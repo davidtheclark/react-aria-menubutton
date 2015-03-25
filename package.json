@@ -38,7 +38,7 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "bundle-demo": "browserify -d -e ./demo/demo.js -o ./demo/demo-bundle.js --extension=.jsx -t [ babelify --loose ]",
+    "bundle-demo": "browserify -d -e ./demo/demo.js -o ./demo/demo-bundle.js --extension=.jsx -t [ babelify --loose ] -t partialify",
     "watch-demo": "watchify -d -e ./demo/demo.js -o ./demo/demo-bundle.js -v --extension=.jsx -t [ babelify --loose ] -t partialify",
     "demo-dev": "parallelshell 'http-server ./ -o' 'npm run watch-demo'",
     "bundle-test": "browserify -e ./test/index.js --extension=.jsx -t [ babelify --loose ] -o ./test/test-bundle.js",
