@@ -14,4 +14,3 @@ Have a look around.
 ## Yet to come:
 
 - Documentation
-- gh-pages demo
