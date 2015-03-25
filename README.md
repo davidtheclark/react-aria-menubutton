@@ -1,4 +1,4 @@
-# react-aria-menubutton
+# react-aria-menubutton https://travis-ci.org/davidtheclark/react-aria-menubutton.svg?branch=master
 
 A dropdown menubutton that
 
@@ -9,7 +9,9 @@ A dropdown menubutton that
 
 Have a look around.
 
-Yet to come:
+## [Demo](http://davidtheclark.github.io/react-aria-menubutton/)
+
+## Yet to come:
 
 - Documentation
 - gh-pages demo
