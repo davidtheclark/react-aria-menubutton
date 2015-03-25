@@ -1,0 +1,69 @@
+.AriaMenuButton {
+  position: relative;
+}
+
+.AriaMenuButton-trigger {
+  cursor: pointer;
+  display: inline-block;
+  color: #555;
+  font-weight: bold;
+  padding: 1px 6px;
+  line-height: 30px;
+  transition: background-color 300ms ease-out;
+}
+
+.AriaMenuButton-trigger::after {
+  content: "";
+  display: inline-block;
+  margin-left: 7px;
+  position: relative;
+  top: 3px;
+  border-color: currentColor transparent transparent;
+  border-width: 5px 4px;
+  border-style: solid;
+}
+
+.AriaMenuButton-trigger:hover,
+.AriaMenuButton-trigger:focus {
+  background: #fff;
+  border: 1px solid #c2c2c2;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+  padding: 0px 5px;
+}
+
+.AriaMenuButton-menu {
+  background: #fff;
+  border: 1px solid #D6D6D6;
+  list-style-type: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 99;
+  padding-left: 0;
+  box-shadow: 0 2px 4px #D6D6D6;
+  color: #333;
+  margin: 0;
+  padding: 5px 0;
+}
+
+.AriaMenuButton-menu--flushRight {
+  right: 0;
+}
+
+.AriaMenuButton-menuItem {
+  cursor: pointer;
+  min-width: 125px;
+  max-width: 200px;
+  padding: 6px 16px;
+}
+
+.AriaMenuButton-menuItem:hover,
+.AriaMenuButton-menuItem:focus {
+  background: #F1F1F1;
+  color: #222;
+}
+
+.AriaMenuButton-menuItem.is-selected {
+  cursor: default;
+  font-weight: bold;
+}

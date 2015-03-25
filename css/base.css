@@ -1,0 +1,35 @@
+.AriaMenuButton {
+  position: relative;
+}
+
+.AriaMenuButton-trigger {
+  cursor: pointer;
+  display: inline-block;
+}
+
+.AriaMenuButton-menu {
+  background: #fff;
+  border: 1px solid;
+  list-style-type: none;
+  padding-left: 0;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 99;
+}
+
+.AriaMenuButton-menu--flushRight {
+  right: 0;
+}
+
+.AriaMenuButton-menuItem {
+  cursor: pointer;
+  padding: 5px 10px;
+  min-width: 125px;
+  max-width: 200px;
+}
+
+.AriaMenuButton-menuItem.is-selected {
+  cursor: default;
+  font-weight: bold;
+}

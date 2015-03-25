@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+  <head>
+    <link rel="stylesheet" href="demo/demo.css">
+  </head>
+  <body>
+
+    <h1>react-aria-menubotton demo</h1>
+
+    <style id="demo-style"></style>
+    <div id="style-select"></div>
+
+    <div>
+
+      <h2>Some interactions you should try:</h2>
+      <ul>
+        <li>
+          Click the trigger to toggle the menu.
+        </li>
+        <li>
+          With focus on the trigger, press Enter or Space to toggle the menu.
+        </li>
+        <li>
+          With focus on the trigger and the menu closed, press ArrowDown to open the menu and move focus to the first menu item.
+        </li>
+        <li>
+          With the menu opened, press ArrowDown or ArrowUp to cycle focus through the menu items.
+        </li>
+        <li>
+          With the menu opened, press a letter key to move focus to the next menu item whose label begins with that letter.
+        </li>
+        <li>
+          With the menu opened, click a menu item to fire the handler.
+        </li>
+        <li>
+          With the menu opened, use the keyboard to move focus to a menu item and press Enter or Space to fire the handler.
+        </li>
+        <li>
+          With the menu opened (which means focus is either on the trigger or a menu item), move focus outside of the menu &mdash; by clicking outside of it or pressing Tab &mdash; to close the menu.
+        </li>
+        <li>
+          With focus inside the menu, press Escape to close the menu and return focus to the trigger.
+        </li>
+      </ul>
+      <p>
+        Keyboard interactions follow the
+        <a href="http://www.w3.org/TR/wai-aria-practices/#menubutton">WAI-ARIA Design Pattern for
+        Menu Button</a>.
+      <p>
+    </div>
+
+    <script src="demo/demo-bundle.js"></script>
+  </body>
+</html>
