@@ -235,10 +235,10 @@ test('when key is pressed inside menu', t => {
   t.test('handles letters when content is a component', st => {
     class SpecialItem extends React.Component {
       render() {
-        return React.DOM.div({ className: 'special'}, [
+        return React.DOM.div({ className: 'special'},
           React.DOM.span({ className: 'special-thing'}),
           React.DOM.span(null, this.props.inner)
-        ]);
+        );
       }
     }
 

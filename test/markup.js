@@ -38,7 +38,7 @@ test('closed rendering', t => {
       const triggerNode = u.getTriggerNode(c);
       st.equal(triggerNode.id, 'foo-trigger', 'id');
       st.notOk(u.classListContains(triggerNode, 'is-open'), 'correct classes');
-      st.deepEqual(triggerNode.childNodes, [document.createTextNode('FooBar')], 'content');
+      st.equal(triggerNode.textContent, 'FooBar', 'content');
       // "The menu button has an aria-haspopup property, set to true."
       st.ok(triggerNode.getAttribute('aria-haspopup'), 'aria-haspopup');
       // "The menu button itself has a role of button."
@@ -112,7 +112,7 @@ test('basic open rendering', t => {
       u.eachMenuItemNode(c, (n, i) => {
         count++;
         st.equal(n.id, testItems[i].id, 'id');
-        st.deepEqual(n.childNodes, [document.createTextNode(testItems[i].content)], 'content');
+        st.equal(n.textContent, testItems[i].content, 'content');
         st.equal(String(n.getAttribute('data-value')), String(testItems[i].value), 'data-value');
         // "The menu contains elements with roles: menuitem, menuitemcheckbox, or menuitemradio
         // depending on your implementation."

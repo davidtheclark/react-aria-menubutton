@@ -2,16 +2,10 @@ import React from 'react';
 
 const { TestUtils } = React.addons;
 
-var testEl = document.createElement('div');
-document.body.appendChild(testEl);
-
 export function render(c, cb) {
-  emptyDOMNode(testEl);
+  var testEl = document.createElement('div');
+  document.body.appendChild(testEl);
   React.render(c, testEl, cb);
-}
-
-export function emptyDOMNode(node) {
-  while (node.firstChild) node.removeChild(node.firstChild);
 }
 
 export function getContainer(c) {
