@@ -28,6 +28,7 @@
     "eslint-plugin-react": "1.6.0",
     "http-server": "0.8.0",
     "karma": "0.12.31",
+    "karma-cli": "0.0.4",
     "karma-firefox-launcher": "0.1.4",
     "karma-tap": "1.0.3",
     "parallelshell": "1.1.1",
