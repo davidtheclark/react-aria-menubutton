@@ -1,4 +1,4 @@
-# react-aria-menubutton https://travis-ci.org/davidtheclark/react-aria-menubutton.svg?branch=master
+# react-aria-menubutton [![Build Status](https://travis-ci.org/davidtheclark/react-aria-menubutton.svg?branch=master)](https://travis-ci.org/davidtheclark/react-aria-menubutton)
 
 A dropdown menubutton that
 
