@@ -12,6 +12,7 @@
     "react"
   ],
   "rules": {
+    "curly": 0,
     "radix": 2,
     "wrap-iife": 2,
     "brace-style": 0,
