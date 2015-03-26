@@ -23,7 +23,8 @@ export default class AriaDropdownMenu extends React.Component {
     const items = props.items.map((item, i) => {
       return (
         <li key={i}
-         className='AriaMenuButton-li'>
+         className='AriaMenuButton-li'
+         role='presentation'>
           <MenuItem {...item}
            focusManager={props.focusManager}
            handleSelection={props.handleSelection}
