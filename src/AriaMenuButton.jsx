@@ -79,7 +79,10 @@ export default class AriaMenuButton extends React.Component {
 
     // "With focus on the drop-down menu, the Up and Down Arrow
     // keys move focus within the menu items, "wrapping" at the top and bottom."
-    else if (e.key === keys.UP && this.state.isOpen) this.focusManager.moveUp();
+    else if (e.key === keys.UP && this.state.isOpen) {
+      e.preventDefault();
+      this.focusManager.moveUp();
+    }
   }
 
   checkLetterKeys(e) {
