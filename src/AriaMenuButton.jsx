@@ -43,7 +43,9 @@ export default class AriaMenuButton extends React.Component {
 
   handleAnywhereKey(e) {
     const key = e.key;
-    if (key !== keys.DOWN && key !== keys.NONFUNCTION) return;
+    const isLetterKey = isLetterKeyEvent(e);
+
+    if (key !== keys.DOWN && !isLetterKey) return;
     e.preventDefault();
 
     if (key === keys.DOWN) {
@@ -60,7 +62,7 @@ export default class AriaMenuButton extends React.Component {
       else this.openMenu(true);
     }
 
-    else if (key === keys.NONFUNCTION && this.state.isOpen) this.checkLetterKeys(e);
+    else if (isLetterKey && this.state.isOpen) this.checkLetterKeys(e.keyCode);
   }
 
   // "With focus on the button pressing Space or Enter will toggle
@@ -85,12 +87,9 @@ export default class AriaMenuButton extends React.Component {
     }
   }
 
-  checkLetterKeys(e) {
+  checkLetterKeys(kc) {
     // "Typing a letter (printable character) key moves focus to the next
     // instance of a visible node whose title begins with that printable letter."
-    const kc = e.keyCode;
-    if (kc < keys.LOWEST_LETTER_CODE || kc > keys.HIGHEST_LETTER_CODE) return;
-    e.preventDefault();
     this.focusManager.moveToLetter(String.fromCharCode(kc));
   }
 
@@ -174,3 +173,7 @@ AriaMenuButton.propTypes = {
   selectedValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
   transition: PropTypes.bool
 };
+
+function isLetterKeyEvent(e) {
+  return e.keyCode >= keys.LOWEST_LETTER_CODE && e.keyCode <= keys.HIGHEST_LETTER_CODE;
+}
