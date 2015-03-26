@@ -147,6 +147,7 @@ export default class AriaMenuButton extends React.Component {
          onKeyDown={this.handleTriggerKey.bind(this)}
          ref='trigger'
          aria-haspopup={true}
+         aria-expanded={isOpen}
          role='button'
          tabIndex='0'>
           {props.triggerLabel}
