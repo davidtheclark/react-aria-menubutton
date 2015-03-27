@@ -3,11 +3,13 @@
 // making sure the blur handler works as expected, hoping the blur
 // event fires based on real interactions as we'd expect.
 
-import React from 'react';
+import React from 'react/addons';
+import classNames from 'classnames';
 import test from 'tape';
-import AriaMenuButton from '..';
 import * as u from './util';
+import createAriaMenuButton from '..';
 
+const AriaMenuButton = createAriaMenuButton(React, classNames);
 const { Simulate } = React.addons.TestUtils;
 
 var testItems = [{

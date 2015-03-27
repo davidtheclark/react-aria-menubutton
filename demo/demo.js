@@ -1,6 +1,8 @@
 import React from 'react';
-import AriaMenuButton from '..';
+import classNames from 'classnames';
+import createAriaMenuButton from '..';
 
+const AriaMenuButton = createAriaMenuButton(React, classNames);
 const demoStyle = document.getElementById('demo-style');
 
 const stylesheets = {

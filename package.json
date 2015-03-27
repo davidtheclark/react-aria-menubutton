@@ -44,6 +44,7 @@
     "watch-demo": "watchify -d -e ./demo/demo.js -o ./demo/demo-bundle.js -v --extension=.jsx -t [ babelify --loose ] -t partialify",
     "demo-dev": "parallelshell 'http-server ./ -o' 'npm run watch-demo'",
     "bundle-test": "browserify -e ./test/index.js --extension=.jsx -t [ babelify --loose ] -o ./test/test-bundle.js",
+    "build": "browserify -e ./src/createAriaMenuButton.jsx --extension=.jsx -t [ babelify --loose ] -o ./dist/createAriaMenuButton.js --standalone createAriaMenuButton",
     "watch-test": "watchify -d -e ./test/index.js --extension=.jsx -t [ babelify --loose ] -o ./test/test-bundle.js -v",
     "watch-karma": "karma start",
     "test-dev": "parallelshell 'npm run watch-test' 'npm run watch-karma'",
