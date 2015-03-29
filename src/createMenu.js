@@ -52,7 +52,6 @@ export default function ariaMenuButtonMenu(React, classNames) {
   const pt = React.PropTypes;
   Menu.propTypes = {
     focusManager: pt.object.isRequired,
-    id: pt.string.isRequired,
     items: pt.arrayOf(pt.object).isRequired,
     flushRight: pt.bool,
     handleSelection: pt.func,

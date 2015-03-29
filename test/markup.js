@@ -23,7 +23,7 @@ const testItems = [{
 test('closed rendering', t => {
   const Component = React.createElement(AriaMenuButton, {
     id: 'foo',
-    triggerLabel: 'FooBar',
+    triggerContent: 'FooBar',
     handleSelection: noop,
     items: testItems
   });
@@ -67,7 +67,7 @@ test('closed rendering', t => {
 test('closed render with transition', t => {
   const Component = React.createElement(AriaMenuButton, {
     id: 'foo',
-    triggerLabel: 'FooBar',
+    triggerContent: 'FooBar',
     handleSelection: noop,
     items: testItems,
     transition: true
@@ -87,7 +87,7 @@ test('closed render with transition', t => {
 test('basic open rendering', t => {
   const Component = React.createElement(AriaMenuButton, {
     id: 'foo',
-    triggerLabel: 'FooBar',
+    triggerContent: 'FooBar',
     handleSelection: noop,
     items: testItems,
     startOpen: true
@@ -132,7 +132,7 @@ test('basic open rendering', t => {
 test('open rendering flushRight', t => {
   const Component = React.createElement(AriaMenuButton, {
     id: 'foo',
-    triggerLabel: 'FooBar',
+    triggerContent: 'FooBar',
     handleSelection: noop,
     items: testItems,
     startOpen: true,
@@ -153,7 +153,7 @@ test('open rendering flushRight', t => {
 test('open rendering with selectedValue', t => {
   const Component = React.createElement(AriaMenuButton, {
     id: 'foo',
-    triggerLabel: 'FooBar',
+    triggerContent: 'FooBar',
     handleSelection: noop,
     items: testItems,
     startOpen: true,

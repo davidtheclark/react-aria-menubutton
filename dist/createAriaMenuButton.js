@@ -186,7 +186,7 @@ function createAriaMenuButton(React, classNames) {
             "aria-expanded": isOpen,
             role: "button",
             tabIndex: "0" },
-          props.triggerLabel
+          props.triggerContent
         ),
         menuWrapper
       );
@@ -199,7 +199,7 @@ function createAriaMenuButton(React, classNames) {
   AriaMenuButton.propTypes = {
     id: pt.string.isRequired,
     items: pt.arrayOf(pt.object).isRequired,
-    triggerLabel: pt.string.isRequired,
+    triggerContent: pt.string.isRequired,
     closeOnSelection: pt.bool,
     flushRight: pt.bool,
     handleSelection: pt.func,

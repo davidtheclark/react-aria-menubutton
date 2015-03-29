@@ -28,7 +28,7 @@ var testItems = [{
 
 const BaseComponent = React.createElement(AriaMenuButton, {
   id: 'foo',
-  triggerLabel: 'FooBar',
+  triggerContent: 'FooBar',
   handleSelection: noop,
   items: testItems
 });

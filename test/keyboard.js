@@ -24,7 +24,7 @@ var testItems = [{
 
 const BaseComponent = React.createElement(AriaMenuButton, {
   id: 'foo',
-  triggerLabel: 'FooBar',
+  triggerContent: 'FooBar',
   handleSelection: noop,
   items: testItems
 });
@@ -260,7 +260,7 @@ test('when key is pressed inside menu', t => {
 
     const SpecialComponent = React.createElement(AriaMenuButton, {
       id: 'foo',
-      triggerLabel: 'FooBar',
+      triggerContent: 'FooBar',
       handleSelection: noop,
       items: specialItems
     });
@@ -307,7 +307,7 @@ test('when key is pressed inside menu', t => {
     const spy = sinon.spy();
     const SpyComponent = React.createElement(AriaMenuButton, {
       id: 'foo',
-      triggerLabel: 'FooBar',
+      triggerContent: 'FooBar',
       handleSelection: spy,
       items: testItems
     });
@@ -331,7 +331,7 @@ test('when key is pressed inside menu', t => {
     st.plan(2);
     const OpenComponentThatCloses = React.createElement(AriaMenuButton, {
       id: 'foo',
-      triggerLabel: 'FooBar',
+      triggerContent: 'FooBar',
       handleSelection: noop,
       items: testItems,
       startOpen: true,

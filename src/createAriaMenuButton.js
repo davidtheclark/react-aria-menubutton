@@ -2,7 +2,7 @@ import * as keys from './keys';
 import createMenu from './createMenu';
 import focusManager from './focusManager';
 
-export default function createAriaMenuButton(React, classNames) {
+export default function createAriaMenuButton(React=global.React, classNames=global.classNames) {
 
   const Menu = createMenu(React, classNames);
   const CSSTransitionGroup = (React.addons) ? React.addons.CSSTransitionGroup : false;
@@ -121,6 +121,9 @@ export default function createAriaMenuButton(React, classNames) {
       const props = this.props;
       const isOpen = this.state.isOpen;
 
+      const triggerId = (props.id) ? `${props.id}-trigger` : undefined;
+      const outsideId = (props.id) ? `${props.id}-outside` : undefined;
+
       const menu = (isOpen) ? (
         <Menu {...props}
          handleSelection={this.handleSelection.bind(this)}
@@ -147,6 +150,10 @@ export default function createAriaMenuButton(React, classNames) {
         'is-open': isOpen
       });
 
+      // The outsideOverlay and its accompanying innerStyle are
+      // to make the menu close when there is a click outside it
+      // (mobile browsers will not fire the onBlur handler)
+
       const innerStyle = (!isOpen) ? {} : {
         display: 'inline-block',
         position: 'relative',
@@ -154,7 +161,7 @@ export default function createAriaMenuButton(React, classNames) {
       };
 
       const outsideOverlay = (!isOpen) ? false : (
-        <div id={`${props.id}-outside`}
+        <div id={outsideId}
          onClick={() => this.closeMenu.call(this, false)}
          style={{
            cursor: 'pointer',
@@ -175,7 +182,7 @@ export default function createAriaMenuButton(React, classNames) {
 
           <div style={innerStyle}>
 
-            <div id={`${props.id}-trigger`}
+            <div id={triggerId}
              className={triggerClasses}
              onClick={this.toggleMenu.bind(this)}
              onKeyDown={this.handleTriggerKey.bind(this)}
@@ -184,7 +191,7 @@ export default function createAriaMenuButton(React, classNames) {
              aria-expanded={isOpen}
              role='button'
              tabIndex='0'>
-              {props.triggerLabel}
+              {props.triggerContent}
             </div>
 
             {menuWrapper}
@@ -199,11 +206,11 @@ export default function createAriaMenuButton(React, classNames) {
   const pt = React.PropTypes;
   AriaMenuButton.propTypes = {
     handleSelection: pt.func.isRequired,
-    id: pt.string.isRequired,
     items: pt.arrayOf(pt.object).isRequired,
-    triggerLabel: pt.string.isRequired,
+    triggerContent: pt.string.isRequired,
     closeOnSelection: pt.bool,
     flushRight: pt.bool,
+    id: pt.string,
     startOpen: pt.bool,
     selectedValue: pt.oneOfType([pt.string, pt.number, pt.bool]),
     transition: pt.bool

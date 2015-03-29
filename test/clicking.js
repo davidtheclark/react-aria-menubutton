@@ -25,7 +25,7 @@ const testItems = [{
 test('when trigger is clicked', t => {
   const Component = React.createElement(AriaMenuButton, {
     id: 'foo',
-    triggerLabel: 'FooBar',
+    triggerContent: 'FooBar',
     handleSelection: noop,
     items: testItems
   });
@@ -46,7 +46,7 @@ test('when menuItem is clicked', t => {
   const spy = sinon.spy();
   const OpenSpyComponent = React.createElement(AriaMenuButton, {
     id: 'foo',
-    triggerLabel: 'FooBar',
+    triggerContent: 'FooBar',
     handleSelection: spy,
     items: testItems,
     startOpen: true
@@ -67,7 +67,7 @@ test('when menuItem is clicked', t => {
 test('when menuItem is clicked if closeOnSelection is true', t => {
   const OpenComponentThatCloses = React.createElement(AriaMenuButton, {
     id: 'foo',
-    triggerLabel: 'FooBar',
+    triggerContent: 'FooBar',
     handleSelection: noop,
     items: testItems,
     startOpen: true,
