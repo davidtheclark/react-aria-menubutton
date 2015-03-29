@@ -9,6 +9,7 @@ body {
   -webkit-font-smoothing: antialiased;
   max-width: 600px;
   margin: 0 auto;
+  padding: 10px;
 }
 
 /* transition */
@@ -31,8 +32,8 @@ body {
 /* Fancy */
 
 #fancy .AriaMenuButton-menu {
-  width: 300px;
-  max-width: 300px;
+  width: 250px;
+  max-width: 250px;
 }
 
 .Fancy-item::after {

@@ -18,6 +18,9 @@ const stylesheets = {
 };
 
 const styleItems = [{
+  content: 'Github',
+  value: 'github'
+}, {
   content: 'Bootstrap',
   value: 'bootstrap'
 }, {
@@ -27,18 +30,16 @@ const styleItems = [{
   content: 'Google',
   value: 'google'
 }, {
-  content: 'Github',
-  value: 'github'
-}, {
   content: 'Base',
   value: 'base'
 }];
 
-demoStyle.textContent = stylesheets.bootstrap;
+const firstSelected = 'github';
+demoStyle.textContent = stylesheets[firstSelected];
 
 class Demo extends React.Component {
   constructor() {
-    this.state = { selected: 'bootstrap' };
+    this.state = { selected: firstSelected };
   }
 
   handleSelection(val) {
@@ -52,7 +53,7 @@ class Demo extends React.Component {
         <p>
           Current style is: <strong>{this.state.selected.charAt(0).toUpperCase() + this.state.selected.slice(1)}</strong>
         </p>
-        <AriaMenuButton id='style-select-bootstrap'
+        <AriaMenuButton id='style-select'
          handleSelection={this.handleSelection.bind(this)}
          triggerLabel='Choose a different style'
          items={styleItems}
@@ -74,7 +75,9 @@ React.render(
  * Fanciness demo
  */
 
-const fancyItems = ['bowling', 'science', 'scooting'].map(activity => {
+const fancyStuff = ['bowling', 'science', 'scooting'];
+
+const fancyMenuItem = fancyStuff.map(activity => {
   return {
     content: (
       <div className='Fancy-item'>
@@ -98,7 +101,7 @@ class Fancy extends React.Component {
       <AriaMenuButton id='fancy'
        handleSelection={() => {}}
        triggerLabel='Fancy stuff'
-       items={fancyItems}
+       items={fancyMenuItem}
        transition={true} />
     );
   }
@@ -110,3 +113,9 @@ React.render(
   /* eslint-enable */
   document.getElementById('fancy-container')
 );
+
+// Pre-load the SVGs
+fancyStuff.forEach(t => {
+  const x = new Image();
+  x.src = `demo/svg/${t}.svg`;
+});

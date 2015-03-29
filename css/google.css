@@ -5,6 +5,10 @@
 .AriaMenuButton-trigger {
   cursor: pointer;
   display: inline-block;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   color: #555;
   font-weight: bold;
   padding: 1px 6px;
