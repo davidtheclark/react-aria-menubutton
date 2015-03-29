@@ -1,11 +1,11 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 module.exports = '.AriaMenuButton {\n  position: relative;\n}\n\n.AriaMenuButton-trigger {\n  cursor: pointer;\n  display: inline-block;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n\n.AriaMenuButton-menu {\n  background: #fff;\n  border: 1px solid;\n  list-style-type: none;\n  padding-left: 0;\n  position: absolute;\n  top: 100%;\n  left: 0;\n  z-index: 99;\n  min-width: 125px;\n  max-width: 200px;\n}\n\n.AriaMenuButton-menu--flushRight {\n  right: 0;\n}\n\n.AriaMenuButton-menuItem {\n  cursor: pointer;\n  padding: 5px 10px;\n}\n\n.AriaMenuButton-menuItem.is-selected {\n  cursor: default;\n  font-weight: bold;\n}\n';
 },{}],2:[function(require,module,exports){
-module.exports = '.AriaMenuButton {\n  position: relative;\n}\n\n.AriaMenuButton-trigger {\n  cursor: pointer;\n  display: inline-block;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  background: #fff;\n  border: 1px solid #ccc;\n  border-radius: 4px;\n  padding: 6px 12px;\n  transition: background-color 0.2s linear;\n}\n\n.AriaMenuButton-trigger::after {\n  content: "";\n  display: inline-block;\n  margin-left: 5px;\n  position: relative;\n  top: 3px;\n  border-color: currentColor transparent transparent;\n  border-width: 5px 4px;\n  border-style: solid;\n}\n\n.AriaMenuButton-trigger:hover,\n.AriaMenuButton-trigger:focus,\n.AriaMenuButton-trigger.is-open {\n  background: #e6e6e6;\n  border-color: #adadad;\n}\n\n.AriaMenuButton-trigger.is-open {\n  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);\n}\n\n.AriaMenuButton-menu {\n  background: #fff;\n  border: 1px solid rgba(0, 0, 0, 0.15);\n  list-style-type: none;\n  position: absolute;\n  top: 100%;\n  left: 0;\n  z-index: 99;\n  min-width: 125px;\n  max-width: 200px;\n  padding-left: 0;\n  border-radius: 4px;\n  margin: 2px 0 0 0;\n  padding: 5px 0;\n  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);\n}\n\n.AriaMenuButton-menu--flushRight {\n  right: 0;\n}\n\n.AriaMenuButton-menuItem {\n  cursor: pointer;\n  padding: 5px 10px;\n}\n\n.AriaMenuButton-menuItem:hover,\n.AriaMenuButton-menuItem:focus {\n  background-color: #f5f5f5;\n  color: #262626;\n}\n\n.AriaMenuButton-menuItem.is-selected {\n  cursor: default;\n  font-weight: bold;\n}\n';
+module.exports = '.AriaMenuButton {\n  position: relative;\n}\n\n.AriaMenuButton-trigger {\n  cursor: pointer;\n  display: inline-block;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  background: #fff;\n  border: 1px solid #ccc;\n  border-radius: 4px;\n  padding: 6px 12px;\n  transition: background-color 0.2s linear;\n}\n\n.AriaMenuButton-trigger::after {\n  content: "";\n  display: inline-block;\n  margin-left: 5px;\n  position: relative;\n  top: 3px;\n  border-color: currentColor transparent transparent;\n  border-width: 5px 4px;\n  border-style: solid;\n}\n\n.AriaMenuButton-trigger:hover,\n.AriaMenuButton-trigger:focus,\n.AriaMenuButton-trigger.is-open {\n  background: #e6e6e6;\n  border-color: #adadad;\n}\n\n.AriaMenuButton-trigger:active,\n.AriaMenuButton-trigger.is-open {\n  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);\n}\n\n.AriaMenuButton-menu {\n  background: #fff;\n  border: 1px solid rgba(0, 0, 0, 0.15);\n  list-style-type: none;\n  position: absolute;\n  top: 100%;\n  left: 0;\n  z-index: 99;\n  min-width: 125px;\n  max-width: 200px;\n  padding-left: 0;\n  border-radius: 4px;\n  margin: 2px 0 0 0;\n  padding: 5px 0;\n  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);\n}\n\n.AriaMenuButton-menu--flushRight {\n  right: 0;\n}\n\n.AriaMenuButton-menuItem {\n  cursor: pointer;\n  padding: 5px 10px;\n}\n\n.AriaMenuButton-menuItem:hover,\n.AriaMenuButton-menuItem:focus {\n  background-color: #f5f5f5;\n  color: #262626;\n}\n\n.AriaMenuButton-menuItem.is-selected {\n  cursor: default;\n  font-weight: bold;\n}\n';
 },{}],3:[function(require,module,exports){
 module.exports = '.AriaMenuButton {\n  position: relative;\n}\n\n.AriaMenuButton-trigger {\n  cursor: pointer;\n  display: inline-block;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  background: #008CBA;\n  color: #fff;\n  padding: 0.88889rem 1.77778rem 0.94444rem 1.77778rem;\n  transition: background-color 300ms ease-out;\n}\n\n.AriaMenuButton-trigger:hover,\n.AriaMenuButton-trigger:focus {\n  background: #007095;\n}\n\n.AriaMenuButton-trigger::after {\n  content: "";\n  display: inline-block;\n  margin-left: 20px;\n  position: relative;\n  top: 3px;\n  border-color: currentColor transparent transparent;\n  border-width: 5px 5px;\n  border-style: solid;\n}\n\n.AriaMenuButton-menu {\n  background: #fff;\n  border: 1px solid #ccc;\n  list-style-type: none;\n  padding-left: 0;\n  position: absolute;\n  top: 100%;\n  left: 0;\n  z-index: 99;\n  margin: 2px 0 0 0;\n  width: 100%;\n  max-width: 200px;\n}\n\n.AriaMenuButton-menu--flushRight {\n  right: 0;\n}\n\n.AriaMenuButton-menu::before {\n  border: inset 6px;\n  content: "";\n  display: block;\n  height: 0;\n  width: 0;\n  border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #FFF rgba(0, 0, 0, 0);\n  border-bottom-style: solid;\n  position: absolute;\n  top: -12px;\n  left: 10px;\n  z-index: 89;\n}\n\n.AriaMenuButton-menu::after {\n  border: inset 7px;\n  content: "";\n  display: block;\n  height: 0;\n  width: 0;\n  border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #ccc rgba(0, 0, 0, 0);\n  border-bottom-style: solid;\n  position: absolute;\n  top: -14px;\n  left: 9px;\n  z-index: 88;\n}\n\n.AriaMenuButton-menuItem {\n  cursor: pointer;\n  color: #555;\n  padding: 0.5rem;\n}\n\n.AriaMenuButton-menuItem:hover,\n.AriaMenuButton-menuItem:focus {\n  background: #EEE;\n}\n\n.AriaMenuButton-menuItem.is-selected {\n  cursor: default;\n  font-weight: bold;\n}\n';
 },{}],4:[function(require,module,exports){
-module.exports = '.AriaMenuButton {\n  position: relative;\n}\n\n.AriaMenuButton-trigger {\n  cursor: pointer;\n  display: inline-block;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  background-color: #EEE;\n  background-image: linear-gradient(#FCFCFC, #EEE);\n  border: 1px solid #D5D5D5;\n  border-radius: 3px;\n  font-weight: bold;\n  padding: 6px 10px;\n}\n\n.AriaMenuButton-trigger::after {\n  content: "";\n  display: inline-block;\n  margin-left: 3px;\n  position: relative;\n  top: 3px;\n  border-color: currentColor transparent transparent;\n  border-width: 5px 4px;\n  border-style: solid;\n}\n\n.AriaMenuButton-trigger:hover,\n.AriaMenuButton-trigger:focus,\n.AriaMenuButton-trigger.is-open {\n  background-color: #DDD;\n  background-image: linear-gradient(#EEE, #DDD);\n  border-color: #CCC;\n}\n\n.AriaMenuButton-trigger.is-open {\n  background-color: #DCDCDC;\n  background-image: none;\n  border-color: #B5B5B5;\n  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);\n}\n\n.AriaMenuButton-menu {\n  background: #fff;\n  border: 1px solid rgba(200, 200, 200, 0.4);\n  list-style-type: none;\n  position: absolute;\n  top: 100%;\n  left: 0;\n  z-index: 99;\n  padding-left: 0;\n  border-radius: 3px;\n  margin: 4px 0 0 0;\n  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);\n  width: 215px;\n}\n\n.AriaMenuButton-menu--flushRight {\n  right: 0;\n}\n\n.AriaMenuButton-menuItem {\n  cursor: pointer;\n  font-size: 12px;\n  padding: 8px;\n  border-bottom: 1px solid #EEE;\n}\n\n.AriaMenuButton-li:first-of-type .AriaMenuButton-menuItem {\n  border-top-right-radius: 3px;\n  border-top-left-radius: 3px;\n}\n\n.AriaMenuButton-li:last-of-type .AriaMenuButton-menuItem {\n  border-bottom-right-radius: 3px;\n  border-bottom-left-radius: 3px;\n}\n\n.AriaMenuButton-menuItem:hover,\n.AriaMenuButton-menuItem:focus {\n  background-color: #4183C4;\n  color: #fff;\n}\n\n.AriaMenuButton-menuItem.is-selected {\n  cursor: default;\n  font-weight: bold;\n}\n';
+module.exports = '.AriaMenuButton {\n  position: relative;\n}\n\n.AriaMenuButton-trigger {\n  cursor: pointer;\n  display: inline-block;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  background-color: #EEE;\n  background-image: linear-gradient(#FCFCFC, #EEE);\n  border: 1px solid #D5D5D5;\n  border-radius: 3px;\n  font-weight: bold;\n  padding: 6px 10px;\n}\n\n.AriaMenuButton-trigger::after {\n  content: "";\n  display: inline-block;\n  margin-left: 3px;\n  position: relative;\n  top: 3px;\n  border-color: currentColor transparent transparent;\n  border-width: 5px 4px;\n  border-style: solid;\n}\n\n.AriaMenuButton-trigger:hover,\n.AriaMenuButton-trigger:focus,\n.AriaMenuButton-trigger.is-open {\n  background-color: #DDD;\n  background-image: linear-gradient(#EEE, #DDD);\n  border-color: #CCC;\n}\n\n.AriaMenuButton-trigger:active,\n.AriaMenuButton-trigger.is-open {\n  background-color: #DCDCDC;\n  background-image: none;\n  border-color: #B5B5B5;\n  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);\n}\n\n.AriaMenuButton-menu {\n  background: #fff;\n  border: 1px solid rgba(200, 200, 200, 0.4);\n  list-style-type: none;\n  position: absolute;\n  top: 100%;\n  left: 0;\n  z-index: 99;\n  padding-left: 0;\n  border-radius: 3px;\n  margin: 4px 0 0 0;\n  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);\n  width: 215px;\n}\n\n.AriaMenuButton-menu--flushRight {\n  right: 0;\n}\n\n.AriaMenuButton-menuItem {\n  cursor: pointer;\n  font-size: 12px;\n  padding: 8px;\n  border-bottom: 1px solid #EEE;\n}\n\n.AriaMenuButton-li:first-of-type .AriaMenuButton-menuItem {\n  border-top-right-radius: 3px;\n  border-top-left-radius: 3px;\n}\n\n.AriaMenuButton-li:last-of-type .AriaMenuButton-menuItem {\n  border-bottom-right-radius: 3px;\n  border-bottom-left-radius: 3px;\n}\n\n.AriaMenuButton-menuItem:hover,\n.AriaMenuButton-menuItem:focus {\n  background-color: #4183C4;\n  color: #fff;\n}\n\n.AriaMenuButton-menuItem.is-selected {\n  cursor: default;\n  font-weight: bold;\n}\n';
 },{}],5:[function(require,module,exports){
 module.exports = '.AriaMenuButton {\n  position: relative;\n}\n\n.AriaMenuButton-trigger {\n  cursor: pointer;\n  display: inline-block;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  color: #555;\n  font-weight: bold;\n  padding: 1px 6px;\n  line-height: 30px;\n  transition: background-color 300ms ease-out;\n}\n\n.AriaMenuButton-trigger::after {\n  content: "";\n  display: inline-block;\n  margin-left: 7px;\n  position: relative;\n  top: 3px;\n  border-color: currentColor transparent transparent;\n  border-width: 5px 4px;\n  border-style: solid;\n}\n\n.AriaMenuButton-trigger:hover,\n.AriaMenuButton-trigger:focus {\n  background: #fff;\n  border: 1px solid #c2c2c2;\n  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);\n  padding: 0px 5px;\n}\n\n.AriaMenuButton-menu {\n  background: #fff;\n  border: 1px solid #D6D6D6;\n  list-style-type: none;\n  position: absolute;\n  top: 100%;\n  left: 0;\n  z-index: 99;\n  min-width: 125px;\n  max-width: 200px;\n  padding-left: 0;\n  box-shadow: 0 2px 4px #D6D6D6;\n  color: #333;\n  margin: 0;\n  padding: 5px 0;\n}\n\n.AriaMenuButton-menu--flushRight {\n  right: 0;\n}\n\n.AriaMenuButton-menuItem {\n  cursor: pointer;\n  padding: 6px 16px;\n}\n\n.AriaMenuButton-menuItem:hover,\n.AriaMenuButton-menuItem:focus {\n  background: #F1F1F1;\n  color: #222;\n}\n\n.AriaMenuButton-menuItem.is-selected {\n  cursor: default;\n  font-weight: bold;\n}\n';
 },{}],6:[function(require,module,exports){
@@ -21995,7 +21995,7 @@ function createAriaMenuButton(React, classNames) {
       _classCallCheck(this, AriaMenuButton);
 
       _React$Component.call(this, props);
-      this.state = { isOpen: !!props.isOpen };
+      this.state = { isOpen: !!props.startOpen };
       this.focusManager = focusManager();
     }
 
@@ -22026,6 +22026,7 @@ function createAriaMenuButton(React, classNames) {
 
       var focusTrigger = arguments[0] === undefined ? true : arguments[0];
 
+      console.log("trying to close");
       this.setState({ isOpen: false, innerFocus: false }, function () {
         if (focusTrigger) _this.focusManager.focusTrigger();
         _this.focusManager.currentFocus = -1;
@@ -22135,26 +22136,47 @@ function createAriaMenuButton(React, classNames) {
         "is-open": isOpen
       });
 
+      var innerStyle = !isOpen ? {} : {
+        display: "inline-block",
+        position: "relative",
+        zIndex: "100"
+      };
+
+      var outsideOverlay = !isOpen ? false : React.createElement("div", { id: "" + props.id + "-outside",
+        onClick: this.closeMenu.bind(this),
+        style: {
+          cursor: "pointer",
+          position: "fixed",
+          top: 0, bottom: 0, left: 0, right: 0,
+          zIndex: "99",
+          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+        } });
+
       return React.createElement(
         "div",
         { id: props.id,
           className: "AriaMenuButton",
           onKeyDown: this.handleAnywhereKey.bind(this),
           onBlur: this.handleBlur.bind(this) },
+        outsideOverlay,
         React.createElement(
           "div",
-          { id: "" + props.id + "-trigger",
-            className: triggerClasses,
-            onClick: this.toggleMenu.bind(this),
-            onKeyDown: this.handleTriggerKey.bind(this),
-            ref: "trigger",
-            "aria-haspopup": true,
-            "aria-expanded": isOpen,
-            role: "button",
-            tabIndex: "0" },
-          props.triggerLabel
-        ),
-        menuWrapper
+          { style: innerStyle },
+          React.createElement(
+            "div",
+            { id: "" + props.id + "-trigger",
+              className: triggerClasses,
+              onClick: this.toggleMenu.bind(this),
+              onKeyDown: this.handleTriggerKey.bind(this),
+              ref: "trigger",
+              "aria-haspopup": true,
+              "aria-expanded": isOpen,
+              role: "button",
+              tabIndex: "0" },
+            props.triggerLabel
+          ),
+          menuWrapper
+        )
       );
     };
 
@@ -22169,7 +22191,7 @@ function createAriaMenuButton(React, classNames) {
     triggerLabel: pt.string.isRequired,
     closeOnSelection: pt.bool,
     flushRight: pt.bool,
-    isOpen: pt.bool,
+    startOpen: pt.bool,
     selectedValue: pt.oneOfType([pt.string, pt.number, pt.bool]),
     transition: pt.bool
   };
