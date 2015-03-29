@@ -36,6 +36,7 @@
   border-color: #CCC;
 }
 
+.AriaMenuButton-trigger:active,
 .AriaMenuButton-trigger.is-open {
   background-color: #DCDCDC;
   background-image: none;
