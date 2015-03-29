@@ -1,1 +1,1 @@
-module.exports = require('./src/createAriaMenuButton.jsx');
+module.exports = require('./src/createAriaMenuButton.js');
