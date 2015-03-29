@@ -35,8 +35,8 @@ const focusManagerProto = {
         throw new Error('AriaMenuButton items must have textual `content` or a `text` prop');
       }
       if (item.text) {
-        if (item.text.charAt(0) !== letter) continue;
-      } else if (item.content.charAt(0) !== letter) continue;
+        if (item.text.charAt(0).toLowerCase() !== letter.toLowerCase()) continue;
+      } else if (item.content.charAt(0).toLowerCase() !== letter.toLowerCase()) continue;
       item.node.focus();
       this.currentFocus = this.focusables.indexOf(item);
       return;

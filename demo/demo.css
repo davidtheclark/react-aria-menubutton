@@ -40,7 +40,7 @@ body {
   transform: scale(1);
 }
 
-/* Fancy */
+/* Fancy - Do not imitate these styles: they are stupid */
 
 #fancy .AriaMenuButton-menu {
   width: 250px;
@@ -73,6 +73,27 @@ body {
   padding: 0 0.5em;
   border: 1px solid #ccc;
   border-radius: 4px;
+}
+
+.Fancy-triggerIcon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.Fancy-triggerText {
+  display: inline-block;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.Fancy-triggerSmallText {
+  font-size: 10px;
+  font-weight: normal;
+}
+
+#fancy .AriaMenuButton-trigger::after {
+  display: none;
 }
 
 #fancy .AriaMenuButton-li:nth-child(even) .Fancy-svg,

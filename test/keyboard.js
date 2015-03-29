@@ -9,21 +9,17 @@ const AriaMenuButton = createAriaMenuButton(React, classNames);
 const { Simulate } = React.addons.TestUtils;
 
 var testItems = [{
-  id: 'foo',
   content: 'Foo',
   value: 0
 }, {
-  id: 'bar',
   content: 'Bar',
   value: 1
 }, {
-  id: 'baz',
   content: 'Baz',
   value: 2
 }];
 
 const BaseComponent = React.createElement(AriaMenuButton, {
-  id: 'foo',
   triggerContent: 'FooBar',
   handleSelection: noop,
   items: testItems
@@ -259,7 +255,6 @@ test('when key is pressed inside menu', t => {
     }];
 
     const SpecialComponent = React.createElement(AriaMenuButton, {
-      id: 'foo',
       triggerContent: 'FooBar',
       handleSelection: noop,
       items: specialItems
@@ -306,7 +301,6 @@ test('when key is pressed inside menu', t => {
   t.test('Enter and Space trigger selection', st => {
     const spy = sinon.spy();
     const SpyComponent = React.createElement(AriaMenuButton, {
-      id: 'foo',
       triggerContent: 'FooBar',
       handleSelection: spy,
       items: testItems
@@ -330,7 +324,6 @@ test('when key is pressed inside menu', t => {
   t.test('Enter and Space when closeOnSelection is true', st => {
     st.plan(2);
     const OpenComponentThatCloses = React.createElement(AriaMenuButton, {
-      id: 'foo',
       triggerContent: 'FooBar',
       handleSelection: noop,
       items: testItems,

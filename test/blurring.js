@@ -13,21 +13,17 @@ const AriaMenuButton = createAriaMenuButton(React, classNames);
 const { Simulate } = React.addons.TestUtils;
 
 var testItems = [{
-  id: 'foo',
   content: 'Foo',
   value: 0
 }, {
-  id: 'bar',
   content: 'Bar',
   value: 1
 }, {
-  id: 'baz',
   content: 'Baz',
   value: 2
 }];
 
 const BaseComponent = React.createElement(AriaMenuButton, {
-  id: 'foo',
   triggerContent: 'FooBar',
   handleSelection: noop,
   items: testItems

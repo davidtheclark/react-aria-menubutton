@@ -55,7 +55,7 @@ class Demo extends React.Component {
         </p>
         <AriaMenuButton id='style-select'
          handleSelection={this.handleSelection.bind(this)}
-         triggerLabel='Choose a different style'
+         triggerContent='Choose a different style'
          items={styleItems}
          selectedValue={this.state.selected} />
       </div>
@@ -97,12 +97,25 @@ const fancyMenuItem = fancyStuff.map(activity => {
 
 class Fancy extends React.Component {
   render() {
+    const fancyTriggerContent = (
+      <div className='Fancy-triggerInnards'>
+        <img src='demo/svg/profile-female.svg' className='Fancy-triggerIcon '/>
+        <div className='Fancy-triggerText'>
+          Humans enjoy fancy things<br />
+          <span className='Fancy-triggerSmallText'>
+            (click to select a fancy thing)
+          </span>
+        </div>
+      </div>
+    );
+
     return (
       <AriaMenuButton id='fancy'
        handleSelection={() => {}}
-       triggerLabel='Fancy stuff'
+       triggerContent={fancyTriggerContent}
        items={fancyMenuItem}
-       transition={true} />
+       transition={true}
+       closeOnSelection={true} />
     );
   }
 }
@@ -114,7 +127,7 @@ React.render(
   document.getElementById('fancy-container')
 );
 
-// Pre-load the SVGs
+// Pre-load the initially hidden SVGs
 fancyStuff.forEach(t => {
   const x = new Image();
   x.src = `demo/svg/${t}.svg`;

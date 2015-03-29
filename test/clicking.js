@@ -9,22 +9,18 @@ const AriaMenuButton = createAriaMenuButton(React, classNames);
 const { Simulate } = React.addons.TestUtils;
 
 const testItems = [{
-  id: 'foo',
   content: 'Foo',
   value: 0
 }, {
-  id: 'bar',
   content: 'Bar',
   value: 1
 }, {
-  id: 'baz',
   content: 'Baz',
   value: 2
 }];
 
 test('when trigger is clicked', t => {
   const Component = React.createElement(AriaMenuButton, {
-    id: 'foo',
     triggerContent: 'FooBar',
     handleSelection: noop,
     items: testItems
@@ -45,7 +41,6 @@ test('when trigger is clicked', t => {
 test('when menuItem is clicked', t => {
   const spy = sinon.spy();
   const OpenSpyComponent = React.createElement(AriaMenuButton, {
-    id: 'foo',
     triggerContent: 'FooBar',
     handleSelection: spy,
     items: testItems,
@@ -66,7 +61,6 @@ test('when menuItem is clicked', t => {
 
 test('when menuItem is clicked if closeOnSelection is true', t => {
   const OpenComponentThatCloses = React.createElement(AriaMenuButton, {
-    id: 'foo',
     triggerContent: 'FooBar',
     handleSelection: noop,
     items: testItems,
@@ -76,6 +70,21 @@ test('when menuItem is clicked if closeOnSelection is true', t => {
 
   u.render(OpenComponentThatCloses, function() {
     clickNode(u.getMenuItemNodes(this)[0]);
+    t.notOk(u.menuIsOpen(this), 'menu closed');
+    t.end();
+  });
+});
+
+test('when there is a click on the outside overlay', t => {
+  const OpenComponent = React.createElement(AriaMenuButton, {
+    triggerContent: 'FooBar',
+    handleSelection: noop,
+    items: testItems,
+    startOpen: true
+  });
+
+  u.render(OpenComponent, function() {
+    clickNode(React.findDOMNode(this.refs.overlay));
     t.notOk(u.menuIsOpen(this), 'menu closed');
     t.end();
   });

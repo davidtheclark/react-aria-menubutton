@@ -104,17 +104,22 @@ export default function createAriaMenuButton(React=global.React, classNames=glob
     }
 
     handleBlur() {
-      setTimeout(() => {
+      this.blurTimeout = setTimeout(() => {
         const activeEl = document.activeElement;
         if (activeEl === this.focusManager.trigger) return;
         if (this.focusManager.focusables.some(f => f.node === activeEl)) return;
-        this.closeMenu(false);
+        if (this.state.isOpen) this.closeMenu(false);
       }, 0);
     }
 
     handleSelection(v) {
       if (this.props.closeOnSelection) this.closeMenu();
       this.props.handleSelection(v);
+    }
+
+    handleOverlayClick() {
+      console.log('overlay click triggered');
+      this.closeMenu(false);
     }
 
     render() {
@@ -162,13 +167,14 @@ export default function createAriaMenuButton(React=global.React, classNames=glob
 
       const outsideOverlay = (!isOpen) ? false : (
         <div id={outsideId}
-         onClick={() => this.closeMenu.call(this, false)}
+         onClick={this.handleOverlayClick.bind(this)}
+         ref='overlay'
          style={{
            cursor: 'pointer',
            position: 'fixed',
            top: 0, bottom: 0, left: 0, right: 0,
            zIndex: '99',
-           WebkitTapHighlightColor: 'rgba(0, 0, 0, 0)'
+           WebkitTapHighlightColor: 'rgba(0,0,0,0)'
          }} />
       );
 
@@ -207,7 +213,7 @@ export default function createAriaMenuButton(React=global.React, classNames=glob
   AriaMenuButton.propTypes = {
     handleSelection: pt.func.isRequired,
     items: pt.arrayOf(pt.object).isRequired,
-    triggerContent: pt.string.isRequired,
+    triggerContent: pt.oneOfType([pt.string, pt.element]).isRequired,
     closeOnSelection: pt.bool,
     flushRight: pt.bool,
     id: pt.string,

@@ -3,7 +3,7 @@ import React from 'react';
 const { TestUtils } = React.addons;
 
 export function render(c, cb) {
-  var testEl = document.createElement('div');
+  const testEl = document.createElement('div');
   document.body.appendChild(testEl);
   React.render(c, testEl, cb);
 }
