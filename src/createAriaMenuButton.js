@@ -155,7 +155,7 @@ export default function createAriaMenuButton(React, classNames) {
 
       const outsideOverlay = (!isOpen) ? false : (
         <div id={`${props.id}-outside`}
-         onClick={this.closeMenu.bind(this)}
+         onClick={() => this.closeMenu.call(this, false)}
          style={{
            cursor: 'pointer',
            position: 'fixed',
