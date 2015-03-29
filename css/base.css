@@ -16,6 +16,8 @@
   top: 100%;
   left: 0;
   z-index: 99;
+  min-width: 125px;
+  max-width: 200px;
 }
 
 .AriaMenuButton-menu--flushRight {
@@ -25,8 +27,6 @@
 .AriaMenuButton-menuItem {
   cursor: pointer;
   padding: 5px 10px;
-  min-width: 125px;
-  max-width: 200px;
 }
 
 .AriaMenuButton-menuItem.is-selected {

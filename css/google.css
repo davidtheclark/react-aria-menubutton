@@ -39,6 +39,8 @@
   top: 100%;
   left: 0;
   z-index: 99;
+  min-width: 125px;
+  max-width: 200px;
   padding-left: 0;
   box-shadow: 0 2px 4px #D6D6D6;
   color: #333;
@@ -52,8 +54,6 @@
 
 .AriaMenuButton-menuItem {
   cursor: pointer;
-  min-width: 125px;
-  max-width: 200px;
   padding: 6px 16px;
 }
 

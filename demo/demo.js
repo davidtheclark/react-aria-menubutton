@@ -1,9 +1,13 @@
-import React from 'react';
+import React from 'react/addons';
 import classNames from 'classnames';
 import createAriaMenuButton from '..';
 
 const AriaMenuButton = createAriaMenuButton(React, classNames);
 const demoStyle = document.getElementById('demo-style');
+
+/**
+ * Stylesheet-selecting demo
+ */
 
 const stylesheets = {
   base: require('../css/base.css'),
@@ -63,4 +67,46 @@ React.render(
   <Demo />,
   /* eslint-enable */
   document.getElementById('style-select')
+);
+
+
+/**
+ * Fanciness demo
+ */
+
+const fancyItems = ['bowling', 'science', 'scooting'].map(activity => {
+  return {
+    content: (
+      <div className='Fancy-item'>
+        <img src={`demo/svg/${activity}.svg`} className='Fancy-svg' />
+        <span className='Fancy-text'>
+          Humans enjoy
+          <span className='Fancy-keyword'>
+            {activity}
+          </span>
+        </span>
+      </div>
+    ),
+    text: activity,
+    value: activity
+  };
+});
+
+class Fancy extends React.Component {
+  render() {
+    return (
+      <AriaMenuButton id='fancy'
+       handleSelection={() => {}}
+       triggerLabel='Fancy stuff'
+       items={fancyItems}
+       transition={true} />
+    );
+  }
+}
+
+React.render(
+  /* eslint-disable */
+  <Fancy />,
+  /* eslint-enable */
+  document.getElementById('fancy-container')
 );

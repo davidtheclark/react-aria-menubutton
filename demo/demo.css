@@ -27,3 +27,47 @@ body {
 .AriaMenuButton-menu.is-leave {
   transform: scale(1);
 }
+
+/* Fancy */
+
+#fancy .AriaMenuButton-menu {
+  width: 300px;
+  max-width: 300px;
+}
+
+.Fancy-item::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+.Fancy-svg {
+  float: left;
+  width: 50px;
+  margin-top: 2px;
+}
+
+.Fancy-text {
+  display: block;
+  float: left;
+  margin: 0 5px;
+}
+
+.Fancy-keyword {
+  display: block;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 0 0.5em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#fancy .AriaMenuButton-li:nth-child(even) .Fancy-svg,
+#fancy .AriaMenuButton-li:nth-child(even) .Fancy-text {
+  float: right;
+}
+
+#fancy .AriaMenuButton-li:nth-child(even) .Fancy-text {
+  text-align: right;
+}

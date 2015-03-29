@@ -42,6 +42,8 @@
   top: 100%;
   left: 0;
   z-index: 99;
+  min-width: 125px;
+  max-width: 200px;
   padding-left: 0;
   border-radius: 4px;
   margin: 2px 0 0 0;
@@ -56,8 +58,6 @@
 .AriaMenuButton-menuItem {
   cursor: pointer;
   padding: 5px 10px;
-  min-width: 125px;
-  max-width: 200px;
 }
 
 .AriaMenuButton-menuItem:hover,

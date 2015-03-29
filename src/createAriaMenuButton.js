@@ -174,12 +174,12 @@ export default function createAriaMenuButton(React, classNames) {
 
   const pt = React.PropTypes;
   AriaMenuButton.propTypes = {
+    handleSelection: pt.func.isRequired,
     id: pt.string.isRequired,
     items: pt.arrayOf(pt.object).isRequired,
     triggerLabel: pt.string.isRequired,
     closeOnSelection: pt.bool,
     flushRight: pt.bool,
-    handleSelection: pt.func,
     isOpen: pt.bool,
     selectedValue: pt.oneOfType([pt.string, pt.number, pt.bool]),
     transition: pt.bool
