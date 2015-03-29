@@ -40,6 +40,7 @@ export default function createAriaMenuButton(React, classNames) {
     }
 
     closeMenu(focusTrigger=true) {
+      console.log('trying to close');
       this.setState({ isOpen: false, innerFocus: false }, () => {
         if (focusTrigger) this.focusManager.focusTrigger();
         this.focusManager.currentFocus = -1;
@@ -147,25 +148,49 @@ export default function createAriaMenuButton(React, classNames) {
         'is-open': isOpen
       });
 
+      const innerStyle = (!isOpen) ? {} : {
+        display: 'inline-block',
+        position: 'relative',
+        zIndex: '100'
+      };
+
+      const outsideOverlay = (!isOpen) ? false : (
+        <div id={`${props.id}-outside`}
+         onClick={this.closeMenu.bind(this)}
+         style={{
+           cursor: 'pointer',
+           position: 'fixed',
+           top: 0, bottom: 0, left: 0, right: 0,
+           zIndex: '99',
+           '-webkit-tap-highlight-color': 'rgba(0, 0, 0, 0)'
+         }} />
+      );
+
       return (
         <div id={props.id}
          className='AriaMenuButton'
          onKeyDown={this.handleAnywhereKey.bind(this)}
          onBlur={this.handleBlur.bind(this)}>
 
-          <div id={`${props.id}-trigger`}
-           className={triggerClasses}
-           onClick={this.toggleMenu.bind(this)}
-           onKeyDown={this.handleTriggerKey.bind(this)}
-           ref='trigger'
-           aria-haspopup={true}
-           aria-expanded={isOpen}
-           role='button'
-           tabIndex='0'>
-            {props.triggerLabel}
-          </div>
+          {outsideOverlay}
 
-          {menuWrapper}
+          <div style={innerStyle}>
+
+            <div id={`${props.id}-trigger`}
+             className={triggerClasses}
+             onClick={this.toggleMenu.bind(this)}
+             onKeyDown={this.handleTriggerKey.bind(this)}
+             ref='trigger'
+             aria-haspopup={true}
+             aria-expanded={isOpen}
+             role='button'
+             tabIndex='0'>
+              {props.triggerLabel}
+            </div>
+
+            {menuWrapper}
+
+          </div>
 
         </div>
       );
