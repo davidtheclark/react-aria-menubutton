@@ -22026,7 +22026,6 @@ function createAriaMenuButton(React, classNames) {
 
       var focusTrigger = arguments[0] === undefined ? true : arguments[0];
 
-      console.log("trying to close");
       this.setState({ isOpen: false, innerFocus: false }, function () {
         if (focusTrigger) _this.focusManager.focusTrigger();
         _this.focusManager.currentFocus = -1;
@@ -22109,6 +22108,8 @@ function createAriaMenuButton(React, classNames) {
     };
 
     AriaMenuButton.prototype.render = function render() {
+      var _this = this;
+
       var props = this.props;
       var isOpen = this.state.isOpen;
 
@@ -22143,7 +22144,9 @@ function createAriaMenuButton(React, classNames) {
       };
 
       var outsideOverlay = !isOpen ? false : React.createElement("div", { id: "" + props.id + "-outside",
-        onClick: this.closeMenu.bind(this),
+        onClick: function () {
+          return _this.closeMenu.call(_this, false);
+        },
         style: {
           cursor: "pointer",
           position: "fixed",
