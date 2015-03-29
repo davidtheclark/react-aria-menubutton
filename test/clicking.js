@@ -49,7 +49,7 @@ test('when menuItem is clicked', t => {
     triggerLabel: 'FooBar',
     handleSelection: spy,
     items: testItems,
-    isOpen: true
+    startOpen: true
   });
 
   u.render(OpenSpyComponent, function() {
@@ -70,7 +70,7 @@ test('when menuItem is clicked if closeOnSelection is true', t => {
     triggerLabel: 'FooBar',
     handleSelection: noop,
     items: testItems,
-    isOpen: true,
+    startOpen: true,
     closeOnSelection: true
   });
 

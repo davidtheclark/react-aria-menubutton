@@ -334,7 +334,7 @@ test('when key is pressed inside menu', t => {
       triggerLabel: 'FooBar',
       handleSelection: noop,
       items: testItems,
-      isOpen: true,
+      startOpen: true,
       closeOnSelection: true
     });
 

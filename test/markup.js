@@ -90,7 +90,7 @@ test('basic open rendering', t => {
     triggerLabel: 'FooBar',
     handleSelection: noop,
     items: testItems,
-    isOpen: true
+    startOpen: true
   });
 
   u.render(Component, function() {
@@ -135,7 +135,7 @@ test('open rendering flushRight', t => {
     triggerLabel: 'FooBar',
     handleSelection: noop,
     items: testItems,
-    isOpen: true,
+    startOpen: true,
     flushRight: true
   });
 
@@ -156,7 +156,7 @@ test('open rendering with selectedValue', t => {
     triggerLabel: 'FooBar',
     handleSelection: noop,
     items: testItems,
-    isOpen: true,
+    startOpen: true,
     selectedValue: 0
   });
 

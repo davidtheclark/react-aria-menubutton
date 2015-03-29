@@ -11,7 +11,7 @@ export default function createAriaMenuButton(React, classNames) {
 
     constructor(props) {
       super(props);
-      this.state = { isOpen: !!props.isOpen };
+      this.state = { isOpen: !!props.startOpen };
       this.focusManager = focusManager();
     }
 
@@ -40,7 +40,6 @@ export default function createAriaMenuButton(React, classNames) {
     }
 
     closeMenu(focusTrigger=true) {
-      console.log('trying to close');
       this.setState({ isOpen: false, innerFocus: false }, () => {
         if (focusTrigger) this.focusManager.focusTrigger();
         this.focusManager.currentFocus = -1;
@@ -205,7 +204,7 @@ export default function createAriaMenuButton(React, classNames) {
     triggerLabel: pt.string.isRequired,
     closeOnSelection: pt.bool,
     flushRight: pt.bool,
-    isOpen: pt.bool,
+    startOpen: pt.bool,
     selectedValue: pt.oneOfType([pt.string, pt.number, pt.bool]),
     transition: pt.bool
   };
