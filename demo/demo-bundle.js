@@ -88,7 +88,7 @@ var Demo = (function (_React$Component) {
       ),
       React.createElement(AriaMenuButton, { id: "style-select",
         handleSelection: this.handleSelection.bind(this),
-        triggerLabel: "Choose a different style",
+        triggerContent: "Choose a different style",
         items: styleItems,
         selectedValue: this.state.selected })
     );
@@ -143,11 +143,29 @@ var Fancy = (function (_React$Component2) {
   _inherits(Fancy, _React$Component2);
 
   Fancy.prototype.render = function render() {
+    var fancyTriggerContent = React.createElement(
+      "div",
+      { className: "Fancy-triggerInnards" },
+      React.createElement("img", { src: "demo/svg/profile-female.svg", className: "Fancy-triggerIcon " }),
+      React.createElement(
+        "div",
+        { className: "Fancy-triggerText" },
+        "Humans enjoy fancy things",
+        React.createElement("br", null),
+        React.createElement(
+          "span",
+          { className: "Fancy-triggerSmallText" },
+          "(click to select a fancy thing)"
+        )
+      )
+    );
+
     return React.createElement(AriaMenuButton, { id: "fancy",
       handleSelection: function () {},
-      triggerLabel: "Fancy stuff",
+      triggerContent: fancyTriggerContent,
       items: fancyMenuItem,
-      transition: true });
+      transition: true,
+      closeOnSelection: true });
   };
 
   return Fancy;
@@ -159,7 +177,7 @@ React.createElement(Fancy, null),
 /* eslint-enable */
 document.getElementById("fancy-container"));
 
-// Pre-load the SVGs
+// Pre-load the initially hidden SVGs
 fancyStuff.forEach(function (t) {
   var x = new Image();
   x.src = "demo/svg/" + t + ".svg";
@@ -21965,6 +21983,7 @@ module.exports = warning;
 
 }).call(this,require('_process'))
 },{"./emptyFunction":139,"_process":8}],182:[function(require,module,exports){
+(function (global){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -21985,7 +22004,9 @@ var createMenu = _interopRequire(require("./createMenu"));
 
 var focusManager = _interopRequire(require("./focusManager"));
 
-function createAriaMenuButton(React, classNames) {
+function createAriaMenuButton() {
+  var React = arguments[0] === undefined ? global.React : arguments[0];
+  var classNames = arguments[1] === undefined ? global.classNames : arguments[1];
 
   var Menu = createMenu(React, classNames);
   var CSSTransitionGroup = React.addons ? React.addons.CSSTransitionGroup : false;
@@ -22092,13 +22113,13 @@ function createAriaMenuButton(React, classNames) {
     AriaMenuButton.prototype.handleBlur = function handleBlur() {
       var _this = this;
 
-      setTimeout(function () {
+      this.blurTimeout = setTimeout(function () {
         var activeEl = document.activeElement;
         if (activeEl === _this.focusManager.trigger) return;
         if (_this.focusManager.focusables.some(function (f) {
           return f.node === activeEl;
         })) return;
-        _this.closeMenu(false);
+        if (_this.state.isOpen) _this.closeMenu(false);
       }, 0);
     };
 
@@ -22107,11 +22128,17 @@ function createAriaMenuButton(React, classNames) {
       this.props.handleSelection(v);
     };
 
-    AriaMenuButton.prototype.render = function render() {
-      var _this = this;
+    AriaMenuButton.prototype.handleOverlayClick = function handleOverlayClick() {
+      console.log("overlay click triggered");
+      this.closeMenu(false);
+    };
 
+    AriaMenuButton.prototype.render = function render() {
       var props = this.props;
       var isOpen = this.state.isOpen;
+
+      var triggerId = props.id ? "" + props.id + "-trigger" : undefined;
+      var outsideId = props.id ? "" + props.id + "-outside" : undefined;
 
       var menu = isOpen ? React.createElement(Menu, _extends({}, props, {
         handleSelection: this.handleSelection.bind(this),
@@ -22137,22 +22164,25 @@ function createAriaMenuButton(React, classNames) {
         "is-open": isOpen
       });
 
+      // The outsideOverlay and its accompanying innerStyle are
+      // to make the menu close when there is a click outside it
+      // (mobile browsers will not fire the onBlur handler)
+
       var innerStyle = !isOpen ? {} : {
         display: "inline-block",
         position: "relative",
         zIndex: "100"
       };
 
-      var outsideOverlay = !isOpen ? false : React.createElement("div", { id: "" + props.id + "-outside",
-        onClick: function () {
-          return _this.closeMenu.call(_this, false);
-        },
+      var outsideOverlay = !isOpen ? false : React.createElement("div", { id: outsideId,
+        onClick: this.handleOverlayClick.bind(this),
+        ref: "overlay",
         style: {
           cursor: "pointer",
           position: "fixed",
           top: 0, bottom: 0, left: 0, right: 0,
           zIndex: "99",
-          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+          WebkitTapHighlightColor: "rgba(0,0,0,0)"
         } });
 
       return React.createElement(
@@ -22167,7 +22197,7 @@ function createAriaMenuButton(React, classNames) {
           { style: innerStyle },
           React.createElement(
             "div",
-            { id: "" + props.id + "-trigger",
+            { id: triggerId,
               className: triggerClasses,
               onClick: this.toggleMenu.bind(this),
               onKeyDown: this.handleTriggerKey.bind(this),
@@ -22176,7 +22206,7 @@ function createAriaMenuButton(React, classNames) {
               "aria-expanded": isOpen,
               role: "button",
               tabIndex: "0" },
-            props.triggerLabel
+            props.triggerContent
           ),
           menuWrapper
         )
@@ -22189,11 +22219,11 @@ function createAriaMenuButton(React, classNames) {
   var pt = React.PropTypes;
   AriaMenuButton.propTypes = {
     handleSelection: pt.func.isRequired,
-    id: pt.string.isRequired,
     items: pt.arrayOf(pt.object).isRequired,
-    triggerLabel: pt.string.isRequired,
+    triggerContent: pt.oneOfType([pt.string, pt.element]).isRequired,
     closeOnSelection: pt.bool,
     flushRight: pt.bool,
+    id: pt.string,
     startOpen: pt.bool,
     selectedValue: pt.oneOfType([pt.string, pt.number, pt.bool]),
     transition: pt.bool
@@ -22206,6 +22236,7 @@ function isLetterKeyEvent(e) {
   return e.keyCode >= keys.LOWEST_LETTER_CODE && e.keyCode <= keys.HIGHEST_LETTER_CODE;
 }
 
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./createMenu":183,"./focusManager":185,"./keys":186}],183:[function(require,module,exports){
 "use strict";
 
@@ -22284,7 +22315,6 @@ function ariaMenuButtonMenu(React, classNames) {
   var pt = React.PropTypes;
   Menu.propTypes = {
     focusManager: pt.object.isRequired,
-    id: pt.string.isRequired,
     items: pt.arrayOf(pt.object).isRequired,
     flushRight: pt.bool,
     handleSelection: pt.func,
@@ -22428,8 +22458,8 @@ var focusManagerProto = {
         throw new Error("AriaMenuButton items must have textual `content` or a `text` prop");
       }
       if (item.text) {
-        if (item.text.charAt(0) !== letter) continue;
-      } else if (item.content.charAt(0) !== letter) continue;
+        if (item.text.charAt(0).toLowerCase() !== letter.toLowerCase()) continue;
+      } else if (item.content.charAt(0).toLowerCase() !== letter.toLowerCase()) continue;
       item.node.focus();
       this.currentFocus = this.focusables.indexOf(item);
       return;
