@@ -18,7 +18,7 @@ Follow the link and read about the keyboard interactions and ARIA attributes. Qu
 
 The [demo](http://davidtheclark.github.io/react-aria-menubutton/) also lists all of the interactions that are built in.
 
-*If you think that this component does not satisfy the spec or if you know of other ways to make it even **more** accessible, please file an issue.*
+*If you think that this component does not satisfy the spec or if you know of other ways to make it even more accessible, please file an issue.*
 
 ## Dependencies
 
