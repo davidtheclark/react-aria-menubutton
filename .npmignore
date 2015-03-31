@@ -1,5 +1,5 @@
-demo
-test
+demo/
+test/
 .*
 index.html
 karma.conf.js
