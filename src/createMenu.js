@@ -1,6 +1,6 @@
 import createMenuItem from './createMenuItem';
 
-export default function ariaMenuButtonMenu(React, classNames) {
+export default function createMenu(React, classNames) {
 
   const MenuItem = createMenuItem(React, classNames);
 

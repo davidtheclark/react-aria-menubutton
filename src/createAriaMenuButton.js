@@ -128,6 +128,10 @@ export default function createAriaMenuButton(React=global.React, classNames=glob
 
       const triggerId = (props.id) ? `${props.id}-trigger` : undefined;
       const outsideId = (props.id) ? `${props.id}-outside` : undefined;
+      const triggerClasses = classNames({
+        'AriaMenuButton-trigger': true,
+        'is-open': isOpen
+      });
 
       const menu = (isOpen) ? (
         <Menu {...props}
@@ -150,14 +154,11 @@ export default function createAriaMenuButton(React=global.React, classNames=glob
         </div>
       );
 
-      const triggerClasses = classNames({
-        'AriaMenuButton-trigger': true,
-        'is-open': isOpen
-      });
-
-      // The outsideOverlay and its accompanying innerStyle are
+      // The outsideOverlay and its accompanying innerStyle are here
       // to make the menu close when there is a click outside it
-      // (mobile browsers will not fire the onBlur handler)
+      // (mobile browsers will not fire the onBlur handler).
+      // They are styled inline here because they should be the same
+      // in every situation.
 
       const innerStyle = (!isOpen) ? {} : {
         display: 'inline-block',
