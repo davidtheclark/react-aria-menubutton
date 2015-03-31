@@ -22139,6 +22139,10 @@ function createAriaMenuButton() {
 
       var triggerId = props.id ? "" + props.id + "-trigger" : undefined;
       var outsideId = props.id ? "" + props.id + "-outside" : undefined;
+      var triggerClasses = classNames({
+        "AriaMenuButton-trigger": true,
+        "is-open": isOpen
+      });
 
       var menu = isOpen ? React.createElement(Menu, _extends({}, props, {
         handleSelection: this.handleSelection.bind(this),
@@ -22159,14 +22163,11 @@ function createAriaMenuButton() {
         menu
       );
 
-      var triggerClasses = classNames({
-        "AriaMenuButton-trigger": true,
-        "is-open": isOpen
-      });
-
-      // The outsideOverlay and its accompanying innerStyle are
+      // The outsideOverlay and its accompanying innerStyle are here
       // to make the menu close when there is a click outside it
-      // (mobile browsers will not fire the onBlur handler)
+      // (mobile browsers will not fire the onBlur handler).
+      // They are styled inline here because they should be the same
+      // in every situation.
 
       var innerStyle = !isOpen ? {} : {
         display: "inline-block",
@@ -22248,11 +22249,11 @@ var _classCallCheck = function (instance, Constructor) { if (!(instance instance
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-module.exports = ariaMenuButtonMenu;
+module.exports = createMenu;
 
 var createMenuItem = _interopRequire(require("./createMenuItem"));
 
-function ariaMenuButtonMenu(React, classNames) {
+function createMenu(React, classNames) {
 
   var MenuItem = createMenuItem(React, classNames);
 
