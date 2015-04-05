@@ -169,3 +169,5 @@ This wrapping element will have the classes `AriaMenuButton-menuWrapper` and `Ar
 Your CSS, then, can respond to the changing state classes `is-enter`, `is-enter-active`, `is-leave`, and `is-leave-active` to apply a CSS transition of one kind or another.
 
 The second example in [the demo](http://davidtheclark.github.io/react-aria-menubutton/) exemplifies a transition.
+
+Note this: If you want to use `transition`, the component will need access to React *with addons*, since `ReactCSSTransitionGroup` is an addon.
