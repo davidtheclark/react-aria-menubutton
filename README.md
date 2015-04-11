@@ -13,7 +13,7 @@ A menu button that
 ## Accessibility
 
 The primary goal of this project is to build a React component that follows every detail of [the WAI-ARIA Menu Button Design Pattern](http://www.w3.org/TR/wai-aria-practices/#menubutton).
-This is kind of hard, so I wanted to share what I'd learned and (hopefully) learn more from others.
+This is kind of hard (because of keyboard interaction and focus management), so I wanted to share what I'd learned and (hopefully) learn more from others.
 Follow the link and read about the keyboard interactions and ARIA attributes. Quotations from this spec are scattered in comments throughout the source code, so it's clear which code addresses which requirements.
 
 The [demo](http://davidtheclark.github.io/react-aria-menubutton/) also lists all of the interactions that are built in.
