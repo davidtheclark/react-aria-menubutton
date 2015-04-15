@@ -22,6 +22,7 @@
     "react": "0.13.x"
   },
   "devDependencies": {
+    "babel": "5.1.9",
     "babelify": "6.0.1",
     "browserify": "9.0.7",
     "es5-shim": "4.1.0",
@@ -46,8 +47,9 @@
     "demo-dev": "parallelshell 'http-server ./ -o' 'npm run watch-demo'",
     "bundle-test": "browserify -e ./test/index.js -t [ babelify --loose ] -o ./test/test-bundle.js",
     "bundle-dist": "browserify -e ./src/createAriaMenuButton.js -t [ babelify --loose ] -o ./dist/createAriaMenuButton.js --standalone createAriaMenuButton",
+    "build-modules": "babel src --loose --out-dir dist-modules",
     "minify": "uglifyjs ./dist/createAriaMenuButton.js -c -m -o ./dist/createAriaMenuButton.min.js",
-    "build": "npm run bundle-dist && npm run minify",
+    "build": "npm run bundle-dist && npm run build-modules && npm run minify",
     "watch-test": "watchify -d -e ./test/index.js -t [ babelify --loose ] -o ./test/test-bundle.js -v",
     "watch-karma": "karma start",
     "test-dev": "parallelshell 'npm run watch-test' 'npm run watch-karma'",
