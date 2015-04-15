@@ -17,6 +17,8 @@
     "wrap-iife": 2,
     "brace-style": 0,
     "comma-style": 2,
+    "consistent-this": 0,
+    "indent": [2, 2],
     "no-lonely-if": 2,
     "no-nested-ternary": 2,
     "no-use-before-define": [2, "nofunc"],

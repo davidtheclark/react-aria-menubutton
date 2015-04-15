@@ -48,10 +48,12 @@ class Demo extends React.Component {
   }
 
   render() {
+    const styleName = this.state.selected.charAt(0).toUpperCase() + this.state.selected.slice(1);
+
     return (
       <div>
         <p>
-          Current style is: <strong>{this.state.selected.charAt(0).toUpperCase() + this.state.selected.slice(1)}</strong>
+          Current style is: <strong>{styleName}</strong>
         </p>
         <AriaMenuButton id='style-select'
          handleSelection={this.handleSelection.bind(this)}
