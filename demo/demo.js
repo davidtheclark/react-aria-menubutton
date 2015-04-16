@@ -38,7 +38,8 @@ const firstSelected = 'github';
 demoStyle.textContent = stylesheets[firstSelected];
 
 class Demo extends React.Component {
-  constructor() {
+  constructor(props) {
+    super(props);
     this.state = { selected: firstSelected };
   }
 
