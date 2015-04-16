@@ -1,10 +1,9 @@
 import React from 'react/addons';
-import classNames from 'classnames';
 import test from 'tape';
 import * as u from './util';
 import createAriaMenuButton from '..';
 
-const AriaMenuButton = createAriaMenuButton(React, classNames);
+const AriaMenuButton = createAriaMenuButton(React);
 
 const testItems = [{
   id: 'foo',

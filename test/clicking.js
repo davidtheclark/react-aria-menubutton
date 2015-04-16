@@ -1,11 +1,10 @@
 import React from 'react/addons';
-import classNames from 'classnames';
 import test from 'tape';
 import sinon from 'sinon';
 import * as u from './util';
 import createAriaMenuButton from '..';
 
-const AriaMenuButton = createAriaMenuButton(React, classNames);
+const AriaMenuButton = createAriaMenuButton(React);
 const { Simulate } = React.addons.TestUtils;
 
 const testItems = [{

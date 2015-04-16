@@ -1,8 +1,7 @@
 import React from 'react/addons';
-import classNames from 'classnames';
 import createAriaMenuButton from '..';
 
-const AriaMenuButton = createAriaMenuButton(React, classNames);
+const AriaMenuButton = createAriaMenuButton(React);
 const demoStyle = document.getElementById('demo-style');
 
 /**
