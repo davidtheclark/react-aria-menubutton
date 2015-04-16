@@ -25,9 +25,8 @@ var _focusManager2 = _interopRequireWildcard(_focusManager);
 
 function createAriaMenuButton() {
   var React = arguments[0] === undefined ? global.React : arguments[0];
-  var classNames = arguments[1] === undefined ? global.classNames : arguments[1];
 
-  var Menu = _createMenu2['default'](React, classNames);
+  var Menu = _createMenu2['default'](React);
   var CSSTransitionGroup = React.addons ? React.addons.CSSTransitionGroup : false;
 
   var AriaMenuButton = (function (_React$Component) {
@@ -158,10 +157,8 @@ function createAriaMenuButton() {
 
       var triggerId = props.id ? '' + props.id + '-trigger' : undefined;
       var outsideId = props.id ? '' + props.id + '-outside' : undefined;
-      var triggerClasses = classNames({
-        'AriaMenuButton-trigger': true,
-        'is-open': isOpen
-      });
+      var triggerClasses = 'AriaMenuButton-trigger';
+      if (isOpen) triggerClasses += ' is-open';
 
       var menu = isOpen ? React.createElement(Menu, _extends({}, props, {
         handleSelection: this.handleSelection.bind(this),

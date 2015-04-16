@@ -18,7 +18,6 @@
   },
   "homepage": "https://github.com/davidtheclark/react-aria-menubutton",
   "dependencies": {
-    "classnames": "^1.0.0",
     "react": "0.13.x"
   },
   "devDependencies": {

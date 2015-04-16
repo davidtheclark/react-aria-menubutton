@@ -15,9 +15,9 @@ var _createMenuItem = require('./createMenuItem');
 
 var _createMenuItem2 = _interopRequireWildcard(_createMenuItem);
 
-function createMenu(React, classNames) {
+function createMenu(React) {
 
-  var MenuItem = _createMenuItem2['default'](React, classNames);
+  var MenuItem = _createMenuItem2['default'](React);
 
   var Menu = (function (_React$Component) {
     function Menu() {
@@ -59,10 +59,8 @@ function createMenu(React, classNames) {
         );
       });
 
-      var menuClasses = classNames({
-        'AriaMenuButton-menu': true,
-        'AriaMenuButton-menu--flushRight': props.flushRight
-      });
+      var menuClasses = 'AriaMenuButton-menu';
+      if (props.flushRight) menuClasses += ' AriaMenuButton-menu--flushRight';
 
       return React.createElement(
         'ol',

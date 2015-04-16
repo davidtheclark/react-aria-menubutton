@@ -23,10 +23,9 @@ The [demo](http://davidtheclark.github.io/react-aria-menubutton/) also lists all
 ## Dependencies
 
 - React 0.13.x
-- classNames ^1.0.0
 
-If you have these dependencies exposed as globals, everything will be fine.
-If not (for instance, if you're using a module system), you will pass the dependencies in when you call `createAriaMenuButton()`, as [documented below](#api).
+If you have React exposed as a global, everything will be fine.
+If not (for instance, if you're using a module system), you will pass the dependency in when you call `createAriaMenuButton()`, as [documented below](#api).
 
 ## Installation
 
@@ -40,10 +39,9 @@ Using CommonJS:
 
 ```js
 var React = require('react');
-var classNames = require('classnames');
 var createAriaMenuButton = require('react-aria-menubutton');
 
-var AriaMenuButton = createAriaMenuButton(React, classNames);
+var AriaMenuButton = createAriaMenuButton(React);
 
 React.render(
   <AriaMenuButton id='myMenuButton'
@@ -61,7 +59,7 @@ Using globals:
 ```html
 <script src="createAriaMenuButton.js"></script>
 <script>
-  // Assuming React and classNames are globally available
+  // Assuming React is globally available
   var AriaMenuButton = createAriaMenuButton();
   // ...
 </script>
@@ -102,12 +100,12 @@ If you `require()` this module with CommonJS, you will receive the the function 
 
 If you are not using CommonJS, the same function will be globally exposed.
 
-### createAriaMenuButton(React, classNames)
+### createAriaMenuButton(React)
 
 Returns a React component, an `AriaMenuButton`, as described below.
 
-If `React` and `classNames` are available on the global (`window`) object, you do not have to pass them in as arguments.
-Otherwise, pass in the dependencies to get your special button.
+If `React` is available on the global (`window`) object, you do not have to pass them in as arguments.
+Otherwise, pass in the dependency to get your special button.
 
 ### AriaMenuButton
 

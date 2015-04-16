@@ -1,8 +1,8 @@
 import createMenuItem from './createMenuItem';
 
-export default function createMenu(React, classNames) {
+export default function createMenu(React) {
 
-  const MenuItem = createMenuItem(React, classNames);
+  const MenuItem = createMenuItem(React);
 
   class Menu extends React.Component {
 
@@ -35,10 +35,8 @@ export default function createMenu(React, classNames) {
         );
       });
 
-      const menuClasses = classNames({
-        'AriaMenuButton-menu': true,
-        'AriaMenuButton-menu--flushRight': props.flushRight
-      });
+      let menuClasses = 'AriaMenuButton-menu';
+      if (props.flushRight) menuClasses += ' AriaMenuButton-menu--flushRight';
 
       return (
         <ol className={menuClasses}

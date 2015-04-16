@@ -2,9 +2,9 @@ import * as keys from './keys';
 import createMenu from './createMenu';
 import focusManager from './focusManager';
 
-export default function createAriaMenuButton(React=global.React, classNames=global.classNames) {
+export default function createAriaMenuButton(React=global.React) {
 
-  const Menu = createMenu(React, classNames);
+  const Menu = createMenu(React);
   const CSSTransitionGroup = (React.addons) ? React.addons.CSSTransitionGroup : false;
 
   class AriaMenuButton extends React.Component {
@@ -128,10 +128,8 @@ export default function createAriaMenuButton(React=global.React, classNames=glob
 
       const triggerId = (props.id) ? `${props.id}-trigger` : undefined;
       const outsideId = (props.id) ? `${props.id}-outside` : undefined;
-      const triggerClasses = classNames({
-        'AriaMenuButton-trigger': true,
-        'is-open': isOpen
-      });
+      let triggerClasses = 'AriaMenuButton-trigger';
+      if (isOpen) triggerClasses += ' is-open';
 
       const menu = (isOpen) ? (
         <Menu {...props}

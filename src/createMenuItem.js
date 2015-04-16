@@ -1,6 +1,6 @@
 import { ENTER, SPACE } from './keys';
 
-export default function createMenuItem(React, classNames) {
+export default function createMenuItem(React) {
 
   class MenuItem extends React.Component {
 
@@ -32,10 +32,8 @@ export default function createMenuItem(React, classNames) {
 
     render() {
       const props = this.props;
-      const itemClasses = classNames({
-        'AriaMenuButton-menuItem': true,
-        'is-selected': props.isSelected
-      });
+      let itemClasses = 'AriaMenuButton-menuItem';
+      if (props.isSelected) itemClasses += ' is-selected';
 
       // tabindex -1 because: "With focus on the button pressing
       // the Tab key will take the user to the next tab focusable item on the page.

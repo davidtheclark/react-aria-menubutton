@@ -9,7 +9,7 @@ exports['default'] = createMenuItem;
 
 var _ENTER$SPACE = require('./keys');
 
-function createMenuItem(React, classNames) {
+function createMenuItem(React) {
   var MenuItem = (function (_React$Component) {
     function MenuItem() {
       _classCallCheck(this, MenuItem);
@@ -51,10 +51,8 @@ function createMenuItem(React, classNames) {
 
     MenuItem.prototype.render = function render() {
       var props = this.props;
-      var itemClasses = classNames({
-        'AriaMenuButton-menuItem': true,
-        'is-selected': props.isSelected
-      });
+      var itemClasses = 'AriaMenuButton-menuItem';
+      if (props.isSelected) itemClasses += ' is-selected';
 
       // tabindex -1 because: "With focus on the button pressing
       // the Tab key will take the user to the next tab focusable item on the page.
