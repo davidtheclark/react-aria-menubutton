@@ -2,9 +2,9 @@ import React from 'react/addons';
 import test from 'tape';
 import sinon from 'sinon';
 import * as u from './util';
-import createAriaMenuButton from '..';
+import createAriaMenuButton from '../src/createAriaMenuButton';
 
-const AriaMenuButton = createAriaMenuButton(React);
+const AriaMenuButton = createAriaMenuButton();
 const { Simulate } = React.addons.TestUtils;
 
 const testItems = [{

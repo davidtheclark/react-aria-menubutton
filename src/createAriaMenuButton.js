@@ -1,11 +1,11 @@
+import React from 'react';
 import * as keys from './keys';
-import createMenu from './createMenu';
+import Menu from './Menu';
 import focusManager from './focusManager';
 
-export default function createAriaMenuButton(React=global.React) {
+export default function createAriaMenuButton(opts={}) {
 
-  const Menu = createMenu(React);
-  const CSSTransitionGroup = (React.addons) ? React.addons.CSSTransitionGroup : false;
+  const CSSTransitionGroup = (opts.reactAddons) ? opts.reactAddons.CSSTransitionGroup : false;
 
   class AriaMenuButton extends React.Component {
 
@@ -209,6 +209,7 @@ export default function createAriaMenuButton(React=global.React) {
   }
 
   const pt = React.PropTypes;
+
   AriaMenuButton.propTypes = {
     handleSelection: pt.func.isRequired,
     items: pt.arrayOf(pt.object).isRequired,

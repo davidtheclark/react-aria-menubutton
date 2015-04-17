@@ -1,9 +1,10 @@
 import React from 'react/addons';
 import test from 'tape';
 import * as u from './util';
-import createAriaMenuButton from '..';
+import createAriaMenuButton from '../src/createAriaMenuButton';
 
-const AriaMenuButton = createAriaMenuButton(React);
+const AriaMenuButton = createAriaMenuButton();
+const AriaMenuButtonTrans = createAriaMenuButton({ reactAddons: React.addons });
 
 const testItems = [{
   id: 'foo',
@@ -67,7 +68,7 @@ test('closed rendering', t => {
 });
 
 test('closed render with transition', t => {
-  const Component = React.createElement(AriaMenuButton, {
+  const Component = React.createElement(AriaMenuButtonTrans, {
     id: 'foo',
     triggerContent: 'FooBar',
     handleSelection: noop,

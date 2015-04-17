@@ -1,19 +1,21 @@
 import React from 'react/addons';
-import createAriaMenuButton from '..';
+import createAriaMenuButton from '../src/createAriaMenuButton';
 
-const AriaMenuButton = createAriaMenuButton(React);
 const demoStyle = document.getElementById('demo-style');
+const AriaMenuButton = createAriaMenuButton({
+  reactAddons: React.addons
+});
 
 /**
  * Stylesheet-selecting demo
  */
 
 const stylesheets = {
-  base: require('../css/base.css'),
-  bootstrap: require('../css/bootstrap.css'),
-  foundation: require('../css/foundation.css'),
-  google: require('../css/google.css'),
-  github: require('../css/github.css')
+  base: require('css!../css/base.css'),
+  bootstrap: require('css!../css/bootstrap.css'),
+  foundation: require('css!../css/foundation.css'),
+  google: require('css!../css/google.css'),
+  github: require('css!../css/github.css')
 };
 
 const styleItems = [{

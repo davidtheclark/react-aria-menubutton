@@ -1,6 +1,6 @@
-import React from 'react';
+import React from 'react/addons';
 
-const { TestUtils } = React.addons;
+const TestUtils = React.addons.TestUtils;
 
 export function render(c, cb) {
   const testEl = document.createElement('div');

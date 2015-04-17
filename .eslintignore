@@ -1,4 +1,5 @@
 node_modules
 **/*-bundle.js
+**/*-bundle.min.js
 dist
 dist-modules
