@@ -20,28 +20,28 @@ The [demo](http://davidtheclark.github.io/react-aria-menubutton/) also lists all
 
 *If you think that this component does not satisfy the spec or if you know of other ways to make it even more accessible, please file an issue.*
 
-## Dependencies
-
-- React 0.13.x
-
-If you have React exposed as a global, everything will be fine.
-If not (for instance, if you're using a module system), you will pass the dependency in when you call `createAriaMenuButton()`, as [documented below](#api).
-
 ## Installation
 
 ```
 npm install react-aria-menubutton
 ```
 
-## Example Usage
+There is only one dependency: React 0.13.x.
 
-Using CommonJS:
+## Usage
+
+There are two ways to use this module:
+- with CommonJS
+- as a global UMD library
+
+Either way, what is exposed is the function `createAriaMenuButton([options])`, which returns the component, tailored with your options.
+
+Using CommonJS, for example, you can simply `require()` the module to get the factory:
 
 ```js
-var React = require('react');
 var createAriaMenuButton = require('react-aria-menubutton');
 
-var AriaMenuButton = createAriaMenuButton(React);
+var AriaMenuButton = createAriaMenuButton();
 
 React.render(
   <AriaMenuButton id='myMenuButton'
@@ -54,16 +54,19 @@ React.render(
 );
 ```
 
-Using globals:
+Using globals/UMD, you must do the following:
+- Expose React globally
+- Use one of the builds in the `dist/` directory.
+
+For example:
 
 ```html
-<script src="createAriaMenuButton.js"></script>
+<script src="react.min.js"></script>
+<script src="node_modules/react-aria-menu-button/dist/createAriaMenuButton.min.js"></script>
 <script>
-  // Assuming React is globally available
   var AriaMenuButton = createAriaMenuButton();
   // ...
 </script>
-
 ```
 
 ## Styling
@@ -100,12 +103,18 @@ If you `require()` this module with CommonJS, you will receive the the function 
 
 If you are not using CommonJS, the same function will be globally exposed.
 
-### createAriaMenuButton(React)
+### createAriaMenuButton([options])
 
 Returns a React component, an `AriaMenuButton`, as described below.
 
-If `React` is available on the global (`window`) object, you do not have to pass them in as arguments.
-Otherwise, pass in the dependency to get your special button.
+#### options
+
+- **reactAddons**: If `transition` is true — because you want to use React's CSSTransitionGroup to animate the opening and closing of the menu — you need to pass in `React.addons` here. For example,
+  ```js
+  var React = require('react/addons');
+  var createAriaMenuButton = require('react-aria-menubutton');
+  var AriaMenuButton = createAriaMenuButton({ reactAddons: React.addons });
+  ```
 
 ### AriaMenuButton
 
@@ -168,4 +177,4 @@ Your CSS, then, can respond to the changing state classes `is-enter`, `is-enter-
 
 The second example in [the demo](http://davidtheclark.github.io/react-aria-menubutton/) exemplifies a transition.
 
-Note this: If you want to use `transition`, the component will need access to React *with addons*, since `ReactCSSTransitionGroup` is an addon.
+Note this: If you want to use `transition`, the component will need access to React *with addons*, since `ReactCSSTransitionGroup` is an addon. This is done by passing `React.addons` as the option `reactAddons`, as described above.

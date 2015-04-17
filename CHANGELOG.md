@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.0
+- Remove the need to pass in React by distinguishing `dist-modules/` with (transpiled) CommonJS modules and `dist/` with a UMD library that expects React to be global.
+- Switch from browserify to webpack for JS module compilation.
+
 ## 0.3.0
 - Remove `classnames` dependency.
 
