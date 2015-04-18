@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import * as keys from './keys';
 import Menu from './Menu';
 import focusManager from './focusManager';
@@ -9,7 +9,7 @@ export default function createAriaMenuButton(opts={}) {
   const CSSTransitionGroup = (opts.reactAddons) ? opts.reactAddons.CSSTransitionGroup : false;
   cssClassnamer.init(opts.componentName, opts.namespace);
 
-  class AriaMenuButton extends React.Component {
+  class AriaMenuButton extends Component {
 
     constructor(props) {
       super(props);
@@ -213,18 +213,16 @@ export default function createAriaMenuButton(opts={}) {
     }
   }
 
-  const pt = React.PropTypes;
-
   AriaMenuButton.propTypes = {
-    handleSelection: pt.func.isRequired,
-    items: pt.arrayOf(pt.object).isRequired,
-    triggerContent: pt.oneOfType([pt.string, pt.element]).isRequired,
-    closeOnSelection: pt.bool,
-    flushRight: pt.bool,
-    id: pt.string,
-    startOpen: pt.bool,
-    selectedValue: pt.oneOfType([pt.string, pt.number, pt.bool]),
-    transition: pt.bool
+    handleSelection: PropTypes.func.isRequired,
+    items: PropTypes.arrayOf(PropTypes.object).isRequired,
+    triggerContent: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
+    closeOnSelection: PropTypes.bool,
+    flushRight: PropTypes.bool,
+    id: PropTypes.string,
+    startOpen: PropTypes.bool,
+    selectedValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
+    transition: PropTypes.bool
   };
 
   return AriaMenuButton;

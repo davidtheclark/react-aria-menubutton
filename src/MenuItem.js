@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { PropTypes, Component } from 'react';
 import { ENTER, SPACE } from './keys';
 import cssClassnamer from './cssClassnamer';
 
-export default class MenuItem extends React.Component {
+export default class MenuItem extends Component {
 
   shouldComponentUpdate(newProps) {
     return this.props.isSelected !== newProps.isSelected;
@@ -56,14 +56,12 @@ export default class MenuItem extends React.Component {
   }
 }
 
-const pt = React.PropTypes;
-
 MenuItem.propTypes = {
-  focusManager: pt.object.isRequired,
-  handleSelection: pt.func.isRequired,
-  content: pt.oneOfType([pt.string, pt.element]).isRequired,
-  id: pt.string,
-  isSelected: pt.bool,
-  text: pt.string,
-  value: pt.oneOfType([pt.string, pt.number, pt.bool])
+  focusManager: PropTypes.object.isRequired,
+  handleSelection: PropTypes.func.isRequired,
+  content: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
+  id: PropTypes.string,
+  isSelected: PropTypes.bool,
+  text: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool])
 };

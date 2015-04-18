@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import MenuItem from './MenuItem';
 import cssClassnamer from './cssClassnamer';
 
-export default class Menu extends React.Component {
+export default class Menu extends Component {
 
   shouldComponentUpdate(newProps) {
     return this.props.selectedValue !== newProps.selectedValue;
@@ -45,13 +45,11 @@ export default class Menu extends React.Component {
   }
 }
 
-const pt = React.PropTypes;
-
 Menu.propTypes = {
-  focusManager: pt.object.isRequired,
-  items: pt.arrayOf(pt.object).isRequired,
-  flushRight: pt.bool,
-  handleSelection: pt.func,
-  receiveFocus: pt.bool,
-  selectedValue: pt.any
+  focusManager: PropTypes.object.isRequired,
+  items: PropTypes.arrayOf(PropTypes.object).isRequired,
+  flushRight: PropTypes.bool,
+  handleSelection: PropTypes.func,
+  receiveFocus: PropTypes.bool,
+  selectedValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool])
 };
