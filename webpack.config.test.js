@@ -10,6 +10,7 @@ module.exports = {
   output: {
     filename: 'test/test-bundle.js'
   },
+  // Hack due to https://github.com/webpack/webpack/issues/451
   node: {
     fs: 'empty'
   }
