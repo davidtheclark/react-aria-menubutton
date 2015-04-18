@@ -48,8 +48,7 @@ React.render(
    handleSelection={mySelectionHandler}
    items={myItems}
    triggerContent='Click me'
-   closeOnSelection={true}
-   transition={true} />,
+   closeOnSelection={true} />,
   document.getElementById('container')
 );
 ```
@@ -147,10 +146,12 @@ Returns a React component, an `AriaMenuButton`, as described below.
 
 ```js
 /* little example */
+var React = require('react/addons');
 var createAriaMenuButton = require('react-aria-menubutton');
 var MySpecialButton = createAriaMenuButton({
   componentName: 'MySpecialButton',
-  namespace: 'me'  
+  namespace: 'me',
+  transition: React.addons.CSSTransitionGroup
 });
 ```
 
@@ -158,12 +159,15 @@ var MySpecialButton = createAriaMenuButton({
 
 - **componentName**: Specify a component name for css classes. [See above](#specify-your-own-component-name).
 - **namespace**: Specify a namespace for css classes. [See above](#specify-your-own-namespace).
-- **reactAddons**: If `transition` is true — because you want to use React's CSSTransitionGroup to animate the opening and closing of the menu — you need to pass in `React.addons` here. For example,
+- **transition**: If you want to animate the opening & closing of the menu, pass in [React's CSSTransitionGroup](https://facebook.github.io/react/docs/animation.html) here. For example,
+
   ```js
   var React = require('react/addons');
   var createAriaMenuButton = require('react-aria-menubutton');
-  var AriaMenuButton = createAriaMenuButton({ reactAddons: React.addons });
+  var AriaMenuButton = createAriaMenuButton({ transition: React.addons.CSSTransitionGroup });
   ```
+
+  Make sure you read React's docs on the component and setup your CSS to properly work with it.
 
 ### AriaMenuButton
 
@@ -217,13 +221,3 @@ This is useful for testing, but probably not useful for you (unless you are cont
 
 The currently selected value.
 The item that has this value will receive the state class `is-selected`, which CSS can use for special standout styling.
-
-#### transition: Boolean, optional
-
-If `true`, the menu will be wrapped in a [`ReactCSSTransitionGroup`](https://facebook.github.io/react/docs/animation.html).
-This wrapping element will have the classes `AriaMenuButton-menuWrapper` and `AriaMenuButton-menuWrapper--trans`.
-Your CSS, then, can respond to the changing state classes `is-enter`, `is-enter-active`, `is-leave`, and `is-leave-active` to apply a CSS transition of one kind or another.
-
-The second example in [the demo](http://davidtheclark.github.io/react-aria-menubutton/) exemplifies a transition.
-
-Note this: If you want to use `transition`, the component will need access to React *with addons*, since `ReactCSSTransitionGroup` is an addon. This is done by passing `React.addons` as the option `reactAddons`, as [described above](#options).

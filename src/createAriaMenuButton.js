@@ -6,10 +6,19 @@ import cssClassnamer from './cssClassnamer';
 
 export default function createAriaMenuButton(opts={}) {
 
-  const CSSTransitionGroup = (opts.reactAddons) ? opts.reactAddons.CSSTransitionGroup : false;
   cssClassnamer.init(opts.componentName, opts.namespace);
 
-  class AriaMenuButton extends Component {
+  let TransitionGroup = false;
+  if (opts.transition) {
+    if (opts.transition.displayName !== 'ReactCSSTransitionGroup') {
+      throw new Error(
+        'createAriaMenuButton\s `transition` option expects a ReactCSSTransitionGroup'
+      );
+    }
+    TransitionGroup = opts.transition;
+  }
+
+  class MenuButton extends Component {
 
     constructor(props) {
       super(props);
@@ -22,15 +31,6 @@ export default function createAriaMenuButton(opts={}) {
         this.state.isOpen !== newState.isOpen
         || this.props.selectedValue !== newProps.selectedValue
       );
-    }
-
-    componentWillMount() {
-      if (this.props.transition && !CSSTransitionGroup) {
-        throw new Error(
-          'If you want to use transitions with ariaMenuButton, you need to pass it ' +
-          'React with addons'
-        );
-      }
     }
 
     componentDidMount() {
@@ -139,8 +139,8 @@ export default function createAriaMenuButton(opts={}) {
          focusManager={this.focusManager} />
       ) : false;
 
-      const menuWrapper = (props.transition) ? (
-        <CSSTransitionGroup transitionName={cssClassnamer.applyNamespace('is')}
+      const menuWrapper = (TransitionGroup) ? (
+        <TransitionGroup transitionName={cssClassnamer.applyNamespace('is')}
          component='div'
          className={[
            cssClassnamer.componentPart('menuWrapper'),
@@ -148,7 +148,7 @@ export default function createAriaMenuButton(opts={}) {
          ].join(' ')}
          onKeyDown={this.handleMenuKey.bind(this)}>
           {menu}
-        </CSSTransitionGroup>
+        </TransitionGroup>
       ) : (
         <div className={cssClassnamer.componentPart('menuWrapper')}
          onKeyDown={this.handleMenuKey.bind(this)}>
@@ -212,7 +212,7 @@ export default function createAriaMenuButton(opts={}) {
     }
   }
 
-  AriaMenuButton.propTypes = {
+  MenuButton.propTypes = {
     handleSelection: PropTypes.func.isRequired,
     items: PropTypes.arrayOf(PropTypes.object).isRequired,
     triggerContent: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
@@ -220,11 +220,10 @@ export default function createAriaMenuButton(opts={}) {
     flushRight: PropTypes.bool,
     id: PropTypes.string,
     startOpen: PropTypes.bool,
-    selectedValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
-    transition: PropTypes.bool
+    selectedValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool])
   };
 
-  return AriaMenuButton;
+  return MenuButton;
 }
 
 function isLetterKeyEvent(e) {

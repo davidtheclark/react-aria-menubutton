@@ -67,7 +67,7 @@ test('closed rendering', t => {
 });
 
 test('closed render with transition', t => {
-  const AriaMenuButtonTrans = createAriaMenuButton({ reactAddons: React.addons });
+  const AriaMenuButtonTrans = createAriaMenuButton({ transition: React.addons.CSSTransitionGroup });
   const Component = React.createElement(AriaMenuButtonTrans, {
     id: 'foo',
     triggerContent: 'FooBar',
