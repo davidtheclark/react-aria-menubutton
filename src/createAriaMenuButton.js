@@ -2,10 +2,12 @@ import React from 'react';
 import * as keys from './keys';
 import Menu from './Menu';
 import focusManager from './focusManager';
+import cssClassnamer from './cssClassnamer';
 
 export default function createAriaMenuButton(opts={}) {
 
   const CSSTransitionGroup = (opts.reactAddons) ? opts.reactAddons.CSSTransitionGroup : false;
+  cssClassnamer.init(opts.componentName, opts.namespace);
 
   class AriaMenuButton extends React.Component {
 
@@ -128,8 +130,8 @@ export default function createAriaMenuButton(opts={}) {
 
       const triggerId = (props.id) ? `${props.id}-trigger` : undefined;
       const outsideId = (props.id) ? `${props.id}-outside` : undefined;
-      let triggerClasses = 'AriaMenuButton-trigger';
-      if (isOpen) triggerClasses += ' is-open';
+      const triggerClasses = [cssClassnamer.componentPart('trigger')];
+      if (isOpen) triggerClasses.push(cssClassnamer.applyNamespace('is-open'));
 
       const menu = (isOpen) ? (
         <Menu {...props}
@@ -139,14 +141,17 @@ export default function createAriaMenuButton(opts={}) {
       ) : false;
 
       const menuWrapper = (props.transition) ? (
-        <CSSTransitionGroup transitionName='is'
+        <CSSTransitionGroup transitionName={cssClassnamer.applyNamespace('is')}
          component='div'
-         className='AriaMenuButton-menuWrapper AriaMenuButton-menuWrapper--trans'
+         className={[
+           cssClassnamer.componentPart('menuWrapper'),
+           cssClassnamer.componentPart('menuWrapper--trans')
+         ].join(' ')}
          onKeyDown={this.handleMenuKey.bind(this)}>
           {menu}
         </CSSTransitionGroup>
       ) : (
-        <div className='AriaMenuButton-menuWrapper'
+        <div className={cssClassnamer.componentPart('menuWrapper')}
          onKeyDown={this.handleMenuKey.bind(this)}>
           {menu}
         </div>
@@ -179,7 +184,7 @@ export default function createAriaMenuButton(opts={}) {
 
       return (
         <div id={props.id}
-         className='AriaMenuButton'
+         className={cssClassnamer.componentPart()}
          onKeyDown={this.handleAnywhereKey.bind(this)}
          onBlur={this.handleBlur.bind(this)}>
 
@@ -188,7 +193,7 @@ export default function createAriaMenuButton(opts={}) {
           <div style={innerStyle}>
 
             <div id={triggerId}
-             className={triggerClasses}
+             className={triggerClasses.join(' ')}
              onClick={this.toggleMenu.bind(this)}
              onKeyDown={this.handleTriggerKey.bind(this)}
              ref='trigger'

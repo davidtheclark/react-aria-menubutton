@@ -47,7 +47,7 @@
     "minify": "uglifyjs ./dist/createAriaMenuButton.js -c -m -o ./dist/createAriaMenuButton.min.js",
     "bundle-demo": "webpack --config webpack.config.demo.js",
     "watch-demo": "webpack --config webpack.config.demo.js --watch",
-    "demo-dev": "webpack-dev-server --config webpack.config.demo.js",
+    "demo-dev": "webpack-dev-server --config webpack.config.demo.js --watch",
     "watch-karma": "karma start",
     "bundle-test": "webpack --config webpack.config.test.js",
     "watch-test": "webpack --config webpack.config.test.js --watch",

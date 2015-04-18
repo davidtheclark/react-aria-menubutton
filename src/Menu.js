@@ -1,5 +1,6 @@
 import React from 'react';
 import MenuItem from './MenuItem';
+import cssClassnamer from './cssClassnamer';
 
 export default class Menu extends React.Component {
 
@@ -22,7 +23,7 @@ export default class Menu extends React.Component {
     const items = props.items.map((item, i) => {
       return (
         <li key={i}
-         className='AriaMenuButton-li'
+         className={cssClassnamer.componentPart('li')}
          role='presentation'>
           <MenuItem {...item}
            focusManager={props.focusManager}
@@ -32,11 +33,11 @@ export default class Menu extends React.Component {
       );
     });
 
-    let menuClasses = 'AriaMenuButton-menu';
-    if (props.flushRight) menuClasses += ' AriaMenuButton-menu--flushRight';
+    const menuClasses = [cssClassnamer.componentPart('menu')];
+    if (props.flushRight) menuClasses.push(cssClassnamer.componentPart('menu--flushRight'));
 
     return (
-      <ol className={menuClasses}
+      <ol className={menuClasses.join(' ')}
        role='menu'>
         {items}
       </ol>

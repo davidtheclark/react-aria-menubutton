@@ -1,5 +1,6 @@
 import React from 'react';
 import { ENTER, SPACE } from './keys';
+import cssClassnamer from './cssClassnamer';
 
 export default class MenuItem extends React.Component {
 
@@ -31,8 +32,8 @@ export default class MenuItem extends React.Component {
 
   render() {
     const props = this.props;
-    let itemClasses = 'AriaMenuButton-menuItem';
-    if (props.isSelected) itemClasses += ' is-selected';
+    const itemClasses = [cssClassnamer.componentPart('menuItem')];
+    if (props.isSelected) itemClasses.push(cssClassnamer.applyNamespace('is-selected'));
 
     // tabindex -1 because: "With focus on the button pressing
     // the Tab key will take the user to the next tab focusable item on the page.
@@ -43,7 +44,7 @@ export default class MenuItem extends React.Component {
     // ... so not in tab order, but programatically focusable
     return (
       <div id={props.id}
-       className={itemClasses}
+       className={itemClasses.join(' ')}
        onClick={this.handleClick.bind(this)}
        onKeyDown={this.handleKey.bind(this)}
        role='menuitem'
