@@ -4,3 +4,4 @@ spec
 **/*-bundle.min.js
 *.log
 !demo/demo-bundle.js
+!demo/demo-bundle.min.js
