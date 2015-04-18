@@ -159,15 +159,7 @@ var MySpecialButton = createAriaMenuButton({
 
 - **componentName**: Specify a component name for css classes. [See above](#specify-your-own-component-name).
 - **namespace**: Specify a namespace for css classes. [See above](#specify-your-own-namespace).
-- **transition**: If you want to animate the opening & closing of the menu, pass in [React's CSSTransitionGroup](https://facebook.github.io/react/docs/animation.html) here. For example,
-
-  ```js
-  var React = require('react/addons');
-  var createAriaMenuButton = require('react-aria-menubutton');
-  var AriaMenuButton = createAriaMenuButton({ transition: React.addons.CSSTransitionGroup });
-  ```
-
-  Make sure you read React's docs on the component and setup your CSS to properly work with it.
+- **transition**: If you want to animate the opening & closing of the menu, pass in [React's CSSTransitionGroup](https://facebook.github.io/react/docs/animation.html) here. (See example above.) Make sure you read React's docs on the component and setup your CSS to properly work with it.
 
 ### AriaMenuButton
 
