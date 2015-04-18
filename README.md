@@ -34,7 +34,7 @@ There are two ways to use this module:
 - with CommonJS
 - as a global UMD library
 
-Either way, what is exposed is the function `createAriaMenuButton([options])`, which returns the component, tailored with your options.
+Either way, what is exposed is the function `createAriaMenuButton([options])`, which returns the component you want, tailored with your options.
 
 Using CommonJS, for example, you can simply `require()` the module to get the factory:
 
@@ -56,7 +56,7 @@ React.render(
 
 Using globals/UMD, you must do the following:
 - Expose React globally
-- Use one of the builds in the `dist/` directory.
+- Use one of the builds in the `dist/` directory
 
 For example:
 
@@ -97,6 +97,44 @@ The following classes are used:
 .AriaMenuButton-menuItem.is-selected {}
 ```
 
+### Customizing class names
+
+You can customize these class names in SUIT-compliant ways by passing `componentName` and `namespace` options to `createAriaMenuButton([options]).
+
+#### Specify your own component name
+
+This will replace `AriaMenuButton` in the class name with the component name of your choice. For example, if you pass `{ componentName: 'Dropdown' }`, your classes will be
+
+```css
+.Dropdown {}
+.Dropdown-trigger {}
+.Dropdown-trigger.is-open {}
+.Dropdown-menuWrapper {}
+/* ... and so on */
+```
+
+#### Specify your own namespace
+
+This will add you namespace to the front of every class name, including the state classes. For example, if you pass `{ namespace: 'up' }`, you classes will be
+
+```css
+.up-AriaMenuButton {}
+.up-AriaMenuButton-trigger {}
+.up-AriaMenuButton-trigger.up-is-open {}
+.up-AriaMenuButton-menuWrapper {}
+```
+
+#### Specify both component name and namespace
+
+And you can, of course, specify both a component name and a namespace. Passing `{ componentName: 'Down', namespace: 'lo' }`, you'll get
+
+```css
+.lo-Down {}
+.lo-Down-trigger {}
+.lo-Down-trigger.lo-is-open {}
+.lo-Down-menuWrapper {}
+```
+
 ## API
 
 If you `require()` this module with CommonJS, you will receive the the function `createAriaMenuButton()`.
@@ -107,8 +145,19 @@ If you are not using CommonJS, the same function will be globally exposed.
 
 Returns a React component, an `AriaMenuButton`, as described below.
 
+```js
+/* little example */
+var createAriaMenuButton = require('react-aria-menubutton');
+var MySpecialButton = createAriaMenuButton({
+  componentName: 'MySpecialButton',
+  namespace: 'me'  
+});
+```
+
 #### options
 
+- **componentName**: Specify a component name for css classes. [See above](#specify-your-own-component-name).
+- **namespace**: Specify a namespace for css classes. [See above](#specify-your-own-namespace).
 - **reactAddons**: If `transition` is true — because you want to use React's CSSTransitionGroup to animate the opening and closing of the menu — you need to pass in `React.addons` here. For example,
   ```js
   var React = require('react/addons');
@@ -177,4 +226,4 @@ Your CSS, then, can respond to the changing state classes `is-enter`, `is-enter-
 
 The second example in [the demo](http://davidtheclark.github.io/react-aria-menubutton/) exemplifies a transition.
 
-Note this: If you want to use `transition`, the component will need access to React *with addons*, since `ReactCSSTransitionGroup` is an addon. This is done by passing `React.addons` as the option `reactAddons`, as described above.
+Note this: If you want to use `transition`, the component will need access to React *with addons*, since `ReactCSSTransitionGroup` is an addon. This is done by passing `React.addons` as the option `reactAddons`, as [described above](#options).
