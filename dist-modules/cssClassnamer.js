@@ -21,5 +21,6 @@ exports['default'] = {
       return str;
     }return '' + this.namespace + '-' + str;
   }
+
 };
 module.exports = exports['default'];

@@ -67,9 +67,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.__esModule = true;
 	exports['default'] = createAriaMenuButton;
 
-	var _React = __webpack_require__(1);
+	var _React$Component$PropTypes = __webpack_require__(1);
 
-	var _React2 = _interopRequireWildcard(_React);
+	var _React$Component$PropTypes2 = _interopRequireWildcard(_React$Component$PropTypes);
 
 	var _import = __webpack_require__(2);
 
@@ -90,41 +90,42 @@ return /******/ (function(modules) { // webpackBootstrap
 	function createAriaMenuButton() {
 	  var opts = arguments[0] === undefined ? {} : arguments[0];
 
-	  var CSSTransitionGroup = opts.reactAddons ? opts.reactAddons.CSSTransitionGroup : false;
 	  _cssClassnamer2['default'].init(opts.componentName, opts.namespace);
 
-	  var AriaMenuButton = (function (_React$Component) {
-	    function AriaMenuButton(props) {
-	      _classCallCheck(this, AriaMenuButton);
+	  var TransitionGroup = false;
+	  if (opts.transition) {
+	    if (opts.transition.displayName !== 'ReactCSSTransitionGroup') {
+	      throw new Error('createAriaMenuButtons `transition` option expects a ReactCSSTransitionGroup');
+	    }
+	    TransitionGroup = opts.transition;
+	  }
 
-	      _React$Component.call(this, props);
+	  var MenuButton = (function (_Component) {
+	    function MenuButton(props) {
+	      _classCallCheck(this, MenuButton);
+
+	      _Component.call(this, props);
 	      this.state = { isOpen: !!props.startOpen };
 	      this.focusManager = _focusManager2['default']();
 	    }
 
-	    _inherits(AriaMenuButton, _React$Component);
+	    _inherits(MenuButton, _Component);
 
-	    AriaMenuButton.prototype.shouldComponentUpdate = function shouldComponentUpdate(newProps, newState) {
+	    MenuButton.prototype.shouldComponentUpdate = function shouldComponentUpdate(newProps, newState) {
 	      return this.state.isOpen !== newState.isOpen || this.props.selectedValue !== newProps.selectedValue;
 	    };
 
-	    AriaMenuButton.prototype.componentWillMount = function componentWillMount() {
-	      if (this.props.transition && !CSSTransitionGroup) {
-	        throw new Error('If you want to use transitions with ariaMenuButton, you need to pass it ' + 'React with addons');
-	      }
+	    MenuButton.prototype.componentDidMount = function componentDidMount() {
+	      this.focusManager.trigger = _React$Component$PropTypes2['default'].findDOMNode(this.refs.trigger);
 	    };
 
-	    AriaMenuButton.prototype.componentDidMount = function componentDidMount() {
-	      this.focusManager.trigger = _React2['default'].findDOMNode(this.refs.trigger);
-	    };
-
-	    AriaMenuButton.prototype.openMenu = function openMenu() {
+	    MenuButton.prototype.openMenu = function openMenu() {
 	      var innerFocus = arguments[0] === undefined ? false : arguments[0];
 
 	      this.setState({ isOpen: true, innerFocus: innerFocus });
 	    };
 
-	    AriaMenuButton.prototype.closeMenu = function closeMenu() {
+	    MenuButton.prototype.closeMenu = function closeMenu() {
 	      var _this = this;
 
 	      var focusTrigger = arguments[0] === undefined ? true : arguments[0];
@@ -135,11 +136,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      });
 	    };
 
-	    AriaMenuButton.prototype.toggleMenu = function toggleMenu() {
+	    MenuButton.prototype.toggleMenu = function toggleMenu() {
 	      if (this.state.isOpen) this.closeMenu();else this.openMenu();
 	    };
 
-	    AriaMenuButton.prototype.handleAnywhereKey = function handleAnywhereKey(e) {
+	    MenuButton.prototype.handleAnywhereKey = function handleAnywhereKey(e) {
 	      var key = e.key;
 	      var isLetterKey = isLetterKeyEvent(e);
 
@@ -165,7 +166,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // "With focus on the button pressing Space or Enter will toggle
 	    // the display of the drop-down menu. Focus remains on the button."
 
-	    AriaMenuButton.prototype.handleTriggerKey = function handleTriggerKey(e) {
+	    MenuButton.prototype.handleTriggerKey = function handleTriggerKey(e) {
 	      var key = e.key;
 	      if (key !== keys.ENTER && key !== keys.SPACE) {
 	        return;
@@ -173,7 +174,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.toggleMenu();
 	    };
 
-	    AriaMenuButton.prototype.handleMenuKey = function handleMenuKey(e) {
+	    MenuButton.prototype.handleMenuKey = function handleMenuKey(e) {
 	      // "With focus on the drop-down menu, pressing Escape closes
 	      // the menu and returns focus to the button.
 	      if (e.key === keys.ESCAPE) this.closeMenu();
@@ -186,16 +187,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    };
 
-	    AriaMenuButton.prototype.checkLetterKeys = function checkLetterKeys(kc) {
+	    MenuButton.prototype.checkLetterKeys = function checkLetterKeys(kc) {
 	      // "Typing a letter (printable character) key moves focus to the next
 	      // instance of a visible node whose title begins with that printable letter."
 	      this.focusManager.moveToLetter(String.fromCharCode(kc));
 	    };
 
-	    AriaMenuButton.prototype.handleBlur = function handleBlur() {
+	    MenuButton.prototype.handleBlur = function handleBlur() {
 	      var _this2 = this;
 
-	      this.blurTimeout = setTimeout(function () {
+	      setTimeout(function () {
 	        var activeEl = document.activeElement;
 	        if (activeEl === _this2.focusManager.trigger) return;
 	        if (_this2.focusManager.focusables.some(function (f) {
@@ -205,17 +206,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }, 0);
 	    };
 
-	    AriaMenuButton.prototype.handleSelection = function handleSelection(v) {
+	    MenuButton.prototype.handleSelection = function handleSelection(v) {
 	      if (this.props.closeOnSelection) this.closeMenu();
 	      this.props.handleSelection(v);
 	    };
 
-	    AriaMenuButton.prototype.handleOverlayClick = function handleOverlayClick() {
-	      console.log('overlay click triggered');
+	    MenuButton.prototype.handleOverlayClick = function handleOverlayClick() {
 	      this.closeMenu(false);
 	    };
 
-	    AriaMenuButton.prototype.render = function render() {
+	    MenuButton.prototype.render = function render() {
 	      var props = this.props;
 	      var isOpen = this.state.isOpen;
 
@@ -224,19 +224,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var triggerClasses = [_cssClassnamer2['default'].componentPart('trigger')];
 	      if (isOpen) triggerClasses.push(_cssClassnamer2['default'].applyNamespace('is-open'));
 
-	      var menu = isOpen ? _React2['default'].createElement(_Menu2['default'], _extends({}, props, {
+	      var menu = isOpen ? _React$Component$PropTypes2['default'].createElement(_Menu2['default'], _extends({}, props, {
 	        handleSelection: this.handleSelection.bind(this),
 	        receiveFocus: this.state.innerFocus,
 	        focusManager: this.focusManager })) : false;
 
-	      var menuWrapper = props.transition ? _React2['default'].createElement(
-	        CSSTransitionGroup,
+	      var menuWrapper = TransitionGroup ? _React$Component$PropTypes2['default'].createElement(
+	        TransitionGroup,
 	        { transitionName: _cssClassnamer2['default'].applyNamespace('is'),
 	          component: 'div',
-	          className: [_cssClassnamer2['default'].componentPart('menuWrapper'), _cssClassnamer2['default'].componentPart('menuWrapper--trans')].join(' '),
+	          className: [_cssClassnamer2['default'].componentPart('menuWrapper'), _cssClassnamer2['default'].componentPart('menuWrapper--transition')].join(' '),
 	          onKeyDown: this.handleMenuKey.bind(this) },
 	        menu
-	      ) : _React2['default'].createElement(
+	      ) : _React$Component$PropTypes2['default'].createElement(
 	        'div',
 	        { className: _cssClassnamer2['default'].componentPart('menuWrapper'),
 	          onKeyDown: this.handleMenuKey.bind(this) },
@@ -255,7 +255,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        zIndex: '100'
 	      };
 
-	      var outsideOverlay = !isOpen ? false : _React2['default'].createElement('div', { id: outsideId,
+	      var outsideOverlay = !isOpen ? false : _React$Component$PropTypes2['default'].createElement('div', { id: outsideId,
 	        onClick: this.handleOverlayClick.bind(this),
 	        ref: 'overlay',
 	        style: {
@@ -266,17 +266,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	          WebkitTapHighlightColor: 'rgba(0,0,0,0)'
 	        } });
 
-	      return _React2['default'].createElement(
+	      return _React$Component$PropTypes2['default'].createElement(
 	        'div',
 	        { id: props.id,
 	          className: _cssClassnamer2['default'].componentPart(),
 	          onKeyDown: this.handleAnywhereKey.bind(this),
 	          onBlur: this.handleBlur.bind(this) },
 	        outsideOverlay,
-	        _React2['default'].createElement(
+	        _React$Component$PropTypes2['default'].createElement(
 	          'div',
 	          { style: innerStyle },
-	          _React2['default'].createElement(
+	          _React$Component$PropTypes2['default'].createElement(
 	            'div',
 	            { id: triggerId,
 	              className: triggerClasses.join(' '),
@@ -294,24 +294,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	      );
 	    };
 
-	    return AriaMenuButton;
-	  })(_React2['default'].Component);
+	    return MenuButton;
+	  })(_React$Component$PropTypes.Component);
 
-	  var pt = _React2['default'].PropTypes;
-
-	  AriaMenuButton.propTypes = {
-	    handleSelection: pt.func.isRequired,
-	    items: pt.arrayOf(pt.object).isRequired,
-	    triggerContent: pt.oneOfType([pt.string, pt.element]).isRequired,
-	    closeOnSelection: pt.bool,
-	    flushRight: pt.bool,
-	    id: pt.string,
-	    startOpen: pt.bool,
-	    selectedValue: pt.oneOfType([pt.string, pt.number, pt.bool]),
-	    transition: pt.bool
+	  MenuButton.propTypes = {
+	    handleSelection: _React$Component$PropTypes.PropTypes.func.isRequired,
+	    items: _React$Component$PropTypes.PropTypes.arrayOf(_React$Component$PropTypes.PropTypes.object).isRequired,
+	    triggerContent: _React$Component$PropTypes.PropTypes.oneOfType([_React$Component$PropTypes.PropTypes.string, _React$Component$PropTypes.PropTypes.element]).isRequired,
+	    closeOnSelection: _React$Component$PropTypes.PropTypes.bool,
+	    flushRight: _React$Component$PropTypes.PropTypes.bool,
+	    id: _React$Component$PropTypes.PropTypes.string,
+	    startOpen: _React$Component$PropTypes.PropTypes.bool,
+	    selectedValue: _React$Component$PropTypes.PropTypes.oneOfType([_React$Component$PropTypes.PropTypes.string, _React$Component$PropTypes.PropTypes.number, _React$Component$PropTypes.PropTypes.bool])
 	  };
 
-	  return AriaMenuButton;
+	  return MenuButton;
 	}
 
 	function isLetterKeyEvent(e) {
@@ -366,9 +363,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	exports.__esModule = true;
 
-	var _React = __webpack_require__(1);
+	var _React$Component$PropTypes = __webpack_require__(1);
 
-	var _React2 = _interopRequireWildcard(_React);
+	var _React$Component$PropTypes2 = _interopRequireWildcard(_React$Component$PropTypes);
 
 	var _MenuItem = __webpack_require__(6);
 
@@ -378,16 +375,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _cssClassnamer2 = _interopRequireWildcard(_cssClassnamer);
 
-	var Menu = (function (_React$Component) {
+	var Menu = (function (_Component) {
 	  function Menu() {
 	    _classCallCheck(this, Menu);
 
-	    if (_React$Component != null) {
-	      _React$Component.apply(this, arguments);
+	    if (_Component != null) {
+	      _Component.apply(this, arguments);
 	    }
 	  }
 
-	  _inherits(Menu, _React$Component);
+	  _inherits(Menu, _Component);
 
 	  Menu.prototype.shouldComponentUpdate = function shouldComponentUpdate(newProps) {
 	    return this.props.selectedValue !== newProps.selectedValue;
@@ -406,12 +403,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var selectedValue = props.selectedValue;
 
 	    var items = props.items.map(function (item, i) {
-	      return _React2['default'].createElement(
+	      return _React$Component$PropTypes2['default'].createElement(
 	        'li',
 	        { key: i,
-	          className: _cssClassnamer2['default'].componentPart('li'),
+	          className: _cssClassnamer2['default'].componentPart('menuItemWrapper'),
 	          role: 'presentation' },
-	        _React2['default'].createElement(_MenuItem2['default'], _extends({}, item, {
+	        _React$Component$PropTypes2['default'].createElement(_MenuItem2['default'], _extends({}, item, {
 	          focusManager: props.focusManager,
 	          handleSelection: props.handleSelection,
 	          isSelected: item.value === selectedValue }))
@@ -421,7 +418,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var menuClasses = [_cssClassnamer2['default'].componentPart('menu')];
 	    if (props.flushRight) menuClasses.push(_cssClassnamer2['default'].componentPart('menu--flushRight'));
 
-	    return _React2['default'].createElement(
+	    return _React$Component$PropTypes2['default'].createElement(
 	      'ol',
 	      { className: menuClasses.join(' '),
 	        role: 'menu' },
@@ -430,19 +427,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 
 	  return Menu;
-	})(_React2['default'].Component);
+	})(_React$Component$PropTypes.Component);
 
 	exports['default'] = Menu;
 
-	var pt = _React2['default'].PropTypes;
-
 	Menu.propTypes = {
-	  focusManager: pt.object.isRequired,
-	  items: pt.arrayOf(pt.object).isRequired,
-	  flushRight: pt.bool,
-	  handleSelection: pt.func,
-	  receiveFocus: pt.bool,
-	  selectedValue: pt.any
+	  focusManager: _React$Component$PropTypes.PropTypes.object.isRequired,
+	  items: _React$Component$PropTypes.PropTypes.arrayOf(_React$Component$PropTypes.PropTypes.object).isRequired,
+	  flushRight: _React$Component$PropTypes.PropTypes.bool,
+	  handleSelection: _React$Component$PropTypes.PropTypes.func,
+	  receiveFocus: _React$Component$PropTypes.PropTypes.bool,
+	  selectedValue: _React$Component$PropTypes.PropTypes.oneOfType([_React$Component$PropTypes.PropTypes.string, _React$Component$PropTypes.PropTypes.number, _React$Component$PropTypes.PropTypes.bool])
 	};
 	module.exports = exports['default'];
 
@@ -532,6 +527,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return str;
 	    }return '' + this.namespace + '-' + str;
 	  }
+
 	};
 	module.exports = exports['default'];
 
@@ -549,9 +545,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	exports.__esModule = true;
 
-	var _React = __webpack_require__(1);
+	var _React$PropTypes$Component = __webpack_require__(1);
 
-	var _React2 = _interopRequireWildcard(_React);
+	var _React$PropTypes$Component2 = _interopRequireWildcard(_React$PropTypes$Component);
 
 	var _ENTER$SPACE = __webpack_require__(2);
 
@@ -559,16 +555,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _cssClassnamer2 = _interopRequireWildcard(_cssClassnamer);
 
-	var MenuItem = (function (_React$Component) {
+	var MenuItem = (function (_Component) {
 	  function MenuItem() {
 	    _classCallCheck(this, MenuItem);
 
-	    if (_React$Component != null) {
-	      _React$Component.apply(this, arguments);
+	    if (_Component != null) {
+	      _Component.apply(this, arguments);
 	    }
 	  }
 
-	  _inherits(MenuItem, _React$Component);
+	  _inherits(MenuItem, _Component);
 
 	  MenuItem.prototype.shouldComponentUpdate = function shouldComponentUpdate(newProps) {
 	    return this.props.isSelected !== newProps.isSelected;
@@ -578,7 +574,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.props.focusManager.focusables.push({
 	      content: this.props.content,
 	      text: this.props.text,
-	      node: _React2['default'].findDOMNode(this)
+	      node: _React$PropTypes$Component2['default'].findDOMNode(this)
 	    });
 	  };
 
@@ -610,7 +606,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // "A menuitem within a menu or menubar may appear in the tab order
 	    // only if it is not within a popup menu."
 	    // ... so not in tab order, but programatically focusable
-	    return _React2['default'].createElement(
+	    return _React$PropTypes$Component2['default'].createElement(
 	      'div',
 	      { id: props.id,
 	        className: itemClasses.join(' '),
@@ -624,20 +620,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 
 	  return MenuItem;
-	})(_React2['default'].Component);
+	})(_React$PropTypes$Component.Component);
 
 	exports['default'] = MenuItem;
 
-	var pt = _React2['default'].PropTypes;
-
 	MenuItem.propTypes = {
-	  focusManager: pt.object.isRequired,
-	  handleSelection: pt.func.isRequired,
-	  content: pt.oneOfType([pt.string, pt.element]).isRequired,
-	  id: pt.string,
-	  isSelected: pt.bool,
-	  text: pt.string,
-	  value: pt.oneOfType([pt.string, pt.number, pt.bool])
+	  focusManager: _React$PropTypes$Component.PropTypes.object.isRequired,
+	  handleSelection: _React$PropTypes$Component.PropTypes.func.isRequired,
+	  content: _React$PropTypes$Component.PropTypes.oneOfType([_React$PropTypes$Component.PropTypes.string, _React$PropTypes$Component.PropTypes.element]).isRequired,
+	  id: _React$PropTypes$Component.PropTypes.string,
+	  isSelected: _React$PropTypes$Component.PropTypes.bool,
+	  text: _React$PropTypes$Component.PropTypes.string,
+	  value: _React$PropTypes$Component.PropTypes.oneOfType([_React$PropTypes$Component.PropTypes.string, _React$PropTypes$Component.PropTypes.number, _React$PropTypes$Component.PropTypes.bool])
 	};
 	module.exports = exports['default'];
 

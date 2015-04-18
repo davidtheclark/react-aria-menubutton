@@ -10,9 +10,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 exports.__esModule = true;
 
-var _React = require('react');
+var _React$Component$PropTypes = require('react');
 
-var _React2 = _interopRequireWildcard(_React);
+var _React$Component$PropTypes2 = _interopRequireWildcard(_React$Component$PropTypes);
 
 var _MenuItem = require('./MenuItem');
 
@@ -22,16 +22,16 @@ var _cssClassnamer = require('./cssClassnamer');
 
 var _cssClassnamer2 = _interopRequireWildcard(_cssClassnamer);
 
-var Menu = (function (_React$Component) {
+var Menu = (function (_Component) {
   function Menu() {
     _classCallCheck(this, Menu);
 
-    if (_React$Component != null) {
-      _React$Component.apply(this, arguments);
+    if (_Component != null) {
+      _Component.apply(this, arguments);
     }
   }
 
-  _inherits(Menu, _React$Component);
+  _inherits(Menu, _Component);
 
   Menu.prototype.shouldComponentUpdate = function shouldComponentUpdate(newProps) {
     return this.props.selectedValue !== newProps.selectedValue;
@@ -50,12 +50,12 @@ var Menu = (function (_React$Component) {
     var selectedValue = props.selectedValue;
 
     var items = props.items.map(function (item, i) {
-      return _React2['default'].createElement(
+      return _React$Component$PropTypes2['default'].createElement(
         'li',
         { key: i,
-          className: _cssClassnamer2['default'].componentPart('li'),
+          className: _cssClassnamer2['default'].componentPart('menuItemWrapper'),
           role: 'presentation' },
-        _React2['default'].createElement(_MenuItem2['default'], _extends({}, item, {
+        _React$Component$PropTypes2['default'].createElement(_MenuItem2['default'], _extends({}, item, {
           focusManager: props.focusManager,
           handleSelection: props.handleSelection,
           isSelected: item.value === selectedValue }))
@@ -65,7 +65,7 @@ var Menu = (function (_React$Component) {
     var menuClasses = [_cssClassnamer2['default'].componentPart('menu')];
     if (props.flushRight) menuClasses.push(_cssClassnamer2['default'].componentPart('menu--flushRight'));
 
-    return _React2['default'].createElement(
+    return _React$Component$PropTypes2['default'].createElement(
       'ol',
       { className: menuClasses.join(' '),
         role: 'menu' },
@@ -74,18 +74,16 @@ var Menu = (function (_React$Component) {
   };
 
   return Menu;
-})(_React2['default'].Component);
+})(_React$Component$PropTypes.Component);
 
 exports['default'] = Menu;
 
-var pt = _React2['default'].PropTypes;
-
 Menu.propTypes = {
-  focusManager: pt.object.isRequired,
-  items: pt.arrayOf(pt.object).isRequired,
-  flushRight: pt.bool,
-  handleSelection: pt.func,
-  receiveFocus: pt.bool,
-  selectedValue: pt.any
+  focusManager: _React$Component$PropTypes.PropTypes.object.isRequired,
+  items: _React$Component$PropTypes.PropTypes.arrayOf(_React$Component$PropTypes.PropTypes.object).isRequired,
+  flushRight: _React$Component$PropTypes.PropTypes.bool,
+  handleSelection: _React$Component$PropTypes.PropTypes.func,
+  receiveFocus: _React$Component$PropTypes.PropTypes.bool,
+  selectedValue: _React$Component$PropTypes.PropTypes.oneOfType([_React$Component$PropTypes.PropTypes.string, _React$Component$PropTypes.PropTypes.number, _React$Component$PropTypes.PropTypes.bool])
 };
 module.exports = exports['default'];

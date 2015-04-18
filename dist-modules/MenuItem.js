@@ -8,9 +8,9 @@ var _inherits = function (subClass, superClass) { if (typeof superClass !== 'fun
 
 exports.__esModule = true;
 
-var _React = require('react');
+var _React$PropTypes$Component = require('react');
 
-var _React2 = _interopRequireWildcard(_React);
+var _React$PropTypes$Component2 = _interopRequireWildcard(_React$PropTypes$Component);
 
 var _ENTER$SPACE = require('./keys');
 
@@ -18,16 +18,16 @@ var _cssClassnamer = require('./cssClassnamer');
 
 var _cssClassnamer2 = _interopRequireWildcard(_cssClassnamer);
 
-var MenuItem = (function (_React$Component) {
+var MenuItem = (function (_Component) {
   function MenuItem() {
     _classCallCheck(this, MenuItem);
 
-    if (_React$Component != null) {
-      _React$Component.apply(this, arguments);
+    if (_Component != null) {
+      _Component.apply(this, arguments);
     }
   }
 
-  _inherits(MenuItem, _React$Component);
+  _inherits(MenuItem, _Component);
 
   MenuItem.prototype.shouldComponentUpdate = function shouldComponentUpdate(newProps) {
     return this.props.isSelected !== newProps.isSelected;
@@ -37,7 +37,7 @@ var MenuItem = (function (_React$Component) {
     this.props.focusManager.focusables.push({
       content: this.props.content,
       text: this.props.text,
-      node: _React2['default'].findDOMNode(this)
+      node: _React$PropTypes$Component2['default'].findDOMNode(this)
     });
   };
 
@@ -69,7 +69,7 @@ var MenuItem = (function (_React$Component) {
     // "A menuitem within a menu or menubar may appear in the tab order
     // only if it is not within a popup menu."
     // ... so not in tab order, but programatically focusable
-    return _React2['default'].createElement(
+    return _React$PropTypes$Component2['default'].createElement(
       'div',
       { id: props.id,
         className: itemClasses.join(' '),
@@ -83,19 +83,17 @@ var MenuItem = (function (_React$Component) {
   };
 
   return MenuItem;
-})(_React2['default'].Component);
+})(_React$PropTypes$Component.Component);
 
 exports['default'] = MenuItem;
 
-var pt = _React2['default'].PropTypes;
-
 MenuItem.propTypes = {
-  focusManager: pt.object.isRequired,
-  handleSelection: pt.func.isRequired,
-  content: pt.oneOfType([pt.string, pt.element]).isRequired,
-  id: pt.string,
-  isSelected: pt.bool,
-  text: pt.string,
-  value: pt.oneOfType([pt.string, pt.number, pt.bool])
+  focusManager: _React$PropTypes$Component.PropTypes.object.isRequired,
+  handleSelection: _React$PropTypes$Component.PropTypes.func.isRequired,
+  content: _React$PropTypes$Component.PropTypes.oneOfType([_React$PropTypes$Component.PropTypes.string, _React$PropTypes$Component.PropTypes.element]).isRequired,
+  id: _React$PropTypes$Component.PropTypes.string,
+  isSelected: _React$PropTypes$Component.PropTypes.bool,
+  text: _React$PropTypes$Component.PropTypes.string,
+  value: _React$PropTypes$Component.PropTypes.oneOfType([_React$PropTypes$Component.PropTypes.string, _React$PropTypes$Component.PropTypes.number, _React$PropTypes$Component.PropTypes.bool])
 };
 module.exports = exports['default'];

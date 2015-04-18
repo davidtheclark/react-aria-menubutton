@@ -11,9 +11,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 exports.__esModule = true;
 exports['default'] = createAriaMenuButton;
 
-var _React = require('react');
+var _React$Component$PropTypes = require('react');
 
-var _React2 = _interopRequireWildcard(_React);
+var _React$Component$PropTypes2 = _interopRequireWildcard(_React$Component$PropTypes);
 
 var _import = require('./keys');
 
@@ -34,41 +34,42 @@ var _cssClassnamer2 = _interopRequireWildcard(_cssClassnamer);
 function createAriaMenuButton() {
   var opts = arguments[0] === undefined ? {} : arguments[0];
 
-  var CSSTransitionGroup = opts.reactAddons ? opts.reactAddons.CSSTransitionGroup : false;
   _cssClassnamer2['default'].init(opts.componentName, opts.namespace);
 
-  var AriaMenuButton = (function (_React$Component) {
-    function AriaMenuButton(props) {
-      _classCallCheck(this, AriaMenuButton);
+  var TransitionGroup = false;
+  if (opts.transition) {
+    if (opts.transition.displayName !== 'ReactCSSTransitionGroup') {
+      throw new Error('createAriaMenuButtons `transition` option expects a ReactCSSTransitionGroup');
+    }
+    TransitionGroup = opts.transition;
+  }
 
-      _React$Component.call(this, props);
+  var MenuButton = (function (_Component) {
+    function MenuButton(props) {
+      _classCallCheck(this, MenuButton);
+
+      _Component.call(this, props);
       this.state = { isOpen: !!props.startOpen };
       this.focusManager = _focusManager2['default']();
     }
 
-    _inherits(AriaMenuButton, _React$Component);
+    _inherits(MenuButton, _Component);
 
-    AriaMenuButton.prototype.shouldComponentUpdate = function shouldComponentUpdate(newProps, newState) {
+    MenuButton.prototype.shouldComponentUpdate = function shouldComponentUpdate(newProps, newState) {
       return this.state.isOpen !== newState.isOpen || this.props.selectedValue !== newProps.selectedValue;
     };
 
-    AriaMenuButton.prototype.componentWillMount = function componentWillMount() {
-      if (this.props.transition && !CSSTransitionGroup) {
-        throw new Error('If you want to use transitions with ariaMenuButton, you need to pass it ' + 'React with addons');
-      }
+    MenuButton.prototype.componentDidMount = function componentDidMount() {
+      this.focusManager.trigger = _React$Component$PropTypes2['default'].findDOMNode(this.refs.trigger);
     };
 
-    AriaMenuButton.prototype.componentDidMount = function componentDidMount() {
-      this.focusManager.trigger = _React2['default'].findDOMNode(this.refs.trigger);
-    };
-
-    AriaMenuButton.prototype.openMenu = function openMenu() {
+    MenuButton.prototype.openMenu = function openMenu() {
       var innerFocus = arguments[0] === undefined ? false : arguments[0];
 
       this.setState({ isOpen: true, innerFocus: innerFocus });
     };
 
-    AriaMenuButton.prototype.closeMenu = function closeMenu() {
+    MenuButton.prototype.closeMenu = function closeMenu() {
       var _this = this;
 
       var focusTrigger = arguments[0] === undefined ? true : arguments[0];
@@ -79,11 +80,11 @@ function createAriaMenuButton() {
       });
     };
 
-    AriaMenuButton.prototype.toggleMenu = function toggleMenu() {
+    MenuButton.prototype.toggleMenu = function toggleMenu() {
       if (this.state.isOpen) this.closeMenu();else this.openMenu();
     };
 
-    AriaMenuButton.prototype.handleAnywhereKey = function handleAnywhereKey(e) {
+    MenuButton.prototype.handleAnywhereKey = function handleAnywhereKey(e) {
       var key = e.key;
       var isLetterKey = isLetterKeyEvent(e);
 
@@ -109,7 +110,7 @@ function createAriaMenuButton() {
     // "With focus on the button pressing Space or Enter will toggle
     // the display of the drop-down menu. Focus remains on the button."
 
-    AriaMenuButton.prototype.handleTriggerKey = function handleTriggerKey(e) {
+    MenuButton.prototype.handleTriggerKey = function handleTriggerKey(e) {
       var key = e.key;
       if (key !== keys.ENTER && key !== keys.SPACE) {
         return;
@@ -117,7 +118,7 @@ function createAriaMenuButton() {
       this.toggleMenu();
     };
 
-    AriaMenuButton.prototype.handleMenuKey = function handleMenuKey(e) {
+    MenuButton.prototype.handleMenuKey = function handleMenuKey(e) {
       // "With focus on the drop-down menu, pressing Escape closes
       // the menu and returns focus to the button.
       if (e.key === keys.ESCAPE) this.closeMenu();
@@ -130,16 +131,16 @@ function createAriaMenuButton() {
       }
     };
 
-    AriaMenuButton.prototype.checkLetterKeys = function checkLetterKeys(kc) {
+    MenuButton.prototype.checkLetterKeys = function checkLetterKeys(kc) {
       // "Typing a letter (printable character) key moves focus to the next
       // instance of a visible node whose title begins with that printable letter."
       this.focusManager.moveToLetter(String.fromCharCode(kc));
     };
 
-    AriaMenuButton.prototype.handleBlur = function handleBlur() {
+    MenuButton.prototype.handleBlur = function handleBlur() {
       var _this2 = this;
 
-      this.blurTimeout = setTimeout(function () {
+      setTimeout(function () {
         var activeEl = document.activeElement;
         if (activeEl === _this2.focusManager.trigger) return;
         if (_this2.focusManager.focusables.some(function (f) {
@@ -149,17 +150,16 @@ function createAriaMenuButton() {
       }, 0);
     };
 
-    AriaMenuButton.prototype.handleSelection = function handleSelection(v) {
+    MenuButton.prototype.handleSelection = function handleSelection(v) {
       if (this.props.closeOnSelection) this.closeMenu();
       this.props.handleSelection(v);
     };
 
-    AriaMenuButton.prototype.handleOverlayClick = function handleOverlayClick() {
-      console.log('overlay click triggered');
+    MenuButton.prototype.handleOverlayClick = function handleOverlayClick() {
       this.closeMenu(false);
     };
 
-    AriaMenuButton.prototype.render = function render() {
+    MenuButton.prototype.render = function render() {
       var props = this.props;
       var isOpen = this.state.isOpen;
 
@@ -168,19 +168,19 @@ function createAriaMenuButton() {
       var triggerClasses = [_cssClassnamer2['default'].componentPart('trigger')];
       if (isOpen) triggerClasses.push(_cssClassnamer2['default'].applyNamespace('is-open'));
 
-      var menu = isOpen ? _React2['default'].createElement(_Menu2['default'], _extends({}, props, {
+      var menu = isOpen ? _React$Component$PropTypes2['default'].createElement(_Menu2['default'], _extends({}, props, {
         handleSelection: this.handleSelection.bind(this),
         receiveFocus: this.state.innerFocus,
         focusManager: this.focusManager })) : false;
 
-      var menuWrapper = props.transition ? _React2['default'].createElement(
-        CSSTransitionGroup,
+      var menuWrapper = TransitionGroup ? _React$Component$PropTypes2['default'].createElement(
+        TransitionGroup,
         { transitionName: _cssClassnamer2['default'].applyNamespace('is'),
           component: 'div',
-          className: [_cssClassnamer2['default'].componentPart('menuWrapper'), _cssClassnamer2['default'].componentPart('menuWrapper--trans')].join(' '),
+          className: [_cssClassnamer2['default'].componentPart('menuWrapper'), _cssClassnamer2['default'].componentPart('menuWrapper--transition')].join(' '),
           onKeyDown: this.handleMenuKey.bind(this) },
         menu
-      ) : _React2['default'].createElement(
+      ) : _React$Component$PropTypes2['default'].createElement(
         'div',
         { className: _cssClassnamer2['default'].componentPart('menuWrapper'),
           onKeyDown: this.handleMenuKey.bind(this) },
@@ -199,7 +199,7 @@ function createAriaMenuButton() {
         zIndex: '100'
       };
 
-      var outsideOverlay = !isOpen ? false : _React2['default'].createElement('div', { id: outsideId,
+      var outsideOverlay = !isOpen ? false : _React$Component$PropTypes2['default'].createElement('div', { id: outsideId,
         onClick: this.handleOverlayClick.bind(this),
         ref: 'overlay',
         style: {
@@ -210,17 +210,17 @@ function createAriaMenuButton() {
           WebkitTapHighlightColor: 'rgba(0,0,0,0)'
         } });
 
-      return _React2['default'].createElement(
+      return _React$Component$PropTypes2['default'].createElement(
         'div',
         { id: props.id,
           className: _cssClassnamer2['default'].componentPart(),
           onKeyDown: this.handleAnywhereKey.bind(this),
           onBlur: this.handleBlur.bind(this) },
         outsideOverlay,
-        _React2['default'].createElement(
+        _React$Component$PropTypes2['default'].createElement(
           'div',
           { style: innerStyle },
-          _React2['default'].createElement(
+          _React$Component$PropTypes2['default'].createElement(
             'div',
             { id: triggerId,
               className: triggerClasses.join(' '),
@@ -238,24 +238,21 @@ function createAriaMenuButton() {
       );
     };
 
-    return AriaMenuButton;
-  })(_React2['default'].Component);
+    return MenuButton;
+  })(_React$Component$PropTypes.Component);
 
-  var pt = _React2['default'].PropTypes;
-
-  AriaMenuButton.propTypes = {
-    handleSelection: pt.func.isRequired,
-    items: pt.arrayOf(pt.object).isRequired,
-    triggerContent: pt.oneOfType([pt.string, pt.element]).isRequired,
-    closeOnSelection: pt.bool,
-    flushRight: pt.bool,
-    id: pt.string,
-    startOpen: pt.bool,
-    selectedValue: pt.oneOfType([pt.string, pt.number, pt.bool]),
-    transition: pt.bool
+  MenuButton.propTypes = {
+    handleSelection: _React$Component$PropTypes.PropTypes.func.isRequired,
+    items: _React$Component$PropTypes.PropTypes.arrayOf(_React$Component$PropTypes.PropTypes.object).isRequired,
+    triggerContent: _React$Component$PropTypes.PropTypes.oneOfType([_React$Component$PropTypes.PropTypes.string, _React$Component$PropTypes.PropTypes.element]).isRequired,
+    closeOnSelection: _React$Component$PropTypes.PropTypes.bool,
+    flushRight: _React$Component$PropTypes.PropTypes.bool,
+    id: _React$Component$PropTypes.PropTypes.string,
+    startOpen: _React$Component$PropTypes.PropTypes.bool,
+    selectedValue: _React$Component$PropTypes.PropTypes.oneOfType([_React$Component$PropTypes.PropTypes.string, _React$Component$PropTypes.PropTypes.number, _React$Component$PropTypes.PropTypes.bool])
   };
 
-  return AriaMenuButton;
+  return MenuButton;
 }
 
 function isLetterKeyEvent(e) {
