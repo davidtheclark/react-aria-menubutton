@@ -18,6 +18,10 @@ var _MenuItem = require('./MenuItem');
 
 var _MenuItem2 = _interopRequireWildcard(_MenuItem);
 
+var _cssClassnamer = require('./cssClassnamer');
+
+var _cssClassnamer2 = _interopRequireWildcard(_cssClassnamer);
+
 var Menu = (function (_React$Component) {
   function Menu() {
     _classCallCheck(this, Menu);
@@ -49,7 +53,7 @@ var Menu = (function (_React$Component) {
       return _React2['default'].createElement(
         'li',
         { key: i,
-          className: 'AriaMenuButton-li',
+          className: _cssClassnamer2['default'].componentPart('li'),
           role: 'presentation' },
         _React2['default'].createElement(_MenuItem2['default'], _extends({}, item, {
           focusManager: props.focusManager,
@@ -58,12 +62,12 @@ var Menu = (function (_React$Component) {
       );
     });
 
-    var menuClasses = 'AriaMenuButton-menu';
-    if (props.flushRight) menuClasses += ' AriaMenuButton-menu--flushRight';
+    var menuClasses = [_cssClassnamer2['default'].componentPart('menu')];
+    if (props.flushRight) menuClasses.push(_cssClassnamer2['default'].componentPart('menu--flushRight'));
 
     return _React2['default'].createElement(
       'ol',
-      { className: menuClasses,
+      { className: menuClasses.join(' '),
         role: 'menu' },
       items
     );

@@ -27,10 +27,15 @@ var _focusManager = require('./focusManager');
 
 var _focusManager2 = _interopRequireWildcard(_focusManager);
 
+var _cssClassnamer = require('./cssClassnamer');
+
+var _cssClassnamer2 = _interopRequireWildcard(_cssClassnamer);
+
 function createAriaMenuButton() {
   var opts = arguments[0] === undefined ? {} : arguments[0];
 
   var CSSTransitionGroup = opts.reactAddons ? opts.reactAddons.CSSTransitionGroup : false;
+  _cssClassnamer2['default'].init(opts.componentName, opts.namespace);
 
   var AriaMenuButton = (function (_React$Component) {
     function AriaMenuButton(props) {
@@ -160,8 +165,8 @@ function createAriaMenuButton() {
 
       var triggerId = props.id ? '' + props.id + '-trigger' : undefined;
       var outsideId = props.id ? '' + props.id + '-outside' : undefined;
-      var triggerClasses = 'AriaMenuButton-trigger';
-      if (isOpen) triggerClasses += ' is-open';
+      var triggerClasses = [_cssClassnamer2['default'].componentPart('trigger')];
+      if (isOpen) triggerClasses.push(_cssClassnamer2['default'].applyNamespace('is-open'));
 
       var menu = isOpen ? _React2['default'].createElement(_Menu2['default'], _extends({}, props, {
         handleSelection: this.handleSelection.bind(this),
@@ -170,14 +175,14 @@ function createAriaMenuButton() {
 
       var menuWrapper = props.transition ? _React2['default'].createElement(
         CSSTransitionGroup,
-        { transitionName: 'is',
+        { transitionName: _cssClassnamer2['default'].applyNamespace('is'),
           component: 'div',
-          className: 'AriaMenuButton-menuWrapper AriaMenuButton-menuWrapper--trans',
+          className: [_cssClassnamer2['default'].componentPart('menuWrapper'), _cssClassnamer2['default'].componentPart('menuWrapper--trans')].join(' '),
           onKeyDown: this.handleMenuKey.bind(this) },
         menu
       ) : _React2['default'].createElement(
         'div',
-        { className: 'AriaMenuButton-menuWrapper',
+        { className: _cssClassnamer2['default'].componentPart('menuWrapper'),
           onKeyDown: this.handleMenuKey.bind(this) },
         menu
       );
@@ -208,7 +213,7 @@ function createAriaMenuButton() {
       return _React2['default'].createElement(
         'div',
         { id: props.id,
-          className: 'AriaMenuButton',
+          className: _cssClassnamer2['default'].componentPart(),
           onKeyDown: this.handleAnywhereKey.bind(this),
           onBlur: this.handleBlur.bind(this) },
         outsideOverlay,
@@ -218,7 +223,7 @@ function createAriaMenuButton() {
           _React2['default'].createElement(
             'div',
             { id: triggerId,
-              className: triggerClasses,
+              className: triggerClasses.join(' '),
               onClick: this.toggleMenu.bind(this),
               onKeyDown: this.handleTriggerKey.bind(this),
               ref: 'trigger',

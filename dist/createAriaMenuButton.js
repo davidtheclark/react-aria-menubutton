@@ -83,10 +83,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _focusManager2 = _interopRequireWildcard(_focusManager);
 
+	var _cssClassnamer = __webpack_require__(5);
+
+	var _cssClassnamer2 = _interopRequireWildcard(_cssClassnamer);
+
 	function createAriaMenuButton() {
 	  var opts = arguments[0] === undefined ? {} : arguments[0];
 
 	  var CSSTransitionGroup = opts.reactAddons ? opts.reactAddons.CSSTransitionGroup : false;
+	  _cssClassnamer2['default'].init(opts.componentName, opts.namespace);
 
 	  var AriaMenuButton = (function (_React$Component) {
 	    function AriaMenuButton(props) {
@@ -216,8 +221,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var triggerId = props.id ? '' + props.id + '-trigger' : undefined;
 	      var outsideId = props.id ? '' + props.id + '-outside' : undefined;
-	      var triggerClasses = 'AriaMenuButton-trigger';
-	      if (isOpen) triggerClasses += ' is-open';
+	      var triggerClasses = [_cssClassnamer2['default'].componentPart('trigger')];
+	      if (isOpen) triggerClasses.push(_cssClassnamer2['default'].applyNamespace('is-open'));
 
 	      var menu = isOpen ? _React2['default'].createElement(_Menu2['default'], _extends({}, props, {
 	        handleSelection: this.handleSelection.bind(this),
@@ -226,14 +231,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var menuWrapper = props.transition ? _React2['default'].createElement(
 	        CSSTransitionGroup,
-	        { transitionName: 'is',
+	        { transitionName: _cssClassnamer2['default'].applyNamespace('is'),
 	          component: 'div',
-	          className: 'AriaMenuButton-menuWrapper AriaMenuButton-menuWrapper--trans',
+	          className: [_cssClassnamer2['default'].componentPart('menuWrapper'), _cssClassnamer2['default'].componentPart('menuWrapper--trans')].join(' '),
 	          onKeyDown: this.handleMenuKey.bind(this) },
 	        menu
 	      ) : _React2['default'].createElement(
 	        'div',
-	        { className: 'AriaMenuButton-menuWrapper',
+	        { className: _cssClassnamer2['default'].componentPart('menuWrapper'),
 	          onKeyDown: this.handleMenuKey.bind(this) },
 	        menu
 	      );
@@ -264,7 +269,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _React2['default'].createElement(
 	        'div',
 	        { id: props.id,
-	          className: 'AriaMenuButton',
+	          className: _cssClassnamer2['default'].componentPart(),
 	          onKeyDown: this.handleAnywhereKey.bind(this),
 	          onBlur: this.handleBlur.bind(this) },
 	        outsideOverlay,
@@ -274,7 +279,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          _React2['default'].createElement(
 	            'div',
 	            { id: triggerId,
-	              className: triggerClasses,
+	              className: triggerClasses.join(' '),
 	              onClick: this.toggleMenu.bind(this),
 	              onKeyDown: this.handleTriggerKey.bind(this),
 	              ref: 'trigger',
@@ -365,9 +370,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _React2 = _interopRequireWildcard(_React);
 
-	var _MenuItem = __webpack_require__(5);
+	var _MenuItem = __webpack_require__(6);
 
 	var _MenuItem2 = _interopRequireWildcard(_MenuItem);
+
+	var _cssClassnamer = __webpack_require__(5);
+
+	var _cssClassnamer2 = _interopRequireWildcard(_cssClassnamer);
 
 	var Menu = (function (_React$Component) {
 	  function Menu() {
@@ -400,7 +409,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _React2['default'].createElement(
 	        'li',
 	        { key: i,
-	          className: 'AriaMenuButton-li',
+	          className: _cssClassnamer2['default'].componentPart('li'),
 	          role: 'presentation' },
 	        _React2['default'].createElement(_MenuItem2['default'], _extends({}, item, {
 	          focusManager: props.focusManager,
@@ -409,12 +418,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      );
 	    });
 
-	    var menuClasses = 'AriaMenuButton-menu';
-	    if (props.flushRight) menuClasses += ' AriaMenuButton-menu--flushRight';
+	    var menuClasses = [_cssClassnamer2['default'].componentPart('menu')];
+	    if (props.flushRight) menuClasses.push(_cssClassnamer2['default'].componentPart('menu--flushRight'));
 
 	    return _React2['default'].createElement(
 	      'ol',
-	      { className: menuClasses,
+	      { className: menuClasses.join(' '),
 	        role: 'menu' },
 	      items
 	    );
@@ -502,6 +511,36 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
+	exports.__esModule = true;
+	exports['default'] = {
+
+	  init: function init(_x, namespace) {
+	    var componentName = arguments[0] === undefined ? 'AriaMenuButton' : arguments[0];
+
+	    this.namespace = namespace;
+	    this.componentName = this.applyNamespace(componentName);
+	  },
+
+	  componentPart: function componentPart(remainder) {
+	    if (!remainder) {
+	      return this.componentName;
+	    }return '' + this.componentName + '-' + remainder;
+	  },
+
+	  applyNamespace: function applyNamespace(str) {
+	    if (!this.namespace) {
+	      return str;
+	    }return '' + this.namespace + '-' + str;
+	  }
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
 	var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
 
 	var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
@@ -515,6 +554,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _React2 = _interopRequireWildcard(_React);
 
 	var _ENTER$SPACE = __webpack_require__(2);
+
+	var _cssClassnamer = __webpack_require__(5);
+
+	var _cssClassnamer2 = _interopRequireWildcard(_cssClassnamer);
 
 	var MenuItem = (function (_React$Component) {
 	  function MenuItem() {
@@ -557,8 +600,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  MenuItem.prototype.render = function render() {
 	    var props = this.props;
-	    var itemClasses = 'AriaMenuButton-menuItem';
-	    if (props.isSelected) itemClasses += ' is-selected';
+	    var itemClasses = [_cssClassnamer2['default'].componentPart('menuItem')];
+	    if (props.isSelected) itemClasses.push(_cssClassnamer2['default'].applyNamespace('is-selected'));
 
 	    // tabindex -1 because: "With focus on the button pressing
 	    // the Tab key will take the user to the next tab focusable item on the page.
@@ -570,7 +613,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return _React2['default'].createElement(
 	      'div',
 	      { id: props.id,
-	        className: itemClasses,
+	        className: itemClasses.join(' '),
 	        onClick: this.handleClick.bind(this),
 	        onKeyDown: this.handleKey.bind(this),
 	        role: 'menuitem',

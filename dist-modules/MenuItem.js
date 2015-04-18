@@ -14,6 +14,10 @@ var _React2 = _interopRequireWildcard(_React);
 
 var _ENTER$SPACE = require('./keys');
 
+var _cssClassnamer = require('./cssClassnamer');
+
+var _cssClassnamer2 = _interopRequireWildcard(_cssClassnamer);
+
 var MenuItem = (function (_React$Component) {
   function MenuItem() {
     _classCallCheck(this, MenuItem);
@@ -55,8 +59,8 @@ var MenuItem = (function (_React$Component) {
 
   MenuItem.prototype.render = function render() {
     var props = this.props;
-    var itemClasses = 'AriaMenuButton-menuItem';
-    if (props.isSelected) itemClasses += ' is-selected';
+    var itemClasses = [_cssClassnamer2['default'].componentPart('menuItem')];
+    if (props.isSelected) itemClasses.push(_cssClassnamer2['default'].applyNamespace('is-selected'));
 
     // tabindex -1 because: "With focus on the button pressing
     // the Tab key will take the user to the next tab focusable item on the page.
@@ -68,7 +72,7 @@ var MenuItem = (function (_React$Component) {
     return _React2['default'].createElement(
       'div',
       { id: props.id,
-        className: itemClasses,
+        className: itemClasses.join(' '),
         onClick: this.handleClick.bind(this),
         onKeyDown: this.handleKey.bind(this),
         role: 'menuitem',
