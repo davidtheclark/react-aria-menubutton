@@ -2,9 +2,8 @@ import React from 'react/addons';
 import createAriaMenuButton from '../src/createAriaMenuButton';
 
 const demoStyle = document.getElementById('demo-style');
-const AriaMenuButton = createAriaMenuButton({
-  reactAddons: React.addons
-});
+const AriaMenuButton = createAriaMenuButton();
+const AriaMenuButtonTrans = createAriaMenuButton({ transition: React.addons.CSSTransitionGroup });
 
 /**
  * Stylesheet-selecting demo
@@ -114,11 +113,10 @@ class Fancy extends React.Component {
     );
 
     return (
-      <AriaMenuButton id='fancy'
+      <AriaMenuButtonTrans id='fancy'
        handleSelection={() => {}}
        triggerContent={fancyTriggerContent}
        items={fancyMenuItem}
-       transition={true}
        closeOnSelection={true} />
     );
   }

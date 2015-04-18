@@ -88,10 +88,10 @@ The following classes are used:
 .AriaMenuButton-trigger {}
 .AriaMenuButton-trigger.is-open {}
 .AriaMenuButton-menuWrapper {}
-.AriaMenuButton-menuWrapper--trans {}
+.AriaMenuButton-menuWrapper--transition {}
 .AriaMenuButton-menu {}
 .AriaMenuButton-menu--flushRight {}
-.AriaMenuButton-li {}
+.AriaMenuButton-menuItemWrapper {}
 .AriaMenuButton-menuItem {}
 .AriaMenuButton-menuItem.is-selected {}
 ```

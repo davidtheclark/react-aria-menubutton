@@ -96,11 +96,11 @@ body {
   display: none;
 }
 
-#fancy .AriaMenuButton-li:nth-child(even) .Fancy-svg,
-#fancy .AriaMenuButton-li:nth-child(even) .Fancy-text {
+#fancy .AriaMenuButton-menuItemWrapper:nth-child(even) .Fancy-svg,
+#fancy .AriaMenuButton-menuItemWrapper:nth-child(even) .Fancy-text {
   float: right;
 }
 
-#fancy .AriaMenuButton-li:nth-child(even) .Fancy-text {
+#fancy .AriaMenuButton-menuItemWrapper:nth-child(even) .Fancy-text {
   text-align: right;
 }

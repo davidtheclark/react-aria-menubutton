@@ -70,12 +70,12 @@
   border-bottom: 1px solid #EEE;
 }
 
-.AriaMenuButton-li:first-of-type .AriaMenuButton-menuItem {
+.AriaMenuButton-menuItemWrapper:first-of-type .AriaMenuButton-menuItem {
   border-top-right-radius: 3px;
   border-top-left-radius: 3px;
 }
 
-.AriaMenuButton-li:last-of-type .AriaMenuButton-menuItem {
+.AriaMenuButton-menuItemWrapper:last-of-type .AriaMenuButton-menuItem {
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
 }

@@ -51,7 +51,7 @@ test('closed rendering', t => {
     t.test('menuWrapper', st => {
       const menuWrapperNode = u.getMenuWrapperNode(c);
       st.notOk(
-        u.classListContains(menuWrapperNode, 'AriaMenuButton-menuWrapper--trans'),
+        u.classListContains(menuWrapperNode, 'AriaMenuButton-menuWrapper--transition'),
         'correct classes'
       );
       st.end();
@@ -81,7 +81,7 @@ test('closed render with transition', t => {
     t.test('menuWrapper', st => {
       const menuWrapperNode = u.getMenuWrapperNode(c);
       st.ok(
-        u.classListContains(menuWrapperNode, 'AriaMenuButton-menuWrapper--trans'),
+        u.classListContains(menuWrapperNode, 'AriaMenuButton-menuWrapper--transition'),
         'correct classes'
       );
       st.end();

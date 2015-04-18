@@ -23,7 +23,7 @@ export default class Menu extends Component {
     const items = props.items.map((item, i) => {
       return (
         <li key={i}
-         className={cssClassnamer.componentPart('li')}
+         className={cssClassnamer.componentPart('menuItemWrapper')}
          role='presentation'>
           <MenuItem {...item}
            focusManager={props.focusManager}

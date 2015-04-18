@@ -1,6 +1,7 @@
 # Changelog
 
 ## 0.5.0
+- Make class names a little more explicit (change `menuWrapper--trans` to `menuWrapper--transition` and `li` to `menuItemWrapper`).
 - Add `transition` option to factory and remove `transition` prop from component.
 
 ## 0.4.0

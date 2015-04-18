@@ -144,7 +144,7 @@ export default function createAriaMenuButton(opts={}) {
          component='div'
          className={[
            cssClassnamer.componentPart('menuWrapper'),
-           cssClassnamer.componentPart('menuWrapper--trans')
+           cssClassnamer.componentPart('menuWrapper--transition')
          ].join(' ')}
          onKeyDown={this.handleMenuKey.bind(this)}>
           {menu}
