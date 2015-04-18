@@ -106,7 +106,7 @@ export default function createAriaMenuButton(opts={}) {
     }
 
     handleBlur() {
-      this.blurTimeout = setTimeout(() => {
+      setTimeout(() => {
         const activeEl = document.activeElement;
         if (activeEl === this.focusManager.trigger) return;
         if (this.focusManager.focusables.some(f => f.node === activeEl)) return;
@@ -120,7 +120,6 @@ export default function createAriaMenuButton(opts={}) {
     }
 
     handleOverlayClick() {
-      console.log('overlay click triggered');
       this.closeMenu(false);
     }
 

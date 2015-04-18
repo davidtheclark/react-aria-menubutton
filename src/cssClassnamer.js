@@ -14,4 +14,5 @@ export default {
     if (!this.namespace) return str;
     return `${this.namespace}-${str}`;
   }
+
 };
