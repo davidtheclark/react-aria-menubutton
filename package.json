@@ -1,6 +1,6 @@
 {
   "name": "react-aria-menubutton",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "A fully accessible, easily themeable, React-powered menu button",
   "main": "index.js",
   "repository": {
@@ -17,6 +17,16 @@
     "url": "https://github.com/davidtheclark/react-aria-menubutton/issues"
   },
   "homepage": "https://github.com/davidtheclark/react-aria-menubutton",
+  "keywords": [
+    "react",
+    "reactjs",
+    "react-component",
+    "aria",
+    "accessibility",
+    "menu",
+    "dropdown",
+    "widget"
+  ],
   "dependencies": {
     "react": "0.13.x"
   },

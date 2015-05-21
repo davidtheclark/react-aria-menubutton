@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.5.2
+- Add keywords to `package.json`.
+
 ## 0.5.1
 - Update build.
 
