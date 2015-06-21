@@ -5,11 +5,11 @@
     <title>react-aria-menubutton demo</title>
     <meta name="description" content="A demo of react-aria-menubutton">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="demo/demo.css">
+    <link rel="stylesheet" href="css/demo.css">
   </head>
   <body>
 
-    <h1 tabindex="0">react-aria-menubotton demo</h1>
+    <h1 tabindex="0">react-aria-menubutton demo</h1>
 
     <style id="demo-style"></style>
     <div id="style-select"></div>
@@ -23,25 +23,28 @@
         With focus on the trigger, press Enter or Space to toggle the menu.
       </li>
       <li>
-        With focus on the trigger and the menu closed, press ArrowDown to open the menu and move focus to the first menu item.
+        With the menu opened focus on the trigger, press ArrowDown to move focus to the first menu item.
       </li>
       <li>
-        With the menu opened, press ArrowDown or ArrowUp to cycle focus through the menu items.
+        With the menu closed and focus on the trigger, press ArrowDown to open the menu and move focus to the first menu item.
       </li>
       <li>
-        With the menu opened, press a letter key to move focus to the next menu item whose label begins with that letter.
+        With the menu opened and focus in the menu, press ArrowDown or ArrowUp to cycle focus through the menu items.
+      </li>
+      <li>
+        With the menu opened and focus in the menu, press a letter key to move focus to the next menu item whose label begins with that letter.
       </li>
       <li>
         With the menu opened, click a menu item to fire the handler.
       </li>
       <li>
-        With the menu opened, use the keyboard to move focus to a menu item and press Enter or Space to fire the handler.
+        With the menu opened and focus in the menu, use the keyboard to move focus to a menu item and press Enter or Space to fire the handler.
       </li>
       <li>
-        With the menu opened (which means focus is either on the trigger or a menu item), move focus outside of the menu &mdash; by clicking outside of it or pressing Tab &mdash; to close the menu.
+        With the menu opened and focus on either the trigger or a menu item, move focus outside of the menu &mdash; by clicking outside of it or pressing Tab &mdash; to close the menu.
       </li>
       <li>
-        With focus inside the menu, press Escape to close the menu and return focus to the trigger.
+        With the menu opened and focus inside the menu, press Escape to close the menu and return focus to the trigger.
       </li>
     </ul>
     <p>
@@ -82,6 +85,6 @@
       <a href="https://github.com/davidtheclark/react-aria-menubutton">Go back to the repo</a>
     </p>
 
-    <script src="demo/demo-bundle.min.js"></script>
+    <script src="demo-bundle.js"></script>
   </body>
 </html>

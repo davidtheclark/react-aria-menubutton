@@ -33,6 +33,7 @@
   "devDependencies": {
     "babel": "5.1.10",
     "babel-loader": "5.0.0",
+    "browser-sync": "2.7.12",
     "css-loader": "0.10.1",
     "es5-shim": "4.1.1",
     "eslint": "0.19.0",
@@ -48,8 +49,7 @@
     "trash": "1.4.1",
     "uglify-js": "2.4.20",
     "watchify": "3.1.1",
-    "webpack": "1.8.5",
-    "webpack-dev-server": "1.8.0"
+    "webpack": "1.8.5"
   },
   "scripts": {
     "lint": "eslint .",
@@ -57,7 +57,8 @@
     "minify": "uglifyjs ./dist/createAriaMenuButton.js -c -m -o ./dist/createAriaMenuButton.min.js",
     "bundle-demo": "webpack --config webpack.config.demo.js",
     "watch-demo": "webpack --config webpack.config.demo.js --watch",
-    "demo-dev": "webpack-dev-server --config webpack.config.demo.js --watch",
+    "bs-demo": "browser-sync start --server demo --files=\"demo/**/*.css,demo/index.html,demo/demo-bundle.js\"",
+    "demo-dev": "parallelshell 'npm run watch-demo' 'npm run bs-demo'",
     "watch-karma": "karma start",
     "bundle-test": "webpack --config webpack.config.test.js",
     "watch-test": "webpack --config webpack.config.test.js --watch",

@@ -42,7 +42,7 @@ body {
 
 /* Fancy - Do not imitate these styles: they are stupid */
 
-#fancy .AriaMenuButton-menu {
+#fancy-container .AriaMenuButton-menu {
   width: 250px;
   max-width: 250px;
 }
@@ -92,15 +92,19 @@ body {
   font-weight: normal;
 }
 
-#fancy .AriaMenuButton-trigger::after {
+.Fancy-selectedText {
+  margin-top: 1em;
+}
+
+#fancy-container .AriaMenuButton-trigger::after {
   display: none;
 }
 
-#fancy .AriaMenuButton-menuItemWrapper:nth-child(even) .Fancy-svg,
-#fancy .AriaMenuButton-menuItemWrapper:nth-child(even) .Fancy-text {
+#fancy-container .AriaMenuButton-menuItemWrapper:nth-child(even) .Fancy-svg,
+#fancy-container .AriaMenuButton-menuItemWrapper:nth-child(even) .Fancy-text {
   float: right;
 }
 
-#fancy .AriaMenuButton-menuItemWrapper:nth-child(even) .Fancy-text {
+#fancy-container .AriaMenuButton-menuItemWrapper:nth-child(even) .Fancy-text {
   text-align: right;
 }

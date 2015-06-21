@@ -1,26 +1,20 @@
 var webpack = require('webpack');
 
 module.exports = {
-  entry: './demo/demo.js',
+  entry: './demo/js/demo.jsx',
   module: {
     loaders: [
-      { test: /\.js$/, loader: 'babel?loose=all', exclude: /node_modules/ }
-    ]
+      { test: /\.(js|jsx)$/, loader: 'babel?loose=all', exclude: /node_modules/ },
+    ],
+  },
+  resolve: {
+    extensions: ['', '.js', '.jsx'],
   },
   output: {
-    filename: 'demo/demo-bundle.min.js'
+    filename: './demo/demo-bundle.js',
   },
+  devtool: '#inline-source-map',
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production')
-      }
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compressor: {
-        warnings: false
-      }
-    })
-  ]
+  ],
 };

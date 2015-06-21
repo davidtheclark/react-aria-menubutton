@@ -12,6 +12,7 @@
     "react"
   ],
   "rules": {
+    "comma-dangle": [2, "always-multiline"],
     "curly": 0,
     "radix": 2,
     "wrap-iife": 2,
