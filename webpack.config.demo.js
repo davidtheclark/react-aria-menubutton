@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 
 module.exports = {
-  entry: './demo/js/demo.jsx',
+  entry: './demo/js/demo.js',
   module: {
     loaders: [
       { test: /\.(js|jsx)$/, loader: 'babel?loose=all', exclude: /node_modules/ },

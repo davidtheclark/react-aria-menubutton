@@ -1,8 +1,7 @@
-import React from 'react/addons';
+import React from 'react';
 import ariaMenuButton from '../../src/ariaMenuButton';
 
 const fancyStuff = ['bowling', 'science', 'scooting'];
-const { CSSTransitionGroup } = React.addons;
 
 class Fancy extends React.Component {
   constructor(props) {
@@ -45,26 +44,23 @@ class Fancy extends React.Component {
     return (
       <div>
         <div className='AriaMenuButton'>
-            <Container
-              closeOnSelection={true}
-              menu={FancyMenu}
-              handleSelection={this.handleSelection.bind(this)}
-              tag={CSSTransitionGroup}
-            >
-              <CSSTransitionGroup transitionName='is'>
-                <div className='AriaMenuButton-trigger' key='trigger'>
-                  <div className='Fancy-triggerInnards'>
-                    <img src='svg/profile-female.svg' className='Fancy-triggerIcon '/>
-                    <div className='Fancy-triggerText'>
-                      Humans enjoy fancy things<br />
-                      <span className='Fancy-triggerSmallText'>
-                        (click to select a fancy thing)
-                      </span>
-                    </div>
-                  </div>
+          <Container
+            closeOnSelection={true}
+            menu={FancyMenu}
+            handleSelection={this.handleSelection.bind(this)}
+          >
+            <div className='AriaMenuButton-trigger' key='trigger'>
+              <div className='Fancy-triggerInnards'>
+                <img src='svg/profile-female.svg' className='Fancy-triggerIcon '/>
+                <div className='Fancy-triggerText'>
+                  Humans enjoy fancy things<br />
+                  <span className='Fancy-triggerSmallText'>
+                    (click to select a fancy thing)
+                  </span>
                 </div>
-              </CSSTransitionGroup>
-            </Container>
+              </div>
+            </div>
+          </Container>
         </div>
         <div className='Fancy-selectedText'>
           Last selection: {this.state.lastSelected}

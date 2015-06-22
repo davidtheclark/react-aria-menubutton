@@ -70,6 +70,7 @@ export default class Container extends React.Component {
 Container.propTypes = {
   handleSelection: PropTypes.func.isRequired,
   manager: PropTypes.object.isRequired,
+  menu: PropTypes.object.isRequired,
   children: PropTypes.oneOfType([
     PropTypes.element,
     PropTypes.string,

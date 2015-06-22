@@ -56,6 +56,7 @@ MenuItem.propTypes = {
     PropTypes.string,
   ]).isRequired,
   manager: PropTypes.object.isRequired,
+  tag: PropTypes.string,
   text: PropTypes.string,
   value: PropTypes.oneOfType([
     PropTypes.bool,
