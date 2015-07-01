@@ -5,6 +5,9 @@ module.exports = {
       { test: /\.js$/, loader: 'babel?loose=all', exclude: /node_modules/ },
     ],
   },
+  resolve: {
+    extensions: ['', '.js', '.jsx'],
+  },
   externals: {
     react: 'react',
   },
