@@ -5,9 +5,8 @@ import MenuItem from '../src/MenuItem';
 
 const ReactTestUtils = React.addons.TestUtils;
 
-const shallowRenderer = ReactTestUtils.createRenderer();
-
 test('MenuItem basic markup', t => {
+  const shallowRenderer = ReactTestUtils.createRenderer();
   shallowRenderer.render(
     <MenuItem manager={{}}>
       foo
@@ -28,6 +27,7 @@ test('MenuItem basic markup', t => {
 });
 
 test('MenuItem element child with tag prop, text, and value', t => {
+  const shallowRenderer = ReactTestUtils.createRenderer();
   shallowRenderer.render(
     <MenuItem
       manager={{}}

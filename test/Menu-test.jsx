@@ -5,9 +5,9 @@ import Menu from '../src/Menu';
 
 const ReactTestUtils = React.addons.TestUtils;
 
-const shallowRenderer = ReactTestUtils.createRenderer();
 
 test('Menu basic markup', t => {
+  const shallowRenderer = ReactTestUtils.createRenderer();
   shallowRenderer.render(
     <Menu
       manager={{}}

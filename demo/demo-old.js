@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React from 'react/addons';
 import createAriaMenuButton from '../src/createAriaMenuButton';
 

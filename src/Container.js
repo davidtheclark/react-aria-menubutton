@@ -6,7 +6,7 @@ export default class Container extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showingMenu: false,
+      showingMenu: props.startOpen,
       openingMenuReceivesFocus: false,
     };
     props.manager.selectionHandler = this.handleSelection.bind(this);
@@ -70,15 +70,17 @@ export default class Container extends React.Component {
 Container.propTypes = {
   handleSelection: PropTypes.func.isRequired,
   manager: PropTypes.object.isRequired,
-  menu: PropTypes.object.isRequired,
+  menu: PropTypes.element.isRequired,
   children: PropTypes.oneOfType([
     PropTypes.element,
     PropTypes.string,
   ]),
   closeOnSelection: PropTypes.bool,
+  startOpen: PropTypes.bool,
   tag: PropTypes.string,
 };
 
 Container.defaultProps = {
+  startOpen: false,
   tag: 'div',
 };
