@@ -23,22 +23,22 @@
         With focus on the trigger, press Enter or Space to toggle the menu.
       </li>
       <li>
-        With the menu opened focus on the trigger, press ArrowDown to move focus to the first menu item.
+        With the menu opened and focus on the trigger, press ArrowDown to move focus to the first menu item.
       </li>
       <li>
         With the menu closed and focus on the trigger, press ArrowDown to open the menu and move focus to the first menu item.
       </li>
       <li>
-        With the menu opened and focus in the menu, press ArrowDown or ArrowUp to cycle focus through the menu items.
+        With the menu opened and focus inside the menu, press ArrowDown or ArrowUp to cycle focus through the menu items.
       </li>
       <li>
-        With the menu opened and focus in the menu, press a letter key to move focus to the next menu item whose label begins with that letter.
+        With the menu opened and focus inside the menu, press a letter key to move focus to the next menu item whose label begins with that letter.
       </li>
       <li>
         With the menu opened, click a menu item to fire the handler.
       </li>
       <li>
-        With the menu opened and focus in the menu, use the keyboard to move focus to a menu item and press Enter or Space to fire the handler.
+        With the menu opened and focus inside the menu, use the keyboard to move focus to a menu item and press Enter or Space to fire the handler.
       </li>
       <li>
         With the menu opened and focus on either the trigger or a menu item, move focus outside of the menu &mdash; by clicking outside of it or pressing Tab &mdash; to close the menu.
@@ -48,37 +48,26 @@
       </li>
     </ul>
     <p>
-      Keyboard interactions follow the
+      All of these keyboard interactions follow the
       <a href="http://www.w3.org/TR/wai-aria-practices/#menubutton">WAI-ARIA Design Pattern for
       Menu Button</a>.
     </p>
 
     <h2>Possibilities for Fanciness</h2>
     <p>
-      You can include opening/closing <strong>animation</strong> (via <a href="https://facebook.github.io/react/docs/animation.html">ReactTransitionGroup</a>) and use <strong>components as the content of menu items</strong>. Whichs means <em>nothing can stop you</em>.
+      The provided components are just "smart" components to wrap whatever "dumb" components you want to function as a part of the menu button you're building -- i.e. they just wrap your components and provide the keyboard functionality described above.
+    </p>
+    <p>
+      This means that <strong>you can use any React element as your trigger or menu item</strong>.
+      Which means that <em>nothing can stop you</em>.
+    </p>
+    <p>
+      Here's a fancier menu button whose Trigger and MenuItems wrap complex elements:
     </p>
     <div id="fancy-container"></div>
     <p>
       <small>Icons from <a href="http://tympanus.net/codrops/2014/10/27/freebie-ballicons-2-vol-2/">Ballicons by PixelBuddha</a>.</small>
     </p>
-
-    <p>
-      Please take note of a few things:
-    </p>
-    <ul>
-      <li>
-        There is snazzy open/close animation.
-      </li>
-      <li>
-        You can use a React element as content for the menu button or any menu item.
-      </li>
-      <li>
-        You can still type a letter on the keyboard to navigate to the relevant item (because of metadata fed to these items).
-      </li>
-      <li>
-        Unlike the menu above, this one closes as soon as you make a selection (that's an option).
-      </li>
-    </ul>
 
     <h2>Great, now what do I do?</h2>
     <p>
