@@ -168,7 +168,8 @@ A React component that takes the following props:
 #### handleSelection: Function, required
 
 A callback to run when the user makes a selection (i.e. clicks or presses Enter or Space on a menu item).
-It will be passed the value of the selected menu item (as defined in the `items` prop).
+
+It will be passed the value of the selected menu item (as defined in the `items` prop) as the first argument, and the React SyntheticEvent that triggered the selection as the second argument.
 
 While the menu's open/closed-state is handled internally, the selection-state is up to you: do with it what you will.
 
