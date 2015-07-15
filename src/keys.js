@@ -7,6 +7,4 @@ export default {
   ESCAPE: 'Escape',
   UP: 'ArrowUp',
   DOWN: 'ArrowDown',
-  LOWEST_LETTER_CODE: 65,
-  HIGHEST_LETTER_CODE: 91,
 };

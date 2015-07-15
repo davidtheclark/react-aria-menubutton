@@ -4,12 +4,11 @@ import keys from './keys';
 export default class MenuItem extends React.Component {
   componentDidMount() {
     const props = this.props;
-    this.itemForManager = {
+    this.managedIndex = props.manager.menuItems.push({
       node: React.findDOMNode(this),
       content: props.children,
       text: props.text,
-    };
-    props.manager.items.push(this.itemForManager);
+    }) - 1;
   }
 
   handleKeyDown(event) {
@@ -20,16 +19,18 @@ export default class MenuItem extends React.Component {
 
   selectItem(event) {
     const props = this.props;
-    // If there's no value, we'll send the label (child)
+    // If there's no value, we'll send the child
     const value = (typeof props.value !== 'undefined')
       ? props.value
       : props.children;
-    props.manager.selectionHandler(value, event);
-    props.manager.currentFocus = props.manager.items.indexOf(this.itemForManager);
+    props.manager.handleSelection(value, event);
+    props.manager.currentFocus = this.managedIndex;
   }
 
   render() {
-    return React.createElement(this.props.tag, {
+    const { tag, children } = this.props;
+
+    return React.createElement(tag, {
       onClick: this.selectItem.bind(this),
       onKeyDown: this.handleKeyDown.bind(this),
       // "The menu contains elements with roles: menuitem,
@@ -46,7 +47,7 @@ export default class MenuItem extends React.Component {
       // "Menu focus is managed by the menu using tabindex
       // or aria-activedescendant."
       tabIndex: '-1',
-    }, this.props.children);
+    }, children);
   }
 }
 

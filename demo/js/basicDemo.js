@@ -1,85 +1,63 @@
 import React from 'react';
 import ariaMenuButton from '../../src/ariaMenuButton';
 
-const demoStyle = document.getElementById('demo-style');
-const stylesheets = {
-  bootstrap: require('css!../css/bootstrap.css'),
-  foundation: require('css!../css/foundation.css'),
-  github: require('css!../css/github.css'),
-};
-
-const firstSelected = 'github';
-demoStyle.textContent = stylesheets[firstSelected];
-
-const menuItems = [
-  {
-    value: 'github',
-    display: 'Github',
-  },
-  {
-    value: 'bootstrap',
-    display: 'Bootstrap',
-  },
-  {
-    value: 'foundation',
-    display: 'Foundation',
-  },
-];
-
-class Demo extends React.Component {
+const words = ['pectinate', 'borborygmus', 'anisodactylous', 'barbar', 'pilcrow'];
+class DemoOne extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { selected: firstSelected };
-    this.ambSet = ariaMenuButton();
+    this.state = { selected: '' };
+    this.ariaMenuButton = ariaMenuButton({
+      onSelection: this.handleSelection.bind(this),
+    });
   }
 
   handleSelection(value) {
-    demoStyle.textContent = stylesheets[value];
     this.setState({ selected: value });
   }
 
   render() {
     const { selected } = this.state;
-    const { Container, MenuItem } = this.ambSet;
+    const { Button, Menu, MenuItem } = this.ariaMenuButton;
 
-    const menuItemElements = menuItems.map((item, i) => {
-      const cl = ['AriaMenuButton-menuItem'];
-      if (selected === item.value) {
-        cl.push('is-selected');
+    const menuItemElements = words.map((word, i) => {
+      let itemClass = 'AriaMenuButton-menuItem';
+      if (selected === word) {
+        itemClass += ' is-selected';
       }
       return (
         <li className='AriaMenuButton-menuItemWrapper' key={i}>
-          <MenuItem value={item.value} text={item.display}>
-            <div className={cl.join(' ')}>
-              {item.display}
+          <MenuItem value={word} text={word}>
+            <div className={itemClass}>
+              {word}
             </div>
           </MenuItem>
         </li>
       );
     });
 
-    const Menu = (
-      <ul className='AriaMenuButton-menu'>
-        {menuItemElements}
-      </ul>
-    );
-
     return (
-      <div className='AriaMenuButton'>
-        <Container
-          menu={Menu}
-          handleSelection={this.handleSelection.bind(this)}
-        >
-          <span className='AriaMenuButton-trigger'>
-            Select a style
-          </span>
-        </Container>
+      <div>
+        <div className='AriaMenuButton'>
+          <Button>
+            <span className='AriaMenuButton-trigger'>
+              Select a word
+            </span>
+          </Button>
+          <Menu>
+            <ul className='AriaMenuButton-menu'>
+              {menuItemElements}
+            </ul>
+          </Menu>
+        </div>
+        <p>
+          Your last selection was: <strong>{selected}</strong>
+        </p>
       </div>
     );
   }
 }
 
 React.render(
-  <Demo />,
-  document.getElementById('style-select')
+  <DemoOne />,
+  document.getElementById('demo-one')
 );

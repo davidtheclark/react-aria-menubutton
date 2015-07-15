@@ -1,7 +1,8 @@
-import React from 'react';
+import React from 'react/addons';
 import ariaMenuButton from '../../src/ariaMenuButton';
 
 const fancyStuff = ['bowling', 'science', 'scooting'];
+const CSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 class Fancy extends React.Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class Fancy extends React.Component {
   }
 
   render() {
-    const { Container, MenuItem } = this.ambSet;
+    const { Button, Menu, MenuItem } = this.ambSet;
 
     const fancyMenuItems = fancyStuff.map((activity, i) => (
       <MenuItem
@@ -35,20 +36,23 @@ class Fancy extends React.Component {
       </MenuItem>
     ));
 
-    const FancyMenu = (
-      <div className='AriaMenuButton-menu' key='menu'>
-        {fancyMenuItems}
-      </div>
-    );
+    const menuInnards = menuIsOpen => {
+      const menu = (!menuIsOpen) ? false : (
+        <div className='AriaMenuButton-menu' key='menu'>
+          {fancyMenuItems}
+        </div>
+      );
+      return (
+        <CSSTransitionGroup transitionName='is'>
+          {menu}
+        </CSSTransitionGroup>
+      )
+    }
 
     return (
       <div>
-        <div className='AriaMenuButton'>
-          <Container
-            closeOnSelection={true}
-            menu={FancyMenu}
-            handleSelection={this.handleSelection.bind(this)}
-          >
+        <Button>
+          <div className='AriaMenuButton'>
             <div className='AriaMenuButton-trigger' key='trigger'>
               <div className='Fancy-triggerInnards'>
                 <img src='svg/profile-female.svg' className='Fancy-triggerIcon '/>
@@ -60,8 +64,11 @@ class Fancy extends React.Component {
                 </div>
               </div>
             </div>
-          </Container>
-        </div>
+          </div>
+        </Button>
+        <Menu>
+          {menuInnards}
+        </Menu>
         <div className='Fancy-selectedText'>
           Last selection: {this.state.lastSelected}
         </div>

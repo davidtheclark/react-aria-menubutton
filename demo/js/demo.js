@@ -1,2 +1,2 @@
 import './basicDemo';
-import './fancyDemo';
+// import './fancyDemo';
