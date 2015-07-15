@@ -49,7 +49,7 @@ test('when menuItem is clicked', t => {
   u.render(OpenSpyComponent, function() {
     u.eachMenuItemNode(this, (n, i) => {
       clickNode(n);
-      t.ok(spy.calledWith(testItems[i].value),
+      t.ok(spy.calledWithExactly(testItems[i].value, sinon.match.has('nativeEvent')),
         'menuItem ' + i + ' selected');
       t.ok(u.menuIsOpen(this), 'menu is still open');
       spy.reset();

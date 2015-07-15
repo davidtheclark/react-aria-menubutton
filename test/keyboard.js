@@ -309,10 +309,10 @@ test('when key is pressed inside menu', t => {
       this.openMenu();
       u.getMenuItemNodes(this).forEach((n, i) => {
         press(n, 'Enter');
-        st.ok(spy.calledWith(testItems[i].value), 'Enter worked');
+        st.ok(spy.calledWithExactly(testItems[i].value, sinon.match.has('nativeEvent')), 'Enter worked');
         spy.reset();
         press(n, ' ');
-        st.ok(spy.calledWith(testItems[i].value), 'Space worked');
+        st.ok(spy.calledWithExactly(testItems[i].value, sinon.match.has('nativeEvent')), 'Space worked');
         spy.reset();
         st.ok(u.menuIsOpen(this), 'menu is still open');
       });

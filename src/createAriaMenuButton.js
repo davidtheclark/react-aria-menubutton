@@ -114,9 +114,9 @@ export default function createAriaMenuButton(opts={}) {
       }, 0);
     }
 
-    handleSelection(v) {
+    handleSelection(v, e) {
       if (this.props.closeOnSelection) this.closeMenu();
-      this.props.handleSelection(v);
+      this.props.handleSelection(v, e);
     }
 
     handleOverlayClick() {
