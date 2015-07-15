@@ -56,36 +56,39 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
-
-	var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
-
-	var _inherits = function (subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
+	exports.__esModule = true;
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	exports.__esModule = true;
 	exports['default'] = createAriaMenuButton;
 
-	var _React$Component$PropTypes = __webpack_require__(1);
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
-	var _React$Component$PropTypes2 = _interopRequireWildcard(_React$Component$PropTypes);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _import = __webpack_require__(2);
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	var keys = _interopRequireWildcard(_import);
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _keys = __webpack_require__(2);
+
+	var keys = _interopRequireWildcard(_keys);
 
 	var _Menu = __webpack_require__(3);
 
-	var _Menu2 = _interopRequireWildcard(_Menu);
+	var _Menu2 = _interopRequireDefault(_Menu);
 
-	var _focusManager = __webpack_require__(4);
+	var _focusManager = __webpack_require__(6);
 
-	var _focusManager2 = _interopRequireWildcard(_focusManager);
+	var _focusManager2 = _interopRequireDefault(_focusManager);
 
 	var _cssClassnamer = __webpack_require__(5);
 
-	var _cssClassnamer2 = _interopRequireWildcard(_cssClassnamer);
+	var _cssClassnamer2 = _interopRequireDefault(_cssClassnamer);
 
 	function createAriaMenuButton() {
 	  var opts = arguments[0] === undefined ? {} : arguments[0];
@@ -106,7 +109,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      _Component.call(this, props);
 	      this.state = { isOpen: !!props.startOpen };
-	      this.focusManager = _focusManager2['default']();
+	      this.focusManager = (0, _focusManager2['default'])();
 	    }
 
 	    _inherits(MenuButton, _Component);
@@ -116,7 +119,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	    MenuButton.prototype.componentDidMount = function componentDidMount() {
-	      this.focusManager.trigger = _React$Component$PropTypes2['default'].findDOMNode(this.refs.trigger);
+	      this.focusManager.trigger = _react2['default'].findDOMNode(this.refs.trigger);
 	    };
 
 	    MenuButton.prototype.openMenu = function openMenu() {
@@ -144,9 +147,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var key = e.key;
 	      var isLetterKey = isLetterKeyEvent(e);
 
-	      if (key !== keys.DOWN && !isLetterKey) {
-	        return;
-	      }e.preventDefault();
+	      if (key !== keys.DOWN && !isLetterKey) return;
+	      e.preventDefault();
 
 	      if (key === keys.DOWN) {
 	        // "With focus on the button and the drop-down menu open,
@@ -168,9 +170,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    MenuButton.prototype.handleTriggerKey = function handleTriggerKey(e) {
 	      var key = e.key;
-	      if (key !== keys.ENTER && key !== keys.SPACE) {
-	        return;
-	      }e.preventDefault();
+	      if (key !== keys.ENTER && key !== keys.SPACE) return;
+	      e.preventDefault();
 	      this.toggleMenu();
 	    };
 
@@ -206,9 +207,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }, 0);
 	    };
 
-	    MenuButton.prototype.handleSelection = function handleSelection(v) {
+	    MenuButton.prototype.handleSelection = function handleSelection(v, e) {
 	      if (this.props.closeOnSelection) this.closeMenu();
-	      this.props.handleSelection(v);
+	      this.props.handleSelection(v, e);
 	    };
 
 	    MenuButton.prototype.handleOverlayClick = function handleOverlayClick() {
@@ -224,19 +225,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var triggerClasses = [_cssClassnamer2['default'].componentPart('trigger')];
 	      if (isOpen) triggerClasses.push(_cssClassnamer2['default'].applyNamespace('is-open'));
 
-	      var menu = isOpen ? _React$Component$PropTypes2['default'].createElement(_Menu2['default'], _extends({}, props, {
+	      var menu = isOpen ? _react2['default'].createElement(_Menu2['default'], _extends({}, props, {
 	        handleSelection: this.handleSelection.bind(this),
 	        receiveFocus: this.state.innerFocus,
 	        focusManager: this.focusManager })) : false;
 
-	      var menuWrapper = TransitionGroup ? _React$Component$PropTypes2['default'].createElement(
+	      var menuWrapper = TransitionGroup ? _react2['default'].createElement(
 	        TransitionGroup,
 	        { transitionName: _cssClassnamer2['default'].applyNamespace('is'),
 	          component: 'div',
 	          className: [_cssClassnamer2['default'].componentPart('menuWrapper'), _cssClassnamer2['default'].componentPart('menuWrapper--transition')].join(' '),
 	          onKeyDown: this.handleMenuKey.bind(this) },
 	        menu
-	      ) : _React$Component$PropTypes2['default'].createElement(
+	      ) : _react2['default'].createElement(
 	        'div',
 	        { className: _cssClassnamer2['default'].componentPart('menuWrapper'),
 	          onKeyDown: this.handleMenuKey.bind(this) },
@@ -255,7 +256,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        zIndex: '100'
 	      };
 
-	      var outsideOverlay = !isOpen ? false : _React$Component$PropTypes2['default'].createElement('div', { id: outsideId,
+	      var outsideOverlay = !isOpen ? false : _react2['default'].createElement('div', { id: outsideId,
 	        onClick: this.handleOverlayClick.bind(this),
 	        ref: 'overlay',
 	        style: {
@@ -266,17 +267,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	          WebkitTapHighlightColor: 'rgba(0,0,0,0)'
 	        } });
 
-	      return _React$Component$PropTypes2['default'].createElement(
+	      return _react2['default'].createElement(
 	        'div',
 	        { id: props.id,
 	          className: _cssClassnamer2['default'].componentPart(),
 	          onKeyDown: this.handleAnywhereKey.bind(this),
 	          onBlur: this.handleBlur.bind(this) },
 	        outsideOverlay,
-	        _React$Component$PropTypes2['default'].createElement(
+	        _react2['default'].createElement(
 	          'div',
 	          { style: innerStyle },
-	          _React$Component$PropTypes2['default'].createElement(
+	          _react2['default'].createElement(
 	            'div',
 	            { id: triggerId,
 	              className: triggerClasses.join(' '),
@@ -295,17 +296,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	    return MenuButton;
-	  })(_React$Component$PropTypes.Component);
+	  })(_react.Component);
 
 	  MenuButton.propTypes = {
-	    handleSelection: _React$Component$PropTypes.PropTypes.func.isRequired,
-	    items: _React$Component$PropTypes.PropTypes.arrayOf(_React$Component$PropTypes.PropTypes.object).isRequired,
-	    triggerContent: _React$Component$PropTypes.PropTypes.oneOfType([_React$Component$PropTypes.PropTypes.string, _React$Component$PropTypes.PropTypes.element]).isRequired,
-	    closeOnSelection: _React$Component$PropTypes.PropTypes.bool,
-	    flushRight: _React$Component$PropTypes.PropTypes.bool,
-	    id: _React$Component$PropTypes.PropTypes.string,
-	    startOpen: _React$Component$PropTypes.PropTypes.bool,
-	    selectedValue: _React$Component$PropTypes.PropTypes.oneOfType([_React$Component$PropTypes.PropTypes.string, _React$Component$PropTypes.PropTypes.number, _React$Component$PropTypes.PropTypes.bool])
+	    handleSelection: _react.PropTypes.func.isRequired,
+	    items: _react.PropTypes.arrayOf(_react.PropTypes.object).isRequired,
+	    triggerContent: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.element]).isRequired,
+	    closeOnSelection: _react.PropTypes.bool,
+	    flushRight: _react.PropTypes.bool,
+	    id: _react.PropTypes.string,
+	    startOpen: _react.PropTypes.bool,
+	    selectedValue: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number, _react.PropTypes.bool])
 	  };
 
 	  return MenuButton;
@@ -318,20 +319,20 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
 
 /***/ },
 /* 2 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
+
+	// Lookey here
+	// https://github.com/facebook/react/blob/0.13-stable/src/browser/ui/dom/getEventKey.js
 
 	'use strict';
 
 	exports.__esModule = true;
-	// Lookey here
-	// https://github.com/facebook/react/blob/0.13-stable/src/browser/ui/dom/getEventKey.js
-
 	var ENTER = 'Enter';
 	exports.ENTER = ENTER;
 	var SPACE = ' ';
@@ -353,27 +354,27 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
-
-	var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
-
-	var _inherits = function (subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
+	exports.__esModule = true;
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	exports.__esModule = true;
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _React$Component$PropTypes = __webpack_require__(1);
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	var _React$Component$PropTypes2 = _interopRequireWildcard(_React$Component$PropTypes);
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 
-	var _MenuItem = __webpack_require__(6);
+	var _react = __webpack_require__(1);
 
-	var _MenuItem2 = _interopRequireWildcard(_MenuItem);
+	var _react2 = _interopRequireDefault(_react);
+
+	var _MenuItem = __webpack_require__(4);
+
+	var _MenuItem2 = _interopRequireDefault(_MenuItem);
 
 	var _cssClassnamer = __webpack_require__(5);
 
-	var _cssClassnamer2 = _interopRequireWildcard(_cssClassnamer);
+	var _cssClassnamer2 = _interopRequireDefault(_cssClassnamer);
 
 	var Menu = (function (_Component) {
 	  function Menu() {
@@ -403,12 +404,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var selectedValue = props.selectedValue;
 
 	    var items = props.items.map(function (item, i) {
-	      return _React$Component$PropTypes2['default'].createElement(
+	      return _react2['default'].createElement(
 	        'li',
 	        { key: i,
 	          className: _cssClassnamer2['default'].componentPart('menuItemWrapper'),
 	          role: 'presentation' },
-	        _React$Component$PropTypes2['default'].createElement(_MenuItem2['default'], _extends({}, item, {
+	        _react2['default'].createElement(_MenuItem2['default'], _extends({}, item, {
 	          focusManager: props.focusManager,
 	          handleSelection: props.handleSelection,
 	          isSelected: item.value === selectedValue }))
@@ -418,7 +419,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var menuClasses = [_cssClassnamer2['default'].componentPart('menu')];
 	    if (props.flushRight) menuClasses.push(_cssClassnamer2['default'].componentPart('menu--flushRight'));
 
-	    return _React$Component$PropTypes2['default'].createElement(
+	    return _react2['default'].createElement(
 	      'ol',
 	      { className: menuClasses.join(' '),
 	        role: 'menu' },
@@ -427,23 +428,154 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 
 	  return Menu;
-	})(_React$Component$PropTypes.Component);
+	})(_react.Component);
 
 	exports['default'] = Menu;
 
 	Menu.propTypes = {
-	  focusManager: _React$Component$PropTypes.PropTypes.object.isRequired,
-	  items: _React$Component$PropTypes.PropTypes.arrayOf(_React$Component$PropTypes.PropTypes.object).isRequired,
-	  flushRight: _React$Component$PropTypes.PropTypes.bool,
-	  handleSelection: _React$Component$PropTypes.PropTypes.func,
-	  receiveFocus: _React$Component$PropTypes.PropTypes.bool,
-	  selectedValue: _React$Component$PropTypes.PropTypes.oneOfType([_React$Component$PropTypes.PropTypes.string, _React$Component$PropTypes.PropTypes.number, _React$Component$PropTypes.PropTypes.bool])
+	  focusManager: _react.PropTypes.object.isRequired,
+	  items: _react.PropTypes.arrayOf(_react.PropTypes.object).isRequired,
+	  flushRight: _react.PropTypes.bool,
+	  handleSelection: _react.PropTypes.func,
+	  receiveFocus: _react.PropTypes.bool,
+	  selectedValue: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number, _react.PropTypes.bool])
 	};
 	module.exports = exports['default'];
 
 /***/ },
 /* 4 */
 /***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _keys = __webpack_require__(2);
+
+	var _cssClassnamer = __webpack_require__(5);
+
+	var _cssClassnamer2 = _interopRequireDefault(_cssClassnamer);
+
+	var MenuItem = (function (_Component) {
+	  function MenuItem() {
+	    _classCallCheck(this, MenuItem);
+
+	    if (_Component != null) {
+	      _Component.apply(this, arguments);
+	    }
+	  }
+
+	  _inherits(MenuItem, _Component);
+
+	  MenuItem.prototype.shouldComponentUpdate = function shouldComponentUpdate(newProps) {
+	    return this.props.isSelected !== newProps.isSelected;
+	  };
+
+	  MenuItem.prototype.componentDidMount = function componentDidMount() {
+	    this.props.focusManager.focusables.push({
+	      content: this.props.content,
+	      text: this.props.text,
+	      node: _react2['default'].findDOMNode(this)
+	    });
+	  };
+
+	  MenuItem.prototype.handleClick = function handleClick(e) {
+	    var props = this.props;
+	    if (props.isSelected) return;
+	    // If there's no value, we'll send the label
+	    var v = typeof props.value !== 'undefined' ? props.value : props.content;
+	    props.handleSelection(v, e);
+	  };
+
+	  MenuItem.prototype.handleKey = function handleKey(e) {
+	    if (e.key !== _keys.ENTER && e.key !== _keys.SPACE) return;
+	    e.preventDefault();
+	    this.handleClick(e);
+	  };
+
+	  MenuItem.prototype.render = function render() {
+	    var props = this.props;
+	    var itemClasses = [_cssClassnamer2['default'].componentPart('menuItem')];
+	    if (props.isSelected) itemClasses.push(_cssClassnamer2['default'].applyNamespace('is-selected'));
+
+	    // tabindex -1 because: "With focus on the button pressing
+	    // the Tab key will take the user to the next tab focusable item on the page.
+	    // With focus on the drop-down menu, pressing the Tab key will take the user
+	    // to the next tab focusable item on the page."
+	    // "A menuitem within a menu or menubar may appear in the tab order
+	    // only if it is not within a popup menu."
+	    // ... so not in tab order, but programatically focusable
+	    return _react2['default'].createElement(
+	      'div',
+	      { id: props.id,
+	        className: itemClasses.join(' '),
+	        onClick: this.handleClick.bind(this),
+	        onKeyDown: this.handleKey.bind(this),
+	        role: 'menuitem',
+	        tabIndex: '-1',
+	        'data-value': props.value },
+	      props.content
+	    );
+	  };
+
+	  return MenuItem;
+	})(_react.Component);
+
+	exports['default'] = MenuItem;
+
+	MenuItem.propTypes = {
+	  focusManager: _react.PropTypes.object.isRequired,
+	  handleSelection: _react.PropTypes.func.isRequired,
+	  content: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.element]).isRequired,
+	  id: _react.PropTypes.string,
+	  isSelected: _react.PropTypes.bool,
+	  text: _react.PropTypes.string,
+	  value: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number, _react.PropTypes.bool])
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 5 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	exports.__esModule = true;
+	exports['default'] = {
+
+	  init: function init(componentName, namespace) {
+	    if (componentName === undefined) componentName = 'AriaMenuButton';
+
+	    this.namespace = namespace;
+	    this.componentName = this.applyNamespace(componentName);
+	  },
+
+	  componentPart: function componentPart(remainder) {
+	    if (!remainder) return this.componentName;
+	    return '' + this.componentName + '-' + remainder;
+	  },
+
+	  applyNamespace: function applyNamespace(str) {
+	    if (!this.namespace) return str;
+	    return '' + this.namespace + '-' + str;
+	  }
+
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 6 */
+/***/ function(module, exports) {
 
 	'use strict';
 
@@ -498,141 +630,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return Object.create(focusManagerProto);
 	}
 
-	module.exports = exports['default'];
-
-/***/ },
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	exports.__esModule = true;
-	exports['default'] = {
-
-	  init: function init(_x, namespace) {
-	    var componentName = arguments[0] === undefined ? 'AriaMenuButton' : arguments[0];
-
-	    this.namespace = namespace;
-	    this.componentName = this.applyNamespace(componentName);
-	  },
-
-	  componentPart: function componentPart(remainder) {
-	    if (!remainder) {
-	      return this.componentName;
-	    }return '' + this.componentName + '-' + remainder;
-	  },
-
-	  applyNamespace: function applyNamespace(str) {
-	    if (!this.namespace) {
-	      return str;
-	    }return '' + this.namespace + '-' + str;
-	  }
-
-	};
-	module.exports = exports['default'];
-
-/***/ },
-/* 6 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
-
-	var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
-
-	var _inherits = function (subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
-
-	exports.__esModule = true;
-
-	var _React$PropTypes$Component = __webpack_require__(1);
-
-	var _React$PropTypes$Component2 = _interopRequireWildcard(_React$PropTypes$Component);
-
-	var _ENTER$SPACE = __webpack_require__(2);
-
-	var _cssClassnamer = __webpack_require__(5);
-
-	var _cssClassnamer2 = _interopRequireWildcard(_cssClassnamer);
-
-	var MenuItem = (function (_Component) {
-	  function MenuItem() {
-	    _classCallCheck(this, MenuItem);
-
-	    if (_Component != null) {
-	      _Component.apply(this, arguments);
-	    }
-	  }
-
-	  _inherits(MenuItem, _Component);
-
-	  MenuItem.prototype.shouldComponentUpdate = function shouldComponentUpdate(newProps) {
-	    return this.props.isSelected !== newProps.isSelected;
-	  };
-
-	  MenuItem.prototype.componentDidMount = function componentDidMount() {
-	    this.props.focusManager.focusables.push({
-	      content: this.props.content,
-	      text: this.props.text,
-	      node: _React$PropTypes$Component2['default'].findDOMNode(this)
-	    });
-	  };
-
-	  MenuItem.prototype.handleClick = function handleClick(e) {
-	    var props = this.props;
-	    if (props.isSelected) {
-	      return;
-	    } // If there's no value, we'll send the label
-	    var v = typeof props.value !== 'undefined' ? props.value : props.content;
-	    props.handleSelection(v, e);
-	  };
-
-	  MenuItem.prototype.handleKey = function handleKey(e) {
-	    if (e.key !== _ENTER$SPACE.ENTER && e.key !== _ENTER$SPACE.SPACE) {
-	      return;
-	    }e.preventDefault();
-	    this.handleClick(e);
-	  };
-
-	  MenuItem.prototype.render = function render() {
-	    var props = this.props;
-	    var itemClasses = [_cssClassnamer2['default'].componentPart('menuItem')];
-	    if (props.isSelected) itemClasses.push(_cssClassnamer2['default'].applyNamespace('is-selected'));
-
-	    // tabindex -1 because: "With focus on the button pressing
-	    // the Tab key will take the user to the next tab focusable item on the page.
-	    // With focus on the drop-down menu, pressing the Tab key will take the user
-	    // to the next tab focusable item on the page."
-	    // "A menuitem within a menu or menubar may appear in the tab order
-	    // only if it is not within a popup menu."
-	    // ... so not in tab order, but programatically focusable
-	    return _React$PropTypes$Component2['default'].createElement(
-	      'div',
-	      { id: props.id,
-	        className: itemClasses.join(' '),
-	        onClick: this.handleClick.bind(this),
-	        onKeyDown: this.handleKey.bind(this),
-	        role: 'menuitem',
-	        tabIndex: '-1',
-	        'data-value': props.value },
-	      props.content
-	    );
-	  };
-
-	  return MenuItem;
-	})(_React$PropTypes$Component.Component);
-
-	exports['default'] = MenuItem;
-
-	MenuItem.propTypes = {
-	  focusManager: _React$PropTypes$Component.PropTypes.object.isRequired,
-	  handleSelection: _React$PropTypes$Component.PropTypes.func.isRequired,
-	  content: _React$PropTypes$Component.PropTypes.oneOfType([_React$PropTypes$Component.PropTypes.string, _React$PropTypes$Component.PropTypes.element]).isRequired,
-	  id: _React$PropTypes$Component.PropTypes.string,
-	  isSelected: _React$PropTypes$Component.PropTypes.bool,
-	  text: _React$PropTypes$Component.PropTypes.string,
-	  value: _React$PropTypes$Component.PropTypes.oneOfType([_React$PropTypes$Component.PropTypes.string, _React$PropTypes$Component.PropTypes.number, _React$PropTypes$Component.PropTypes.bool])
-	};
 	module.exports = exports['default'];
 
 /***/ }

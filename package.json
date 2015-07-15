@@ -1,8 +1,11 @@
 {
   "name": "react-aria-menubutton",
-  "version": "0.5.2",
+  "version": "0.6.0",
   "description": "A fully accessible, easily themeable, React-powered menu button",
   "main": "index.js",
+  "scripts": {
+    "prepublish": "npm run build"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/davidtheclark/react-aria-menubutton.git"

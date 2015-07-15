@@ -1,35 +1,38 @@
 'use strict';
 
-var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
-
-var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
-
-var _inherits = function (subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
+exports.__esModule = true;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-exports.__esModule = true;
 exports['default'] = createAriaMenuButton;
 
-var _React$Component$PropTypes = require('react');
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
-var _React$Component$PropTypes2 = _interopRequireWildcard(_React$Component$PropTypes);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _import = require('./keys');
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-var keys = _interopRequireWildcard(_import);
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _keys = require('./keys');
+
+var keys = _interopRequireWildcard(_keys);
 
 var _Menu = require('./Menu');
 
-var _Menu2 = _interopRequireWildcard(_Menu);
+var _Menu2 = _interopRequireDefault(_Menu);
 
 var _focusManager = require('./focusManager');
 
-var _focusManager2 = _interopRequireWildcard(_focusManager);
+var _focusManager2 = _interopRequireDefault(_focusManager);
 
 var _cssClassnamer = require('./cssClassnamer');
 
-var _cssClassnamer2 = _interopRequireWildcard(_cssClassnamer);
+var _cssClassnamer2 = _interopRequireDefault(_cssClassnamer);
 
 function createAriaMenuButton() {
   var opts = arguments[0] === undefined ? {} : arguments[0];
@@ -60,7 +63,7 @@ function createAriaMenuButton() {
     };
 
     MenuButton.prototype.componentDidMount = function componentDidMount() {
-      this.focusManager.trigger = _React$Component$PropTypes2['default'].findDOMNode(this.refs.trigger);
+      this.focusManager.trigger = _react2['default'].findDOMNode(this.refs.trigger);
     };
 
     MenuButton.prototype.openMenu = function openMenu() {
@@ -88,9 +91,8 @@ function createAriaMenuButton() {
       var key = e.key;
       var isLetterKey = isLetterKeyEvent(e);
 
-      if (key !== keys.DOWN && !isLetterKey) {
-        return;
-      }e.preventDefault();
+      if (key !== keys.DOWN && !isLetterKey) return;
+      e.preventDefault();
 
       if (key === keys.DOWN) {
         // "With focus on the button and the drop-down menu open,
@@ -112,9 +114,8 @@ function createAriaMenuButton() {
 
     MenuButton.prototype.handleTriggerKey = function handleTriggerKey(e) {
       var key = e.key;
-      if (key !== keys.ENTER && key !== keys.SPACE) {
-        return;
-      }e.preventDefault();
+      if (key !== keys.ENTER && key !== keys.SPACE) return;
+      e.preventDefault();
       this.toggleMenu();
     };
 
@@ -150,9 +151,9 @@ function createAriaMenuButton() {
       }, 0);
     };
 
-    MenuButton.prototype.handleSelection = function handleSelection(v) {
+    MenuButton.prototype.handleSelection = function handleSelection(v, e) {
       if (this.props.closeOnSelection) this.closeMenu();
-      this.props.handleSelection(v);
+      this.props.handleSelection(v, e);
     };
 
     MenuButton.prototype.handleOverlayClick = function handleOverlayClick() {
@@ -163,24 +164,24 @@ function createAriaMenuButton() {
       var props = this.props;
       var isOpen = this.state.isOpen;
 
-      var triggerId = props.id ? '' + props.id + '-trigger' : undefined;
-      var outsideId = props.id ? '' + props.id + '-outside' : undefined;
+      var triggerId = props.id ? props.id + '-trigger' : undefined;
+      var outsideId = props.id ? props.id + '-outside' : undefined;
       var triggerClasses = [_cssClassnamer2['default'].componentPart('trigger')];
       if (isOpen) triggerClasses.push(_cssClassnamer2['default'].applyNamespace('is-open'));
 
-      var menu = isOpen ? _React$Component$PropTypes2['default'].createElement(_Menu2['default'], _extends({}, props, {
+      var menu = isOpen ? _react2['default'].createElement(_Menu2['default'], _extends({}, props, {
         handleSelection: this.handleSelection.bind(this),
         receiveFocus: this.state.innerFocus,
         focusManager: this.focusManager })) : false;
 
-      var menuWrapper = TransitionGroup ? _React$Component$PropTypes2['default'].createElement(
+      var menuWrapper = TransitionGroup ? _react2['default'].createElement(
         TransitionGroup,
         { transitionName: _cssClassnamer2['default'].applyNamespace('is'),
           component: 'div',
           className: [_cssClassnamer2['default'].componentPart('menuWrapper'), _cssClassnamer2['default'].componentPart('menuWrapper--transition')].join(' '),
           onKeyDown: this.handleMenuKey.bind(this) },
         menu
-      ) : _React$Component$PropTypes2['default'].createElement(
+      ) : _react2['default'].createElement(
         'div',
         { className: _cssClassnamer2['default'].componentPart('menuWrapper'),
           onKeyDown: this.handleMenuKey.bind(this) },
@@ -199,7 +200,7 @@ function createAriaMenuButton() {
         zIndex: '100'
       };
 
-      var outsideOverlay = !isOpen ? false : _React$Component$PropTypes2['default'].createElement('div', { id: outsideId,
+      var outsideOverlay = !isOpen ? false : _react2['default'].createElement('div', { id: outsideId,
         onClick: this.handleOverlayClick.bind(this),
         ref: 'overlay',
         style: {
@@ -210,17 +211,17 @@ function createAriaMenuButton() {
           WebkitTapHighlightColor: 'rgba(0,0,0,0)'
         } });
 
-      return _React$Component$PropTypes2['default'].createElement(
+      return _react2['default'].createElement(
         'div',
         { id: props.id,
           className: _cssClassnamer2['default'].componentPart(),
           onKeyDown: this.handleAnywhereKey.bind(this),
           onBlur: this.handleBlur.bind(this) },
         outsideOverlay,
-        _React$Component$PropTypes2['default'].createElement(
+        _react2['default'].createElement(
           'div',
           { style: innerStyle },
-          _React$Component$PropTypes2['default'].createElement(
+          _react2['default'].createElement(
             'div',
             { id: triggerId,
               className: triggerClasses.join(' '),
@@ -239,17 +240,17 @@ function createAriaMenuButton() {
     };
 
     return MenuButton;
-  })(_React$Component$PropTypes.Component);
+  })(_react.Component);
 
   MenuButton.propTypes = {
-    handleSelection: _React$Component$PropTypes.PropTypes.func.isRequired,
-    items: _React$Component$PropTypes.PropTypes.arrayOf(_React$Component$PropTypes.PropTypes.object).isRequired,
-    triggerContent: _React$Component$PropTypes.PropTypes.oneOfType([_React$Component$PropTypes.PropTypes.string, _React$Component$PropTypes.PropTypes.element]).isRequired,
-    closeOnSelection: _React$Component$PropTypes.PropTypes.bool,
-    flushRight: _React$Component$PropTypes.PropTypes.bool,
-    id: _React$Component$PropTypes.PropTypes.string,
-    startOpen: _React$Component$PropTypes.PropTypes.bool,
-    selectedValue: _React$Component$PropTypes.PropTypes.oneOfType([_React$Component$PropTypes.PropTypes.string, _React$Component$PropTypes.PropTypes.number, _React$Component$PropTypes.PropTypes.bool])
+    handleSelection: _react.PropTypes.func.isRequired,
+    items: _react.PropTypes.arrayOf(_react.PropTypes.object).isRequired,
+    triggerContent: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.element]).isRequired,
+    closeOnSelection: _react.PropTypes.bool,
+    flushRight: _react.PropTypes.bool,
+    id: _react.PropTypes.string,
+    startOpen: _react.PropTypes.bool,
+    selectedValue: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number, _react.PropTypes.bool])
   };
 
   return MenuButton;

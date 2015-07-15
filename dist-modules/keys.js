@@ -1,9 +1,9 @@
-'use strict';
-
-exports.__esModule = true;
 // Lookey here
 // https://github.com/facebook/react/blob/0.13-stable/src/browser/ui/dom/getEventKey.js
 
+'use strict';
+
+exports.__esModule = true;
 var ENTER = 'Enter';
 exports.ENTER = ENTER;
 var SPACE = ' ';

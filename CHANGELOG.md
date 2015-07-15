@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.6.0
+- Pass event object as second argument to `handleSelection` callback.
+
 ## 0.5.2
 - Add keywords to `package.json`.
 
