@@ -49,9 +49,9 @@ class DemoOne extends React.Component {
             </ul>
           </Menu>
         </div>
-        <p>
+        <span style={{ marginLeft: '1em' }}>
           Your last selection was: <strong>{selected}</strong>
-        </p>
+        </span>
       </div>
     );
   }

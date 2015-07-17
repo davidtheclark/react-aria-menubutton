@@ -7,16 +7,18 @@ const CSSTransitionGroup = React.addons.CSSTransitionGroup;
 class Fancy extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { lastSelected: '' };
-    this.ambSet = ariaMenuButton();
+    this.state = { selected: '' };
+    this.ariaMenuButton = ariaMenuButton({
+      onSelection: this.handleSelection.bind(this),
+    });
   }
 
   handleSelection(value) {
-    this.setState({ lastSelected: value });
+    this.setState({ selected: value });
   }
 
   render() {
-    const { Button, Menu, MenuItem } = this.ambSet;
+    const { Button, Menu, MenuItem } = this.ariaMenuButton;
 
     const fancyMenuItems = fancyStuff.map((activity, i) => (
       <MenuItem
@@ -24,11 +26,11 @@ class Fancy extends React.Component {
         text={activity}
         key={i}
       >
-        <div className='AriaMenuButton-menuItem Fancy-item'>
-          <img src={`svg/${activity}.svg`} className='Fancy-svg' />
-          <span className='Fancy-text'>
-            Humans enjoy
-            <span className='Fancy-keyword'>
+        <div className='FancyMB-menuItem'>
+          <img src={`svg/${activity}.svg`} className='FancyMB-svg' />
+          <span className='FancyMB-text'>
+            I enjoy
+            <span className='FancyMB-keyword'>
               {activity}
             </span>
           </span>
@@ -38,7 +40,7 @@ class Fancy extends React.Component {
 
     const menuInnards = menuIsOpen => {
       const menu = (!menuIsOpen) ? false : (
-        <div className='AriaMenuButton-menu' key='menu'>
+        <div className='FancyMB-menu' key='menu'>
           {fancyMenuItems}
         </div>
       );
@@ -46,32 +48,32 @@ class Fancy extends React.Component {
         <CSSTransitionGroup transitionName='is'>
           {menu}
         </CSSTransitionGroup>
-      )
-    }
+      );
+    };
 
     return (
       <div>
-        <Button>
-          <div className='AriaMenuButton'>
-            <div className='AriaMenuButton-trigger' key='trigger'>
-              <div className='Fancy-triggerInnards'>
-                <img src='svg/profile-female.svg' className='Fancy-triggerIcon '/>
-                <div className='Fancy-triggerText'>
-                  Humans enjoy fancy things<br />
-                  <span className='Fancy-triggerSmallText'>
-                    (click to select a fancy thing)
+        <div className='FancyMB'>
+          <Button>
+            <div className='FancyMB-trigger'>
+              <span className='FancyMB-triggerInnards'>
+                <img src='svg/profile-female.svg' className='FancyMB-triggerIcon '/>
+                <span className='FancyMB-triggerText'>
+                  What do you enjoy?<br />
+                  <span className='FancyMB-triggerSmallText'>
+                    (select an enjoyable activity)
                   </span>
-                </div>
-              </div>
+                </span>
+              </span>
             </div>
-          </div>
-        </Button>
-        <Menu>
-          {menuInnards}
-        </Menu>
-        <div className='Fancy-selectedText'>
-          Last selection: {this.state.lastSelected}
+          </Button>
+          <Menu>
+            {menuInnards}
+          </Menu>
         </div>
+        <span className='FancyMB-selectedText' style={{ marginLeft: '1em' }}>
+          You said you enjoy: <strong>{this.state.selected}</strong>
+        </span>
       </div>
     );
   }
@@ -79,7 +81,7 @@ class Fancy extends React.Component {
 
 React.render(
   <Fancy />,
-  document.getElementById('fancy-container')
+  document.getElementById('demo-fancy')
 );
 
 // Pre-load the initially hidden SVGs

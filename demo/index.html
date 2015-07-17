@@ -53,25 +53,43 @@
       Menu Button</a>.
     </p>
 
-    <!-- <h2>Possibilities for Fanciness</h2>
+    <h2>Possibilities for Fanciness</h2>
     <p>
-      The provided components are just "smart" components to wrap whatever "dumb" components you want to function as a part of the menu button you're building -- i.e. they just wrap your components and provide the keyboard functionality described above.
+      The provided components are just "smart" components to wrap whatever "dumb" components you want to be a part of the Menu Button pattern you're building -- i.e. they just <em>wrap <strong>your</strong> components</em> to provide the keyboard functionality described above and some ARIA attributes.
     </p>
     <p>
-      This means that <strong>you can use any React element as your trigger or menu item</strong>.
+      This means that <strong>you can use any React element within your button, menu, or menu items</strong>.
       Which means that <em>nothing can stop you</em>.
     </p>
     <p>
-      Here's a fancier menu button whose Trigger and MenuItems wrap complex elements:
+      Here's a fancier ARIA-compliant menu button:
     </p>
-    <div id="fancy-container"></div>
+    <div id="demo-fancy"></div>
     <p>
-      <small>Icons from <a href="http://tympanus.net/codrops/2014/10/27/freebie-ballicons-2-vol-2/">Ballicons by PixelBuddha</a>.</small>
-    </p> -->
+      Notice a few features:
+    </p>
+    <ul>
+      <li>
+        Complex markup within the button
+      </li>
+      <li>
+        Complex markup within the menu items
+      </li>
+      <li>
+        Navigating the menu with letters keys still makes sense
+      </li>
+      <li>
+        Open-close animation (using React's CSSTransitionGroup)
+      </li>
+    </ul>
 
     <h2>Great, now what do I do?</h2>
     <p>
       <a href="https://github.com/davidtheclark/react-aria-menubutton">Go back to the repo</a>
+    </p>
+
+    <p style='text-align: right;'>
+      <small>Icons in fancy demo from <a href="http://tympanus.net/codrops/2014/10/27/freebie-ballicons-2-vol-2/">Ballicons by PixelBuddha</a>.</small>
     </p>
 
     <script src="demo-bundle.js"></script>
