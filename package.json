@@ -67,6 +67,7 @@
     "test-single": "npm run bundle-test && karma start --single-run",
     "test": "npm run lint && npm run test-single",
     "bundle-dist": "webpack --config webpack.config.dist.js",
-    "build": "trash dist/* --force && npm run bundle-dist && parallelshell 'npm run build-modules' 'npm run minify'"
+    "build": "trash dist/* --force && npm run bundle-dist && parallelshell 'npm run build-modules' 'npm run minify'",
+    "prepublish": "npm run build"
   }
 }
