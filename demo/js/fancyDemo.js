@@ -25,16 +25,15 @@ class Fancy extends React.Component {
         value={activity}
         text={activity}
         key={i}
+        className='FancyMB-menuItem'
       >
-        <div className='FancyMB-menuItem'>
-          <img src={`svg/${activity}.svg`} className='FancyMB-svg' />
-          <span className='FancyMB-text'>
-            I enjoy
-            <span className='FancyMB-keyword'>
-              {activity}
-            </span>
+        <img src={`svg/${activity}.svg`} className='FancyMB-svg' />
+        <span className='FancyMB-text'>
+          I enjoy
+          <span className='FancyMB-keyword'>
+            {activity}
           </span>
-        </div>
+        </span>
       </MenuItem>
     ));
 
@@ -54,18 +53,16 @@ class Fancy extends React.Component {
     return (
       <div>
         <div className='FancyMB'>
-          <Button>
-            <div className='FancyMB-trigger'>
-              <span className='FancyMB-triggerInnards'>
-                <img src='svg/profile-female.svg' className='FancyMB-triggerIcon '/>
-                <span className='FancyMB-triggerText'>
-                  What do you enjoy?<br />
-                  <span className='FancyMB-triggerSmallText'>
-                    (select an enjoyable activity)
-                  </span>
+          <Button className='FancyMB-trigger'>
+            <span className='FancyMB-triggerInnards'>
+              <img src='svg/profile-female.svg' className='FancyMB-triggerIcon '/>
+              <span className='FancyMB-triggerText'>
+                What do you enjoy?<br />
+                <span className='FancyMB-triggerSmallText'>
+                  (select an enjoyable activity)
                 </span>
               </span>
-            </div>
+            </span>
           </Button>
           <Menu>
             {menuInnards}

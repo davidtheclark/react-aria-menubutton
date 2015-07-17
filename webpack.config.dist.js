@@ -2,7 +2,7 @@ module.exports = {
   entry: './src/createAriaMenuButton.js',
   module: {
     loaders: [
-      { test: /\.js$/, loader: 'babel?loose=all', exclude: /node_modules/ },
+      { test: /\.(js|jsx)$/, loader: 'babel?loose=all', exclude: /node_modules/ },
     ],
   },
   resolve: {

@@ -16,7 +16,7 @@ export default class Menu extends React.Component {
   }
 
   render() {
-    const { manager, children, tag } = this.props;
+    const { manager, children, tag, className } = this.props;
 
     const childrenToRender = (() => {
       if (typeof children === 'function') return children(manager.isOpen);
@@ -25,6 +25,7 @@ export default class Menu extends React.Component {
     })();
 
     return React.createElement(tag, {
+      className,
       onKeyDown: manager.handleMenuKey,
       // "A menu is a container of options. The container may have a role of
       // menu or menubar depending on your implementation."
@@ -37,6 +38,8 @@ export default class Menu extends React.Component {
 Menu.propTypes = {
   children: PropTypes.oneOfType([PropTypes.func, PropTypes.element]).isRequired,
   manager: PropTypes.object.isRequired,
+  className: PropTypes.string,
+  tag: PropTypes.string,
 };
 
 Menu.defaultProps = {

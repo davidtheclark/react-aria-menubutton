@@ -42,9 +42,10 @@ export default class Button extends React.Component {
   }
 
   render() {
-    const { manager, children, tag } = this.props;
+    const { manager, children, tag, className } = this.props;
 
     return React.createElement(tag, {
+      className,
       // "The menu button itself has a role of button."
       role: 'button',
       tabIndex: '0',
@@ -61,6 +62,8 @@ export default class Button extends React.Component {
 Button.propTypes = {
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
   manager: PropTypes.object.isRequired,
+  className: PropTypes.string,
+  tag: PropTypes.string,
 };
 
 Button.defaultProps = {

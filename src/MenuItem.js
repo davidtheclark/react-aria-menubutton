@@ -28,9 +28,10 @@ export default class MenuItem extends React.Component {
   }
 
   render() {
-    const { tag, children } = this.props;
+    const { tag, children, className } = this.props;
 
     return React.createElement(tag, {
+      className,
       onClick: this.selectItem.bind(this),
       onKeyDown: this.handleKeyDown.bind(this),
       // "The menu contains elements with roles: menuitem,
@@ -57,6 +58,7 @@ MenuItem.propTypes = {
     PropTypes.string,
   ]).isRequired,
   manager: PropTypes.object.isRequired,
+  className: PropTypes.string,
   tag: PropTypes.string,
   text: PropTypes.string,
   value: PropTypes.oneOfType([

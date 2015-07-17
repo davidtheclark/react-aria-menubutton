@@ -26,10 +26,12 @@ class DemoOne extends React.Component {
       }
       return (
         <li className='AriaMenuButton-menuItemWrapper' key={i}>
-          <MenuItem value={word} text={word}>
-            <div className={itemClass}>
-              {word}
-            </div>
+          <MenuItem
+            className={itemClass}
+            value={word}
+            text={word}
+          >
+            {word}
           </MenuItem>
         </li>
       );
@@ -38,10 +40,8 @@ class DemoOne extends React.Component {
     return (
       <div>
         <div className='AriaMenuButton'>
-          <Button>
-            <span className='AriaMenuButton-trigger'>
-              Select a word
-            </span>
+          <Button className='AriaMenuButton-trigger'>
+            Select a word
           </Button>
           <Menu>
             <ul className='AriaMenuButton-menu'>
