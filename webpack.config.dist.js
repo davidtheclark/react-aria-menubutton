@@ -1,5 +1,5 @@
 module.exports = {
-  entry: './src/createAriaMenuButton.js',
+  entry: './src/ariaMenuButton.jsx',
   module: {
     loaders: [
       { test: /\.(js|jsx)$/, loader: 'babel?loose=all', exclude: /node_modules/ },
@@ -12,7 +12,7 @@ module.exports = {
     react: 'react',
   },
   output: {
-    filename: 'dist/createAriaMenuButton.js',
+    filename: 'dist/ariaMenuButton.js',
     libraryTarget: 'umd',
     library: 'AriaMenuButton',
   },
