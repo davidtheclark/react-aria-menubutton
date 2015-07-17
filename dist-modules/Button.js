@@ -66,9 +66,11 @@ var Button = (function (_React$Component) {
     var children = _props.children;
     var tag = _props.tag;
     var className = _props.className;
+    var id = _props.id;
 
     return _react2['default'].createElement(tag, {
       className: className,
+      id: id,
       // "The menu button itself has a role of button."
       role: 'button',
       tabIndex: '0',
@@ -90,6 +92,7 @@ Button.propTypes = {
   children: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.element]).isRequired,
   manager: _react.PropTypes.object.isRequired,
   className: _react.PropTypes.string,
+  id: _react.PropTypes.string,
   tag: _react.PropTypes.string
 };
 

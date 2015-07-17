@@ -53,9 +53,11 @@ var MenuItem = (function (_React$Component) {
     var tag = _props.tag;
     var children = _props.children;
     var className = _props.className;
+    var id = _props.id;
 
     return _react2['default'].createElement(tag, {
       className: className,
+      id: id,
       onClick: this.selectItem.bind(this),
       onKeyDown: this.handleKeyDown.bind(this),
       // "The menu contains elements with roles: menuitem,
@@ -84,6 +86,7 @@ MenuItem.propTypes = {
   children: _react.PropTypes.oneOfType([_react.PropTypes.element, _react.PropTypes.string]).isRequired,
   manager: _react.PropTypes.object.isRequired,
   className: _react.PropTypes.string,
+  id: _react.PropTypes.string,
   tag: _react.PropTypes.string,
   text: _react.PropTypes.string,
   value: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.number, _react.PropTypes.string])

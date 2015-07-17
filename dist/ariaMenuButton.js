@@ -439,9 +439,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var children = _props.children;
 	    var tag = _props.tag;
 	    var className = _props.className;
+	    var id = _props.id;
 
 	    return _react2['default'].createElement(tag, {
 	      className: className,
+	      id: id,
 	      // "The menu button itself has a role of button."
 	      role: 'button',
 	      tabIndex: '0',
@@ -463,6 +465,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  children: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.element]).isRequired,
 	  manager: _react.PropTypes.object.isRequired,
 	  className: _react.PropTypes.string,
+	  id: _react.PropTypes.string,
 	  tag: _react.PropTypes.string
 	};
 
@@ -515,6 +518,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var children = _props.children;
 	    var tag = _props.tag;
 	    var className = _props.className;
+	    var id = _props.id;
 
 	    var childrenToRender = (function () {
 	      if (typeof children === 'function') return children(manager.isOpen);
@@ -524,6 +528,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    return _react2['default'].createElement(tag, {
 	      className: className,
+	      id: id,
 	      onKeyDown: manager.handleMenuKey,
 	      // "A menu is a container of options. The container may have a role of
 	      // menu or menubar depending on your implementation."
@@ -540,6 +545,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Menu.propTypes = {
 	  children: _react.PropTypes.oneOfType([_react.PropTypes.func, _react.PropTypes.element]).isRequired,
 	  manager: _react.PropTypes.object.isRequired,
+	  id: _react.PropTypes.string,
 	  className: _react.PropTypes.string,
 	  tag: _react.PropTypes.string
 	};
@@ -608,9 +614,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var tag = _props.tag;
 	    var children = _props.children;
 	    var className = _props.className;
+	    var id = _props.id;
 
 	    return _react2['default'].createElement(tag, {
 	      className: className,
+	      id: id,
 	      onClick: this.selectItem.bind(this),
 	      onKeyDown: this.handleKeyDown.bind(this),
 	      // "The menu contains elements with roles: menuitem,
@@ -639,6 +647,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  children: _react.PropTypes.oneOfType([_react.PropTypes.element, _react.PropTypes.string]).isRequired,
 	  manager: _react.PropTypes.object.isRequired,
 	  className: _react.PropTypes.string,
+	  id: _react.PropTypes.string,
 	  tag: _react.PropTypes.string,
 	  text: _react.PropTypes.string,
 	  value: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.number, _react.PropTypes.string])

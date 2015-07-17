@@ -38,6 +38,7 @@ var Menu = (function (_React$Component) {
     var children = _props.children;
     var tag = _props.tag;
     var className = _props.className;
+    var id = _props.id;
 
     var childrenToRender = (function () {
       if (typeof children === 'function') return children(manager.isOpen);
@@ -47,6 +48,7 @@ var Menu = (function (_React$Component) {
 
     return _react2['default'].createElement(tag, {
       className: className,
+      id: id,
       onKeyDown: manager.handleMenuKey,
       // "A menu is a container of options. The container may have a role of
       // menu or menubar depending on your implementation."
@@ -63,6 +65,7 @@ exports['default'] = Menu;
 Menu.propTypes = {
   children: _react.PropTypes.oneOfType([_react.PropTypes.func, _react.PropTypes.element]).isRequired,
   manager: _react.PropTypes.object.isRequired,
+  id: _react.PropTypes.string,
   className: _react.PropTypes.string,
   tag: _react.PropTypes.string
 };
