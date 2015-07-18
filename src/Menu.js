@@ -19,7 +19,9 @@ export default class Menu extends React.Component {
     const { manager, children, tag, className, id } = this.props;
 
     const childrenToRender = (() => {
-      if (typeof children === 'function') return children(manager.isOpen);
+      if (typeof children === 'function') {
+        return children({ isOpen: manager.isOpen });
+      }
       if (manager.isOpen) return children;
       return [];
     })();
@@ -28,8 +30,6 @@ export default class Menu extends React.Component {
       className,
       id,
       onKeyDown: manager.handleMenuKey,
-      // "A menu is a container of options. The container may have a role of
-      // menu or menubar depending on your implementation."
       role: 'menu',
       onBlur: manager.handleBlur,
     }, childrenToRender);

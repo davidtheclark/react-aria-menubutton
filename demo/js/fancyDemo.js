@@ -37,8 +37,8 @@ class Fancy extends React.Component {
       </MenuItem>
     ));
 
-    const menuInnards = menuIsOpen => {
-      const menu = (!menuIsOpen) ? false : (
+    const menuInnards = menuState => {
+      const menu = (!menuState.isOpen) ? false : (
         <div className='FancyMB-menu' key='menu'>
           {fancyMenuItems}
         </div>

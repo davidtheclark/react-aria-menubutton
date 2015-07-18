@@ -1,5 +1,5 @@
+import './Manager-test';
 import './MenuItem-test';
 import './Menu-test';
-import './Trigger-test';
-import './Container-test';
-import './Manager-test';
+import './Button-test';
+import './ariaMenuButton-test';

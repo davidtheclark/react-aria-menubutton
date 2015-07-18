@@ -5,7 +5,9 @@ import isLetterKeyCode from './isLetterKeyCode';
 export default class Manager {
   constructor(options={}) {
     this.options = options;
-    this.options.closeOnSelection = this.options.closeOnSelection || true;
+    if (typeof this.options.closeOnSelection === 'undefined') {
+      this.options.closeOnSelection = true;
+    }
 
     this.handleBlur = handleBlur.bind(this);
     this.handleSelection = handleSelection.bind(this);
@@ -131,6 +133,7 @@ function handleMenuKey(event) {
       break;
     default:
       if (!isLetterKeyCode(event.keyCode)) return;
+      event.preventDefault();
       // "Typing a letter (printable character) key moves focus to the next
       // instance of a visible node whose title begins with that printable letter."
       this.moveToLetter(String.fromCharCode(event.keyCode));

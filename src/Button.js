@@ -13,21 +13,11 @@ export default class Button extends React.Component {
 
     if (key === keys.DOWN) {
       event.preventDefault();
-
-      // "With focus on the button and no drop-down menu displayed,
-      // pressing Down Arrow will open the drop-down menu and move focus
-      // into the menu and onto the first menu item."
       if (!manager.isOpen) manager.openMenu({ focusMenu: true });
-
-      // "With focus on the button and the drop-down menu open,
-      // pressing Down Arrow will move focus into the menu onto
-      // the first menu item. [...]"
       else manager.moveFocusDown();
       return;
     }
 
-    // "With focus on the button pressing Space or Enter will toggle
-    // the display of the drop-down menu. Focus remains on the button."
     if (key === keys.ENTER || key === keys.SPACE) {
       event.preventDefault();
       manager.toggleMenu();

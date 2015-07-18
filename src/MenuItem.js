@@ -35,19 +35,7 @@ export default class MenuItem extends React.Component {
       id,
       onClick: this.selectItem.bind(this),
       onKeyDown: this.handleKeyDown.bind(this),
-      // "The menu contains elements with roles: menuitem,
-      // menuitemcheckbox, or menuitemradio depending on your implementation."
       role: 'menuitem',
-      // "With focus on the button pressing the Tab key will
-      // take the user to the next tab focusable item
-      // on the page."
-      //
-      // "With focus on the drop-down menu, pressing the Tab
-      // key will take the user to the next tab focusable
-      // item on the page."
-      //
-      // "Menu focus is managed by the menu using tabindex
-      // or aria-activedescendant."
       tabIndex: '-1',
     }, children);
   }
@@ -57,6 +45,7 @@ MenuItem.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.element,
     PropTypes.string,
+    PropTypes.arrayOf(PropTypes.element),
   ]).isRequired,
   manager: PropTypes.object.isRequired,
   className: PropTypes.string,
