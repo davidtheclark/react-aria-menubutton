@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.7.0
+- New, more flexible API: provided components are just wrappers around whatever elements they're given.
+
+## 0.6.0
+- Pass `event` to `handleSelection`.
+
 ## 0.5.2
 - Add keywords to `package.json`.
 

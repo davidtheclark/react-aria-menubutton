@@ -32,21 +32,10 @@ var Button = (function (_React$Component) {
 
     if (key === _keys2['default'].DOWN) {
       event.preventDefault();
-
-      // "With focus on the button and no drop-down menu displayed,
-      // pressing Down Arrow will open the drop-down menu and move focus
-      // into the menu and onto the first menu item."
-      if (!manager.isOpen) manager.openMenu({ focusMenu: true });
-
-      // "With focus on the button and the drop-down menu open,
-      // pressing Down Arrow will move focus into the menu onto
-      // the first menu item. [...]"
-      else manager.moveFocusDown();
+      if (!manager.isOpen) manager.openMenu({ focusMenu: true });else manager.moveFocusDown();
       return;
     }
 
-    // "With focus on the button pressing Space or Enter will toggle
-    // the display of the drop-down menu. Focus remains on the button."
     if (key === _keys2['default'].ENTER || key === _keys2['default'].SPACE) {
       event.preventDefault();
       manager.toggleMenu();

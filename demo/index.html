@@ -29,22 +29,22 @@
         With the menu closed and focus on the trigger, press ArrowDown to open the menu and move focus to the first menu item.
       </li>
       <li>
-        With the menu opened and focus inside the menu, press ArrowDown or ArrowUp to cycle focus through the menu items.
+        With the menu opened, press ArrowDown or ArrowUp to cycle focus through the menu items.
       </li>
       <li>
-        With the menu opened and focus inside the menu, press a letter key to move focus to the next menu item whose label begins with that letter.
+        With the menu opened, press a letter key to move focus to the next menu item whose label begins with that letter.
       </li>
       <li>
         With the menu opened, click a menu item to fire the handler.
       </li>
       <li>
-        With the menu opened and focus inside the menu, use the keyboard to move focus to a menu item and press Enter or Space to fire the handler.
+        With the menu opened, use the keyboard to move focus to a menu item and press Enter or Space to fire the handler.
       </li>
       <li>
         With the menu opened and focus on either the trigger or a menu item, move focus outside of the menu &mdash; by clicking outside of it or pressing Tab &mdash; to close the menu.
       </li>
       <li>
-        With the menu opened and focus inside the menu, press Escape to close the menu and return focus to the trigger.
+        With the menu opened, press Escape to close the menu and return focus to the trigger.
       </li>
     </ul>
     <p>
@@ -55,14 +55,14 @@
 
     <h2>Possibilities for Fanciness</h2>
     <p>
-      The provided components are just "smart" components to wrap whatever "dumb" components you want to be a part of the Menu Button pattern you're building -- i.e. they just <em>wrap <strong>your</strong> components</em> to provide the keyboard functionality described above and some ARIA attributes.
+      The provided components &mdash; the Button, the Menu, and the MenuItem &mdash; are just "smart" components to wrap whatever "dumb" components you want to be a part of the Menu Button pattern you're building &mdash; i.e. they just <em>wrap <strong>your</strong> components</em> to provide the keyboard functionality described above and some ARIA attributes.
     </p>
     <p>
-      This means that <strong>you can use any React element within your button, menu, or menu items</strong>.
+      This means that <strong>you can use any React element within the Button, Menu, or MenuItems</strong>.
       Which means that <em>nothing can stop you</em>.
     </p>
     <p>
-      Here's a fancier ARIA-compliant menu button:
+      To demonstrate, here's a fancier but equally ARIA-compliant and keyboard-friendly menu button:
     </p>
     <div id="demo-fancy"></div>
     <p>
@@ -79,7 +79,7 @@
         Navigating the menu with letters keys still makes sense
       </li>
       <li>
-        Open-close animation (using React's CSSTransitionGroup)
+        Open-close animation (using <a href="https://facebook.github.io/react/docs/animation.html">React's CSSTransitionGroup</a>)
       </li>
     </ul>
 

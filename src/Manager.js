@@ -107,9 +107,9 @@ function handleBlur() {
   }, 0);
 }
 
-function handleSelection(value) {
+function handleSelection(value, event) {
   if (this.options.closeOnSelection) this.closeMenu();
-  this.options.onSelection(value);
+  this.options.onSelection(value, event);
 }
 
 function handleMenuKey(event) {

@@ -187,9 +187,9 @@ test('Manager#handleSelection', t => {
     onSelection: mOneHandler,
   });
   sinon.stub(mOne, 'closeMenu');
-  mOne.handleSelection('foo');
+  mOne.handleSelection('foo', { bar: 1 });
   t.equal(mOne.closeMenu.getCall(0).args.length, 0);
-  t.deepEqual(mOneHandler.getCall(0).args, ['foo']);
+  t.deepEqual(mOneHandler.getCall(0).args, ['foo', { bar: 1 }]);
 
   const mTwoHandler = sinon.spy();
   const mTwo = mockManager({
@@ -197,9 +197,9 @@ test('Manager#handleSelection', t => {
     onSelection: mTwoHandler,
   });
   sinon.stub(mTwo, 'closeMenu');
-  mTwo.handleSelection('foo');
+  mTwo.handleSelection('foo', { bar: 1 });
   t.notOk(mTwo.closeMenu.called);
-  t.deepEqual(mTwoHandler.getCall(0).args, ['foo']);
+  t.deepEqual(mTwoHandler.getCall(0).args, ['foo', { bar: 1 }]);
 
   t.end();
 });

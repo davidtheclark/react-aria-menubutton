@@ -60,19 +60,7 @@ var MenuItem = (function (_React$Component) {
       id: id,
       onClick: this.selectItem.bind(this),
       onKeyDown: this.handleKeyDown.bind(this),
-      // "The menu contains elements with roles: menuitem,
-      // menuitemcheckbox, or menuitemradio depending on your implementation."
       role: 'menuitem',
-      // "With focus on the button pressing the Tab key will
-      // take the user to the next tab focusable item
-      // on the page."
-      //
-      // "With focus on the drop-down menu, pressing the Tab
-      // key will take the user to the next tab focusable
-      // item on the page."
-      //
-      // "Menu focus is managed by the menu using tabindex
-      // or aria-activedescendant."
       tabIndex: '-1'
     }, children);
   };
@@ -83,7 +71,7 @@ var MenuItem = (function (_React$Component) {
 exports['default'] = MenuItem;
 
 MenuItem.propTypes = {
-  children: _react.PropTypes.oneOfType([_react.PropTypes.element, _react.PropTypes.string]).isRequired,
+  children: _react.PropTypes.oneOfType([_react.PropTypes.element, _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.element)]).isRequired,
   manager: _react.PropTypes.object.isRequired,
   className: _react.PropTypes.string,
   id: _react.PropTypes.string,

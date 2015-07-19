@@ -1,24 +1,35 @@
 # react-aria-menubutton [![Build Status](https://travis-ci.org/davidtheclark/react-aria-menubutton.svg?branch=master)](https://travis-ci.org/davidtheclark/react-aria-menubutton)
 
-A menu button that
+---
 
-  - is a React component;
-  - follows [the WAI-ARIA Menu Button Design Pattern](http://www.w3.org/TR/wai-aria-practices/#menubutton) for maximal accessibility (including *ARIA attributes* and *keyboard interaction*);
-  - uses [SUIT CSS conventions](https://github.com/suitcss/suit/blob/master/doc/README.md) for maximal themeability;
-  - is very thoroughly tested (have a look in `test/`);
-  - is flexible & customizable enough that it's worth passing around.
+**v0.7.0 provides a new, better, more flexible API.** It shouldn't be too hard to upgrade.
 
-**Please check out [the demo](http://davidtheclark.github.io/react-aria-menubutton/).**
+---
 
-## Accessibility
+A React component that helps you build accessible menu buttons, by providing keyboard interactions and ARIA attributes aligned with [the WAI-ARIA Menu Button Design Pattern](http://www.w3.org/TR/wai-aria-practices/#menubutton).
 
-The primary goal of this project is to build a React component that follows every detail of [the WAI-ARIA Menu Button Design Pattern](http://www.w3.org/TR/wai-aria-practices/#menubutton).
-This is kind of hard (because of keyboard interaction and focus management), so I wanted to share what I'd learned and (hopefully) learn more from others.
-Follow the link and read about the keyboard interactions and ARIA attributes. Quotations from this spec are scattered in comments throughout the source code, so it's clear which code addresses which requirements.
+Please check out [the demo](http://davidtheclark.github.io/react-aria-menubutton/).
 
-The [demo](http://davidtheclark.github.io/react-aria-menubutton/) also lists all of the interactions that are built in.
+## Project Goal
+
+### Accessibility
+
+The project started as an effort to build a React component that follows every detail of [the WAI-ARIA Menu Button Design Pattern](http://www.w3.org/TR/wai-aria-practices/#menubutton) for **maximum accessibility**.
+
+Just hiding and showing a menu is easy; but the required **keyboard interactions** are kind of tricky, and the required **ARIA attributes** are easy to forget.
+So I decided to try to abstract the component enough that it would be **worth sharing with others**.
+
+Follow [the link](http://www.w3.org/TR/wai-aria-practices/#menubutton) and read about the keyboard interactions and ARIA attributes. [The demo](http://davidtheclark.github.io/react-aria-menubutton/) also lists all of the interactions that are built in.
 
 *If you think that this component does not satisfy the spec or if you know of other ways to make it even more accessible, please file an issue.*
+
+### Flexibility
+
+Instead of providing a pre-fabricated, fully styled component, this module's goal is to provide a component that others can build their own stuff on top of.
+
+The first draft of the API (<0.7.0) tried to achieve this flexibility by following [SUIT CSS conventions](https://github.com/suitcss/suit/blob/master/doc/README.md) and allowing users to customize the class names to their liking. It also had a weird, non-optimal way to allow users to take advantage of [React's CSSTransitionGroup](https://facebook.github.io/react/docs/animation.html).
+
+The current API is more flexible: it **does not provide any classes**, only **provides smart components to wrap *your* components**. These components provide the keyboard interaction and ARIA attributes, while your components do whatever you want your components to do.
 
 ## Installation
 
@@ -30,186 +41,325 @@ There is only one dependency: React 0.13.x.
 
 ## Usage
 
-There are two ways to use this module:
+There are two ways to consume this module:
 - with CommonJS
 - as a global UMD library
 
-Either way, what is exposed is the function `createAriaMenuButton([options])`, which returns the component you want, tailored with your options.
-
-Using CommonJS, for example, you can simply `require()` the module to get the factory:
+Using CommonJS, for example, you can simply `require()` the module to get the function `ariaMenuButton([options])`, which:
 
 ```js
-var createAriaMenuButton = require('react-aria-menubutton');
+var ariaMenuButton = require('react-aria-menubutton');
 
-var AriaMenuButton = createAriaMenuButton();
-
-React.render(
-  <AriaMenuButton id='myMenuButton'
-   handleSelection={mySelectionHandler}
-   items={myItems}
-   triggerContent='Click me'
-   closeOnSelection={true} />,
-  document.getElementById('container')
-);
+var myAmb = ariaMenuButton({
+  onSelection: mySelectionHandler
+});
 ```
 
 Using globals/UMD, you must do the following:
 - Expose React globally
 - Use one of the builds in the `dist/` directory
 
-For example:
-
 ```html
 <script src="react.min.js"></script>
-<script src="node_modules/react-aria-menu-button/dist/createAriaMenuButton.min.js"></script>
+<script src="node_modules/react-aria-menu-button/dist/ariaMenuButton.min.js"></script>
 <script>
-  var AriaMenuButton = createAriaMenuButton();
-  // ...
+  var myAmb = ariaMenuButton({
+    onSelection: mySelectionHandler
+  });
 </script>
 ```
 
-## Styling
+**You *get to* (have to) write your own CSS, your own way!**
 
-It is not a goal of this module to share some new neat dropdown style.
-This module's focus is on functionality — especially accessibility.
-However, in order for this thing to look like a menu button, it will need to be styled like a menu button.
-Therefore, I'm trying to *give you, the user, the means to write your own styles*, rather than forcing you into anything.
+### ariaMenuButton([options])
 
-Towards that end, the elements of `AriaMenuButton` are marked with classes that follow [SUIT CSS conventions](https://github.com/suitcss/suit/blob/master/doc/README.md); so the whole thing is very easily themeable.
-
-Within `css/`, there is a `base.css` stylesheet that provides some minimal rule sets that can get you started.
-There are also a few ready-made themes that match the styles of popular frameworks.
-All of them are on display in the [demo](http://davidtheclark.github.io/react-aria-menubutton/), so have a look.
-
-The following classes are used:
-
-```css
-.AriaMenuButton {}
-.AriaMenuButton-trigger {}
-.AriaMenuButton-trigger.is-open {}
-.AriaMenuButton-menuWrapper {}
-.AriaMenuButton-menuWrapper--transition {}
-.AriaMenuButton-menu {}
-.AriaMenuButton-menu--flushRight {}
-.AriaMenuButton-menuItemWrapper {}
-.AriaMenuButton-menuItem {}
-.AriaMenuButton-menuItem.is-selected {}
-```
-
-### Customizing class names
-
-You can customize these class names in SUIT-compliant ways by passing `componentName` and `namespace` options to `createAriaMenuButton([options]).
-
-#### Specify your own component name
-
-This will replace `AriaMenuButton` in the class name with the component name of your choice. For example, if you pass `{ componentName: 'Dropdown' }`, your classes will be
-
-```css
-.Dropdown {}
-.Dropdown-trigger {}
-.Dropdown-trigger.is-open {}
-.Dropdown-menuWrapper {}
-/* ... and so on */
-```
-
-#### Specify your own namespace
-
-This will add you namespace to the front of every class name, including the state classes. For example, if you pass `{ namespace: 'up' }`, you classes will be
-
-```css
-.up-AriaMenuButton {}
-.up-AriaMenuButton-trigger {}
-.up-AriaMenuButton-trigger.up-is-open {}
-.up-AriaMenuButton-menuWrapper {}
-```
-
-#### Specify both component name and namespace
-
-And you can, of course, specify both a component name and a namespace. Passing `{ componentName: 'Down', namespace: 'lo' }`, you'll get
-
-```css
-.lo-Down {}
-.lo-Down-trigger {}
-.lo-Down-trigger.lo-is-open {}
-.lo-Down-menuWrapper {}
-```
-
-## API
-
-If you `require()` this module with CommonJS, you will receive the the function `createAriaMenuButton()`.
-
-If you are not using CommonJS, the same function will be globally exposed.
-
-### createAriaMenuButton([options])
-
-Returns a React component, an `AriaMenuButton`, as described below.
+Returns an object with three components: `Button`, `Menu`, and `MenuItem`. Each of these is documented below.
 
 ```js
-/* little example */
-var React = require('react/addons');
-var createAriaMenuButton = require('react-aria-menubutton');
-var MySpecialButton = createAriaMenuButton({
-  componentName: 'MySpecialButton',
-  namespace: 'me',
-  transition: React.addons.CSSTransitionGroup
+var myAmb = ariaMenuButton({
+  onSelection: mySelectionHandler
 });
+var MyAmbButton = myAmb.Button;
+var MyAmbMenu = myAmb.Menu;
+var MyAmbMenuItem = myAmb.MenuItem;
 ```
 
 #### options
 
-- **componentName**: Specify a component name for css classes. [See above](#specify-your-own-component-name).
-- **namespace**: Specify a namespace for css classes. [See above](#specify-your-own-namespace).
-- **transition**: If you want to animate the opening & closing of the menu, pass in [React's CSSTransitionGroup](https://facebook.github.io/react/docs/animation.html) here. (See example above.) Make sure you read React's docs on the component and setup your CSS to properly work with it.
+##### onSelection
 
-### AriaMenuButton
+Type: `Function` *Required*
 
-A React component that takes the following props:
+A callback to run when the user makes a selection (i.e. clicks or presses Enter or Space on a `MenuItem`). It will be passed the value of the selected `MenuItem` and the event.
 
-#### handleSelection: Function, required
+```js
+var myAmb = ariaMenuButton({
+  onSelection: function(value, event) {
+    event.stopPropagation;
+    console.log(value);
+  }
+});
+```
 
-A callback to run when the user makes a selection (i.e. clicks or presses Enter or Space on a menu item).
-It will be passed the value of the selected menu item (as defined in the `items` prop).
+##### closeOnSelection
 
-While the menu's open/closed-state is handled internally, the selection-state is up to you: do with it what you will.
+Type: `Boolean` Default: `true`
 
-#### items: Array of Objects, required
+If `false`, the menu will *not* automatically close when a selection is made. (By default, it *does* automatically close.)
 
-Each item has the following properties:
-- **content: String|ReactElement, required** — The content to be rendered inside the menu item. A simple string or a super fancy React element: it's up to you.
-- **id: String, optional** — An id for the element (maybe useful for testing).
-- **text: String, optional** — If `content` is an element, include a `text` property to be used when letter keys are pressed. For example, if your item essentially says "horse" but the `content` prop is a complicated element with icons and sub-elements and whatnot, provide `test: 'horse'` and the component will know that when the user types "h" this item should be focused.
-- **value: String|Number|Boolean, optional** — The value to be passed to the `handleSelection()` function when this item is selected. If no `value` is provided, the item's `content` will be passed to the selection handler.
+## Examples
 
-#### triggerContent: String|ReactElement, required
+For details about why the examples work, read the component API documentation below.
 
-The content to be displayed in the menu button — the "trigger".
-This is inserted directly into the button via JSX, so it can be a string or a React element with mind-blowing innards, whatever you need.
+You can see more examples by looking in `demo/`.
 
-#### closeOnSelection: Boolean, optional
+```js
+// Very simple ES6 example
 
-If `true`, the menu will close when a selection is made.
+import React from 'react';
+import ariaMenuButton from 'react-aria-menubutton';
 
-#### flushRight: Boolean, optional
+const menuItemWords = ['foo', 'bar', 'baz'];
 
-If `true`, the menu will receive the modifier class
-`AriaMenuButton-menu--flushRight`.
+class MyMenuButton extends React.Component {
+  componentWillMount() {
+    this.amb = ariaMenuButton({
+      onSelection: handleSelection
+    });
+  }
+  render() {
+    const { Button, Menu, MenuItem } = this.amb;
 
-All of the provided styles (in `css/`) by default position the menu flush with the left side of the button.
-But if the button were at the *right* edge of the screen, you'd want the menu flushed with its right side, instead, so that the menu didn't extend offscreen to the right.
-That's why we have this option.
+    const menuItems = menuItemWords.map((word, i) => {
+      return (
+        <li key={i}>
+          <MenuItem className='MyMenuButton-menuItem'>
+            {word}
+          </MenuItem>
+        </li>
+      );
+    });
 
-#### id: String, optional
+    return (
+      <div className='MyMenuButton'>
+        <Button className='MyMenuButton-button'>
+          click me
+        </Button>
+        <Menu className='MyMenuButton-menu'>
+          <ul>{menuItems}</ul>
+        </Menu>
+      </div>
+    );
+  }
+}
 
-A base id for the component.
-This will be used to generate ids for all clickable elements besides menu items (which each get their own id).
-The ids might be useful for testing.
+function handleSelection(value, event) { .. }
+```
 
-#### startOpen: Boolean, optional
+```js
+// Slightly more complex, ES5 example:
+// - MenuItems have hidden values that are passed
+//   to the selection handler
+// - User can navigate the MenuItems by typing the
+//   first letter of a person's name, even though
+//   each MenuItem's child is not simple text
+// - Menu has a function for a child
+// - React's CSSTransitionGroup is used for open-close animation
 
-If `true`, the menu will be start open when `AriaMenuButton` mounts.
-This is useful for testing, but probably not useful for you (unless you are contributing).
+var React = require('react/addons');
+var ariaMenuButton = require('react-aria-menubutton');
+var CSSTransitionGroup = React.addons.CSSTransitionGroup;
 
-#### selectedValue: String|Number|Boolean, optional
+var people = [{
+  name: 'Charles Choo-Choo',
+  id: 1242
+}, {
+  name: 'Mina Meowmers',
+  id: 8372
+}, {
+  name: 'Susan Sailor',
+  id: 2435
+}];
 
-The currently selected value.
-The item that has this value will receive the state class `is-selected`, which CSS can use for special standout styling.
+var MyMenuButton = React.createClass({
+  componentWillMount: function() {
+    this.amb = ariaMenuButton({
+      onSelection: handleSelection
+    });
+  },
+
+  render: function() {
+    var MyButton = this.amb.Button;
+    var MyMenu = this.amb.Menu;
+    var MyMenuItem = this.amb.MenuItem;
+
+    var peopleMenuItems = people.map(function(person, i) {
+      return (
+        <MyMenuItem
+          key={i}
+          tag='li'
+          value={person.id}
+          text={person.name}
+          className='PeopleMenu-person'
+        >
+          <div className='PeopleMenu-personPhoto'>
+            <img src={'/people/pictures/' + person.id + '.jpg'}/ >
+          </div>
+          <div className='PeopleMenu-personName'>
+            {person.name}
+          </div>
+        </MyMenuItem>
+      );
+    });
+
+    var peopleMenuInnards = function(menuState) {
+      var menu = (!menuState.isOpen) ? false : (
+        <div
+          className='PeopleMenu-menu'
+          key='menu'
+        >
+          {peopleMenuItems}
+        </div>
+      );
+      return (
+        <CSSTransitionGroup transitionName='people'>
+          {menu}
+        </CSSTransitionGroup>
+      );
+    };
+
+    return (
+      <div className='PeopleMenu'>
+        <MyButton className='PeopleMenu-trigger'>
+          <span className='PeopleMenu-triggerText'>
+            Select a person
+          </span>
+          <span className='PeopleMenu-triggerIcon' />
+        </MyButton>
+        <MyMenu>
+          {peopleMenuInnards}
+        </MyMenu>
+      </div>
+    );
+  }
+});
+
+function handleSelection(value, event) { .. }
+```
+
+## Component API
+
+### `Button`
+
+A React component to wrap the content of your menu-button-pattern's button.
+
+A `Button`'s child can be a string or a React element.
+
+#### props
+
+*All props are optional.*
+
+##### tag
+
+Type: `String` Default: `'span'`
+
+The HTML tag for this element.
+
+##### id
+
+Type: `String`
+
+An id value.
+
+##### className
+
+Type: `String`
+
+A class value.
+
+### Menu
+
+A React component to wrap the content of your menu-button-pattern's menu.
+
+A `Menu`'s child may be one of the following:
+
+- a React element, which will mount when the menu is open and unmount when the menu closes
+- a function accepting the following menu-state object
+
+  ```js
+  {
+    isOpen: Boolean // whether or not the menu is open
+  }
+  ```
+
+#### props
+
+*All props are optional.*
+
+##### tag
+
+Type: `String` Default: `'span'`
+
+The HTML tag for this element.
+
+##### id
+
+Type: `String`
+
+An id value.
+
+##### className
+
+Type: `String`
+
+A class value.
+
+### MenuItem
+
+A React component to wrap the content of one of your menu-button-pattern's menu items.
+
+When a `MenuItem` is *selected* (by clicking or focusing and hitting Enter or Space), it calls the `onSelection` handler you passed `ariaMenuButton` when creating this set of components.
+
+It passes that handler a *value* and the *event*. The value it passes is determined as follows:
+
+- If the `MenuItem` has a `value` prop, that is passed.
+- If the `MenuItem` has no `value` prop, the component's child is passed (so it better be simple text!).
+
+When the menu is open and the user hits a letter key, focus moves to the next `MenuItem` whose "text" starts with that letter. The `MenuItem`'s relevant "text" is determined as follows:
+
+- If the `MenuItem` has a `text` prop, that is used.
+- If the `MenuItem` has no `text` prop, the component's child is used (so it better be simple text!).
+
+#### props
+
+*All props are optional.*
+
+##### text
+
+Type: `String` *Required if child is an element*
+
+If `text` has a value, its first letter will be the letter a user can type to navigate to that item.
+
+##### value
+
+Type: `String|Boolean|Number` *Required if child is an element*
+
+If `value` has a value, it will be passed to the `onSelection` handler when the `MenuItem` is selected.
+
+##### tag
+
+Type: `String` Default: `'span'`
+
+The HTML tag for this element.
+
+##### id
+
+Type: `String`
+
+An id value.
+
+##### className
+
+Type: `String`
+
+A class value.

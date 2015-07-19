@@ -41,7 +41,9 @@ var Menu = (function (_React$Component) {
     var id = _props.id;
 
     var childrenToRender = (function () {
-      if (typeof children === 'function') return children(manager.isOpen);
+      if (typeof children === 'function') {
+        return children({ isOpen: manager.isOpen });
+      }
       if (manager.isOpen) return children;
       return [];
     })();
@@ -50,8 +52,6 @@ var Menu = (function (_React$Component) {
       className: className,
       id: id,
       onKeyDown: manager.handleMenuKey,
-      // "A menu is a container of options. The container may have a role of
-      // menu or menubar depending on your implementation."
       role: 'menu',
       onBlur: manager.handleBlur
     }, childrenToRender);
