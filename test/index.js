@@ -1,6 +1,5 @@
-import './markup';
-import './clicking';
-import './keyboard';
-import './blurring';
-import './cssClassnamer';
-import './customClassNaming';
+import './Manager-test';
+import './Button-test';
+import './Menu-test';
+import './MenuItem-test';
+import './ariaMenuButton-test';

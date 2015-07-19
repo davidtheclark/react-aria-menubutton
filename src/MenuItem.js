@@ -1,67 +1,64 @@
-import React, { PropTypes, Component } from 'react';
-import { ENTER, SPACE } from './keys';
-import cssClassnamer from './cssClassnamer';
+import React, { PropTypes } from 'react';
+import keys from './keys';
 
-export default class MenuItem extends Component {
-
-  shouldComponentUpdate(newProps) {
-    return this.props.isSelected !== newProps.isSelected;
-  }
-
+export default class MenuItem extends React.Component {
   componentDidMount() {
-    this.props.focusManager.focusables.push({
-      content: this.props.content,
-      text: this.props.text,
-      node: React.findDOMNode(this)
-    });
-  }
-
-  handleClick(e) {
     const props = this.props;
-    if (props.isSelected) return;
-    // If there's no value, we'll send the label
-    const v = (typeof props.value !== 'undefined') ? props.value : props.content;
-    props.handleSelection(v, e);
+    this.managedIndex = props.manager.menuItems.push({
+      node: React.findDOMNode(this),
+      content: props.children,
+      text: props.text,
+    }) - 1;
   }
 
-  handleKey(e) {
-    if (e.key !== ENTER && e.key !== SPACE) return;
-    e.preventDefault();
-    this.handleClick(e);
+  handleKeyDown(event) {
+    if (event.key !== keys.ENTER && event.key !== keys.SPACE) return;
+    event.preventDefault();
+    this.selectItem(event);
+  }
+
+  selectItem(event) {
+    const props = this.props;
+    // If there's no value, we'll send the child
+    const value = (typeof props.value !== 'undefined')
+      ? props.value
+      : props.children;
+    props.manager.handleSelection(value, event);
+    props.manager.currentFocus = this.managedIndex;
   }
 
   render() {
-    const props = this.props;
-    const itemClasses = [cssClassnamer.componentPart('menuItem')];
-    if (props.isSelected) itemClasses.push(cssClassnamer.applyNamespace('is-selected'));
+    const { tag, children, className, id } = this.props;
 
-    // tabindex -1 because: "With focus on the button pressing
-    // the Tab key will take the user to the next tab focusable item on the page.
-    // With focus on the drop-down menu, pressing the Tab key will take the user
-    // to the next tab focusable item on the page."
-    // "A menuitem within a menu or menubar may appear in the tab order
-    // only if it is not within a popup menu."
-    // ... so not in tab order, but programatically focusable
-    return (
-      <div id={props.id}
-       className={itemClasses.join(' ')}
-       onClick={this.handleClick.bind(this)}
-       onKeyDown={this.handleKey.bind(this)}
-       role='menuitem'
-       tabIndex='-1'
-       data-value={props.value}>
-        {props.content}
-      </div>
-    );
+    return React.createElement(tag, {
+      className,
+      id,
+      onClick: this.selectItem.bind(this),
+      onKeyDown: this.handleKeyDown.bind(this),
+      role: 'menuitem',
+      tabIndex: '-1',
+    }, children);
   }
 }
 
 MenuItem.propTypes = {
-  focusManager: PropTypes.object.isRequired,
-  handleSelection: PropTypes.func.isRequired,
-  content: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.element),
+  ]).isRequired,
+  manager: PropTypes.object.isRequired,
+  className: PropTypes.string,
   id: PropTypes.string,
-  isSelected: PropTypes.bool,
+  tag: PropTypes.string,
   text: PropTypes.string,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool])
+  value: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.number,
+    PropTypes.string,
+  ]),
+};
+
+MenuItem.defaultProps = {
+  tag: 'div',
 };

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>react-aria-menubutton demo</title>
+    <meta name="description" content="A demo of react-aria-menubutton">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="baseStyle.css">
+    <link rel="stylesheet" href="menuStyle.css">
+  </head>
+  <body>
+
+    <h1 tabindex="0">react-aria-menubutton demo</h1>
+
+    <div id="demo-one"></div>
+
+    <h2 tabindex="0">Some interactions you should try</h2>
+    <ul>
+      <li>
+        Click the trigger to toggle the menu.
+      </li>
+      <li>
+        With focus on the trigger, press Enter or Space to toggle the menu.
+      </li>
+      <li>
+        With the menu opened and focus on the trigger, press ArrowDown to move focus to the first menu item.
+      </li>
+      <li>
+        With the menu closed and focus on the trigger, press ArrowDown to open the menu and move focus to the first menu item.
+      </li>
+      <li>
+        With the menu opened, press ArrowDown or ArrowUp to cycle focus through the menu items.
+      </li>
+      <li>
+        With the menu opened, press a letter key to move focus to the next menu item whose label begins with that letter.
+      </li>
+      <li>
+        With the menu opened, click a menu item to fire the handler.
+      </li>
+      <li>
+        With the menu opened, use the keyboard to move focus to a menu item and press Enter or Space to fire the handler.
+      </li>
+      <li>
+        With the menu opened and focus on either the trigger or a menu item, move focus outside of the menu &mdash; by clicking outside of it or pressing Tab &mdash; to close the menu.
+      </li>
+      <li>
+        With the menu opened, press Escape to close the menu and return focus to the trigger.
+      </li>
+    </ul>
+    <p>
+      All of these keyboard interactions follow the
+      <a href="http://www.w3.org/TR/wai-aria-practices/#menubutton">WAI-ARIA Design Pattern for
+      Menu Button</a>.
+    </p>
+
+    <h2>Possibilities for Fanciness</h2>
+    <p>
+      The provided components &mdash; the Button, the Menu, and the MenuItem &mdash; are just "smart" components to wrap whatever "dumb" components you want to be a part of the Menu Button pattern you're building &mdash; i.e. they just <em>wrap <strong>your</strong> components</em> to provide the keyboard functionality described above and some ARIA attributes.
+    </p>
+    <p>
+      This means that <strong>you can use any React element within the Button, Menu, or MenuItems</strong>.
+      Which means that <em>nothing can stop you</em>.
+    </p>
+    <p>
+      To demonstrate, here's a fancier but equally ARIA-compliant and keyboard-friendly menu button:
+    </p>
+    <div id="demo-fancy"></div>
+    <p>
+      Notice a few features:
+    </p>
+    <ul>
+      <li>
+        Complex markup within the button
+      </li>
+      <li>
+        Complex markup within the menu items
+      </li>
+      <li>
+        Navigating the menu with letters keys still makes sense
+      </li>
+      <li>
+        Open-close animation (using <a href="https://facebook.github.io/react/docs/animation.html">React's CSSTransitionGroup</a>)
+      </li>
+    </ul>
+
+    <h2>Great, now what do I do?</h2>
+    <p>
+      <a href="https://github.com/davidtheclark/react-aria-menubutton">Go back to the repo</a>
+    </p>
+
+    <p style='text-align: right;'>
+      <small>Icons in fancy demo from <a href="http://tympanus.net/codrops/2014/10/27/freebie-ballicons-2-vol-2/">Ballicons by PixelBuddha</a>.</small>
+    </p>
+
+    <script src="demo-bundle.js"></script>
+  </body>
+</html>

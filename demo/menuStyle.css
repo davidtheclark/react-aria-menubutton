@@ -1,0 +1,273 @@
+.AriaMenuButton {
+  display: inline-block;
+  position: relative;
+}
+
+.AriaMenuButton-trigger {
+  cursor: pointer;
+  display: inline-block;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: #EEE;
+  background-image: linear-gradient(#FCFCFC, #EEE);
+  border: 1px solid #D5D5D5;
+  border-radius: 3px;
+  font-weight: bold;
+  padding: 6px 10px;
+}
+
+.AriaMenuButton-trigger::after {
+  content: "";
+  display: inline-block;
+  margin-left: 3px;
+  position: relative;
+  top: 3px;
+  border-color: currentColor transparent transparent;
+  border-width: 5px 4px;
+  border-style: solid;
+}
+
+.AriaMenuButton-trigger:hover,
+.AriaMenuButton-trigger:focus,
+.AriaMenuButton-trigger.is-open {
+  background-color: #DDD;
+  background-image: linear-gradient(#EEE, #DDD);
+  border-color: #CCC;
+}
+
+.AriaMenuButton-trigger:active,
+.AriaMenuButton-trigger.is-open {
+  background-color: #DCDCDC;
+  background-image: none;
+  border-color: #B5B5B5;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.AriaMenuButton-menu {
+  background: #fff;
+  border: 1px solid rgba(200, 200, 200, 0.4);
+  list-style-type: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 99;
+  padding-left: 0;
+  border-radius: 3px;
+  margin: 4px 0 0 0;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+  width: 215px;
+}
+
+.AriaMenuButton-menu--flushRight {
+  right: 0;
+}
+
+.AriaMenuButton-menuItem {
+  cursor: pointer;
+  padding: 8px;
+  border-bottom: 1px solid #EEE;
+}
+
+.AriaMenuButton-menuItemWrapper:first-of-type .AriaMenuButton-menuItem {
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+}
+
+.AriaMenuButton-menuItemWrapper:last-of-type .AriaMenuButton-menuItem {
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.AriaMenuButton-menuItem:hover,
+.AriaMenuButton-menuItem:focus {
+  background-color: #4183C4;
+  color: #fff;
+}
+
+.AriaMenuButton-menuItem.is-selected {
+  cursor: default;
+  font-weight: bold;
+}
+
+
+/* FANCY */
+
+.FancyMB {
+  position: relative;
+  display: inline-block;
+}
+
+.FancyMB-trigger {
+  cursor: pointer;
+  display: inline-block;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background: #fff;
+  color: #000;
+  border: 1px solid #868686;
+  border-radius: 6px;
+  padding: 0.88889rem 1.77778rem 0.94444rem 1.77778rem;
+  transition: background-color 300ms ease-out;
+}
+
+.FancyMB-trigger:hover,
+.FancyMB-trigger:focus {
+  background: #C9F1FF;
+}
+
+.FancyMB-trigger::after {
+  content: "";
+  display: inline-block;
+  margin-left: 20px;
+  position: relative;
+  top: 3px;
+  border-color: currentColor transparent transparent;
+  border-width: 5px 5px;
+  border-style: solid;
+}
+
+.FancyMB-menu {
+  background: #fff;
+  border: 1px solid #ccc;
+  list-style-type: none;
+  padding-left: 0;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 99;
+  margin: 2px 0 0 0;
+  width: 100%;
+  max-width: 200px;
+}
+
+.FancyMB-menu::before {
+  border: inset 6px;
+  content: "";
+  display: block;
+  height: 0;
+  width: 0;
+  border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #FFF rgba(0, 0, 0, 0);
+  border-bottom-style: solid;
+  position: absolute;
+  top: -12px;
+  left: 10px;
+  z-index: 89;
+}
+
+.FancyMB-menu::after {
+  border: inset 7px;
+  content: "";
+  display: block;
+  height: 0;
+  width: 0;
+  border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #ccc rgba(0, 0, 0, 0);
+  border-bottom-style: solid;
+  position: absolute;
+  top: -14px;
+  left: 9px;
+  z-index: 88;
+}
+
+.FancyMB-menuItem {
+  cursor: pointer;
+  color: #555;
+  padding: 0.5rem;
+}
+
+.FancyMB-menuItem:hover,
+.FancyMB-menuItem:focus {
+  background: #EEE;
+}
+
+.FancyMB-menuItem.is-selected {
+  cursor: default;
+  font-weight: bold;
+}
+
+.FancyMB-menu {
+  width: 250px;
+  max-width: 250px;
+}
+
+.FancyMB-menuItem::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+.FancyMB-svg {
+  float: left;
+  width: 50px;
+  margin-top: 2px;
+}
+
+.FancyMB-text {
+  display: block;
+  float: left;
+  margin: 0 5px;
+}
+
+.FancyMB-keyword {
+  display: block;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 0 0.5em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.FancyMB-triggerIcon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.FancyMB-triggerText {
+  display: inline-block;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.FancyMB-triggerSmallText {
+  font-size: 10px;
+  font-weight: normal;
+}
+
+.FancyMB-selectedText {
+  margin-top: 1em;
+}
+
+/* transition */
+
+.FancyMB-menu {
+  -webkit-transform-origin: 10px 0;
+  transform-origin: 10px 0;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  -webkit-transition: -webkit-transform 0.2s cubic-bezier(.55,0,.1,1);
+  transition: transform 0.2s cubic-bezier(.55,0,.1,1);
+}
+
+/* cf. https://github.com/facebook/react/issues/2227 */
+.FancyMB-menu.is-enter-active,
+.FancyMB-menu.is-leave-active {
+  -webkit-transition: -webkit-transform 0.2s cubic-bezier(.55,0,.1,1);
+  transition: transform 0.2s cubic-bezier(.55,0,.1,1);
+}
+
+.FancyMB-menu.is-enter,
+.FancyMB-menu.is-leave.is-leave-active {
+  -webkit-transform: scale(0);
+  transform: scale(0);
+}
+
+.FancyMB-menu.is-enter.is-enter-active,
+.FancyMB-menu.is-leave {
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
