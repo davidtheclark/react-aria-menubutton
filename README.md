@@ -29,7 +29,7 @@ Instead of providing a pre-fabricated, fully styled component, this module's goa
 
 The first draft of the API (<0.7.0) tried to achieve this flexibility by following [SUIT CSS conventions](https://github.com/suitcss/suit/blob/master/doc/README.md) and allowing users to customize the class names to their liking. It also had a weird, non-optimal way to allow users to take advantage of [React's CSSTransitionGroup](https://facebook.github.io/react/docs/animation.html).
 
-The current API is more flexible: it **does not provide any classes**, only **provides smart components to wrap *your* components**. These components provide the keyboard interaction and ARIA attributes, while your components do whatever you want your components to do.
+The current API is more flexible: it **does not provide any classes**, only **provides "smart" components to wrap *your* components**. The *library's* components take care of keyboard interaction and ARIA attributes, while *your* components just do whatever you want your components to do.
 
 ## Installation
 
