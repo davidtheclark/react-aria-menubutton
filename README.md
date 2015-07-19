@@ -8,7 +8,7 @@
 
 A React component that helps you build accessible menu buttons, by providing keyboard interactions and ARIA attributes aligned with [the WAI-ARIA Menu Button Design Pattern](http://www.w3.org/TR/wai-aria-practices/#menubutton).
 
-Please check out [the demo](http://davidtheclark.github.io/react-aria-menubutton/).
+Please check out [the demo](http://davidtheclark.github.io/react-aria-menubutton/demo/).
 
 ## Project Goal
 
@@ -19,7 +19,7 @@ The project started as an effort to build a React component that follows every d
 Just hiding and showing a menu is easy; but the required **keyboard interactions** are kind of tricky, and the required **ARIA attributes** are easy to forget.
 So I decided to try to abstract the component enough that it would be **worth sharing with others**.
 
-Follow [the link](http://www.w3.org/TR/wai-aria-practices/#menubutton) and read about the keyboard interactions and ARIA attributes. [The demo](http://davidtheclark.github.io/react-aria-menubutton/) also lists all of the interactions that are built in.
+Follow [the link](http://www.w3.org/TR/wai-aria-practices/#menubutton) and read about the keyboard interactions and ARIA attributes. [The demo](http://davidtheclark.github.io/react-aria-menubutton/demo/) also lists all of the interactions that are built in.
 
 *If you think that this component does not satisfy the spec or if you know of other ways to make it even more accessible, please file an issue.*
 
@@ -277,7 +277,7 @@ Type: `String`
 
 A class value.
 
-### Menu
+### `Menu`
 
 A React component to wrap the content of your menu-button-pattern's menu.
 
@@ -314,7 +314,7 @@ Type: `String`
 
 A class value.
 
-### MenuItem
+### `MenuItem`
 
 A React component to wrap the content of one of your menu-button-pattern's menu items.
 
