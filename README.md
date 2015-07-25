@@ -12,6 +12,8 @@ Please check out [the demo](http://davidtheclark.github.io/react-aria-menubutton
 
 ## Project Goal
 
+If you're interested in this project, you should also check out [react-aria-tabpanel](https://github.com/davidtheclark/react-aria-tabpanel).
+
 ### Accessibility
 
 The project started as an effort to build a React component that follows every detail of [the WAI-ARIA Menu Button Design Pattern](http://www.w3.org/TR/wai-aria-practices/#menubutton) for **maximum accessibility**.
