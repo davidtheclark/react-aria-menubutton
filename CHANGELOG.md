@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.8.0
+- Overlay to enable close-when-clicking-outside for mobile.
+
 ## 0.7.0
 - New, more flexible API: provided components are just wrappers around whatever elements they're given.
 

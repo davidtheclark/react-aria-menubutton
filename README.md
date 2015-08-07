@@ -298,6 +298,16 @@ A `Menu`'s child may be one of the following:
 
 *All props are optional.*
 
+##### noOverlay
+
+Type: `Boolean` Default: `false`
+
+By default, a transparent overlay is applied to the page that when clicked closes the menu. This is the only way I know how to consistently provide the clicking-outside-closes-menu functionality on mobile.
+
+You can turn this off by setting this `noOverlay` prop to `true`.
+
+(But if it is causing problems, annoying you or not working in some way, please let me know with an issue!)
+
 ##### tag
 
 Type: `String` Default: `'span'`

@@ -9,6 +9,7 @@ function mockManager() {
   return {
     menuItems: [1, 2],
     isOpen: false,
+    closeMenu: sinon.spy(),
   };
 }
 
@@ -25,11 +26,12 @@ test('Menu creation with only required props and element child', t => {
   t.equal(managerOne.menu, renderedOne);
 
   t.equal(nodeOne.tagName, 'DIV');
-  t.notOk(nodeOne.getAttribute('id'));
-  t.notOk(nodeOne.getAttribute('class'));
-  t.equal(nodeOne.getAttribute('role'), 'menu');
-  t.equal(nodeOne.children.length, 0);
-  t.equal(nodeOne.textContent, '');
+  t.equal(nodeOne.children.length, 1);
+  t.equal(nodeOne.children[0].tagName, 'DIV');
+  t.notOk(nodeOne.children[0].getAttribute('id'));
+  t.notOk(nodeOne.children[0].getAttribute('class'));
+  t.equal(nodeOne.children[0].getAttribute('role'), 'menu');
+  t.equal(nodeOne.children[0].textContent, '');
 
   // Open
   const managerTwo = mockManager();
@@ -40,9 +42,17 @@ test('Menu creation with only required props and element child', t => {
     </Menu>
   );
   const nodeTwo = React.findDOMNode(renderedTwo);
-  t.equal(nodeTwo.children.length, 1);
-  t.equal(nodeTwo.firstChild.tagName, 'DIV');
-  t.equal(nodeTwo.firstChild.textContent, 'foo');
+  t.equal(nodeTwo.children.length, 2);
+  t.equal(nodeTwo.children[0].tagName, 'DIV');
+  t.equal(nodeTwo.children[0].textContent, 'foo');
+  t.equal(nodeTwo.children[1].tagName, 'DIV');
+  t.equal(
+    nodeTwo.children[1].getAttribute('style'),
+    'cursor:pointer;position:fixed;top:0;bottom:0;left:0;right:0;' +
+    '-webkit-tap-highlight-color:rgba(0,0,0,0);z-index:99;'
+  );
+  ReactTestUtils.Simulate.click(nodeTwo.children[1]);
+  t.ok(managerTwo.closeMenu.calledOnce);
 
   t.end();
 });
@@ -58,6 +68,7 @@ test('Menu creation with all possible props and function child', t => {
       id='foo'
       className='bar'
       tag='ul'
+      noOverlay={true}
     >
       {childFunction}
     </Menu>
@@ -67,13 +78,33 @@ test('Menu creation with all possible props and function child', t => {
   t.equal(manager.menu, rendered);
 
   t.equal(node.tagName, 'UL');
+  t.equal(node.children.length, 0);
   t.equal(node.getAttribute('id'), 'foo');
   t.equal(node.getAttribute('class'), 'bar');
   t.equal(node.getAttribute('role'), 'menu');
-  t.equal(node.children.length, 0);
   t.equal(node.textContent, 'isOpen = false');
 
   t.deepEqual(childFunction.getCall(0).args, [{ isOpen: false }]);
+
+  // Open (still no overlay)
+  const manager2 = mockManager();
+  const childFunction2 = sinon.spy(menuState => {
+    return 'isOpen = ' + menuState.isOpen;
+  });
+  const rendered2 = ReactTestUtils.renderIntoDocument(
+    <Menu
+      manager={manager2}
+      id='foo'
+      className='bar'
+      tag='ul'
+      noOverlay={true}
+    >
+      {childFunction2}
+    </Menu>
+  );
+  const node2 = React.findDOMNode(rendered2);
+  t.equal(node2.tagName, 'UL');
+  t.equal(node2.children.length, 0);
 
   t.end();
 });
