@@ -1,18 +1,14 @@
 # react-aria-menubutton [![Build Status](https://travis-ci.org/davidtheclark/react-aria-menubutton.svg?branch=master)](https://travis-ci.org/davidtheclark/react-aria-menubutton)
 
----
-
-**v0.7.0 provides a new, better, more flexible API.** It shouldn't be too hard to upgrade.
-
----
-
 A React component that helps you build accessible menu buttons, by providing keyboard interactions and ARIA attributes aligned with [the WAI-ARIA Menu Button Design Pattern](http://www.w3.org/TR/wai-aria-practices/#menubutton).
 
 Please check out [the demo](http://davidtheclark.github.io/react-aria-menubutton/demo/).
 
 ## Project Goal
 
-If you're interested in this project, you should also check out [react-aria-tabpanel](https://github.com/davidtheclark/react-aria-tabpanel).
+** If you like this kind of module (accessible, flexible, unstyled) you should also check out these projects:**
+- [react-aria-modal](https://github.com/davidtheclark/react-aria-modal)
+- [react-aria-tabpanel](https://github.com/davidtheclark/react-aria-tabpanel)
 
 ### Accessibility
 
