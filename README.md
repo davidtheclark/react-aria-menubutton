@@ -1,11 +1,5 @@
 # react-aria-menubutton [![Build Status](https://travis-ci.org/davidtheclark/react-aria-menubutton.svg?branch=master)](https://travis-ci.org/davidtheclark/react-aria-menubutton)
 
----
-
-**v0.7.0 provides a new, better, more flexible API.** It shouldn't be too hard to upgrade.
-
----
-
 A React component that helps you build accessible menu buttons, by providing keyboard interactions and ARIA attributes aligned with [the WAI-ARIA Menu Button Design Pattern](http://www.w3.org/TR/wai-aria-practices/#menubutton).
 
 Please check out [the demo](http://davidtheclark.github.io/react-aria-menubutton/demo/).
@@ -29,9 +23,7 @@ Follow [the link](http://www.w3.org/TR/wai-aria-practices/#menubutton) and read 
 
 Instead of providing a pre-fabricated, fully styled component, this module's goal is to provide a component that others can build their own stuff on top of.
 
-The first draft of the API (<0.7.0) tried to achieve this flexibility by following [SUIT CSS conventions](https://github.com/suitcss/suit/blob/master/doc/README.md) and allowing users to customize the class names to their liking. It also had a weird, non-optimal way to allow users to take advantage of [React's CSSTransitionGroup](https://facebook.github.io/react/docs/animation.html).
-
-The current API is more flexible: it **does not provide any classes**, only **provides "smart" components to wrap *your* components**. The *library's* components take care of keyboard interaction and ARIA attributes, while *your* components just do whatever you want your components to do.
+It does not provide any classes or a stylesheet you'll have to figure out how to include; and it does not include inline styles that would be hard to override. It **only provides "smart" components to wrap your components**. The *library's* components take care of keyboard interaction and ARIA attributes, while *your* components just do whatever you want your components to do.
 
 ## Installation
 
@@ -71,7 +63,7 @@ Using globals/UMD, you must do the following:
 </script>
 ```
 
-**You *get to* (have to) write your own CSS, your own way!**
+**You *get to* (have to) write your own CSS, your own way, based on your own components.**
 
 ### ariaMenuButton([options])
 
@@ -90,9 +82,9 @@ var MyAmbMenuItem = myAmb.MenuItem;
 
 ##### onSelection
 
-Type: `Function` *Required*
+Type: `Function`, *required*
 
-A callback to run when the user makes a selection (i.e. clicks or presses Enter or Space on a `MenuItem`). It will be passed the value of the selected `MenuItem` and the React SyntheticEvent.
+A callback to run when the user makes a selection (i.e. clicks or presses Enter or Space on a `MenuItem`). It will be passed the `value` of the selected `MenuItem` and the React SyntheticEvent.
 
 ```js
 var myAmb = ariaMenuButton({
@@ -105,9 +97,9 @@ var myAmb = ariaMenuButton({
 
 ##### closeOnSelection
 
-Type: `Boolean` Default: `true`
+Type: `Boolean`, Default: `true`
 
-If `false`, the menu will *not* automatically close when a selection is made. (By default, it *does* automatically close.)
+If `false`, the menu will *not* automatically close when a selection is made. By default, it *does* automatically close.
 
 ## Examples
 

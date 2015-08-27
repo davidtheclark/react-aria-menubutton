@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.0
+
+- Nothing really: it was just time to start the real versioning.
+
 ## 0.8.0
 - Overlay to enable close-when-clicking-outside for mobile.
 
