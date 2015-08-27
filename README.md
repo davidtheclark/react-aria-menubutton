@@ -6,7 +6,9 @@ Please check out [the demo](http://davidtheclark.github.io/react-aria-menubutton
 
 ## Project Goal
 
-If you're interested in this project, you should also check out [react-aria-tabpanel](https://github.com/davidtheclark/react-aria-tabpanel).
+**If you like this kind of module (accessible, flexible, unstyled) you should also check out these projects:**
+- [react-aria-modal](https://github.com/davidtheclark/react-aria-modal)
+- [react-aria-tabpanel](https://github.com/davidtheclark/react-aria-tabpanel)
 
 ### Accessibility
 
