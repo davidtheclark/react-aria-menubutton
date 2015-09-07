@@ -380,3 +380,9 @@ An id value.
 Type: `String`
 
 A class value.
+
+## Development
+
+Lint with `npm run lint`.
+
+Test with `npm run test-dev`, which will give you a URL to open in your browser. Look at the console log for TAP output.
