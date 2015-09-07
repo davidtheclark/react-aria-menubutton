@@ -46,11 +46,20 @@ test('Menu creation with only required props and element child', t => {
   t.equal(nodeTwo.children[0].tagName, 'DIV');
   t.equal(nodeTwo.children[0].textContent, 'foo');
   t.equal(nodeTwo.children[1].tagName, 'DIV');
-  t.equal(
-    nodeTwo.children[1].getAttribute('style'),
-    'cursor:pointer;position:fixed;top:0;bottom:0;left:0;right:0;' +
-    '-webkit-tap-highlight-color:rgba(0,0,0,0);z-index:99;'
-  );
+
+  const underlayStyle = nodeTwo.children[1].style;
+  t.equal(underlayStyle.cursor, 'pointer');
+  t.equal(underlayStyle.position, 'fixed');
+  t.equal(parseFloat(underlayStyle.top), 0);
+  t.equal(parseFloat(underlayStyle.bottom), 0);
+  t.equal(parseFloat(underlayStyle.left), 0);
+  t.equal(parseFloat(underlayStyle.right), 0);
+  t.equal(parseFloat(underlayStyle.right), 0);
+  if (underlayStyle.webkitTapHighlightColor) {
+    t.equal(underlayStyle.webkitTapHighlightColor.replace(/ /g, ''), 'rgba(0,0,0,0)');
+  }
+  t.equal(parseFloat(underlayStyle.zIndex), 99);
+
   ReactTestUtils.Simulate.click(nodeTwo.children[1]);
   t.ok(managerTwo.closeMenu.calledOnce);
 
