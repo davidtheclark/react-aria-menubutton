@@ -10,11 +10,9 @@
     "demo-watch": "watchify demo/js/demo.js -t babelify --extension=.jsx -o demo/demo-bundle.js -v",
     "demo-bs": "browser-sync start --server demo --files=\"demo/**/*.css,demo/index.html,demo/demo-bundle.js\"",
     "demo-dev": "parallelshell \"npm run demo-watch\" \"npm run demo-bs\"",
-    "test-bundle": "browserify test -t babelify -o test/test-bundle.js --extension=.jsx",
-    "test-dev": "watchify test -t babelify -o test/test-bundle.js -v --extension=.jsx",
-    "test-single": "karma start --single-run",
+    "test-dev": "zuul --local 8080 -- test",
     "pretest": "npm run lint",
-    "test": "npm run test-bundle && npm run test-single",
+    "test": "zuul -- test",
     "prebuild-bundle": "trash dist/* --force",
     "build-bundle": " browserify src/ariaMenuButton.jsx -p bundle-collapser/plugin -x react -t [ babelify --loose ] --standalone ariaMenuButton -o dist/ariaMenuButton.js",
     "prebuild-modules": "trash dist-modules/* --force",
@@ -55,17 +53,14 @@
     "browser-sync": "2.8.2",
     "browserify": "11.0.1",
     "bundle-collapser": "1.2.1",
-    "es5-shim": "4.1.10",
     "eslint": "1.2.1",
     "eslint-plugin-react": "3.3.0",
-    "karma": "0.13.9",
-    "karma-phantomjs-launcher": "0.2.1",
-    "karma-tap": "1.0.3",
     "parallelshell": "2.0.0",
     "sinon": "1.16.1",
     "tape": "4.2.0",
     "trash": "2.0.0",
     "uglify-js": "2.4.24",
-    "watchify": "3.3.1"
+    "watchify": "3.3.1",
+    "zuul": "3.4.0"
   }
 }

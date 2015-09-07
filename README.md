@@ -40,6 +40,12 @@ npm install react-aria-menubutton
 
 There is only one dependency: React 0.13.x.
 
+## Tested Browser Support
+
+Basically IE9+. See `.zuul.yml` for more details.
+
+Automated testing is done with [zuul](https://github.com/defunctzombie/zuul) and [Open Suace](https://saucelabs.com/opensauce/).
+
 ## Usage
 
 There are two ways to consume this module:
