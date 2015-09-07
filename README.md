@@ -1,10 +1,15 @@
 # react-aria-menubutton [![Build Status](https://travis-ci.org/davidtheclark/react-aria-menubutton.svg?branch=master)](https://travis-ci.org/davidtheclark/react-aria-menubutton)
 
-A React component that helps you build accessible menu buttons, by providing keyboard interactions and ARIA attributes aligned with [the WAI-ARIA Menu Button Design Pattern](http://www.w3.org/TR/wai-aria-practices/#menubutton).
+A React component that helps you build accessible menu buttons by providing keyboard interactions and ARIA attributes aligned with [the WAI-ARIA Menu Button Design Pattern](http://www.w3.org/TR/wai-aria-practices/#menubutton).
 
 Please check out [the demo](http://davidtheclark.github.io/react-aria-menubutton/demo/).
 
-## Project Goal
+## Project Goals
+
+- Full accessibility
+- Maximum Flexibility
+- Absolutely minimal styling
+- Thorough testing
 
 **If you like this kind of module (accessible, flexible, unstyled) you should also check out these projects:**
 - [react-aria-modal](https://github.com/davidtheclark/react-aria-modal)
@@ -21,11 +26,11 @@ Follow [the link](http://www.w3.org/TR/wai-aria-practices/#menubutton) and read 
 
 *If you think that this component does not satisfy the spec or if you know of other ways to make it even more accessible, please file an issue.*
 
-### Flexibility
+### Flexibility and minimal styling
 
 Instead of providing a pre-fabricated, fully styled component, this module's goal is to provide a component that others can build their own stuff on top of.
 
-It does not provide any classes or a stylesheet you'll have to figure out how to include; and it does not include inline styles that would be hard to override. It **only provides "smart" components to wrap your components**. The *library's* components take care of keyboard interaction and ARIA attributes, while *your* components just do whatever you want your components to do.
+It does not provide any classes or a stylesheet you'll have to figure out how to include; and it does not include inline styles that would be hard to override. It **only provides "smart" components to wrap your (dumb styled) components**. The *library's* components take care of keyboard interaction and ARIA attributes, while *your* components just do whatever you want your components to do.
 
 ## Installation
 
@@ -41,7 +46,7 @@ There are two ways to consume this module:
 - with CommonJS
 - as a global UMD library
 
-Using CommonJS, for example, you can simply `require()` the module to get the function `ariaMenuButton([options])`, which:
+Using CommonJS, for example, you can simply `require()` the module to get the function `ariaMenuButton([options])`, which you use like this:
 
 ```js
 var ariaMenuButton = require('react-aria-menubutton');
