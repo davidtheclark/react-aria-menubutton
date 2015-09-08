@@ -13,8 +13,8 @@ class Fancy extends React.Component {
     });
   }
 
-  handleSelection(value) {
-    this.setState({ selected: value });
+  handleSelection(data) {
+    this.setState({ selected: data.activity });
   }
 
   render() {
@@ -22,7 +22,10 @@ class Fancy extends React.Component {
 
     const fancyMenuItems = fancyStuff.map((activity, i) => (
       <MenuItem
-        value={activity}
+        value={{
+          activity,
+          somethingArbitrary: 'arbitrary',
+        }}
         text={activity}
         key={i}
         className='FancyMB-menuItem'
