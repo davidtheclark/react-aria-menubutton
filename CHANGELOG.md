@@ -1,5 +1,9 @@
 # Changelog
 
+# 1.1.0
+
+- Allow objects as MenuItem `value`s.
+
 ## 1.0.0
 
 - Nothing really: it was just time to start the real versioning.
