@@ -56,6 +56,7 @@ MenuItem.propTypes = {
     PropTypes.bool,
     PropTypes.number,
     PropTypes.string,
+    PropTypes.object
   ]),
 };
 
