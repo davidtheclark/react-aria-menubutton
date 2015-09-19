@@ -10,7 +10,7 @@
     "demo-watch": "watchify demo/js/demo.js -t babelify --extension=.jsx -o demo/demo-bundle.js -v",
     "demo-bs": "browser-sync start --server demo --files=\"demo/**/*.css,demo/index.html,demo/demo-bundle.js\"",
     "demo-dev": "parallelshell \"npm run demo-watch\" \"npm run demo-bs\"",
-    "test-dev": "zuul --local 8080 -- test",
+    "test-dev": "zuul --local 8080 --open -- test",
     "pretest": "npm run lint",
     "test": "zuul -- test",
     "prebuild-bundle": "trash dist/* --force",
@@ -45,7 +45,8 @@
     "widget"
   ],
   "dependencies": {
-    "react": "0.13.x"
+    "react": "0.13.x",
+    "tap.js": "^2.1.1"
   },
   "devDependencies": {
     "babel": "5.8.21",

@@ -19,7 +19,7 @@ Please check out [the demo](http://davidtheclark.github.io/react-aria-menubutton
 
 The project started as an effort to build a React component that follows every detail of [the WAI-ARIA Menu Button Design Pattern](http://www.w3.org/TR/wai-aria-practices/#menubutton) for **maximum accessibility**.
 
-Just hiding and showing a menu is easy; but the required **keyboard interactions** are kind of tricky, and the required **ARIA attributes** are easy to forget.
+Just hiding and showing a menu is easy; but the required **keyboard interactions** are kind of tricky, the required **ARIA attributes** are easy to forget, and some other aspects of opening and closing the menu based on behaviors and managing focus are unpleasant.
 So I decided to try to abstract the component enough that it would be **worth sharing with others**.
 
 Follow [the link](http://www.w3.org/TR/wai-aria-practices/#menubutton) and read about the keyboard interactions and ARIA attributes. [The demo](http://davidtheclark.github.io/react-aria-menubutton/demo/) also lists all of the interactions that are built in.
@@ -38,7 +38,11 @@ It does not provide any classes or a stylesheet you'll have to figure out how to
 npm install react-aria-menubutton
 ```
 
-There is only one dependency: React 0.13.x.
+There are dependencies: React 0.13.x and [tap.js](https://github.com/alexgibson/tap.js).
+
+tap.js is very small and included in the builds (React is not).
+It is included only to accurately detect "taps" (mouse click and touch taps) outside an open
+menu that should close it — which is important enough that it's worth doing right.
 
 ## Tested Browser Support
 
@@ -302,16 +306,6 @@ A `Menu`'s child may be one of the following:
 #### props
 
 *All props are optional.*
-
-##### noOverlay
-
-Type: `Boolean` Default: `false`
-
-By default, a transparent overlay is applied to the page that when clicked closes the menu. This is the only way I know how to consistently provide the clicking-outside-closes-menu functionality on mobile.
-
-You can turn this off by setting this `noOverlay` prop to `true`.
-
-(But if it is causing problems, annoying you or not working in some way, please let me know with an issue!)
 
 ##### tag
 

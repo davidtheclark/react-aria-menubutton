@@ -25,13 +25,7 @@ test('Menu creation with only required props and element child', t => {
 
   t.equal(managerOne.menu, renderedOne);
 
-  t.equal(nodeOne.tagName, 'DIV');
-  t.equal(nodeOne.children.length, 1);
-  t.equal(nodeOne.children[0].tagName, 'DIV');
-  t.notOk(nodeOne.children[0].getAttribute('id'));
-  t.notOk(nodeOne.children[0].getAttribute('class'));
-  t.equal(nodeOne.children[0].getAttribute('role'), 'menu');
-  t.equal(nodeOne.children[0].textContent, '');
+  t.equal(nodeOne, null);
 
   // Open
   const managerTwo = mockManager();
@@ -42,26 +36,9 @@ test('Menu creation with only required props and element child', t => {
     </Menu>
   );
   const nodeTwo = React.findDOMNode(renderedTwo);
-  t.equal(nodeTwo.children.length, 2);
+  t.equal(nodeTwo.children.length, 1);
   t.equal(nodeTwo.children[0].tagName, 'DIV');
   t.equal(nodeTwo.children[0].textContent, 'foo');
-  t.equal(nodeTwo.children[1].tagName, 'DIV');
-
-  const underlayStyle = nodeTwo.children[1].style;
-  t.equal(underlayStyle.cursor, 'pointer');
-  t.equal(underlayStyle.position, 'fixed');
-  t.equal(parseFloat(underlayStyle.top), 0);
-  t.equal(parseFloat(underlayStyle.bottom), 0);
-  t.equal(parseFloat(underlayStyle.left), 0);
-  t.equal(parseFloat(underlayStyle.right), 0);
-  t.equal(parseFloat(underlayStyle.right), 0);
-  if (underlayStyle.webkitTapHighlightColor) {
-    t.equal(underlayStyle.webkitTapHighlightColor.replace(/ /g, ''), 'rgba(0,0,0,0)');
-  }
-  t.equal(parseFloat(underlayStyle.zIndex), 99);
-
-  ReactTestUtils.Simulate.click(nodeTwo.children[1]);
-  t.ok(managerTwo.closeMenu.calledOnce);
 
   t.end();
 });

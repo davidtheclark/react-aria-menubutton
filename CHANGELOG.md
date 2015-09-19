@@ -1,6 +1,10 @@
 # Changelog
 
-# 1.1.0
+## Head
+
+- Use [tap.js](https://github.com/alexgibson/tap.js) to improve click-outside-closes behavior: no overlay required anymore, meaning that a click outside can *both* close the menu *and* do something else — with both mouse and touch events.
+
+## 1.1.0
 
 - Allow objects as MenuItem `value`s.
 
