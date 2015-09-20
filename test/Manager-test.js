@@ -210,6 +210,8 @@ test('Manager#handleMenuKey', t => {
   const downEvent = mockKeyEvent('ArrowDown');
   const fEvent = mockKeyEvent(null, 70);
   const sEvent = mockKeyEvent(null, 83);
+  const ctrlSEvent = mockKeyEvent(null, 83);
+  ctrlSEvent.ctrlKey = true;
 
   const m = mockManager();
   sinon.stub(m, 'closeMenu');
@@ -250,6 +252,9 @@ test('Manager#handleMenuKey', t => {
   m.handleMenuKey(sEvent);
   t.ok(sEvent.preventDefault.calledOnce);
   t.deepEqual(m.moveToLetter.getCall(1).args, ['S']);
+
+  m.handleMenuKey(ctrlSEvent);
+  t.notOk(ctrlSEvent.preventDefault.called);
 
   t.end();
 });

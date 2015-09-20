@@ -133,6 +133,9 @@ function handleMenuKey(event) {
       break;
     default:
       if (!isLetterKeyCode(event.keyCode)) return;
+      // If the letter key is part of a key combo, let it do whatever it was
+      // going to do
+      if (event.ctrlKey || event.metaKey || event.altKey) return;
       event.preventDefault();
       // "Typing a letter (printable character) key moves focus to the next
       // instance of a visible node whose title begins with that printable letter."
