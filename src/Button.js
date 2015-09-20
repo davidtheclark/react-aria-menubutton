@@ -2,9 +2,12 @@ import React, { PropTypes } from 'react';
 import keys from './keys';
 
 export default class Button extends React.Component {
-  constructor(props) {
-    super(props);
-    props.manager.button = this;
+  componentWillMount() {
+    this.props.manager.button = this;
+  }
+
+  componentWillUnmount() {
+    this.props.manager.powerDown();
   }
 
   handleKeyDown(event) {

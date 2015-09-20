@@ -7,7 +7,7 @@
     "lint": "eslint .",
     "minify": "uglifyjs ./dist/ariaMenuButton.js -c -m -o ./dist/ariaMenuButton.min.js",
     "demo-bundle": "browserify demo/js/demo.js -t babelify --extension=.jsx -o demo/demo-bundle.js",
-    "demo-watch": "watchify demo/js/demo.js -t babelify --extension=.jsx -o demo/demo-bundle.js -v",
+    "demo-watch": "watchify demo/js/demo.js -t babelify -d --extension=.jsx -o demo/demo-bundle.js -v",
     "demo-bs": "browser-sync start --server demo --files=\"demo/**/*.css,demo/index.html,demo/demo-bundle.js\"",
     "demo-dev": "parallelshell \"npm run demo-watch\" \"npm run demo-bs\"",
     "test-dev": "zuul --local 8080 --open -- test",

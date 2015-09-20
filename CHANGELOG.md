@@ -1,5 +1,9 @@
 # Changelog
 
+## Head
+
+- Allow for the case that selecting a menu item unmounts the menu (mostly by manager timers more intelligently).
+
 ## 2.0.0
 
 - Ignore letter key presses if the letter is paired with `alt`, `ctrl`, or `meta` keys.

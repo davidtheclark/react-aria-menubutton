@@ -2,19 +2,16 @@ import React, { PropTypes } from 'react';
 import Tap from 'tap.js';
 
 export default class Menu extends React.Component {
-  constructor(props) {
-    super(props);
-    props.manager.menu = this;
+  componentWillMount() {
+    this.props.manager.menu = this;
 
+    new Tap(document.body);
     this.isListeningForTap = false;
     this.tapHandler = (e) => {
       if (React.findDOMNode(this).contains(e.target)) return;
-      props.manager.closeMenu();
+      if (React.findDOMNode(this.props.manager.button).contains(e.target)) return;
+      this.props.manager.closeMenu();
     }
-  }
-
-  componentWillMount() {
-    new Tap(document.body);
   }
 
   componentWillUpdate() {
@@ -30,6 +27,11 @@ export default class Menu extends React.Component {
       // can be reloaded next time this menu opens
       manager.menuItems = [];
     }
+  }
+
+  componentWillUnmount() {
+    this.removeTapListeners();
+    this.props.manager.powerDown();
   }
 
   addTapListeners() {

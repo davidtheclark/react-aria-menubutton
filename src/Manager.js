@@ -23,6 +23,14 @@ export default class Manager {
     this.currentFocus = -1;
   }
 
+  powerDown() {
+    this.button = null;
+    this.menu = null;
+    this.menuItems = [];
+    clearTimeout(this.blurTimer)
+    clearTimeout(this.moveFocusTimer)
+  }
+
   update() {
     this.menu.setState({ isOpen: this.isOpen });
     this.button.setState({ menuOpen: this.isOpen });
@@ -32,7 +40,7 @@ export default class Manager {
     this.isOpen = true;
     this.update();
     if (focusMenu) {
-      setTimeout(() => this.moveFocus(0), 0);
+      this.moveFocusTimer = setTimeout(() => this.moveFocus(0), 0);
     } else {
       this.currentFocus = -1;
     }
@@ -99,7 +107,7 @@ export default class Manager {
 }
 
 function handleBlur() {
-  setTimeout(() => {
+  this.blurTimer = setTimeout(() => {
     const activeEl = document.activeElement;
     if (activeEl === React.findDOMNode(this.button)) return;
     if (this.menuItems.some(menuItem => menuItem.node === activeEl)) return;
