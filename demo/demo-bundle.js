@@ -108,7 +108,7 @@ var DemoOne = (function (_React$Component) {
 
 _react2['default'].render(_react2['default'].createElement(DemoOne, null), document.getElementById('demo-one'));
 
-},{"../../src/ariaMenuButton":182,"react":177}],2:[function(require,module,exports){
+},{"../../src/ariaMenuButton":183,"react":177}],2:[function(require,module,exports){
 'use strict';
 
 require('./basicDemo');
@@ -156,8 +156,8 @@ var Fancy = (function (_React$Component) {
 
   _createClass(Fancy, [{
     key: 'handleSelection',
-    value: function handleSelection(value) {
-      this.setState({ selected: value });
+    value: function handleSelection(data) {
+      this.setState({ selected: data.activity });
     }
   }, {
     key: 'render',
@@ -171,7 +171,10 @@ var Fancy = (function (_React$Component) {
         return _reactAddons2['default'].createElement(
           MenuItem,
           {
-            value: activity,
+            value: {
+              activity: activity,
+              somethingArbitrary: 'arbitrary'
+            },
             text: activity,
             key: i,
             className: 'FancyMB-menuItem'
@@ -260,7 +263,7 @@ fancyStuff.forEach(function (t) {
   x.src = 'svg/' + t + '.svg';
 });
 
-},{"../../src/ariaMenuButton":182,"react/addons":5}],4:[function(require,module,exports){
+},{"../../src/ariaMenuButton":183,"react/addons":5}],4:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -22126,6 +22129,125 @@ module.exports = warning;
 module.exports = require('./lib/React');
 
 },{"./lib/React":35}],178:[function(require,module,exports){
+/*!
+ * tap.js
+ * Copyright (c) 2013 Alex Gibson, http://alxgbsn.co.uk/
+ * Released under MIT license
+ */
+/* global define, module */
+(function (global, factory) {
+    'use strict';
+    if (typeof define === 'function' && define.amd) {
+        define(function () {
+            return (global.Tap = factory(global, global.document));
+        });
+    } else if (typeof exports === 'object') {
+        module.exports = factory(global, global.document);
+    } else {
+        global.Tap = factory(global, global.document);
+    }
+}(typeof window !== 'undefined' ? window : this, function (window, document) {
+    'use strict';
+
+    function Tap(el) {
+        this.el = typeof el === 'object' ? el : document.getElementById(el);
+        this.moved = false; //flags if the finger has moved
+        this.startX = 0; //starting x coordinate
+        this.startY = 0; //starting y coordinate
+        this.hasTouchEventOccured = false; //flag touch event
+        this.el.addEventListener('touchstart', this, false);
+        this.el.addEventListener('mousedown', this, false);
+    }
+
+    Tap.prototype.start = function(e) {
+
+        if (e.type === 'touchstart') {
+
+            this.hasTouchEventOccured = true;
+            this.el.addEventListener('touchmove', this, false);
+            this.el.addEventListener('touchend', this, false);
+            this.el.addEventListener('touchcancel', this, false);
+
+        } else if (e.type === 'mousedown') {
+
+            this.el.addEventListener('mouseup', this, false);
+        }
+
+        this.moved = false;
+        this.startX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+        this.startY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+    };
+
+    Tap.prototype.move = function(e) {
+        //if finger moves more than 10px flag to cancel
+        if (Math.abs(e.touches[0].clientX - this.startX) > 10 || Math.abs(e.touches[0].clientY - this.startY) > 10) {
+            this.moved = true;
+        }
+    };
+
+    Tap.prototype.end = function(e) {
+        var evt;
+
+        this.el.removeEventListener('touchmove', this, false);
+        this.el.removeEventListener('touchend', this, false);
+        this.el.removeEventListener('touchcancel', this, false);
+        this.el.removeEventListener('mouseup', this, false);
+
+        if (!this.moved) {
+            //create custom event
+            if (window.CustomEvent) {
+                evt = new window.CustomEvent('tap', {
+                    bubbles: true,
+                    cancelable: true
+                });
+            } else {
+                evt = document.createEvent('Event');
+                evt.initEvent('tap', true, true);
+            }
+
+            //prevent touchend from propagating to any parent
+            //nodes that may have a tap.js listener attached
+            e.stopPropagation();
+
+            // dispatchEvent returns false if any handler calls preventDefault,
+            if (!e.target.dispatchEvent(evt)) {
+                // in which case we want to prevent clicks from firing.
+                e.preventDefault();
+            }
+        }
+    };
+
+    Tap.prototype.cancel = function() {
+        this.hasTouchEventOccured = false;
+        this.moved = false;
+        this.startX = 0;
+        this.startY = 0;
+    };
+
+    Tap.prototype.destroy = function() {
+        this.el.removeEventListener('touchstart', this, false);
+        this.el.removeEventListener('touchmove', this, false);
+        this.el.removeEventListener('touchend', this, false);
+        this.el.removeEventListener('touchcancel', this, false);
+        this.el.removeEventListener('mousedown', this, false);
+        this.el.removeEventListener('mouseup', this, false);
+    };
+
+    Tap.prototype.handleEvent = function(e) {
+        switch (e.type) {
+            case 'touchstart': this.start(e); break;
+            case 'touchmove': this.move(e); break;
+            case 'touchend': this.end(e); break;
+            case 'touchcancel': this.cancel(e); break;
+            case 'mousedown': this.start(e); break;
+            case 'mouseup': this.end(e); break;
+        }
+    };
+
+    return Tap;
+}));
+
+},{}],179:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -22229,7 +22351,7 @@ Button.defaultProps = {
 };
 module.exports = exports['default'];
 
-},{"./keys":184,"react":177}],179:[function(require,module,exports){
+},{"./keys":185,"react":177}],180:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -22420,6 +22542,9 @@ function handleMenuKey(event) {
       break;
     default:
       if (!(0, _isLetterKeyCode2['default'])(event.keyCode)) return;
+      // If the letter key is part of a key combo, let it do whatever it was
+      // going to do
+      if (event.ctrlKey || event.metaKey || event.altKey) return;
       event.preventDefault();
       // "Typing a letter (printable character) key moves focus to the next
       // instance of a visible node whose title begins with that printable letter."
@@ -22428,7 +22553,7 @@ function handleMenuKey(event) {
 }
 module.exports = exports['default'];
 
-},{"./isLetterKeyCode":183,"./keys":184,"react":177}],180:[function(require,module,exports){
+},{"./isLetterKeyCode":184,"./keys":185,"react":177}],181:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -22449,26 +22574,61 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _tapJs = require('tap.js');
+
+var _tapJs2 = _interopRequireDefault(_tapJs);
+
 var Menu = (function (_React$Component) {
   _inherits(Menu, _React$Component);
 
   function Menu(props) {
+    var _this = this;
+
     _classCallCheck(this, Menu);
 
     _get(Object.getPrototypeOf(Menu.prototype), 'constructor', this).call(this, props);
     props.manager.menu = this;
+
+    this.isListeningForTap = false;
+    this.tapHandler = function (e) {
+      if (_react2['default'].findDOMNode(_this).contains(e.target)) return;
+      props.manager.closeMenu();
+    };
   }
 
   _createClass(Menu, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      new _tapJs2['default'](document.body);
+    }
+  }, {
     key: 'componentWillUpdate',
     value: function componentWillUpdate() {
       var manager = this.props.manager;
+
+      if (manager.isOpen && !this.isListeningForTap) {
+        this.addTapListeners();
+      } else if (!manager.isOpen && this.isListeningForTap) {
+        this.removeTapListeners();
+      }
 
       if (!manager.isOpen) {
         // Clear the manager's items, so they
         // can be reloaded next time this menu opens
         manager.menuItems = [];
       }
+    }
+  }, {
+    key: 'addTapListeners',
+    value: function addTapListeners() {
+      document.body.addEventListener('tap', this.tapHandler, true);
+      this.isListeningForTap = true;
+    }
+  }, {
+    key: 'removeTapListeners',
+    value: function removeTapListeners() {
+      document.body.removeEventListener('tap', this.tapHandler, true);
+      this.isListeningForTap = false;
     }
   }, {
     key: 'render',
@@ -22479,42 +22639,24 @@ var Menu = (function (_React$Component) {
       var tag = _props.tag;
       var className = _props.className;
       var id = _props.id;
-      var noOverlay = _props.noOverlay;
 
       var childrenToRender = (function () {
         if (typeof children === 'function') {
           return children({ isOpen: manager.isOpen });
         }
         if (manager.isOpen) return children;
-        return [];
+        return false;
       })();
 
-      var menuEl = _react2['default'].createElement(tag, {
+      if (!childrenToRender) return false;
+
+      return _react2['default'].createElement(tag, {
         className: className,
         id: id,
         onKeyDown: manager.handleMenuKey,
         role: 'menu',
-        onBlur: manager.handleBlur,
-        style: noOverlay ? undefined : { position: 'relative', zIndex: 100 }
+        onBlur: manager.handleBlur
       }, childrenToRender);
-
-      if (noOverlay) return menuEl;
-
-      var overlay = !manager.isOpen ? false : _react2['default'].createElement('div', {
-        style: {
-          cursor: 'pointer',
-          position: 'fixed',
-          top: 0,
-          bottom: 0,
-          left: 0,
-          right: 0,
-          WebkitTapHighlightColor: 'rgba(0,0,0,0)',
-          zIndex: 99
-        },
-        onClick: manager.closeMenu
-      });
-
-      return _react2['default'].createElement('div', {}, menuEl, overlay);
     }
   }]);
 
@@ -22528,7 +22670,6 @@ Menu.propTypes = {
   manager: _react.PropTypes.object.isRequired,
   id: _react.PropTypes.string,
   className: _react.PropTypes.string,
-  noOverlay: _react.PropTypes.bool,
   tag: _react.PropTypes.string
 };
 
@@ -22537,7 +22678,7 @@ Menu.defaultProps = {
 };
 module.exports = exports['default'];
 
-},{"react":177}],181:[function(require,module,exports){
+},{"react":177,"tap.js":178}],182:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -22629,7 +22770,7 @@ MenuItem.propTypes = {
   id: _react.PropTypes.string,
   tag: _react.PropTypes.string,
   text: _react.PropTypes.string,
-  value: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.number, _react.PropTypes.string])
+  value: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.number, _react.PropTypes.string, _react.PropTypes.object])
 };
 
 MenuItem.defaultProps = {
@@ -22637,7 +22778,7 @@ MenuItem.defaultProps = {
 };
 module.exports = exports['default'];
 
-},{"./keys":184,"react":177}],182:[function(require,module,exports){
+},{"./keys":185,"react":177}],183:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -22742,7 +22883,7 @@ exports['default'] = function (options) {
 
 module.exports = exports['default'];
 
-},{"./Button":178,"./Manager":179,"./Menu":180,"./MenuItem":181,"react":177}],183:[function(require,module,exports){
+},{"./Button":179,"./Manager":180,"./Menu":181,"./MenuItem":182,"react":177}],184:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -22755,7 +22896,7 @@ exports["default"] = function (keyCode) {
 
 module.exports = exports["default"];
 
-},{}],184:[function(require,module,exports){
+},{}],185:[function(require,module,exports){
 // Look here
 // https://github.com/facebook/react/blob/0.13-stable/src/browser/ui/dom/getEventKey.js
 
