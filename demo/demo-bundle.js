@@ -19,7 +19,7 @@ var _srcAriaMenuButton = require('../../src/ariaMenuButton');
 
 var _srcAriaMenuButton2 = _interopRequireDefault(_srcAriaMenuButton);
 
-var words = ['pectinate', 'borborygmus', 'anisodactylous', 'barbar', 'pilcrow'];
+var words = ['pectinate', 'borborygmus', 'anisodactylous', 'barbar', 'pilcrow', 'destroy'];
 
 var DemoOne = (function (_React$Component) {
   _inherits(DemoOne, _React$Component);
@@ -28,7 +28,7 @@ var DemoOne = (function (_React$Component) {
     _classCallCheck(this, DemoOne);
 
     _get(Object.getPrototypeOf(DemoOne.prototype), 'constructor', this).call(this, props);
-    this.state = { selected: '' };
+    this.state = { selected: '', noMenu: false };
     this.ariaMenuButton = (0, _srcAriaMenuButton2['default'])({
       onSelection: this.handleSelection.bind(this)
     });
@@ -37,12 +37,27 @@ var DemoOne = (function (_React$Component) {
   _createClass(DemoOne, [{
     key: 'handleSelection',
     value: function handleSelection(value) {
-      this.setState({ selected: value });
+      if (value === 'destroy') {
+        this.setState({ noMenu: true });
+      } else {
+        this.setState({ selected: value });
+      }
     }
   }, {
     key: 'render',
     value: function render() {
-      var selected = this.state.selected;
+      var _state = this.state;
+      var selected = _state.selected;
+      var noMenu = _state.noMenu;
+
+      if (noMenu) {
+        return _react2['default'].createElement(
+          'div',
+          null,
+          '[You decided to "destroy this menu," so the menu has been destroyed, according to your wishes. Refresh the page to see it again.]'
+        );
+      }
+
       var _ariaMenuButton = this.ariaMenuButton;
       var Button = _ariaMenuButton.Button;
       var Menu = _ariaMenuButton.Menu;
@@ -53,6 +68,7 @@ var DemoOne = (function (_React$Component) {
         if (selected === word) {
           itemClass += ' is-selected';
         }
+        var display = word === 'destroy' ? 'destroy this menu' : word;
         return _react2['default'].createElement(
           'li',
           { className: 'AriaMenuButton-menuItemWrapper', key: i },
@@ -63,7 +79,7 @@ var DemoOne = (function (_React$Component) {
               value: word,
               text: word
             },
-            word
+            display
           )
         );
       });
@@ -22275,14 +22291,23 @@ var _keys2 = _interopRequireDefault(_keys);
 var Button = (function (_React$Component) {
   _inherits(Button, _React$Component);
 
-  function Button(props) {
+  function Button() {
     _classCallCheck(this, Button);
 
-    _get(Object.getPrototypeOf(Button.prototype), 'constructor', this).call(this, props);
-    props.manager.button = this;
+    _get(Object.getPrototypeOf(Button.prototype), 'constructor', this).apply(this, arguments);
   }
 
   _createClass(Button, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      this.props.manager.button = this;
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.props.manager.powerDown();
+    }
+  }, {
     key: 'handleKeyDown',
     value: function handleKeyDown(event) {
       var manager = this.props.manager;
@@ -22402,6 +22427,15 @@ var Manager = (function () {
   }
 
   _createClass(Manager, [{
+    key: 'powerDown',
+    value: function powerDown() {
+      this.button = null;
+      this.menu = null;
+      this.menuItems = [];
+      clearTimeout(this.blurTimer);
+      clearTimeout(this.moveFocusTimer);
+    }
+  }, {
     key: 'update',
     value: function update() {
       this.menu.setState({ isOpen: this.isOpen });
@@ -22420,7 +22454,7 @@ var Manager = (function () {
       this.isOpen = true;
       this.update();
       if (focusMenu) {
-        setTimeout(function () {
+        this.moveFocusTimer = setTimeout(function () {
           return _this.moveFocus(0);
         }, 0);
       } else {
@@ -22506,7 +22540,7 @@ exports['default'] = Manager;
 function handleBlur() {
   var _this2 = this;
 
-  setTimeout(function () {
+  this.blurTimer = setTimeout(function () {
     var activeEl = document.activeElement;
     if (activeEl === _react2['default'].findDOMNode(_this2.button)) return;
     if (_this2.menuItems.some(function (menuItem) {
@@ -22581,25 +22615,26 @@ var _tapJs2 = _interopRequireDefault(_tapJs);
 var Menu = (function (_React$Component) {
   _inherits(Menu, _React$Component);
 
-  function Menu(props) {
-    var _this = this;
-
+  function Menu() {
     _classCallCheck(this, Menu);
 
-    _get(Object.getPrototypeOf(Menu.prototype), 'constructor', this).call(this, props);
-    props.manager.menu = this;
-
-    this.isListeningForTap = false;
-    this.tapHandler = function (e) {
-      if (_react2['default'].findDOMNode(_this).contains(e.target)) return;
-      props.manager.closeMenu();
-    };
+    _get(Object.getPrototypeOf(Menu.prototype), 'constructor', this).apply(this, arguments);
   }
 
   _createClass(Menu, [{
     key: 'componentWillMount',
     value: function componentWillMount() {
+      var _this = this;
+
+      this.props.manager.menu = this;
+
       new _tapJs2['default'](document.body);
+      this.isListeningForTap = false;
+      this.tapHandler = function (e) {
+        if (_react2['default'].findDOMNode(_this).contains(e.target)) return;
+        if (_react2['default'].findDOMNode(_this.props.manager.button).contains(e.target)) return;
+        _this.props.manager.closeMenu();
+      };
     }
   }, {
     key: 'componentWillUpdate',
@@ -22617,6 +22652,12 @@ var Menu = (function (_React$Component) {
         // can be reloaded next time this menu opens
         manager.menuItems = [];
       }
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.removeTapListeners();
+      this.props.manager.powerDown();
     }
   }, {
     key: 'addTapListeners',
