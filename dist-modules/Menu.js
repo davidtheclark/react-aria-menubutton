@@ -19,23 +19,24 @@ var _tapJs2 = _interopRequireDefault(_tapJs);
 var Menu = (function (_React$Component) {
   _inherits(Menu, _React$Component);
 
-  function Menu(props) {
-    var _this = this;
-
+  function Menu() {
     _classCallCheck(this, Menu);
 
-    _React$Component.call(this, props);
-    props.manager.menu = this;
-
-    this.isListeningForTap = false;
-    this.tapHandler = function (e) {
-      if (_react2['default'].findDOMNode(_this).contains(e.target)) return;
-      props.manager.closeMenu();
-    };
+    _React$Component.apply(this, arguments);
   }
 
   Menu.prototype.componentWillMount = function componentWillMount() {
+    var _this = this;
+
+    this.props.manager.menu = this;
+
     new _tapJs2['default'](document.body);
+    this.isListeningForTap = false;
+    this.tapHandler = function (e) {
+      if (_react2['default'].findDOMNode(_this).contains(e.target)) return;
+      if (_react2['default'].findDOMNode(_this.props.manager.button).contains(e.target)) return;
+      _this.props.manager.closeMenu();
+    };
   };
 
   Menu.prototype.componentWillUpdate = function componentWillUpdate() {
@@ -52,6 +53,11 @@ var Menu = (function (_React$Component) {
       // can be reloaded next time this menu opens
       manager.menuItems = [];
     }
+  };
+
+  Menu.prototype.componentWillUnmount = function componentWillUnmount() {
+    this.removeTapListeners();
+    this.props.manager.powerDown();
   };
 
   Menu.prototype.addTapListeners = function addTapListeners() {

@@ -19,12 +19,19 @@ var _keys2 = _interopRequireDefault(_keys);
 var Button = (function (_React$Component) {
   _inherits(Button, _React$Component);
 
-  function Button(props) {
+  function Button() {
     _classCallCheck(this, Button);
 
-    _React$Component.call(this, props);
-    props.manager.button = this;
+    _React$Component.apply(this, arguments);
   }
+
+  Button.prototype.componentWillMount = function componentWillMount() {
+    this.props.manager.button = this;
+  };
+
+  Button.prototype.componentWillUnmount = function componentWillUnmount() {
+    this.props.manager.powerDown();
+  };
 
   Button.prototype.handleKeyDown = function handleKeyDown(event) {
     var manager = this.props.manager;

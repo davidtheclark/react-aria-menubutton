@@ -139,12 +139,19 @@ var _keys2 = _interopRequireDefault(_keys);
 var Button = (function (_React$Component) {
   _inherits(Button, _React$Component);
 
-  function Button(props) {
+  function Button() {
     _classCallCheck(this, Button);
 
-    _React$Component.call(this, props);
-    props.manager.button = this;
+    _React$Component.apply(this, arguments);
   }
+
+  Button.prototype.componentWillMount = function componentWillMount() {
+    this.props.manager.button = this;
+  };
+
+  Button.prototype.componentWillUnmount = function componentWillUnmount() {
+    this.props.manager.powerDown();
+  };
 
   Button.prototype.handleKeyDown = function handleKeyDown(event) {
     var manager = this.props.manager;
@@ -256,6 +263,14 @@ var Manager = (function () {
     this.currentFocus = -1;
   }
 
+  Manager.prototype.powerDown = function powerDown() {
+    this.button = null;
+    this.menu = null;
+    this.menuItems = [];
+    clearTimeout(this.blurTimer);
+    clearTimeout(this.moveFocusTimer);
+  };
+
   Manager.prototype.update = function update() {
     this.menu.setState({ isOpen: this.isOpen });
     this.button.setState({ menuOpen: this.isOpen });
@@ -272,7 +287,7 @@ var Manager = (function () {
     this.isOpen = true;
     this.update();
     if (focusMenu) {
-      setTimeout(function () {
+      this.moveFocusTimer = setTimeout(function () {
         return _this.moveFocus(0);
       }, 0);
     } else {
@@ -351,7 +366,7 @@ exports['default'] = Manager;
 function handleBlur() {
   var _this2 = this;
 
-  setTimeout(function () {
+  this.blurTimer = setTimeout(function () {
     var activeEl = document.activeElement;
     if (activeEl === _react2['default'].findDOMNode(_this2.button)) return;
     if (_this2.menuItems.some(function (menuItem) {
@@ -420,23 +435,24 @@ var _tapJs2 = _interopRequireDefault(_tapJs);
 var Menu = (function (_React$Component) {
   _inherits(Menu, _React$Component);
 
-  function Menu(props) {
-    var _this = this;
-
+  function Menu() {
     _classCallCheck(this, Menu);
 
-    _React$Component.call(this, props);
-    props.manager.menu = this;
-
-    this.isListeningForTap = false;
-    this.tapHandler = function (e) {
-      if (_react2['default'].findDOMNode(_this).contains(e.target)) return;
-      props.manager.closeMenu();
-    };
+    _React$Component.apply(this, arguments);
   }
 
   Menu.prototype.componentWillMount = function componentWillMount() {
+    var _this = this;
+
+    this.props.manager.menu = this;
+
     new _tapJs2['default'](document.body);
+    this.isListeningForTap = false;
+    this.tapHandler = function (e) {
+      if (_react2['default'].findDOMNode(_this).contains(e.target)) return;
+      if (_react2['default'].findDOMNode(_this.props.manager.button).contains(e.target)) return;
+      _this.props.manager.closeMenu();
+    };
   };
 
   Menu.prototype.componentWillUpdate = function componentWillUpdate() {
@@ -453,6 +469,11 @@ var Menu = (function (_React$Component) {
       // can be reloaded next time this menu opens
       manager.menuItems = [];
     }
+  };
+
+  Menu.prototype.componentWillUnmount = function componentWillUnmount() {
+    this.removeTapListeners();
+    this.props.manager.powerDown();
   };
 
   Menu.prototype.addTapListeners = function addTapListeners() {

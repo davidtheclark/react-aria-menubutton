@@ -43,6 +43,14 @@ var Manager = (function () {
     this.currentFocus = -1;
   }
 
+  Manager.prototype.powerDown = function powerDown() {
+    this.button = null;
+    this.menu = null;
+    this.menuItems = [];
+    clearTimeout(this.blurTimer);
+    clearTimeout(this.moveFocusTimer);
+  };
+
   Manager.prototype.update = function update() {
     this.menu.setState({ isOpen: this.isOpen });
     this.button.setState({ menuOpen: this.isOpen });
@@ -59,7 +67,7 @@ var Manager = (function () {
     this.isOpen = true;
     this.update();
     if (focusMenu) {
-      setTimeout(function () {
+      this.moveFocusTimer = setTimeout(function () {
         return _this.moveFocus(0);
       }, 0);
     } else {
@@ -138,7 +146,7 @@ exports['default'] = Manager;
 function handleBlur() {
   var _this2 = this;
 
-  setTimeout(function () {
+  this.blurTimer = setTimeout(function () {
     var activeEl = document.activeElement;
     if (activeEl === _react2['default'].findDOMNode(_this2.button)) return;
     if (_this2.menuItems.some(function (menuItem) {
