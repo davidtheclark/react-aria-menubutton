@@ -1,6 +1,6 @@
 # Changelog
 
-## Head
+## 2.0.0
 
 - Ignore letter key presses if the letter is paired with `alt`, `ctrl`, or `meta` keys.
 - Use [tap.js](https://github.com/alexgibson/tap.js) to improve click-outside-closes behavior: no overlay required anymore, meaning that a click outside can *both* close the menu *and* do something else — with both mouse and touch events.

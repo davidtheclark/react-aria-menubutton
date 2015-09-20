@@ -1,4 +1,123 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.ariaMenuButton = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+/*!
+ * tap.js
+ * Copyright (c) 2013 Alex Gibson, http://alxgbsn.co.uk/
+ * Released under MIT license
+ */
+/* global define, module */
+(function (global, factory) {
+    'use strict';
+    if (typeof define === 'function' && define.amd) {
+        define(function () {
+            return (global.Tap = factory(global, global.document));
+        });
+    } else if (typeof exports === 'object') {
+        module.exports = factory(global, global.document);
+    } else {
+        global.Tap = factory(global, global.document);
+    }
+}(typeof window !== 'undefined' ? window : this, function (window, document) {
+    'use strict';
+
+    function Tap(el) {
+        this.el = typeof el === 'object' ? el : document.getElementById(el);
+        this.moved = false; //flags if the finger has moved
+        this.startX = 0; //starting x coordinate
+        this.startY = 0; //starting y coordinate
+        this.hasTouchEventOccured = false; //flag touch event
+        this.el.addEventListener('touchstart', this, false);
+        this.el.addEventListener('mousedown', this, false);
+    }
+
+    Tap.prototype.start = function(e) {
+
+        if (e.type === 'touchstart') {
+
+            this.hasTouchEventOccured = true;
+            this.el.addEventListener('touchmove', this, false);
+            this.el.addEventListener('touchend', this, false);
+            this.el.addEventListener('touchcancel', this, false);
+
+        } else if (e.type === 'mousedown') {
+
+            this.el.addEventListener('mouseup', this, false);
+        }
+
+        this.moved = false;
+        this.startX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+        this.startY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+    };
+
+    Tap.prototype.move = function(e) {
+        //if finger moves more than 10px flag to cancel
+        if (Math.abs(e.touches[0].clientX - this.startX) > 10 || Math.abs(e.touches[0].clientY - this.startY) > 10) {
+            this.moved = true;
+        }
+    };
+
+    Tap.prototype.end = function(e) {
+        var evt;
+
+        this.el.removeEventListener('touchmove', this, false);
+        this.el.removeEventListener('touchend', this, false);
+        this.el.removeEventListener('touchcancel', this, false);
+        this.el.removeEventListener('mouseup', this, false);
+
+        if (!this.moved) {
+            //create custom event
+            if (window.CustomEvent) {
+                evt = new window.CustomEvent('tap', {
+                    bubbles: true,
+                    cancelable: true
+                });
+            } else {
+                evt = document.createEvent('Event');
+                evt.initEvent('tap', true, true);
+            }
+
+            //prevent touchend from propagating to any parent
+            //nodes that may have a tap.js listener attached
+            e.stopPropagation();
+
+            // dispatchEvent returns false if any handler calls preventDefault,
+            if (!e.target.dispatchEvent(evt)) {
+                // in which case we want to prevent clicks from firing.
+                e.preventDefault();
+            }
+        }
+    };
+
+    Tap.prototype.cancel = function() {
+        this.hasTouchEventOccured = false;
+        this.moved = false;
+        this.startX = 0;
+        this.startY = 0;
+    };
+
+    Tap.prototype.destroy = function() {
+        this.el.removeEventListener('touchstart', this, false);
+        this.el.removeEventListener('touchmove', this, false);
+        this.el.removeEventListener('touchend', this, false);
+        this.el.removeEventListener('touchcancel', this, false);
+        this.el.removeEventListener('mousedown', this, false);
+        this.el.removeEventListener('mouseup', this, false);
+    };
+
+    Tap.prototype.handleEvent = function(e) {
+        switch (e.type) {
+            case 'touchstart': this.start(e); break;
+            case 'touchmove': this.move(e); break;
+            case 'touchend': this.end(e); break;
+            case 'touchcancel': this.cancel(e); break;
+            case 'mousedown': this.start(e); break;
+            case 'mouseup': this.end(e); break;
+        }
+    };
+
+    return Tap;
+}));
+
+},{}],2:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -7,13 +126,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'd
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _keys = require(7);
+var _keys = require(8);
 
 var _keys2 = _interopRequireDefault(_keys);
 
@@ -91,7 +210,7 @@ Button.defaultProps = {
 };
 module.exports = exports['default'];
 
-},{"7":7,"react":"react"}],2:[function(require,module,exports){
+},{"8":8,"react":"react"}],3:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -104,11 +223,11 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _keys = require(7);
+var _keys = require(8);
 
 var _keys2 = _interopRequireDefault(_keys);
 
-var _isLetterKeyCode = require(6);
+var _isLetterKeyCode = require(7);
 
 var _isLetterKeyCode2 = _interopRequireDefault(_isLetterKeyCode);
 
@@ -268,6 +387,9 @@ function handleMenuKey(event) {
       break;
     default:
       if (!_isLetterKeyCode2['default'](event.keyCode)) return;
+      // If the letter key is part of a key combo, let it do whatever it was
+      // going to do
+      if (event.ctrlKey || event.metaKey || event.altKey) return;
       event.preventDefault();
       // "Typing a letter (printable character) key moves focus to the next
       // instance of a visible node whose title begins with that printable letter."
@@ -276,7 +398,7 @@ function handleMenuKey(event) {
 }
 module.exports = exports['default'];
 
-},{"6":6,"7":7,"react":"react"}],3:[function(require,module,exports){
+},{"7":7,"8":8,"react":"react"}],4:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -285,30 +407,62 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'd
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _tapJs = require(1);
+
+var _tapJs2 = _interopRequireDefault(_tapJs);
+
 var Menu = (function (_React$Component) {
   _inherits(Menu, _React$Component);
 
   function Menu(props) {
+    var _this = this;
+
     _classCallCheck(this, Menu);
 
     _React$Component.call(this, props);
     props.manager.menu = this;
+
+    this.isListeningForTap = false;
+    this.tapHandler = function (e) {
+      if (_react2['default'].findDOMNode(_this).contains(e.target)) return;
+      props.manager.closeMenu();
+    };
   }
+
+  Menu.prototype.componentWillMount = function componentWillMount() {
+    new _tapJs2['default'](document.body);
+  };
 
   Menu.prototype.componentWillUpdate = function componentWillUpdate() {
     var manager = this.props.manager;
+
+    if (manager.isOpen && !this.isListeningForTap) {
+      this.addTapListeners();
+    } else if (!manager.isOpen && this.isListeningForTap) {
+      this.removeTapListeners();
+    }
 
     if (!manager.isOpen) {
       // Clear the manager's items, so they
       // can be reloaded next time this menu opens
       manager.menuItems = [];
     }
+  };
+
+  Menu.prototype.addTapListeners = function addTapListeners() {
+    document.body.addEventListener('tap', this.tapHandler, true);
+    this.isListeningForTap = true;
+  };
+
+  Menu.prototype.removeTapListeners = function removeTapListeners() {
+    document.body.removeEventListener('tap', this.tapHandler, true);
+    this.isListeningForTap = false;
   };
 
   Menu.prototype.render = function render() {
@@ -318,42 +472,24 @@ var Menu = (function (_React$Component) {
     var tag = _props.tag;
     var className = _props.className;
     var id = _props.id;
-    var noOverlay = _props.noOverlay;
 
     var childrenToRender = (function () {
       if (typeof children === 'function') {
         return children({ isOpen: manager.isOpen });
       }
       if (manager.isOpen) return children;
-      return [];
+      return false;
     })();
 
-    var menuEl = _react2['default'].createElement(tag, {
+    if (!childrenToRender) return false;
+
+    return _react2['default'].createElement(tag, {
       className: className,
       id: id,
       onKeyDown: manager.handleMenuKey,
       role: 'menu',
-      onBlur: manager.handleBlur,
-      style: noOverlay ? undefined : { position: 'relative', zIndex: 100 }
+      onBlur: manager.handleBlur
     }, childrenToRender);
-
-    if (noOverlay) return menuEl;
-
-    var overlay = !manager.isOpen ? false : _react2['default'].createElement('div', {
-      style: {
-        cursor: 'pointer',
-        position: 'fixed',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        WebkitTapHighlightColor: 'rgba(0,0,0,0)',
-        zIndex: 99
-      },
-      onClick: manager.closeMenu
-    });
-
-    return _react2['default'].createElement('div', {}, menuEl, overlay);
   };
 
   return Menu;
@@ -366,7 +502,6 @@ Menu.propTypes = {
   manager: _react.PropTypes.object.isRequired,
   id: _react.PropTypes.string,
   className: _react.PropTypes.string,
-  noOverlay: _react.PropTypes.bool,
   tag: _react.PropTypes.string
 };
 
@@ -375,7 +510,7 @@ Menu.defaultProps = {
 };
 module.exports = exports['default'];
 
-},{"react":"react"}],4:[function(require,module,exports){
+},{"1":1,"react":"react"}],5:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -384,13 +519,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'd
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _keys = require(7);
+var _keys = require(8);
 
 var _keys2 = _interopRequireDefault(_keys);
 
@@ -463,7 +598,7 @@ MenuItem.defaultProps = {
 };
 module.exports = exports['default'];
 
-},{"7":7,"react":"react"}],5:[function(require,module,exports){
+},{"8":8,"react":"react"}],6:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -474,25 +609,25 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'd
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Manager = require(2);
+var _Manager = require(3);
 
 var _Manager2 = _interopRequireDefault(_Manager);
 
-var _Button = require(1);
+var _Button = require(2);
 
 var _Button2 = _interopRequireDefault(_Button);
 
-var _Menu = require(3);
+var _Menu = require(4);
 
 var _Menu2 = _interopRequireDefault(_Menu);
 
-var _MenuItem = require(4);
+var _MenuItem = require(5);
 
 var _MenuItem2 = _interopRequireDefault(_MenuItem);
 
@@ -553,7 +688,7 @@ exports['default'] = function (options) {
 
 module.exports = exports['default'];
 
-},{"1":1,"2":2,"3":3,"4":4,"react":"react"}],6:[function(require,module,exports){
+},{"2":2,"3":3,"4":4,"5":5,"react":"react"}],7:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -564,7 +699,7 @@ exports["default"] = function (keyCode) {
 
 module.exports = exports["default"];
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 // Look here
 // https://github.com/facebook/react/blob/0.13-stable/src/browser/ui/dom/getEventKey.js
 
@@ -580,5 +715,5 @@ exports['default'] = {
 };
 module.exports = exports['default'];
 
-},{}]},{},[5])(5)
+},{}]},{},[6])(6)
 });
