@@ -33,23 +33,23 @@ export default class Menu extends React.Component {
     this.removeTapListeners();
     this.props.manager.powerDown();
   }
-  
+
   initTap() {
-    if (typeof document == 'undefined') return;
-    
+    if (!document) return;
+
     new Tap(document.body);
   }
 
   addTapListeners() {
-    if (typeof document == 'undefined') return;
-    
+    if (!document) return;
+
     document.body.addEventListener('tap', this.tapHandler, true);
     this.isListeningForTap = true;
   }
 
   removeTapListeners() {
-    if (typeof document == 'undefined') return;
-    
+    if (!document) return;
+
     document.body.removeEventListener('tap', this.tapHandler, true);
     this.isListeningForTap = false;
   }
