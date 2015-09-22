@@ -446,7 +446,7 @@ var Menu = (function (_React$Component) {
 
     this.props.manager.menu = this;
 
-    new _tapJs2['default'](document.body);
+    this.initTap();
     this.isListeningForTap = false;
     this.tapHandler = function (e) {
       if (_react2['default'].findDOMNode(_this).contains(e.target)) return;
@@ -476,12 +476,22 @@ var Menu = (function (_React$Component) {
     this.props.manager.powerDown();
   };
 
+  Menu.prototype.initTap = function initTap() {
+    if (!document) return;
+
+    new _tapJs2['default'](document.body);
+  };
+
   Menu.prototype.addTapListeners = function addTapListeners() {
+    if (!document) return;
+
     document.body.addEventListener('tap', this.tapHandler, true);
     this.isListeningForTap = true;
   };
 
   Menu.prototype.removeTapListeners = function removeTapListeners() {
+    if (!document) return;
+
     document.body.removeEventListener('tap', this.tapHandler, true);
     this.isListeningForTap = false;
   };
