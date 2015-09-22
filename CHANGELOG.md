@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.2
+
+- Avoid presuming that `document` exists, to avoid breaking `React.renderToString()`.
+
 ## 2.0.1
 
 - Allow for the case that selecting a menu item unmounts the menu (mostly by manager timers more intelligently).
