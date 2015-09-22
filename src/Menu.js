@@ -35,20 +35,20 @@ export default class Menu extends React.Component {
   }
 
   initTap() {
-    if (!document) return;
+    if (typeof document === 'undefined') return;
 
     new Tap(document.body);
   }
 
   addTapListeners() {
-    if (!document) return;
+    if (typeof document === 'undefined') return;
 
     document.body.addEventListener('tap', this.tapHandler, true);
     this.isListeningForTap = true;
   }
 
   removeTapListeners() {
-    if (!document) return;
+    if (typeof document === 'undefined') return;
 
     document.body.removeEventListener('tap', this.tapHandler, true);
     this.isListeningForTap = false;

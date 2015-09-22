@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.0.2
+## 2.0.2 and 2.0.3
 
 - Avoid presuming that `document` exists, to avoid breaking `React.renderToString()`.
 
