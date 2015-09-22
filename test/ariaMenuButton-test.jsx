@@ -24,6 +24,11 @@ test('Wrapped Button component', t => {
   t.equal(rendered.props.bar, 2);
   t.equal(rendered.props.children, 'baz');
   t.ok(rendered.props.manager instanceof Manager);
+
+  t.doesNotThrow(() => {
+    React.renderToString(React.createElement(amb.Button, {}, 'foo'));
+  });
+
   t.end();
 });
 
@@ -44,6 +49,11 @@ test('Wrapped Menu component', t => {
   t.equal(rendered.props.bar, 2);
   t.equal(rendered.props.children, child);
   t.ok(rendered.props.manager instanceof Manager);
+
+  t.doesNotThrow(() => {
+    React.renderToString(React.createElement(amb.Menu, {}, React.DOM.div('foo')));
+  });
+
   t.end();
 });
 
@@ -64,5 +74,10 @@ test('Wrapped MenuItem component', t => {
   t.equal(rendered.props.bar, 2);
   t.equal(rendered.props.children, child);
   t.ok(rendered.props.manager instanceof Manager);
+
+  t.doesNotThrow(() => {
+    React.renderToString(React.createElement(amb.MenuItem, {}, 'foo'));
+  });
+
   t.end();
 });

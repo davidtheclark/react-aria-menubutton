@@ -124,3 +124,16 @@ test('Menu updating', t => {
 
   t.end();
 });
+
+test('Menu rendered via renderToString', t => {
+  const manager = mockManager();
+  t.doesNotThrow(() => {
+    React.renderToString(
+      <Menu manager={manager}>
+        <div>foo</div>
+      </Menu>
+    );
+  });
+
+  t.end();
+});

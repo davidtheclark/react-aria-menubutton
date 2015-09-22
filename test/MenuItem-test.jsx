@@ -138,3 +138,16 @@ test('MenuItem keyDown', t => {
 
   t.end();
 });
+
+test('MenuItem rendered via renderToString', t => {
+  const manager = mockManager();
+  t.doesNotThrow(() => {
+    React.renderToString(
+      <MenuItem manager={manager}>
+        foo
+      </MenuItem>
+    );
+  });
+
+  t.end();
+});

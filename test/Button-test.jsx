@@ -137,3 +137,16 @@ test('Button keyDown', t => {
 
   t.end();
 });
+
+test('Button rendered via renderToString', t => {
+  const manager = mockManager();
+  t.doesNotThrow(() => {
+    React.renderToString(
+      <Button manager={manager}>
+        foo
+      </Button>
+    );
+  });
+
+  t.end();
+});
