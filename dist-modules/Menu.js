@@ -61,20 +61,20 @@ var Menu = (function (_React$Component) {
   };
 
   Menu.prototype.initTap = function initTap() {
-    if (!document) return;
+    if (typeof document === 'undefined') return;
 
     new _tapJs2['default'](document.body);
   };
 
   Menu.prototype.addTapListeners = function addTapListeners() {
-    if (!document) return;
+    if (typeof document === 'undefined') return;
 
     document.body.addEventListener('tap', this.tapHandler, true);
     this.isListeningForTap = true;
   };
 
   Menu.prototype.removeTapListeners = function removeTapListeners() {
-    if (!document) return;
+    if (typeof document === 'undefined') return;
 
     document.body.removeEventListener('tap', this.tapHandler, true);
     this.isListeningForTap = false;
