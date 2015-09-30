@@ -22588,6 +22588,7 @@ function handleMenuKey(event) {
 module.exports = exports['default'];
 
 },{"./isLetterKeyCode":184,"./keys":185,"react":177}],181:[function(require,module,exports){
+(function (global){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -22628,7 +22629,6 @@ var Menu = (function (_React$Component) {
 
       this.props.manager.menu = this;
 
-      new _tapJs2['default'](document.body);
       this.isListeningForTap = false;
       this.tapHandler = function (e) {
         if (_react2['default'].findDOMNode(_this).contains(e.target)) return;
@@ -22662,13 +22662,17 @@ var Menu = (function (_React$Component) {
   }, {
     key: 'addTapListeners',
     value: function addTapListeners() {
+      if (!global.document) return;
+      this.bodyTap = new _tapJs2['default'](document.body);
       document.body.addEventListener('tap', this.tapHandler, true);
       this.isListeningForTap = true;
     }
   }, {
     key: 'removeTapListeners',
     value: function removeTapListeners() {
+      if (!global.document) return;
       document.body.removeEventListener('tap', this.tapHandler, true);
+      this.bodyTap.destroy();
       this.isListeningForTap = false;
     }
   }, {
@@ -22719,6 +22723,7 @@ Menu.defaultProps = {
 };
 module.exports = exports['default'];
 
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"react":177,"tap.js":178}],182:[function(require,module,exports){
 'use strict';
 
@@ -22932,7 +22937,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 exports["default"] = function (keyCode) {
-  return keyCode >= 65 && keyCode <= 91;
+  return keyCode >= 65 && keyCode <= 90;
 };
 
 module.exports = exports["default"];
