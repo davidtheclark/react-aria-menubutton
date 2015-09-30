@@ -5,7 +5,6 @@ export default class Menu extends React.Component {
   componentWillMount() {
     this.props.manager.menu = this;
 
-    this.initTap();
     this.isListeningForTap = false;
     this.tapHandler = (e) => {
       if (React.findDOMNode(this).contains(e.target)) return;
@@ -34,23 +33,17 @@ export default class Menu extends React.Component {
     this.props.manager.powerDown();
   }
 
-  initTap() {
-    if (typeof document === 'undefined') return;
-
-    new Tap(document.body);
-  }
-
   addTapListeners() {
-    if (typeof document === 'undefined') return;
-
+    if (!global.document) return;
+    this.bodyTap = new Tap(document.body);
     document.body.addEventListener('tap', this.tapHandler, true);
     this.isListeningForTap = true;
   }
 
   removeTapListeners() {
-    if (typeof document === 'undefined') return;
-
+    if (!global.document) return;
     document.body.removeEventListener('tap', this.tapHandler, true);
+    this.bodyTap.destroy();
     this.isListeningForTap = false;
   }
 
