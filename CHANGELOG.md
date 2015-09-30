@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.4
+
+- Better cleanup of Tap.js listeners.
+- Key code 91 is not a letter so I should stop treating it like one.
+
 ## 2.0.2 and 2.0.3
 
 - Avoid presuming that `document` exists, to avoid breaking `React.renderToString()`.
