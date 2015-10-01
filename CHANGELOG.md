@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.0.4
+## 2.0.4 and 2.0.5
 
 - Better cleanup of Tap.js listeners.
 - Key code 91 is not a letter so I should stop treating it like one.

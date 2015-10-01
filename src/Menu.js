@@ -42,6 +42,7 @@ export default class Menu extends React.Component {
 
   removeTapListeners() {
     if (!global.document) return;
+    if (!this.isListeningForTap) return;
     document.body.removeEventListener('tap', this.tapHandler, true);
     this.bodyTap.destroy();
     this.isListeningForTap = false;
