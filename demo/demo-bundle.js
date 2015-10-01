@@ -22671,6 +22671,7 @@ var Menu = (function (_React$Component) {
     key: 'removeTapListeners',
     value: function removeTapListeners() {
       if (!global.document) return;
+      if (!this.isListeningForTap) return;
       document.body.removeEventListener('tap', this.tapHandler, true);
       this.bodyTap.destroy();
       this.isListeningForTap = false;
