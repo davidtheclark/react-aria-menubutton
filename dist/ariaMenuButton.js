@@ -65,12 +65,12 @@
 
         if (!this.moved) {
             //create custom event
-            if (window.CustomEvent) {
+            try {
                 evt = new window.CustomEvent('tap', {
                     bubbles: true,
                     cancelable: true
                 });
-            } else {
+            } catch (e) {
                 evt = document.createEvent('Event');
                 evt.initEvent('tap', true, true);
             }

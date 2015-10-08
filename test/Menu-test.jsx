@@ -2,8 +2,7 @@ import test from 'tape';
 import sinon from 'sinon';
 import React from 'react/addons';
 import Menu from '../src/Menu';
-
-const ReactTestUtils = React.addons.TestUtils;
+import ReactTestUtils from "react-test-utils";
 
 function mockManager() {
   return {

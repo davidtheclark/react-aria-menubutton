@@ -45,7 +45,7 @@
     "widget"
   ],
   "dependencies": {
-    "react": "0.13.x",
+    "react": "0.14.x",
     "tap.js": "^2.1.1"
   },
   "devDependencies": {
@@ -57,6 +57,7 @@
     "eslint": "1.2.1",
     "eslint-plugin-react": "3.3.0",
     "parallelshell": "2.0.0",
+    "react-test-utils": "0.0.1",
     "sinon": "1.16.1",
     "tape": "4.2.0",
     "trash": "2.0.0",

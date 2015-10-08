@@ -5,8 +5,7 @@ import Button from '../src/Button';
 import Menu from '../src/Menu';
 import MenuItem from '../src/MenuItem';
 import Manager from '../src/Manager';
-
-const ReactTestUtils = React.addons.TestUtils;
+import ReactTestUtils from "react-test-utils";
 
 test('Wrapped Button component', t => {
   const shallowRenderer = ReactTestUtils.createRenderer();
