@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import Tap from 'tap.js';
 
 export default class Menu extends React.Component {
@@ -7,8 +8,8 @@ export default class Menu extends React.Component {
 
     this.isListeningForTap = false;
     this.tapHandler = (e) => {
-      if (React.findDOMNode(this).contains(e.target)) return;
-      if (React.findDOMNode(this.props.manager.button).contains(e.target)) return;
+      if (ReactDOM.findDOMNode(this).contains(e.target)) return;
+      if (ReactDOM.findDOMNode(this.props.manager.button).contains(e.target)) return;
       this.props.manager.closeMenu();
     }
   }

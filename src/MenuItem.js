@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import keys from './keys';
 
 export default class MenuItem extends React.Component {
   componentDidMount() {
     const props = this.props;
     this.managedIndex = props.manager.menuItems.push({
-      node: React.findDOMNode(this),
+      node: ReactDOM.findDOMNode(this),
       content: props.children,
       text: props.text,
     }) - 1;

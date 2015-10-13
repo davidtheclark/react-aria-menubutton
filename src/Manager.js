@@ -1,4 +1,4 @@
-import React from 'react';
+import ReactDOM from 'react-dom';
 import keys from './keys';
 import isLetterKeyCode from './isLetterKeyCode';
 
@@ -50,7 +50,7 @@ export default class Manager {
     this.isOpen = false;
     this.update();
     if (focusButton) {
-      React.findDOMNode(this.button).focus();
+      ReactDOM.findDOMNode(this.button).focus();
     }
   }
 
@@ -109,7 +109,7 @@ export default class Manager {
 function handleBlur() {
   this.blurTimer = setTimeout(() => {
     const activeEl = document.activeElement;
-    if (activeEl === React.findDOMNode(this.button)) return;
+    if (activeEl === ReactDOM.findDOMNode(this.button)) return;
     if (this.menuItems.some(menuItem => menuItem.node === activeEl)) return;
     if (this.isOpen) this.closeMenu({ focusButton: false });
   }, 0);
