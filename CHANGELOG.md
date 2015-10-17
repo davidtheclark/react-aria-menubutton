@@ -1,5 +1,10 @@
 # Changelog
 
+## Head
+
+- Use React's `context` to simplify API.
+- Add `style` prop to all components.
+
 ## 2.0.4 and 2.0.5
 
 - Better cleanup of Tap.js listeners.

@@ -1,1 +1,1 @@
-module.exports = require('./dist-modules/ariaMenuButton.js');
+module.exports = require('./dist-modules');

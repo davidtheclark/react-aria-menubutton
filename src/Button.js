@@ -3,64 +3,73 @@ import keys from './keys';
 
 export default class Button extends React.Component {
   componentWillMount() {
-    this.props.manager.button = this;
+    this.context.ambManager.button = this;
   }
 
   componentWillUnmount() {
-    this.props.manager.powerDown();
+    this.context.ambManager.destroy();
   }
 
   handleKeyDown(event) {
-    const { manager } = this.props;
+    const { ambManager } = this.context;
     const { key } = event;
 
     if (key === keys.DOWN) {
       event.preventDefault();
-      if (!manager.isOpen) manager.openMenu({ focusMenu: true });
-      else manager.moveFocusDown();
+      if (!ambManager.isOpen) {
+        ambManager.openMenu({ focusMenu: true });
+      } else {
+        ambManager.moveFocusDown();
+      }
       return;
     }
 
     if (key === keys.ENTER || key === keys.SPACE) {
       event.preventDefault();
-      manager.toggleMenu();
+      ambManager.toggleMenu();
       return;
     }
 
-    manager.handleMenuKey(event);
+    ambManager.handleMenuKey(event);
   }
 
   handleClick() {
-    this.props.manager.toggleMenu();
+    this.context.ambManager.toggleMenu();
   }
 
   render() {
-    const { manager, children, tag, className, id } = this.props;
+    const { children, tag, className, id, style } = this.props;
+    const { ambManager } = this.context;
 
     return React.createElement(tag, {
       className,
       id,
+      style,
       // "The menu button itself has a role of button."
       role: 'button',
       tabIndex: '0',
       // "The menu button has an aria-haspopup property, set to true."
       'aria-haspopup': true,
-      'aria-expanded': manager.isOpen,
+      'aria-expanded': ambManager.isOpen,
       onKeyDown: this.handleKeyDown.bind(this),
       onClick: this.handleClick.bind(this),
-      onBlur: manager.handleBlur,
+      onBlur: ambManager.handleBlur,
     }, children);
   }
 }
 
 Button.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
-  manager: PropTypes.object.isRequired,
+  children: PropTypes.node.isRequired,
   className: PropTypes.string,
   id: PropTypes.string,
+  style: PropTypes.object,
   tag: PropTypes.string,
 };
 
 Button.defaultProps = {
   tag: 'span',
+};
+
+Button.contextTypes = {
+  ambManager: PropTypes.object.isRequired,
 };

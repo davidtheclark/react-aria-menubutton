@@ -1,6 +1,6 @@
 # react-aria-menubutton [![Build Status](https://travis-ci.org/davidtheclark/react-aria-menubutton.svg?branch=master)](https://travis-ci.org/davidtheclark/react-aria-menubutton)
 
-A React component that helps you build accessible menu buttons by providing keyboard interactions and ARIA attributes aligned with [the WAI-ARIA Menu Button Design Pattern](http://www.w3.org/TR/wai-aria-practices/#menubutton).
+A React component (set of components, really) that will help you build accessible menu buttons by providing keyboard interactions and ARIA attributes aligned with [the WAI-ARIA Menu Button Design Pattern](http://www.w3.org/TR/wai-aria-practices/#menubutton).
 
 Please check out [the demo](http://davidtheclark.github.io/react-aria-menubutton/demo/).
 
@@ -19,18 +19,18 @@ Please check out [the demo](http://davidtheclark.github.io/react-aria-menubutton
 
 The project started as an effort to build a React component that follows every detail of [the WAI-ARIA Menu Button Design Pattern](http://www.w3.org/TR/wai-aria-practices/#menubutton) for **maximum accessibility**.
 
-Just hiding and showing a menu is easy; but the required **keyboard interactions** are kind of tricky, the required **ARIA attributes** are easy to forget, and some other aspects of opening and closing the menu based on behaviors and managing focus are unpleasant.
+Just hiding and showing a menu is easy; but the required **keyboard interactions** are kind of tricky, the required **ARIA attributes** are easy to forget, and some other aspects of opening and closing the menu based on behaviors, and managing focus, proved less than pleasant.
 So I decided to try to abstract the component enough that it would be **worth sharing with others**.
 
-Follow [the link](http://www.w3.org/TR/wai-aria-practices/#menubutton) and read about the keyboard interactions and ARIA attributes. [The demo](http://davidtheclark.github.io/react-aria-menubutton/demo/) also lists all of the interactions that are built in.
+You can read about [the keyboard interactions and ARIA attributes](http://www.w3.org/TR/wai-aria-practices/#menubutton) of the Design Pattern. [The demo](http://davidtheclark.github.io/react-aria-menubutton/demo/) also lists all of the interactions that are built into this module.
 
 *If you think that this component does not satisfy the spec or if you know of other ways to make it even more accessible, please file an issue.*
 
 ### Flexibility and minimal styling
 
-Instead of providing a pre-fabricated, fully styled component, this module's goal is to provide a component that others can build their own stuff on top of.
+Instead of providing a pre-fabricated, fully styled widget, this module's goal is to provide a set of components that others can build their own stuff on top of.
 
-It does not provide any classes or a stylesheet you'll have to figure out how to include; and it does not include inline styles that would be hard to override. It **only provides "smart" components to wrap your (dumb styled) components**. The *library's* components take care of keyboard interaction and ARIA attributes, while *your* components just do whatever you want your components to do.
+It does not provide any classes or a stylesheet that you'll have to figure out how to include; and it does not include inline styles that would be hard to override. It **only provides "smart" components to wrap your (dumb, styled) components**. The *library's* components take care of keyboard interaction and ARIA attributes, while *your* components just do whatever you want your components to do.
 
 ## Installation
 
@@ -38,11 +38,13 @@ It does not provide any classes or a stylesheet you'll have to figure out how to
 npm install react-aria-menubutton
 ```
 
-There are dependencies: React 0.13.x and [tap.js](https://github.com/alexgibson/tap.js).
+There are dependencies: React 0.14.x and [tap.js](https://github.com/alexgibson/tap.js).
 
 tap.js is very small and included in the builds (React is not).
 It is included only to accurately detect "taps" (mouse click and touch taps) outside an open
 menu that should close it — which is important enough that it's worth doing right.
+
+Versions <3.0 are compatible with React 0.13.x.
 
 ## Tested Browser Support
 
@@ -59,11 +61,10 @@ There are two ways to consume this module:
 Using CommonJS, for example, you can simply `require()` the module to get the function `ariaMenuButton([options])`, which you use like this:
 
 ```js
-var ariaMenuButton = require('react-aria-menubutton');
+var AriaMenuButton = require('react-aria-menubutton');
 
-var myAmb = ariaMenuButton({
-  onSelection: mySelectionHandler
-});
+// Now use AriaMenuButton.Wrapper, AriaMenuButton.Button,
+// AriaMenuButton.Menu, and AriaMenuButton.MenuItem ...
 ```
 
 Using globals/UMD, you must do the following:
@@ -72,94 +73,53 @@ Using globals/UMD, you must do the following:
 
 ```html
 <script src="react.min.js"></script>
-<script src="node_modules/react-aria-menu-button/dist/ariaMenuButton.min.js"></script>
+<script src="node_modules/react-aria-menu-button/dist/AriaMenuButton.min.js"></script>
 <script>
-  var myAmb = ariaMenuButton({
-    onSelection: mySelectionHandler
-  });
+  // Now use AriaMenuButton.Wrapper, AriaMenuButton.Button,
+  // AriaMenuButton.Menu, and AriaMenuButton.MenuItem ...
 </script>
 ```
 
 **You *get to* (have to) write your own CSS, your own way, based on your own components.**
 
-### ariaMenuButton([options])
-
-Returns an object with three components: `Button`, `Menu`, and `MenuItem`. Each of these is documented below.
-
-```js
-var myAmb = ariaMenuButton({
-  onSelection: mySelectionHandler
-});
-var MyAmbButton = myAmb.Button;
-var MyAmbMenu = myAmb.Menu;
-var MyAmbMenuItem = myAmb.MenuItem;
-```
-
-#### options
-
-##### onSelection
-
-Type: `Function`, *required*
-
-A callback to run when the user makes a selection (i.e. clicks or presses Enter or Space on a `MenuItem`). It will be passed the `value` of the selected `MenuItem` and the React SyntheticEvent.
-
-```js
-var myAmb = ariaMenuButton({
-  onSelection: function(value, event) {
-    event.stopPropagation;
-    console.log(value);
-  }
-});
-```
-
-##### closeOnSelection
-
-Type: `Boolean`, Default: `true`
-
-If `false`, the menu will *not* automatically close when a selection is made. By default, it *does* automatically close.
-
 ## Examples
 
-For details about why the examples work, read the component API documentation below.
+For details about why the examples work, read the API documentation below.
 
-You can see more examples by looking in `demo/`.
+You can also see more examples by looking in `demo/`.
 
 ```js
 // Very simple ES6 example
 
 import React from 'react';
-import ariaMenuButton from 'react-aria-menubutton';
+import AriaMenuButton from 'react-aria-menubutton';
 
 const menuItemWords = ['foo', 'bar', 'baz'];
 
 class MyMenuButton extends React.Component {
-  componentWillMount() {
-    this.amb = ariaMenuButton({
-      onSelection: handleSelection
-    });
-  }
   render() {
-    const { Button, Menu, MenuItem } = this.amb;
-
     const menuItems = menuItemWords.map((word, i) => {
       return (
         <li key={i}>
-          <MenuItem className='MyMenuButton-menuItem'>
+          <AriaMenuButton.MenuItem className='MyMenuButton-menuItem'>
             {word}
-          </MenuItem>
+          </AriaMenuButton.MenuItem>
         </li>
       );
     });
 
     return (
-      <div className='MyMenuButton'>
-        <Button className='MyMenuButton-button'>
+      <AriaMenuButton.Wrapper
+        className='MyMenuButton'
+        onSelection={handleSelection}
+      >
+        <AriaMenuButton.Button className='MyMenuButton-button'>
           click me
-        </Button>
-        <Menu className='MyMenuButton-menu'>
+        </AriaMenuButton.Button>
+        <AriaMenuButton.Menu className='MyMenuButton-menu'>
           <ul>{menuItems}</ul>
-        </Menu>
-      </div>
+        </AriaMenuButton.Menu>
+      </AriaMenuButton.Wrapper>
     );
   }
 }
@@ -177,9 +137,13 @@ function handleSelection(value, event) { .. }
 // - Menu has a function for a child
 // - React's CSSTransitionGroup is used for open-close animation
 
-var React = require('react/addons');
-var ariaMenuButton = require('react-aria-menubutton');
-var CSSTransitionGroup = React.addons.CSSTransitionGroup;
+var React = require('react');
+var CSSTransitionGroup = require('react-addons-css-transition-group');
+var AriaMenuButton = require('react-aria-menubutton');
+var AmbWrapper = AriaMenuButton.Wrapper;
+var AmbButton = AriaMenuButton.Button;
+var AmbMenu = AriaMenuButton.Menu;
+var AmbMenuItem = AriaMenuButton.MenuItem;
 
 var people = [{
   name: 'Charles Choo-Choo',
@@ -193,20 +157,10 @@ var people = [{
 }];
 
 var MyMenuButton = React.createClass({
-  componentWillMount: function() {
-    this.amb = ariaMenuButton({
-      onSelection: handleSelection
-    });
-  },
-
   render: function() {
-    var MyButton = this.amb.Button;
-    var MyMenu = this.amb.Menu;
-    var MyMenuItem = this.amb.MenuItem;
-
     var peopleMenuItems = people.map(function(person, i) {
       return (
-        <MyMenuItem
+        <AmbMenuItem
           key={i}
           tag='li'
           value={person.id}
@@ -219,7 +173,7 @@ var MyMenuButton = React.createClass({
           <div className='PeopleMenu-personName'>
             {person.name}
           </div>
-        </MyMenuItem>
+        </AmbMenuItem>
       );
     });
 
@@ -240,17 +194,21 @@ var MyMenuButton = React.createClass({
     };
 
     return (
-      <div className='PeopleMenu'>
-        <MyButton className='PeopleMenu-trigger'>
+      <AmbWrapper
+        className='PeopleMenu'
+        onSelection={handleSelection}
+        style={{ marginTop: 20 }}
+      >
+        <AmbButton className='PeopleMenu-trigger'>
           <span className='PeopleMenu-triggerText'>
             Select a person
           </span>
           <span className='PeopleMenu-triggerIcon' />
-        </MyButton>
-        <MyMenu>
+        </AmbButton>
+        <AmbMenu>
           {peopleMenuInnards}
-        </MyMenu>
-      </div>
+        </AmbMenu>
+      </AmbWrapper>
     );
   }
 });
@@ -258,17 +216,83 @@ var MyMenuButton = React.createClass({
 function handleSelection(value, event) { .. }
 ```
 
-## Component API
+## AriaMenuButton API
+
+The AriaMenuButton object exposes four components: `Wrapper`, `Button`, `Menu`, and `MenuItem`. Each of these is documented below.
+
+**`Button`, `Menu`, and `MenuItem` must always be wrapped in a `Wrapper`.**
+
+### Wrapper
+
+A simple component to group a `Button`/`Menu`/`MenuItem` set, coordinating their interactions.
+*It should wrap your entire menu button widget.*
+
+All `Button`, `Menu`, and `MenuItem` components *must* be nested within a `Wrapper` component.
+
+Each wrapper can contain *only one* `Button`, *only one* `Menu`, and *multiple* `MenuItem`s.
+
+#### props
+
+All props except `onSelection`, are optional.
+
+##### onSelection
+
+Type: `Function`, *required*
+
+A callback to run when the user makes a selection (i.e. clicks or presses Enter or Space on a `MenuItem`). It will be passed the `value` of the selected `MenuItem` and the React SyntheticEvent.
+
+```js
+<Wrapper onSelection={handleSelection} />
+
+// ...
+
+function handleSelection(value, event) {
+  event.stopPropagation;
+  console.log(value);
+}
+```
+
+##### closeOnSelection
+
+Type: `Boolean`, Default: `true`
+
+If `false`, the menu will *not* automatically close when a selection is made. By default, it *does* automatically close.
+
+##### tag
+
+Type: `String` Default: `'div'`
+
+The HTML tag for this element.
+
+##### id
+
+Type: `String`
+
+An id value.
+
+##### className
+
+Type: `String`
+
+A class value.
+
+##### style
+
+Type: `Object`
+
+An object for inline styles.
 
 ### `Button`
 
 A React component to wrap the content of your menu-button-pattern's button.
 
-A `Button`'s child can be a string or a React element.
+The `Button` component itself acts as a UI button (with tab-index, role, etc.), so you probably do not want to pass an HTML `<button>` element as its child.
+
+Each `Button` must be wrapped in a `Wrapper`, and each `Wrapper` can wrap only one `Button`.
 
 #### props
 
-*All props are optional.*
+All props are optional.
 
 ##### tag
 
@@ -287,6 +311,12 @@ An id value.
 Type: `String`
 
 A class value.
+
+##### style
+
+Type: `Object`
+
+An object for inline styles.
 
 ### `Menu`
 
@@ -303,9 +333,11 @@ A `Menu`'s child may be one of the following:
   }
   ```
 
+Each `Menu` must be wrapped in a `Wrapper`, and each `Wrapper` can wrap only one `Menu`.
+
 #### props
 
-*All props are optional.*
+All props are optional.
 
 ##### tag
 
@@ -325,9 +357,17 @@ Type: `String`
 
 A class value.
 
+##### style
+
+Type: `Object`
+
+An object for inline styles.
+
 ### `MenuItem`
 
 A React component to wrap the content of one of your menu-button-pattern's menu items.
+
+Each `MenuItem` must be wrapped in a `Wrapper`, and each `Wrapper` can wrap multiple `MenuItem`s.
 
 When a `MenuItem` is *selected* (by clicking or focusing and hitting Enter or Space), it calls the `onSelection` handler you passed `ariaMenuButton` when creating this set of components.
 
@@ -343,7 +383,7 @@ When the menu is open and the user hits a letter key, focus moves to the next `M
 
 #### props
 
-*All props are optional.*
+All props are optional.
 
 ##### text
 
@@ -375,8 +415,14 @@ Type: `String`
 
 A class value.
 
+##### style
+
+Type: `Object`
+
+An object for inline styles.
+
 ## Development
 
 Lint with `npm run lint`.
 
-Test with `npm run test-dev`, which will give you a URL to open in your browser. Look at the console log for TAP output.
+Test with `npm run test-dev`. A browser should open; look at the console log for TAP output.

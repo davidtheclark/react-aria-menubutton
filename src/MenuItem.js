@@ -4,11 +4,10 @@ import keys from './keys';
 
 export default class MenuItem extends React.Component {
   componentDidMount() {
-    const props = this.props;
-    this.managedIndex = props.manager.menuItems.push({
+    this.managedIndex = this.context.ambManager.menuItems.push({
       node: ReactDOM.findDOMNode(this),
-      content: props.children,
-      text: props.text,
+      content: this.props.children,
+      text: this.props.text,
     }) - 1;
   }
 
@@ -19,21 +18,21 @@ export default class MenuItem extends React.Component {
   }
 
   selectItem(event) {
-    const props = this.props;
     // If there's no value, we'll send the child
-    const value = (typeof props.value !== 'undefined')
-      ? props.value
-      : props.children;
-    props.manager.handleSelection(value, event);
-    props.manager.currentFocus = this.managedIndex;
+    const value = (typeof this.props.value !== 'undefined')
+      ? this.props.value
+      : this.props.children;
+    this.context.ambManager.handleSelection(value, event);
+    this.context.ambManager.currentFocus = this.managedIndex;
   }
 
   render() {
-    const { tag, children, className, id } = this.props;
+    const { tag, children, className, id, style } = this.props;
 
     return React.createElement(tag, {
       className,
       id,
+      style,
       onClick: this.selectItem.bind(this),
       onKeyDown: this.handleKeyDown.bind(this),
       role: 'menuitem',
@@ -43,24 +42,19 @@ export default class MenuItem extends React.Component {
 }
 
 MenuItem.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.element),
-  ]).isRequired,
-  manager: PropTypes.object.isRequired,
+  children: PropTypes.node.isRequired,
   className: PropTypes.string,
   id: PropTypes.string,
+  style: PropTypes.object,
   tag: PropTypes.string,
   text: PropTypes.string,
-  value: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.number,
-    PropTypes.string,
-    PropTypes.object,
-  ]),
+  value: PropTypes.any,
 };
 
 MenuItem.defaultProps = {
   tag: 'div',
+};
+
+MenuItem.contextTypes = {
+  ambManager: PropTypes.object.isRequired,
 };

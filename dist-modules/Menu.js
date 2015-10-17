@@ -12,6 +12,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
 var _tapJs = require('tap.js');
 
 var _tapJs2 = _interopRequireDefault(_tapJs);
@@ -28,35 +32,35 @@ var Menu = (function (_React$Component) {
   Menu.prototype.componentWillMount = function componentWillMount() {
     var _this = this;
 
-    this.props.manager.menu = this;
+    this.context.ambManager.menu = this;
 
     this.isListeningForTap = false;
     this.tapHandler = function (e) {
-      if (_react2['default'].findDOMNode(_this).contains(e.target)) return;
-      if (_react2['default'].findDOMNode(_this.props.manager.button).contains(e.target)) return;
-      _this.props.manager.closeMenu();
+      if (_reactDom2['default'].findDOMNode(_this).contains(e.target)) return;
+      if (_reactDom2['default'].findDOMNode(_this.context.ambManager.button).contains(e.target)) return;
+      _this.context.ambManager.closeMenu();
     };
   };
 
   Menu.prototype.componentWillUpdate = function componentWillUpdate() {
-    var manager = this.props.manager;
+    var ambManager = this.context.ambManager;
 
-    if (manager.isOpen && !this.isListeningForTap) {
+    if (ambManager.isOpen && !this.isListeningForTap) {
       this.addTapListeners();
-    } else if (!manager.isOpen && this.isListeningForTap) {
+    } else if (!ambManager.isOpen && this.isListeningForTap) {
       this.removeTapListeners();
     }
 
-    if (!manager.isOpen) {
-      // Clear the manager's items, so they
+    if (!ambManager.isOpen) {
+      // Clear the ambManager's items, so they
       // can be reloaded next time this menu opens
-      manager.menuItems = [];
+      ambManager.menuItems = [];
     }
   };
 
   Menu.prototype.componentWillUnmount = function componentWillUnmount() {
     this.removeTapListeners();
-    this.props.manager.powerDown();
+    this.context.ambManager.destroy();
   };
 
   Menu.prototype.addTapListeners = function addTapListeners() {
@@ -76,17 +80,18 @@ var Menu = (function (_React$Component) {
 
   Menu.prototype.render = function render() {
     var _props = this.props;
-    var manager = _props.manager;
     var children = _props.children;
     var tag = _props.tag;
     var className = _props.className;
     var id = _props.id;
+    var style = _props.style;
+    var ambManager = this.context.ambManager;
 
     var childrenToRender = (function () {
       if (typeof children === 'function') {
-        return children({ isOpen: manager.isOpen });
+        return children({ isOpen: ambManager.isOpen });
       }
-      if (manager.isOpen) return children;
+      if (ambManager.isOpen) return children;
       return false;
     })();
 
@@ -95,9 +100,10 @@ var Menu = (function (_React$Component) {
     return _react2['default'].createElement(tag, {
       className: className,
       id: id,
-      onKeyDown: manager.handleMenuKey,
+      style: style,
+      onKeyDown: ambManager.handleMenuKey,
       role: 'menu',
-      onBlur: manager.handleBlur
+      onBlur: ambManager.handleBlur
     }, childrenToRender);
   };
 
@@ -107,14 +113,18 @@ var Menu = (function (_React$Component) {
 exports['default'] = Menu;
 
 Menu.propTypes = {
-  children: _react.PropTypes.oneOfType([_react.PropTypes.func, _react.PropTypes.element]).isRequired,
-  manager: _react.PropTypes.object.isRequired,
+  children: _react.PropTypes.oneOfType([_react.PropTypes.func, _react.PropTypes.node]).isRequired,
   id: _react.PropTypes.string,
   className: _react.PropTypes.string,
+  style: _react.PropTypes.object,
   tag: _react.PropTypes.string
 };
 
 Menu.defaultProps = {
   tag: 'div'
+};
+
+Menu.contextTypes = {
+  ambManager: _react.PropTypes.object.isRequired
 };
 module.exports = exports['default'];

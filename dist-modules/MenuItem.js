@@ -12,6 +12,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
 var _keys = require('./keys');
 
 var _keys2 = _interopRequireDefault(_keys);
@@ -26,11 +30,10 @@ var MenuItem = (function (_React$Component) {
   }
 
   MenuItem.prototype.componentDidMount = function componentDidMount() {
-    var props = this.props;
-    this.managedIndex = props.manager.menuItems.push({
-      node: _react2['default'].findDOMNode(this),
-      content: props.children,
-      text: props.text
+    this.managedIndex = this.context.ambManager.menuItems.push({
+      node: _reactDom2['default'].findDOMNode(this),
+      content: this.props.children,
+      text: this.props.text
     }) - 1;
   };
 
@@ -41,11 +44,10 @@ var MenuItem = (function (_React$Component) {
   };
 
   MenuItem.prototype.selectItem = function selectItem(event) {
-    var props = this.props;
     // If there's no value, we'll send the child
-    var value = typeof props.value !== 'undefined' ? props.value : props.children;
-    props.manager.handleSelection(value, event);
-    props.manager.currentFocus = this.managedIndex;
+    var value = typeof this.props.value !== 'undefined' ? this.props.value : this.props.children;
+    this.context.ambManager.handleSelection(value, event);
+    this.context.ambManager.currentFocus = this.managedIndex;
   };
 
   MenuItem.prototype.render = function render() {
@@ -54,10 +56,12 @@ var MenuItem = (function (_React$Component) {
     var children = _props.children;
     var className = _props.className;
     var id = _props.id;
+    var style = _props.style;
 
     return _react2['default'].createElement(tag, {
       className: className,
       id: id,
+      style: style,
       onClick: this.selectItem.bind(this),
       onKeyDown: this.handleKeyDown.bind(this),
       role: 'menuitem',
@@ -71,16 +75,20 @@ var MenuItem = (function (_React$Component) {
 exports['default'] = MenuItem;
 
 MenuItem.propTypes = {
-  children: _react.PropTypes.oneOfType([_react.PropTypes.element, _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.element)]).isRequired,
-  manager: _react.PropTypes.object.isRequired,
+  children: _react.PropTypes.node.isRequired,
   className: _react.PropTypes.string,
   id: _react.PropTypes.string,
+  style: _react.PropTypes.object,
   tag: _react.PropTypes.string,
   text: _react.PropTypes.string,
-  value: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.number, _react.PropTypes.string, _react.PropTypes.object])
+  value: _react.PropTypes.any
 };
 
 MenuItem.defaultProps = {
   tag: 'div'
+};
+
+MenuItem.contextTypes = {
+  ambManager: _react.PropTypes.object.isRequired
 };
 module.exports = exports['default'];

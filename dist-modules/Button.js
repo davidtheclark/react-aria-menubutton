@@ -26,56 +26,62 @@ var Button = (function (_React$Component) {
   }
 
   Button.prototype.componentWillMount = function componentWillMount() {
-    this.props.manager.button = this;
+    this.context.ambManager.button = this;
   };
 
   Button.prototype.componentWillUnmount = function componentWillUnmount() {
-    this.props.manager.powerDown();
+    this.context.ambManager.destroy();
   };
 
   Button.prototype.handleKeyDown = function handleKeyDown(event) {
-    var manager = this.props.manager;
+    var ambManager = this.context.ambManager;
     var key = event.key;
 
     if (key === _keys2['default'].DOWN) {
       event.preventDefault();
-      if (!manager.isOpen) manager.openMenu({ focusMenu: true });else manager.moveFocusDown();
+      if (!ambManager.isOpen) {
+        ambManager.openMenu({ focusMenu: true });
+      } else {
+        ambManager.moveFocusDown();
+      }
       return;
     }
 
     if (key === _keys2['default'].ENTER || key === _keys2['default'].SPACE) {
       event.preventDefault();
-      manager.toggleMenu();
+      ambManager.toggleMenu();
       return;
     }
 
-    manager.handleMenuKey(event);
+    ambManager.handleMenuKey(event);
   };
 
   Button.prototype.handleClick = function handleClick() {
-    this.props.manager.toggleMenu();
+    this.context.ambManager.toggleMenu();
   };
 
   Button.prototype.render = function render() {
     var _props = this.props;
-    var manager = _props.manager;
     var children = _props.children;
     var tag = _props.tag;
     var className = _props.className;
     var id = _props.id;
+    var style = _props.style;
+    var ambManager = this.context.ambManager;
 
     return _react2['default'].createElement(tag, {
       className: className,
       id: id,
+      style: style,
       // "The menu button itself has a role of button."
       role: 'button',
       tabIndex: '0',
       // "The menu button has an aria-haspopup property, set to true."
       'aria-haspopup': true,
-      'aria-expanded': manager.isOpen,
+      'aria-expanded': ambManager.isOpen,
       onKeyDown: this.handleKeyDown.bind(this),
       onClick: this.handleClick.bind(this),
-      onBlur: manager.handleBlur
+      onBlur: ambManager.handleBlur
     }, children);
   };
 
@@ -85,14 +91,18 @@ var Button = (function (_React$Component) {
 exports['default'] = Button;
 
 Button.propTypes = {
-  children: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.element]).isRequired,
-  manager: _react.PropTypes.object.isRequired,
+  children: _react.PropTypes.node.isRequired,
   className: _react.PropTypes.string,
   id: _react.PropTypes.string,
+  style: _react.PropTypes.object,
   tag: _react.PropTypes.string
 };
 
 Button.defaultProps = {
   tag: 'span'
+};
+
+Button.contextTypes = {
+  ambManager: _react.PropTypes.object.isRequired
 };
 module.exports = exports['default'];

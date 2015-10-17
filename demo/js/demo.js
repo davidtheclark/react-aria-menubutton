@@ -1,3 +1,3 @@
 import './basicDemo';
 import './fancyDemo';
-// import './readmeDemos';
+import './readmeDemos';

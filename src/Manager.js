@@ -3,7 +3,7 @@ import keys from './keys';
 import isLetterKeyCode from './isLetterKeyCode';
 
 export default class Manager {
-  constructor(options={}) {
+  constructor(options = {}) {
     this.options = options;
     if (typeof this.options.closeOnSelection === 'undefined') {
       this.options.closeOnSelection = true;
@@ -23,7 +23,7 @@ export default class Manager {
     this.currentFocus = -1;
   }
 
-  powerDown() {
+  destroy() {
     this.button = null;
     this.menu = null;
     this.menuItems = [];
@@ -36,7 +36,7 @@ export default class Manager {
     this.button.setState({ menuOpen: this.isOpen });
   }
 
-  openMenu({ focusMenu=false }={}) {
+  openMenu({ focusMenu = false } = {}) {
     this.isOpen = true;
     this.update();
     if (focusMenu) {
@@ -46,7 +46,7 @@ export default class Manager {
     }
   }
 
-  closeMenu({ focusButton=true }={}) {
+  closeMenu({ focusButton = true } = {}) {
     this.isOpen = false;
     this.update();
     if (focusButton) {
@@ -55,8 +55,11 @@ export default class Manager {
   }
 
   toggleMenu() {
-    if (this.isOpen) this.closeMenu();
-    else this.openMenu();
+    if (this.isOpen) {
+      this.closeMenu();
+    } else {
+      this.openMenu();
+    }
   }
 
   moveFocus(itemIndex) {

@@ -1,4 +1,4 @@
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.ariaMenuButton = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.AriaMenuButton = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /*!
  * tap.js
  * Copyright (c) 2013 Alex Gibson, http://alxgbsn.co.uk/
@@ -146,56 +146,62 @@ var Button = (function (_React$Component) {
   }
 
   Button.prototype.componentWillMount = function componentWillMount() {
-    this.props.manager.button = this;
+    this.context.ambManager.button = this;
   };
 
   Button.prototype.componentWillUnmount = function componentWillUnmount() {
-    this.props.manager.powerDown();
+    this.context.ambManager.destroy();
   };
 
   Button.prototype.handleKeyDown = function handleKeyDown(event) {
-    var manager = this.props.manager;
+    var ambManager = this.context.ambManager;
     var key = event.key;
 
     if (key === _keys2['default'].DOWN) {
       event.preventDefault();
-      if (!manager.isOpen) manager.openMenu({ focusMenu: true });else manager.moveFocusDown();
+      if (!ambManager.isOpen) {
+        ambManager.openMenu({ focusMenu: true });
+      } else {
+        ambManager.moveFocusDown();
+      }
       return;
     }
 
     if (key === _keys2['default'].ENTER || key === _keys2['default'].SPACE) {
       event.preventDefault();
-      manager.toggleMenu();
+      ambManager.toggleMenu();
       return;
     }
 
-    manager.handleMenuKey(event);
+    ambManager.handleMenuKey(event);
   };
 
   Button.prototype.handleClick = function handleClick() {
-    this.props.manager.toggleMenu();
+    this.context.ambManager.toggleMenu();
   };
 
   Button.prototype.render = function render() {
     var _props = this.props;
-    var manager = _props.manager;
     var children = _props.children;
     var tag = _props.tag;
     var className = _props.className;
     var id = _props.id;
+    var style = _props.style;
+    var ambManager = this.context.ambManager;
 
     return _react2['default'].createElement(tag, {
       className: className,
       id: id,
+      style: style,
       // "The menu button itself has a role of button."
       role: 'button',
       tabIndex: '0',
       // "The menu button has an aria-haspopup property, set to true."
       'aria-haspopup': true,
-      'aria-expanded': manager.isOpen,
+      'aria-expanded': ambManager.isOpen,
       onKeyDown: this.handleKeyDown.bind(this),
       onClick: this.handleClick.bind(this),
-      onBlur: manager.handleBlur
+      onBlur: ambManager.handleBlur
     }, children);
   };
 
@@ -205,15 +211,19 @@ var Button = (function (_React$Component) {
 exports['default'] = Button;
 
 Button.propTypes = {
-  children: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.element]).isRequired,
-  manager: _react.PropTypes.object.isRequired,
+  children: _react.PropTypes.node.isRequired,
   className: _react.PropTypes.string,
   id: _react.PropTypes.string,
+  style: _react.PropTypes.object,
   tag: _react.PropTypes.string
 };
 
 Button.defaultProps = {
   tag: 'span'
+};
+
+Button.contextTypes = {
+  ambManager: _react.PropTypes.object.isRequired
 };
 module.exports = exports['default'];
 
@@ -226,9 +236,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'd
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-var _react = require("react");
+var _reactDom = require("react-dom");
 
-var _react2 = _interopRequireDefault(_react);
+var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _keys = require(8);
 
@@ -263,7 +273,7 @@ var Manager = (function () {
     this.currentFocus = -1;
   }
 
-  Manager.prototype.powerDown = function powerDown() {
+  Manager.prototype.destroy = function destroy() {
     this.button = null;
     this.menu = null;
     this.menuItems = [];
@@ -304,12 +314,16 @@ var Manager = (function () {
     this.isOpen = false;
     this.update();
     if (focusButton) {
-      _react2['default'].findDOMNode(this.button).focus();
+      _reactDom2['default'].findDOMNode(this.button).focus();
     }
   };
 
   Manager.prototype.toggleMenu = function toggleMenu() {
-    if (this.isOpen) this.closeMenu();else this.openMenu();
+    if (this.isOpen) {
+      this.closeMenu();
+    } else {
+      this.openMenu();
+    }
   };
 
   Manager.prototype.moveFocus = function moveFocus(itemIndex) {
@@ -368,7 +382,7 @@ function handleBlur() {
 
   this.blurTimer = setTimeout(function () {
     var activeEl = document.activeElement;
-    if (activeEl === _react2['default'].findDOMNode(_this2.button)) return;
+    if (activeEl === _reactDom2['default'].findDOMNode(_this2.button)) return;
     if (_this2.menuItems.some(function (menuItem) {
       return menuItem.node === activeEl;
     })) return;
@@ -413,7 +427,7 @@ function handleMenuKey(event) {
 }
 module.exports = exports['default'];
 
-},{"7":7,"8":8,"react":"react"}],4:[function(require,module,exports){
+},{"7":7,"8":8,"react-dom":"react-dom"}],4:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -428,6 +442,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== 'function' 
 var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require("react-dom");
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _tapJs = require(1);
 
@@ -445,35 +463,35 @@ var Menu = (function (_React$Component) {
   Menu.prototype.componentWillMount = function componentWillMount() {
     var _this = this;
 
-    this.props.manager.menu = this;
+    this.context.ambManager.menu = this;
 
     this.isListeningForTap = false;
     this.tapHandler = function (e) {
-      if (_react2['default'].findDOMNode(_this).contains(e.target)) return;
-      if (_react2['default'].findDOMNode(_this.props.manager.button).contains(e.target)) return;
-      _this.props.manager.closeMenu();
+      if (_reactDom2['default'].findDOMNode(_this).contains(e.target)) return;
+      if (_reactDom2['default'].findDOMNode(_this.context.ambManager.button).contains(e.target)) return;
+      _this.context.ambManager.closeMenu();
     };
   };
 
   Menu.prototype.componentWillUpdate = function componentWillUpdate() {
-    var manager = this.props.manager;
+    var ambManager = this.context.ambManager;
 
-    if (manager.isOpen && !this.isListeningForTap) {
+    if (ambManager.isOpen && !this.isListeningForTap) {
       this.addTapListeners();
-    } else if (!manager.isOpen && this.isListeningForTap) {
+    } else if (!ambManager.isOpen && this.isListeningForTap) {
       this.removeTapListeners();
     }
 
-    if (!manager.isOpen) {
-      // Clear the manager's items, so they
+    if (!ambManager.isOpen) {
+      // Clear the ambManager's items, so they
       // can be reloaded next time this menu opens
-      manager.menuItems = [];
+      ambManager.menuItems = [];
     }
   };
 
   Menu.prototype.componentWillUnmount = function componentWillUnmount() {
     this.removeTapListeners();
-    this.props.manager.powerDown();
+    this.context.ambManager.destroy();
   };
 
   Menu.prototype.addTapListeners = function addTapListeners() {
@@ -493,17 +511,18 @@ var Menu = (function (_React$Component) {
 
   Menu.prototype.render = function render() {
     var _props = this.props;
-    var manager = _props.manager;
     var children = _props.children;
     var tag = _props.tag;
     var className = _props.className;
     var id = _props.id;
+    var style = _props.style;
+    var ambManager = this.context.ambManager;
 
     var childrenToRender = (function () {
       if (typeof children === 'function') {
-        return children({ isOpen: manager.isOpen });
+        return children({ isOpen: ambManager.isOpen });
       }
-      if (manager.isOpen) return children;
+      if (ambManager.isOpen) return children;
       return false;
     })();
 
@@ -512,9 +531,10 @@ var Menu = (function (_React$Component) {
     return _react2['default'].createElement(tag, {
       className: className,
       id: id,
-      onKeyDown: manager.handleMenuKey,
+      style: style,
+      onKeyDown: ambManager.handleMenuKey,
       role: 'menu',
-      onBlur: manager.handleBlur
+      onBlur: ambManager.handleBlur
     }, childrenToRender);
   };
 
@@ -524,20 +544,24 @@ var Menu = (function (_React$Component) {
 exports['default'] = Menu;
 
 Menu.propTypes = {
-  children: _react.PropTypes.oneOfType([_react.PropTypes.func, _react.PropTypes.element]).isRequired,
-  manager: _react.PropTypes.object.isRequired,
+  children: _react.PropTypes.oneOfType([_react.PropTypes.func, _react.PropTypes.node]).isRequired,
   id: _react.PropTypes.string,
   className: _react.PropTypes.string,
+  style: _react.PropTypes.object,
   tag: _react.PropTypes.string
 };
 
 Menu.defaultProps = {
   tag: 'div'
 };
+
+Menu.contextTypes = {
+  ambManager: _react.PropTypes.object.isRequired
+};
 module.exports = exports['default'];
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"1":1,"react":"react"}],5:[function(require,module,exports){
+},{"1":1,"react":"react","react-dom":"react-dom"}],5:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -551,6 +575,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== 'function' 
 var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require("react-dom");
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _keys = require(8);
 
@@ -566,11 +594,10 @@ var MenuItem = (function (_React$Component) {
   }
 
   MenuItem.prototype.componentDidMount = function componentDidMount() {
-    var props = this.props;
-    this.managedIndex = props.manager.menuItems.push({
-      node: _react2['default'].findDOMNode(this),
-      content: props.children,
-      text: props.text
+    this.managedIndex = this.context.ambManager.menuItems.push({
+      node: _reactDom2['default'].findDOMNode(this),
+      content: this.props.children,
+      text: this.props.text
     }) - 1;
   };
 
@@ -581,11 +608,10 @@ var MenuItem = (function (_React$Component) {
   };
 
   MenuItem.prototype.selectItem = function selectItem(event) {
-    var props = this.props;
     // If there's no value, we'll send the child
-    var value = typeof props.value !== 'undefined' ? props.value : props.children;
-    props.manager.handleSelection(value, event);
-    props.manager.currentFocus = this.managedIndex;
+    var value = typeof this.props.value !== 'undefined' ? this.props.value : this.props.children;
+    this.context.ambManager.handleSelection(value, event);
+    this.context.ambManager.currentFocus = this.managedIndex;
   };
 
   MenuItem.prototype.render = function render() {
@@ -594,10 +620,12 @@ var MenuItem = (function (_React$Component) {
     var children = _props.children;
     var className = _props.className;
     var id = _props.id;
+    var style = _props.style;
 
     return _react2['default'].createElement(tag, {
       className: className,
       id: id,
+      style: style,
       onClick: this.selectItem.bind(this),
       onKeyDown: this.handleKeyDown.bind(this),
       role: 'menuitem',
@@ -611,26 +639,28 @@ var MenuItem = (function (_React$Component) {
 exports['default'] = MenuItem;
 
 MenuItem.propTypes = {
-  children: _react.PropTypes.oneOfType([_react.PropTypes.element, _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.element)]).isRequired,
-  manager: _react.PropTypes.object.isRequired,
+  children: _react.PropTypes.node.isRequired,
   className: _react.PropTypes.string,
   id: _react.PropTypes.string,
+  style: _react.PropTypes.object,
   tag: _react.PropTypes.string,
   text: _react.PropTypes.string,
-  value: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.number, _react.PropTypes.string, _react.PropTypes.object])
+  value: _react.PropTypes.any
 };
 
 MenuItem.defaultProps = {
   tag: 'div'
 };
+
+MenuItem.contextTypes = {
+  ambManager: _react.PropTypes.object.isRequired
+};
 module.exports = exports['default'];
 
-},{"8":8,"react":"react"}],6:[function(require,module,exports){
+},{"8":8,"react":"react","react-dom":"react-dom"}],6:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -646,76 +676,67 @@ var _Manager = require(3);
 
 var _Manager2 = _interopRequireDefault(_Manager);
 
-var _Button = require(2);
+var Wrapper = (function (_React$Component) {
+  _inherits(Wrapper, _React$Component);
 
-var _Button2 = _interopRequireDefault(_Button);
+  function Wrapper() {
+    _classCallCheck(this, Wrapper);
 
-var _Menu = require(4);
+    _React$Component.apply(this, arguments);
+  }
 
-var _Menu2 = _interopRequireDefault(_Menu);
-
-var _MenuItem = require(5);
-
-var _MenuItem2 = _interopRequireDefault(_MenuItem);
-
-// Create a new Manager and use it in wrappers for
-// a Button, Menu, and MenuItem components that will
-// be tied together
-
-exports['default'] = function (options) {
-  var manager = new _Manager2['default'](options);
-  return {
-    Button: (function (_React$Component) {
-      _inherits(ButtonWrapper, _React$Component);
-
-      function ButtonWrapper() {
-        _classCallCheck(this, ButtonWrapper);
-
-        _React$Component.apply(this, arguments);
-      }
-
-      ButtonWrapper.prototype.render = function render() {
-        return _react2['default'].createElement(_Button2['default'], _extends({ manager: manager }, this.props));
-      };
-
-      return ButtonWrapper;
-    })(_react2['default'].Component),
-    Menu: (function (_React$Component2) {
-      _inherits(MenuWrapper, _React$Component2);
-
-      function MenuWrapper() {
-        _classCallCheck(this, MenuWrapper);
-
-        _React$Component2.apply(this, arguments);
-      }
-
-      MenuWrapper.prototype.render = function render() {
-        return _react2['default'].createElement(_Menu2['default'], _extends({ manager: manager }, this.props));
-      };
-
-      return MenuWrapper;
-    })(_react2['default'].Component),
-    MenuItem: (function (_React$Component3) {
-      _inherits(MenuItemWrapper, _React$Component3);
-
-      function MenuItemWrapper() {
-        _classCallCheck(this, MenuItemWrapper);
-
-        _React$Component3.apply(this, arguments);
-      }
-
-      MenuItemWrapper.prototype.render = function render() {
-        return _react2['default'].createElement(_MenuItem2['default'], _extends({ manager: manager }, this.props));
-      };
-
-      return MenuItemWrapper;
-    })(_react2['default'].Component)
+  Wrapper.prototype.componentWillMount = function componentWillMount() {
+    this.manager = new _Manager2['default']({
+      onSelection: this.props.onSelection,
+      closeOnSelection: this.props.closeOnSelection
+    });
   };
+
+  Wrapper.prototype.getChildContext = function getChildContext() {
+    return {
+      ambManager: this.manager
+    };
+  };
+
+  Wrapper.prototype.render = function render() {
+    var _props = this.props;
+    var tag = _props.tag;
+    var id = _props.id;
+    var className = _props.className;
+    var style = _props.style;
+
+    return _react2['default'].createElement(tag, {
+      id: id,
+      className: className,
+      style: style
+    }, this.props.children);
+  };
+
+  return Wrapper;
+})(_react2['default'].Component);
+
+exports['default'] = Wrapper;
+
+Wrapper.childContextTypes = {
+  ambManager: _react.PropTypes.object.isRequired
 };
 
+Wrapper.propTypes = {
+  children: _react.PropTypes.node.isRequired,
+  onSelection: _react.PropTypes.func.isRequired,
+  closeOnSelection: _react.PropTypes.bool,
+  id: _react.PropTypes.string,
+  className: _react.PropTypes.string,
+  style: _react.PropTypes.object,
+  tag: _react.PropTypes.string
+};
+
+Wrapper.defaultProps = {
+  tag: 'div'
+};
 module.exports = exports['default'];
 
-},{"2":2,"3":3,"4":4,"5":5,"react":"react"}],7:[function(require,module,exports){
+},{"3":3,"react":"react"}],7:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -742,5 +763,36 @@ exports['default'] = {
 };
 module.exports = exports['default'];
 
-},{}]},{},[6])(6)
+},{}],9:[function(require,module,exports){
+'use strict';
+
+exports.__esModule = true;
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _Wrapper = require(6);
+
+var _Wrapper2 = _interopRequireDefault(_Wrapper);
+
+var _Button = require(2);
+
+var _Button2 = _interopRequireDefault(_Button);
+
+var _Menu = require(4);
+
+var _Menu2 = _interopRequireDefault(_Menu);
+
+var _MenuItem = require(5);
+
+var _MenuItem2 = _interopRequireDefault(_MenuItem);
+
+exports['default'] = {
+  Wrapper: _Wrapper2['default'],
+  Button: _Button2['default'],
+  Menu: _Menu2['default'],
+  MenuItem: _MenuItem2['default']
+};
+module.exports = exports['default'];
+
+},{"2":2,"4":4,"5":5,"6":6}]},{},[9])(9)
 });

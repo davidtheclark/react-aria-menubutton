@@ -1,16 +1,14 @@
-import React from 'react/addons';
-import ariaMenuButton from '../../src/ariaMenuButton';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import CSSTransitionGroup from 'react-addons-css-transition-group'
+import { Wrapper, Button, Menu, MenuItem } from '../../src';
 
 const fancyStuff = ['bowling', 'science', 'scooting'];
-const CSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 class Fancy extends React.Component {
   constructor(props) {
     super(props);
     this.state = { selected: '' };
-    this.ariaMenuButton = ariaMenuButton({
-      onSelection: this.handleSelection.bind(this),
-    });
   }
 
   handleSelection(data) {
@@ -18,8 +16,6 @@ class Fancy extends React.Component {
   }
 
   render() {
-    const { Button, Menu, MenuItem } = this.ariaMenuButton;
-
     const fancyMenuItems = fancyStuff.map((activity, i) => (
       <MenuItem
         value={{
@@ -47,7 +43,11 @@ class Fancy extends React.Component {
         </div>
       );
       return (
-        <CSSTransitionGroup transitionName='is'>
+        <CSSTransitionGroup
+          transitionName='is'
+          transitionEnterTimeout={200}
+          transitionLeaveTimeout={200}
+        >
           {menu}
         </CSSTransitionGroup>
       );
@@ -55,7 +55,10 @@ class Fancy extends React.Component {
 
     return (
       <div>
-        <div className='FancyMB'>
+        <Wrapper
+          onSelection={this.handleSelection.bind(this)}
+          className='FancyMB'
+        >
           <Button className='FancyMB-trigger'>
             <span className='FancyMB-triggerInnards'>
               <img src='svg/profile-female.svg' className='FancyMB-triggerIcon '/>
@@ -70,7 +73,7 @@ class Fancy extends React.Component {
           <Menu>
             {menuInnards}
           </Menu>
-        </div>
+        </Wrapper>
         <span className='FancyMB-selectedText' style={{ marginLeft: '1em' }}>
           You said you enjoy: <strong>{this.state.selected}</strong>
         </span>
@@ -79,7 +82,7 @@ class Fancy extends React.Component {
   }
 }
 
-React.render(
+ReactDOM.render(
   <Fancy />,
   document.getElementById('demo-fancy')
 );

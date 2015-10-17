@@ -1,43 +1,52 @@
 // Simple ES6 Example
 import React from 'react';
-import ariaMenuButton from '../../src/ariaMenuButton';
+import ReactDOM from 'react-dom';
+import AriaMenuButton from '../../src';
 
 const menuItemWords = ['foo', 'bar', 'baz'];
 
 class MyMenuButton extends React.Component {
-  componentWillMount() {
-    this.amb = ariaMenuButton({
-      onSelection: handleSelection,
-    });
-  }
   render() {
-    const { Button, Menu, MenuItem } = this.amb;
-
     const menuItems = menuItemWords.map((word, i) => {
       return (
         <li key={i}>
-          <MenuItem className='MyMenuButton-menuItem'>
+          <AriaMenuButton.MenuItem className='MyMenuButton-menuItem'>
             {word}
-          </MenuItem>
+          </AriaMenuButton.MenuItem>
         </li>
       );
     });
 
     return (
-      <div className='MyMenuButton'>
-        <Button className='MyMenuButton-button'>
+      <AriaMenuButton.Wrapper
+        className='MyMenuButton'
+        onSelection={handleSelection}
+      >
+        <AriaMenuButton.Button className='MyMenuButton-button'>
           click me
-        </Button>
-        <Menu className='MyMenuButton-menu'>
+        </AriaMenuButton.Button>
+        <AriaMenuButton.Menu className='MyMenuButton-menu'>
           <ul>{menuItems}</ul>
-        </Menu>
-      </div>
+        </AriaMenuButton.Menu>
+      </AriaMenuButton.Wrapper>
     );
   }
 }
 
-// Complex ES5 Example
-var CSSTransitionGroup = React.addons.CSSTransitionGroup;
+// Slightly more complex, ES5 example:
+// - MenuItems have hidden values that are passed
+//   to the selection handler
+// - User can navigate the MenuItems by typing the
+//   first letter of a person's name, even though
+//   each MenuItem's child is not simple text
+// - Menu has a function for a child
+// - React's CSSTransitionGroup is used for open-close animation
+
+var CSSTransitionGroup = require('react-addons-css-transition-group');
+var AmbWrapper = AriaMenuButton.Wrapper;
+var AmbButton = AriaMenuButton.Button;
+var AmbMenu = AriaMenuButton.Menu;
+var AmbMenuItem = AriaMenuButton.MenuItem;
 
 var people = [{
   name: 'Charles Choo-Choo',
@@ -51,20 +60,10 @@ var people = [{
 }];
 
 var MyMenuButton2 = React.createClass({
-  componentWillMount: function() {
-    this.amb = ariaMenuButton({
-      onSelection: handleSelection,
-    });
-  },
-
   render: function() {
-    var MyButton = this.amb.Button;
-    var MyMenu = this.amb.Menu;
-    var MyMenuItem = this.amb.MenuItem;
-
     var peopleMenuItems = people.map(function(person, i) {
       return (
-        <MyMenuItem
+        <AmbMenuItem
           key={i}
           tag='li'
           value={person.id}
@@ -77,7 +76,7 @@ var MyMenuButton2 = React.createClass({
           <div className='PeopleMenu-personName'>
             {person.name}
           </div>
-        </MyMenuItem>
+        </AmbMenuItem>
       );
     });
 
@@ -98,17 +97,21 @@ var MyMenuButton2 = React.createClass({
     };
 
     return (
-      <div className='PeopleMenu'>
-        <MyButton className='PeopleMenu-trigger'>
+      <AmbWrapper
+        className='PeopleMenu'
+        onSelection={handleSelection}
+        style={{ marginTop: 20 }}
+      >
+        <AmbButton className='PeopleMenu-trigger'>
           <span className='PeopleMenu-triggerText'>
             Select a person
           </span>
           <span className='PeopleMenu-triggerIcon' />
-        </MyButton>
-        <MyMenu>
+        </AmbButton>
+        <AmbMenu>
           {peopleMenuInnards}
-        </MyMenu>
-      </div>
+        </AmbMenu>
+      </AmbWrapper>
     );
   },
 });
@@ -118,7 +121,7 @@ function handleSelection(value, event) {
   console.log(value, event);
 }
 
-React.render(
+ReactDOM.render(
   <div>
     <MyMenuButton />
     <MyMenuButton2 />

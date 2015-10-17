@@ -6,9 +6,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'd
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-var _react = require('react');
+var _reactDom = require('react-dom');
 
-var _react2 = _interopRequireDefault(_react);
+var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _keys = require('./keys');
 
@@ -43,7 +43,7 @@ var Manager = (function () {
     this.currentFocus = -1;
   }
 
-  Manager.prototype.powerDown = function powerDown() {
+  Manager.prototype.destroy = function destroy() {
     this.button = null;
     this.menu = null;
     this.menuItems = [];
@@ -84,12 +84,16 @@ var Manager = (function () {
     this.isOpen = false;
     this.update();
     if (focusButton) {
-      _react2['default'].findDOMNode(this.button).focus();
+      _reactDom2['default'].findDOMNode(this.button).focus();
     }
   };
 
   Manager.prototype.toggleMenu = function toggleMenu() {
-    if (this.isOpen) this.closeMenu();else this.openMenu();
+    if (this.isOpen) {
+      this.closeMenu();
+    } else {
+      this.openMenu();
+    }
   };
 
   Manager.prototype.moveFocus = function moveFocus(itemIndex) {
@@ -148,7 +152,7 @@ function handleBlur() {
 
   this.blurTimer = setTimeout(function () {
     var activeEl = document.activeElement;
-    if (activeEl === _react2['default'].findDOMNode(_this2.button)) return;
+    if (activeEl === _reactDom2['default'].findDOMNode(_this2.button)) return;
     if (_this2.menuItems.some(function (menuItem) {
       return menuItem.node === activeEl;
     })) return;

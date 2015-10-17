@@ -1,14 +1,12 @@
 import React from 'react';
-import ariaMenuButton from '../../src/ariaMenuButton';
+import ReactDOM from 'react-dom';
+import AriaMenuButton from '../../src';
 
 const words = ['pectinate', 'borborygmus', 'anisodactylous', 'barbar', 'pilcrow', 'destroy'];
 class DemoOne extends React.Component {
   constructor(props) {
     super(props);
     this.state = { selected: '', noMenu: false };
-    this.ariaMenuButton = ariaMenuButton({
-      onSelection: this.handleSelection.bind(this),
-    });
   }
 
   handleSelection(value) {
@@ -32,8 +30,6 @@ class DemoOne extends React.Component {
       );
     }
 
-    const { Button, Menu, MenuItem } = this.ariaMenuButton;
-
     const menuItemElements = words.map((word, i) => {
       let itemClass = 'AriaMenuButton-menuItem';
       if (selected === word) {
@@ -42,29 +38,32 @@ class DemoOne extends React.Component {
       const display = (word === 'destroy') ? 'destroy this menu' : word;
       return (
         <li className='AriaMenuButton-menuItemWrapper' key={i}>
-          <MenuItem
+          <AriaMenuButton.MenuItem
             className={itemClass}
             value={word}
             text={word}
           >
             {display}
-          </MenuItem>
+          </AriaMenuButton.MenuItem>
         </li>
       );
     });
 
     return (
       <div>
-        <div className='AriaMenuButton'>
-          <Button className='AriaMenuButton-trigger'>
+        <AriaMenuButton.Wrapper
+          className='AriaMenuButton'
+          onSelection={this.handleSelection.bind(this)}
+        >
+          <AriaMenuButton.Button className='AriaMenuButton-trigger'>
             Select a word
-          </Button>
-          <Menu>
+          </AriaMenuButton.Button>
+          <AriaMenuButton.Menu>
             <ul className='AriaMenuButton-menu'>
               {menuItemElements}
             </ul>
-          </Menu>
-        </div>
+          </AriaMenuButton.Menu>
+        </AriaMenuButton.Wrapper>
         <span style={{ marginLeft: '1em' }}>
           Your last selection was: <strong>{selected}</strong>
         </span>
@@ -73,7 +72,7 @@ class DemoOne extends React.Component {
   }
 }
 
-React.render(
+ReactDOM.render(
   <DemoOne />,
   document.getElementById('demo-one')
 );
