@@ -3,8 +3,9 @@ import sinon from 'sinon';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactDOMServer from 'react-dom/server';
-import Button from '../src/Button';
 import ReactTestUtils from 'react-addons-test-utils';
+import MockWrapper from './MockWrapper';
+import Button from '../src/Button';
 
 function mockManager() {
   return {
@@ -18,24 +19,13 @@ function mockManager() {
   };
 }
 
-class MockWrapper extends React.Component {
-  componentWillMount() { this.manager = mockManager(); }
-  getChildContext() {
-    return { ambManager: this.manager };
-  }
-  render() { return React.DOM.div(null, this.props.children); }
-}
-MockWrapper.childContextTypes = {
-  ambManager: React.PropTypes.object.isRequired,
-};
-
 function mockKeyEvent(key, keyCode) {
   return { key, keyCode, preventDefault: sinon.spy() };
 }
 
 test('Button DOM with only required props and text child', t => {
   const renderedWrapper = ReactTestUtils.renderIntoDocument(
-    <MockWrapper>
+    <MockWrapper mockManager={mockManager()}>
       <Button>
         foo
       </Button>
@@ -63,7 +53,7 @@ test('Button DOM with only required props and text child', t => {
 
 test('Button DOM with all possible props and element child', t => {
   const renderedWrapper = ReactTestUtils.renderIntoDocument(
-    <MockWrapper>
+    <MockWrapper mockManager={mockManager()}>
       <Button
         id='foo'
         className='bar'
@@ -99,7 +89,7 @@ test('Button DOM with all possible props and element child', t => {
 
 test('Button click', t => {
   const renderedWrapper = ReactTestUtils.renderIntoDocument(
-    <MockWrapper>
+    <MockWrapper mockManager={mockManager()}>
       <Button>
         foo
       </Button>
@@ -116,7 +106,7 @@ test('Button click', t => {
 
 test('Button keyDown', t => {
   const renderedWrapper = ReactTestUtils.renderIntoDocument(
-    <MockWrapper>
+    <MockWrapper mockManager={mockManager()}>
       <Button>
         foo
       </Button>
@@ -166,7 +156,7 @@ test('Button keyDown', t => {
 test('Button rendered via renderToString', t => {
   t.doesNotThrow(() => {
     ReactDOMServer.renderToString(
-      <MockWrapper>
+      <MockWrapper mockManager={mockManager()}>
         <Button>
           foo
         </Button>

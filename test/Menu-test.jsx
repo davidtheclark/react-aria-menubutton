@@ -1,8 +1,11 @@
 import test from 'tape';
 import sinon from 'sinon';
-import React from 'react/addons';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import ReactDOMServer from 'react-dom/server';
+import ReactTestUtils from 'react-addons-test-utils';
+import MockWrapper from './MockWrapper';
 import Menu from '../src/Menu';
-import ReactTestUtils from "react-test-utils";
 
 function mockManager() {
   return {
@@ -12,84 +15,119 @@ function mockManager() {
   };
 }
 
-test('Menu creation with only required props and element child', t => {
-  // Closed
-  const managerOne = mockManager();
-  const renderedOne = ReactTestUtils.renderIntoDocument(
-    <Menu manager={managerOne}>
-      <div>foo</div>
-    </Menu>
+test('Closed Menu DOM with only required props and element child', t => {
+  const renderedWrapper = ReactTestUtils.renderIntoDocument(
+    <MockWrapper mockManager={mockManager()}>
+      <Menu>
+        <div>
+          foo
+        </div>
+      </Menu>
+    </MockWrapper>
   );
-  const nodeOne = React.findDOMNode(renderedOne);
+  const renderedMenu = ReactTestUtils.findRenderedComponentWithType(renderedWrapper, Menu);
+  const renderedMenuNode = ReactDOM.findDOMNode(renderedMenu);
 
-  t.equal(managerOne.menu, renderedOne);
-
-  t.equal(nodeOne, null);
-
-  // Open
-  const managerTwo = mockManager();
-  managerTwo.isOpen = true;
-  const renderedTwo = ReactTestUtils.renderIntoDocument(
-    <Menu manager={managerTwo}>
-      <div>foo</div>
-    </Menu>
-  );
-  const nodeTwo = React.findDOMNode(renderedTwo);
-  t.equal(nodeTwo.children.length, 1);
-  t.equal(nodeTwo.children[0].tagName, 'DIV');
-  t.equal(nodeTwo.children[0].textContent, 'foo');
+  t.equal(renderedWrapper.manager.menu, renderedMenu);
+  t.equal(renderedMenuNode, null);
 
   t.end();
 });
 
-test('Menu creation with all possible props and function child', t => {
+test('Open Menu DOM with only required props and element child', t => {
+  const manager = mockManager();
+  manager.isOpen = true;
+  const renderedWrapper = ReactTestUtils.renderIntoDocument(
+    <MockWrapper mockManager={manager}>
+      <Menu>
+        <div>
+          foo
+        </div>
+      </Menu>
+    </MockWrapper>
+  );
+  const renderedMenu = ReactTestUtils.findRenderedComponentWithType(renderedWrapper, Menu);
+  const renderedMenuNode = ReactDOM.findDOMNode(renderedMenu);
+
+  t.equal(manager.menu, renderedMenu);
+
+  t.equal(renderedMenuNode.tagName.toLowerCase(), 'div');
+  t.notOk(renderedMenuNode.getAttribute('id'));
+  t.notOk(renderedMenuNode.getAttribute('class'));
+  t.notOk(renderedMenuNode.getAttribute('style'));
+  t.equal(renderedMenuNode.getAttribute('role'), 'menu');
+  t.equal(renderedMenuNode.children.length, 1);
+  t.equal(renderedMenuNode.children[0].tagName.toLowerCase(), 'div');
+  t.equal(renderedMenuNode.children[0].innerHTML, 'foo');
+
+  t.end();
+});
+
+test('Closed menu DOM with all possible props and function child', t => {
   const manager = mockManager();
   const childFunction = sinon.spy(menuState => {
     return 'isOpen = ' + menuState.isOpen;
   });
-  const rendered = ReactTestUtils.renderIntoDocument(
-    <Menu
-      manager={manager}
-      id='foo'
-      className='bar'
-      tag='ul'
-      noOverlay={true}
-    >
-      {childFunction}
-    </Menu>
+  const renderedWrapper = ReactTestUtils.renderIntoDocument(
+    <MockWrapper mockManager={manager}>
+      <Menu
+        id='foo'
+        className='bar'
+        style={{ bottom: 1 }}
+        tag='ul'
+      >
+        {childFunction}
+      </Menu>
+    </MockWrapper>
   );
-  const node = React.findDOMNode(rendered);
+  const renderedMenu = ReactTestUtils.findRenderedComponentWithType(renderedWrapper, Menu);
+  const renderedMenuNode = ReactDOM.findDOMNode(renderedMenu);
 
-  t.equal(manager.menu, rendered);
+  t.equal(manager.menu, renderedMenu);
 
-  t.equal(node.tagName, 'UL');
-  t.equal(node.children.length, 0);
-  t.equal(node.getAttribute('id'), 'foo');
-  t.equal(node.getAttribute('class'), 'bar');
-  t.equal(node.getAttribute('role'), 'menu');
-  t.equal(node.textContent, 'isOpen = false');
-
+  t.equal(renderedMenuNode.tagName.toLowerCase(), 'ul');
+  t.equal(renderedMenuNode.getAttribute('id'), 'foo');
+  t.equal(renderedMenuNode.getAttribute('class'), 'bar');
+  t.equal(renderedMenuNode.getAttribute('style').replace(/[ ;]/g, ''), 'bottom:1px');
+  t.equal(renderedMenuNode.getAttribute('role'), 'menu');
+  t.equal(renderedMenuNode.innerHTML, 'isOpen = false');
+  t.equal(renderedMenuNode.children.length, 0);
   t.deepEqual(childFunction.getCall(0).args, [{ isOpen: false }]);
 
-  // Open (still no overlay)
-  const manager2 = mockManager();
-  const childFunction2 = sinon.spy(menuState => {
+  t.end();
+});
+
+test('Open menu DOM with all possible props and function child', t => {
+  const manager = mockManager();
+  manager.isOpen = true;
+  const childFunction = sinon.spy(menuState => {
     return 'isOpen = ' + menuState.isOpen;
   });
-  const rendered2 = ReactTestUtils.renderIntoDocument(
-    <Menu
-      manager={manager2}
-      id='foo'
-      className='bar'
-      tag='ul'
-      noOverlay={true}
-    >
-      {childFunction2}
-    </Menu>
+  const renderedWrapper = ReactTestUtils.renderIntoDocument(
+    <MockWrapper mockManager={manager}>
+      <Menu
+        id='bar'
+        className='foo'
+        style={{ left: 1 }}
+        tag='section'
+      >
+        {childFunction}
+      </Menu>
+    </MockWrapper>
   );
-  const node2 = React.findDOMNode(rendered2);
-  t.equal(node2.tagName, 'UL');
-  t.equal(node2.children.length, 0);
+  const renderedMenu = ReactTestUtils.findRenderedComponentWithType(renderedWrapper, Menu);
+  const renderedMenuNode = ReactDOM.findDOMNode(renderedMenu);
+
+  t.equal(manager.menu, renderedMenu);
+
+  t.equal(renderedMenuNode.tagName.toLowerCase(), 'section');
+  t.equal(renderedMenuNode.getAttribute('id'), 'bar');
+  t.equal(renderedMenuNode.getAttribute('class'), 'foo');
+  t.equal(renderedMenuNode.getAttribute('style').replace(/[ ;]/g, ''), 'left:1px');
+  t.equal(renderedMenuNode.getAttribute('role'), 'menu');
+  t.equal(renderedMenuNode.innerHTML, 'isOpen = true');
+  t.equal(renderedMenuNode.children.length, 0);
+  t.deepEqual(childFunction.getCall(0).args, [{ isOpen: true }]);
 
   t.end();
 });
@@ -98,7 +136,7 @@ test('Menu updating', t => {
   const manager = mockManager();
   const childFunction = sinon.spy();
 
-  class Wrapper extends React.Component {
+  class LittleApp extends React.Component {
     constructor(props) {
       super(props);
       this.state = { open: false };
@@ -108,17 +146,19 @@ test('Menu updating', t => {
     }
     render() {
       return (
-        <Menu manager={manager}>
-          {childFunction}
-        </Menu>
+        <MockWrapper mockManager={manager}>
+          <Menu>
+            {childFunction}
+          </Menu>
+        </MockWrapper>
       );
     }
   }
 
-  const renderedWrapper = ReactTestUtils.renderIntoDocument(<Wrapper />);
+  const renderedLittleApp = ReactTestUtils.renderIntoDocument(<LittleApp />);
 
   manager.menuItems = [1, 2];
-  renderedWrapper.toggleMenu();
+  renderedLittleApp.toggleMenu();
   t.deepEqual(manager.menuItems, [], 'updating closed clears menuItems');
 
   t.end();
@@ -127,10 +167,14 @@ test('Menu updating', t => {
 test('Menu rendered via renderToString', t => {
   const manager = mockManager();
   t.doesNotThrow(() => {
-    React.renderToString(
-      <Menu manager={manager}>
-        <div>foo</div>
-      </Menu>
+    ReactDOMServer.renderToString(
+      <MockWrapper mockManager={manager}>
+        <Menu>
+          <div>
+            foo
+          </div>
+        </Menu>
+      </MockWrapper>
     );
   });
 
