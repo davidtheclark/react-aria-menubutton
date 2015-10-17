@@ -57,7 +57,7 @@ test('Button DOM with all possible props and element child', t => {
       <Button
         id='foo'
         className='bar'
-        style={{ top: 0 }}
+        style={{ top: 2 }}
         tag='button'
       >
         <span>
@@ -75,7 +75,7 @@ test('Button DOM with all possible props and element child', t => {
   t.equal(renderedButtonNode.tagName.toLowerCase(), 'button');
   t.equal(renderedButtonNode.getAttribute('id'), 'foo');
   t.equal(renderedButtonNode.getAttribute('class'), 'bar');
-  t.equal(renderedButtonNode.getAttribute('style').replace(/[ ;]/g, ''), 'top:0');
+  t.equal(renderedButtonNode.getAttribute('style').replace(/[ ;]/g, ''), 'top:2px');
   t.equal(renderedButtonNode.getAttribute('role'), 'button');
   t.equal(renderedButtonNode.getAttribute('tabindex'), '0');
   t.equal(renderedButtonNode.getAttribute('aria-haspopup'), 'true');
