@@ -4,6 +4,14 @@ A React component (set of components, really) that will help you build accessibl
 
 Please check out [the demo](http://davidtheclark.github.io/react-aria-menubutton/demo/).
 
+## Upgrading from 2.x.x to 3.x.x
+
+There are two big differences between these releases:
+- 3.x.x depends on React 0.14 (and its new counterpart ReactDOM)
+- In 3.x.x, you do not need to use the `ariaMenuButton()` factory function to create a set of components. Instead, you make sure to wrap the `Button`, `Menu`, and `MenuItem` components in a `Wrapper` component: that `Wrapper` will group them and organize the interactions (via [React's `context` API](https://facebook.github.io/react/docs/context.html)). The documentation below explains this new way of doing things.
+
+Please file an issue if anything is unclear or doesn't work as expected.
+
 ## Project Goals
 
 - Full accessibility
