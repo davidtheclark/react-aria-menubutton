@@ -1,8 +1,10 @@
 # Changelog
 
-## Head
+## 3.0.0
 
+- Upgrade to React 0.14.
 - Use React's `context` to simplify API.
+- Add `<Wrapper>` component (replacing the need for the factory function `ariaMenuButton()`).
 - Add `style` prop to all components.
 
 ## 2.0.4 and 2.0.5

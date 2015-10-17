@@ -38,7 +38,7 @@ It does not provide any classes or a stylesheet that you'll have to figure out h
 npm install react-aria-menubutton
 ```
 
-There are dependencies: React 0.14.x and [tap.js](https://github.com/alexgibson/tap.js).
+There are dependencies: react 0.14.x, react-dom 0.14.x, and [tap.js](https://github.com/alexgibson/tap.js).
 
 tap.js is very small and included in the builds (React is not).
 It is included only to accurately detect "taps" (mouse click and touch taps) outside an open
@@ -68,11 +68,12 @@ var AriaMenuButton = require('react-aria-menubutton');
 ```
 
 Using globals/UMD, you must do the following:
-- Expose React globally
+- Expose React and ReactDOM globally
 - Use one of the builds in the `dist/` directory
 
 ```html
 <script src="react.min.js"></script>
+<script src="react-dom.min.js"></script>
 <script src="node_modules/react-aria-menu-button/dist/AriaMenuButton.min.js"></script>
 <script>
   // Now use AriaMenuButton.Wrapper, AriaMenuButton.Button,
