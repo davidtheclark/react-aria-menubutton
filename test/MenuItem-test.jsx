@@ -1,8 +1,11 @@
 import test from 'tape';
 import sinon from 'sinon';
-import React from 'react/addons';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import ReactDOMServer from 'react-dom/server';
+import ReactTestUtils from 'react-addons-test-utils';
+import MockWrapper from './MockWrapper';
 import MenuItem from '../src/MenuItem';
-import ReactTestUtils from "react-test-utils";
 
 function mockManager() {
   return {
@@ -12,126 +15,134 @@ function mockManager() {
   };
 }
 
-test('MenuItem creation with only required props', t => {
-  const manager = mockManager();
-  const rendered = ReactTestUtils.renderIntoDocument(
-    <MenuItem manager={manager}>
-      foo
-    </MenuItem>
+test('MenuItem DOM with only required props', t => {
+  const renderedWrapper = ReactTestUtils.renderIntoDocument(
+    <MockWrapper mockManager={mockManager()}>
+      <MenuItem>
+        foo
+      </MenuItem>
+    </MockWrapper>
   );
-  const node = React.findDOMNode(rendered);
+  const renderedMenuItem = ReactTestUtils.findRenderedComponentWithType(renderedWrapper, MenuItem);
+  const renderedMenuItemNode = ReactDOM.findDOMNode(renderedMenuItem);
 
-  t.equal(rendered.managedIndex, 2);
-  t.deepEqual(manager.menuItems, [1, 2, {
-    node,
+  t.equal(renderedMenuItem.managedIndex, 2);
+  t.deepEqual(renderedWrapper.manager.menuItems, [1, 2, {
+    node: renderedMenuItemNode,
     content: 'foo',
     text: undefined,
   }]);
 
-  // DOM
-  t.equal(node.tagName, 'DIV');
-  t.notOk(node.getAttribute('id'));
-  t.notOk(node.getAttribute('class'));
-  t.equal(node.getAttribute('role'), 'menuitem');
-  t.equal(node.getAttribute('tabindex'), '-1');
-  t.equal(node.children.length, 0);
-  t.equal(node.textContent, 'foo');
+  t.equal(renderedMenuItemNode.tagName.toLowerCase(), 'div');
+  t.notOk(renderedMenuItemNode.getAttribute('id'));
+  t.notOk(renderedMenuItemNode.getAttribute('class'));
+  t.notOk(renderedMenuItemNode.getAttribute('style'));
+  t.equal(renderedMenuItemNode.getAttribute('role'), 'menuitem');
+  t.equal(renderedMenuItemNode.getAttribute('tabindex'), '-1');
+  t.equal(renderedMenuItemNode.children.length, 0);
+  t.equal(renderedMenuItemNode.innerHTML, 'foo');
 
   t.end();
 });
 
-test('MenuItem creation with all possible props and element child', t => {
+test('MenuItem DOM with only all possible props and element child, at item index 3', t => {
   const manager = mockManager();
   manager.menuItems.push(3);
-  const rendered = ReactTestUtils.renderIntoDocument(
-    <MenuItem
-      manager={manager}
-      className='foobar'
-      id='hogwash'
-      tag='li'
-      text='horse'
-      value='lamb'
-    >
-      <a href='#'>foo</a>
-    </MenuItem>
+  const renderedWrapper = ReactTestUtils.renderIntoDocument(
+    <MockWrapper mockManager={manager}>
+      <MenuItem
+        className='foobar'
+        id='hogwash'
+        tag='li'
+        style={{ right: '1em' }}
+        text='horse'
+        value='lamb'
+      >
+        <a href='#'>
+          foo
+        </a>
+      </MenuItem>
+    </MockWrapper>
   );
-  const node = React.findDOMNode(rendered);
+  const renderedMenuItem = ReactTestUtils.findRenderedComponentWithType(renderedWrapper, MenuItem);
+  const renderedMenuItemNode = ReactDOM.findDOMNode(renderedMenuItem);
 
-  t.equal(rendered.managedIndex, 3);
-  const managedMenuItem = manager.menuItems[rendered.managedIndex];
-  t.deepEqual(managedMenuItem.node, node);
-  t.equal(managedMenuItem.text, 'horse');
-  t.equal(managedMenuItem.content.type, 'a');
-  t.deepEqual(managedMenuItem.content.props, {
-    href: '#',
-    children: 'foo',
-  });
+  t.equal(renderedMenuItem.managedIndex, 3);
 
-  // DOM
-  t.equal(node.tagName, 'LI');
-  t.equal(node.getAttribute('id'), 'hogwash');
-  t.equal(node.getAttribute('class'), 'foobar');
-  t.equal(node.getAttribute('role'), 'menuitem');
-  t.equal(node.getAttribute('tabindex'), '-1');
-  t.equal(node.firstChild.tagName, 'A');
-  t.equal(node.firstChild.getAttribute('href'), '#');
-  t.equal(node.firstChild.textContent, 'foo');
+  t.equal(renderedMenuItemNode.tagName.toLowerCase(), 'li');
+  t.equal(renderedMenuItemNode.getAttribute('id'), 'hogwash');
+  t.equal(renderedMenuItemNode.getAttribute('class'), 'foobar');
+  t.equal(renderedMenuItemNode.getAttribute('style').replace(/[ ;]/g, ''), 'right:1em');
+  t.equal(renderedMenuItemNode.getAttribute('role'), 'menuitem');
+  t.equal(renderedMenuItemNode.getAttribute('tabindex'), '-1');
+  t.equal(renderedMenuItemNode.children.length, 1);
+  t.equal(renderedMenuItemNode.children[0].tagName.toLowerCase(), 'a');
+  t.equal(renderedMenuItemNode.children[0].innerHTML, 'foo');
 
   t.end();
 });
 
-test('MenuItem click', t => {
-  const managerOne = mockManager();
-  const renderedOne = ReactTestUtils.renderIntoDocument(
-    <MenuItem manager={managerOne}>
-      foo
-    </MenuItem>
+test('MenuItem click without specified value prop', t => {
+  const manager = mockManager();
+  const renderedWrapper = ReactTestUtils.renderIntoDocument(
+    <MockWrapper mockManager={manager}>
+      <MenuItem>
+        foo
+      </MenuItem>
+    </MockWrapper>
   );
-  const nodeOne = React.findDOMNode(renderedOne);
-  const mockEventOne = { bee: 'baa' };
+  const renderedMenuItem = ReactTestUtils.findRenderedComponentWithType(renderedWrapper, MenuItem);
+  const renderedMenuItemNode = ReactDOM.findDOMNode(renderedMenuItem);
+  const mockEvent = { bee: 'baa' };
 
-  ReactTestUtils.Simulate.click(nodeOne, mockEventOne);
-  t.ok(managerOne.handleSelection.calledOnce);
-  t.ok(managerOne.handleSelection.calledWithMatch('foo', mockEventOne));
-  t.equal(managerOne.currentFocus, 2);
+  ReactTestUtils.Simulate.click(renderedMenuItemNode, mockEvent);
+  t.ok(manager.handleSelection.calledOnce);
+  t.ok(manager.handleSelection.calledWithMatch('foo', mockEvent));
+  t.equal(manager.currentFocus, 2);
 
-  // With specified value prop
-  const managerTwo = mockManager();
-  managerTwo.menuItems.push(3, 4, 5);
-  const renderedTwo = ReactTestUtils.renderIntoDocument(
-    <MenuItem
-      manager={managerTwo}
-      value='bar'
-    >
-      foo
-    </MenuItem>
+  t.end();
+});
+
+test('MenuItem click with specified value prop, at item index 5', t => {
+  const manager = mockManager();
+  manager.menuItems.push(3, 4, 5);
+  const renderedWrapper = ReactTestUtils.renderIntoDocument(
+    <MockWrapper mockManager={manager}>
+      <MenuItem value='bar'>
+        foo
+      </MenuItem>
+    </MockWrapper>
   );
-  const nodeTwo = React.findDOMNode(renderedTwo);
-  const mockEventTwo = { bee: 'baa' };
+  const renderedMenuItem = ReactTestUtils.findRenderedComponentWithType(renderedWrapper, MenuItem);
+  const renderedMenuItemNode = ReactDOM.findDOMNode(renderedMenuItem);
+  const mockEvent = { bee: 'baa' };
 
-  ReactTestUtils.Simulate.click(nodeTwo, mockEventTwo);
-  t.ok(managerTwo.handleSelection.calledOnce);
-  t.ok(managerTwo.handleSelection.calledWithMatch('bar', mockEventTwo));
-  t.equal(managerTwo.currentFocus, 5);
+  ReactTestUtils.Simulate.click(renderedMenuItemNode, mockEvent);
+  t.ok(manager.handleSelection.calledOnce);
+  t.ok(manager.handleSelection.calledWithMatch('bar', mockEvent));
+  t.equal(manager.currentFocus, 5);
 
   t.end();
 });
 
 test('MenuItem keyDown', t => {
   const manager = mockManager();
-  const rendered = ReactTestUtils.renderIntoDocument(
-    <MenuItem manager={manager}>
-      foo
-    </MenuItem>
+  const renderedWrapper = ReactTestUtils.renderIntoDocument(
+    <MockWrapper mockManager={manager}>
+      <MenuItem>
+        foo
+      </MenuItem>
+    </MockWrapper>
   );
-  const node = React.findDOMNode(rendered);
+  const renderedMenuItem = ReactTestUtils.findRenderedComponentWithType(renderedWrapper, MenuItem);
+  const renderedMenuItemNode = ReactDOM.findDOMNode(renderedMenuItem);
   const mockEnterEvent = { key: 'Enter' };
   const mockSpaceEvent = { key: ' ' };
   const mockEscapeEvent = { key: 'Escape' };
 
-  ReactTestUtils.Simulate.keyDown(node, mockEnterEvent);
-  ReactTestUtils.Simulate.keyDown(node, mockSpaceEvent);
-  ReactTestUtils.Simulate.keyDown(node, mockEscapeEvent); // should be ignored
+  ReactTestUtils.Simulate.keyDown(renderedMenuItemNode, mockEnterEvent);
+  ReactTestUtils.Simulate.keyDown(renderedMenuItemNode, mockSpaceEvent);
+  ReactTestUtils.Simulate.keyDown(renderedMenuItemNode, mockEscapeEvent); // should be ignored
   t.ok(manager.handleSelection.calledTwice);
   t.ok(manager.handleSelection.alwaysCalledWith('foo'));
 
@@ -141,10 +152,12 @@ test('MenuItem keyDown', t => {
 test('MenuItem rendered via renderToString', t => {
   const manager = mockManager();
   t.doesNotThrow(() => {
-    React.renderToString(
-      <MenuItem manager={manager}>
-        foo
-      </MenuItem>
+    ReactDOMServer.renderToString(
+      <MockWrapper mockManager={manager}>
+        <MenuItem>
+          foo
+        </MenuItem>
+      </MockWrapper>
     );
   });
 
