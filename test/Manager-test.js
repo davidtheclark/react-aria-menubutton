@@ -1,6 +1,6 @@
 import test from 'tape';
 import sinon from 'sinon';
-import React from 'react';
+import ReactDOM from 'react-dom';
 import Manager from '../src/Manager';
 
 function mockManager(options) {
@@ -73,7 +73,7 @@ test('Manager#openMenu focusing in menu', t => {
 test('Manager#closeMenu focusing on button', t => {
   const m = mockManager();
   const mockNode = { focus: sinon.spy() };
-  const findDOMNodeStub = sinon.stub(React, 'findDOMNode').returns(mockNode);
+  const findDOMNodeStub = sinon.stub(ReactDOM, 'findDOMNode').returns(mockNode);
 
   m.closeMenu();
   t.notOk(m.isOpen);
@@ -89,7 +89,7 @@ test('Manager#closeMenu focusing on button', t => {
 test('Manager#closeMenu without focusing on button', t => {
   const m = mockManager();
   const mockNode = { focus: sinon.spy() };
-  const findDOMNodeStub = sinon.stub(React, 'findDOMNode').returns(mockNode);
+  const findDOMNodeStub = sinon.stub(ReactDOM, 'findDOMNode').returns(mockNode);
 
   m.closeMenu({ focusButton: false });
   t.notOk(mockNode.focus.calledOnce);
