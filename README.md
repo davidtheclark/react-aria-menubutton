@@ -66,7 +66,7 @@ There are two ways to consume this module:
 - with CommonJS
 - as a global UMD library
 
-Using CommonJS, for example, you can simply `require()` the module to get the function `ariaMenuButton([options])`, which you use like this:
+Using CommonJS, for example, you can simply `require()` the module to get the AriaMenuButton object, which contains all the components you'll need:
 
 ```js
 var AriaMenuButton = require('react-aria-menubutton');
