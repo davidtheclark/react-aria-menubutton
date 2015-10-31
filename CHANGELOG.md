@@ -1,5 +1,9 @@
 # Changelog
 
+## Head
+
+- Add `disabled` prop to `Button`.
+
 ## 3.0.0
 
 - Upgrade to React 0.14.

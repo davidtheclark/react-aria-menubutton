@@ -11,6 +11,7 @@ export default class Button extends React.Component {
   }
 
   handleKeyDown(event) {
+    if (this.props.disabled) return;
     const { ambManager } = this.context;
     const { key } = event;
 
@@ -34,6 +35,7 @@ export default class Button extends React.Component {
   }
 
   handleClick() {
+    if (this.props.disabled) return;
     this.context.ambManager.toggleMenu();
   }
 
@@ -47,10 +49,11 @@ export default class Button extends React.Component {
       style,
       // "The menu button itself has a role of button."
       role: 'button',
-      tabIndex: '0',
+      tabIndex: (this.props.disabled) ? '' : '0',
       // "The menu button has an aria-haspopup property, set to true."
       'aria-haspopup': true,
       'aria-expanded': ambManager.isOpen,
+      'aria-disabled': this.props.disabled,
       onKeyDown: this.handleKeyDown.bind(this),
       onClick: this.handleClick.bind(this),
       onBlur: ambManager.handleBlur,
@@ -61,6 +64,7 @@ export default class Button extends React.Component {
 Button.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
+  disabled: PropTypes.bool,
   id: PropTypes.string,
   style: PropTypes.object,
   tag: PropTypes.string,

@@ -303,6 +303,12 @@ Each `Button` must be wrapped in a `Wrapper`, and each `Wrapper` can wrap only o
 
 All props are optional.
 
+##### disabled
+
+Type `Boolean`
+
+If `true`, the element is disabled (`aria-disabled='true'`, not in tab order, clicking has no effect).
+
 ##### tag
 
 Type: `String` Default: `'span'`

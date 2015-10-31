@@ -59,6 +59,7 @@ test('Button DOM with all possible props and element child', t => {
         className='bar'
         style={{ top: 2 }}
         tag='button'
+        disabled={true}
       >
         <span>
           hooha
@@ -77,9 +78,10 @@ test('Button DOM with all possible props and element child', t => {
   t.equal(renderedButtonNode.getAttribute('class'), 'bar');
   t.equal(renderedButtonNode.getAttribute('style').replace(/[ ;]/g, ''), 'top:2px');
   t.equal(renderedButtonNode.getAttribute('role'), 'button');
-  t.equal(renderedButtonNode.getAttribute('tabindex'), '0');
+  t.notOk(renderedButtonNode.getAttribute('tabindex'));
   t.equal(renderedButtonNode.getAttribute('aria-haspopup'), 'true');
   t.equal(renderedButtonNode.getAttribute('aria-expanded'), 'false');
+  t.equal(renderedButtonNode.getAttribute('aria-disabled'), 'true');
   t.equal(renderedButtonNode.children.length, 1);
   t.equal(renderedButtonNode.children[0].tagName.toLowerCase(), 'span');
   t.equal(renderedButtonNode.textContent, 'hooha');
@@ -100,6 +102,19 @@ test('Button click', t => {
 
   ReactTestUtils.Simulate.click(renderedButtonNode);
   t.ok(renderedWrapper.manager.toggleMenu.calledOnce);
+
+  const disabledRenderedWrapper = ReactTestUtils.renderIntoDocument(
+    <MockWrapper mockManager={mockManager()}>
+      <Button disabled={true}>
+        foo
+      </Button>
+    </MockWrapper>
+  );
+  const disabledRenderedButton = ReactTestUtils.findRenderedComponentWithType(disabledRenderedWrapper, Button);
+  const disabledRenderedButtonNode = ReactDOM.findDOMNode(disabledRenderedButton);
+
+  ReactTestUtils.Simulate.click(disabledRenderedButtonNode);
+  t.notOk(disabledRenderedWrapper.manager.toggleMenu.calledOnce, 'no effect when disabled');
 
   t.end();
 });
@@ -149,6 +164,20 @@ test('Button keyDown', t => {
   t.notOk(fEvent.preventDefault.called);
   t.ok(manager.handleMenuKey.calledTwice);
   t.equal(manager.handleMenuKey.getCall(1).args[0].keyCode, 70);
+
+  enterEvent.preventDefault.reset();
+  const disabledRenderedWrapper = ReactTestUtils.renderIntoDocument(
+    <MockWrapper mockManager={mockManager()}>
+      <Button disabled={true}>
+        foo
+      </Button>
+    </MockWrapper>
+  );
+  const disabledRenderedButton = ReactTestUtils.findRenderedComponentWithType(disabledRenderedWrapper, Button);
+  const disabledRenderedButtonNode = ReactDOM.findDOMNode(disabledRenderedButton);
+
+  ReactTestUtils.Simulate.keyDown(disabledRenderedButtonNode, enterEvent);
+  t.notOk(enterEvent.preventDefault.calledOnce, 'no effect when disabled');
 
   t.end();
 });
