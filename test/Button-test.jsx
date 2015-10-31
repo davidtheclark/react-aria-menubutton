@@ -78,7 +78,7 @@ test('Button DOM with all possible props and element child', t => {
   t.equal(renderedButtonNode.getAttribute('class'), 'bar');
   t.equal(renderedButtonNode.getAttribute('style').replace(/[ ;]/g, ''), 'top:2px');
   t.equal(renderedButtonNode.getAttribute('role'), 'button');
-  t.notOk(renderedButtonNode.getAttribute('tabindex'));
+  t.ok(renderedButtonNode.getAttribute('tabindex') !== '0');
   t.equal(renderedButtonNode.getAttribute('aria-haspopup'), 'true');
   t.equal(renderedButtonNode.getAttribute('aria-expanded'), 'false');
   t.equal(renderedButtonNode.getAttribute('aria-disabled'), 'true');
