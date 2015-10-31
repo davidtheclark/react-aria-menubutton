@@ -154,6 +154,7 @@ var Button = (function (_React$Component) {
   };
 
   Button.prototype.handleKeyDown = function handleKeyDown(event) {
+    if (this.props.disabled) return;
     var ambManager = this.context.ambManager;
     var key = event.key;
 
@@ -177,6 +178,7 @@ var Button = (function (_React$Component) {
   };
 
   Button.prototype.handleClick = function handleClick() {
+    if (this.props.disabled) return;
     this.context.ambManager.toggleMenu();
   };
 
@@ -195,10 +197,11 @@ var Button = (function (_React$Component) {
       style: style,
       // "The menu button itself has a role of button."
       role: 'button',
-      tabIndex: '0',
+      tabIndex: this.props.disabled ? '' : '0',
       // "The menu button has an aria-haspopup property, set to true."
       'aria-haspopup': true,
       'aria-expanded': ambManager.isOpen,
+      'aria-disabled': this.props.disabled,
       onKeyDown: this.handleKeyDown.bind(this),
       onClick: this.handleClick.bind(this),
       onBlur: ambManager.handleBlur
@@ -213,6 +216,7 @@ exports['default'] = Button;
 Button.propTypes = {
   children: _react.PropTypes.node.isRequired,
   className: _react.PropTypes.string,
+  disabled: _react.PropTypes.bool,
   id: _react.PropTypes.string,
   style: _react.PropTypes.object,
   tag: _react.PropTypes.string

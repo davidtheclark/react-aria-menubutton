@@ -1,6 +1,6 @@
 # Changelog
 
-## Head
+## 3.1.0
 
 - Add `disabled` prop to `Button`.
 
