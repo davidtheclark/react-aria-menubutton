@@ -49,8 +49,8 @@ npm install react-aria-menubutton
 There are dependencies: react 0.14.x, react-dom 0.14.x, and [teeny-tap](https://github.com/davidtheclark/teeny-tap).
 
 teeny-tap is very small and included in the builds (React is not).
-It is included only to accurately detect "taps" (mouse click and touch taps, not drags or scrolls)
-outside of an open menu that should close it — which is important enough that it's worth doing right.
+It is included only to accurately detect "taps" (mouse click and touch taps) outside an open
+menu that should close it — which is important enough that it's worth doing right.
 
 Versions <3.0 are compatible with React 0.13.x.
 
