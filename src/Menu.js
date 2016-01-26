@@ -1,12 +1,11 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import Tap from 'tap.js';
+import createTapListener from 'teeny-tap';
 
 export default class Menu extends React.Component {
   componentWillMount() {
     this.context.ambManager.menu = this;
 
-    this.isListeningForTap = false;
     this.tapHandler = (e) => {
       if (ReactDOM.findDOMNode(this).contains(e.target)) return;
       if (ReactDOM.findDOMNode(this.context.ambManager.button).contains(e.target)) return;
@@ -16,10 +15,11 @@ export default class Menu extends React.Component {
 
   componentWillUpdate() {
     const { ambManager } = this.context;
-    if (ambManager.isOpen && !this.isListeningForTap) {
-      this.addTapListeners();
-    } else if (!ambManager.isOpen && this.isListeningForTap) {
-      this.removeTapListeners();
+    if (ambManager.isOpen && !this.tapListener) {
+      this.addTapListener();
+    } else if (!ambManager.isOpen && this.tapListener) {
+      this.tapListener.remove()
+      delete this.tapListener;
     }
 
     if (!ambManager.isOpen) {
@@ -30,23 +30,13 @@ export default class Menu extends React.Component {
   }
 
   componentWillUnmount() {
-    this.removeTapListeners();
+    if (this.tapListener) this.tapListener.remove();
     this.context.ambManager.destroy();
   }
 
-  addTapListeners() {
+  addTapListener() {
     if (!global.document) return;
-    this.bodyTap = new Tap(document.body);
-    document.body.addEventListener('tap', this.tapHandler, true);
-    this.isListeningForTap = true;
-  }
-
-  removeTapListeners() {
-    if (!global.document) return;
-    if (!this.isListeningForTap) return;
-    document.body.removeEventListener('tap', this.tapHandler, true);
-    this.bodyTap.destroy();
-    this.isListeningForTap = false;
+    this.tapListener = createTapListener(document.documentElement, this.tapHandler);
   }
 
   render() {

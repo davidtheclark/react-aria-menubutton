@@ -47,7 +47,7 @@
   "dependencies": {
     "react": "0.14.x",
     "react-dom": "0.14.x",
-    "tap.js": "^2.1.2"
+    "teeny-tap": "^0.1.0"
   },
   "devDependencies": {
     "babel": "5.8.23",

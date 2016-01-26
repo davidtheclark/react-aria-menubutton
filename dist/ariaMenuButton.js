@@ -1,121 +1,80 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.AriaMenuButton = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-/*!
- * tap.js
- * Copyright (c) 2013 Alex Gibson, http://alxgbsn.co.uk/
- * Released under MIT license
- */
-/* global define, module */
-(function (global, factory) {
-    'use strict';
-    if (typeof define === 'function' && define.amd) {
-        define(function () {
-            return (global.Tap = factory(global, global.document));
-        });
-    } else if (typeof exports === 'object') {
-        module.exports = factory(global, global.document);
-    } else {
-        global.Tap = factory(global, global.document);
+module.exports = function createTapListener(el, callback) {
+  var startX = 0;
+  var startY = 0;
+  var touchStarted = false;
+  var touchMoved = false;
+  // Assume that if a touchstart event initiates, the user is
+  // using touch and click events should be ignored.
+  // If this isn't done, touch-clicks will fire the callback
+  // twice: once on touchend, once on the subsequent "click".
+  var usingTouch = false;
+
+  el.addEventListener('click', handleClick, false);
+  el.addEventListener('touchstart', handleTouchstart, false);
+
+  function handleClick(e) {
+    if (usingTouch) return;
+    callback(e);
+  }
+
+  function handleTouchstart(e) {
+    usingTouch = true;
+
+    if (touchStarted) return;
+    touchStarted = true;
+
+    el.addEventListener('touchmove', handleTouchmove, false);
+    el.addEventListener('touchend', handleTouchend, false);
+    el.addEventListener('touchcancel', handleTouchcancel, false);
+
+    touchMoved = false;
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  }
+
+  function handleTouchmove(e) {
+    if (touchMoved) return;
+
+    if (
+      Math.abs(e.touches[0].clientX - startX) <= 10
+      && Math.abs(e.touches[0].clientY - startY) <= 10
+    ) return;
+
+    touchMoved = true;
+  }
+
+  function handleTouchend(e) {
+    touchStarted = false;
+    removeSecondaryTouchListeners();
+    if (!touchMoved) {
+      callback(e);
     }
-}(typeof window !== 'undefined' ? window : this, function (window, document) {
-    'use strict';
+  }
 
-    function Tap(el) {
-        this.el = typeof el === 'object' ? el : document.getElementById(el);
-        this.moved = false; //flags if the finger has moved
-        this.startX = 0; //starting x coordinate
-        this.startY = 0; //starting y coordinate
-        this.hasTouchEventOccured = false; //flag touch event
-        this.el.addEventListener('touchstart', this, false);
-        this.el.addEventListener('mousedown', this, false);
-    }
+  function handleTouchcancel() {
+    touchStarted = false;
+    touchMoved = false;
+    startX = 0;
+    startY = 0;
+  }
 
-    Tap.prototype.start = function(e) {
+  function removeSecondaryTouchListeners() {
+    el.removeEventListener('touchmove', handleTouchmove, false);
+    el.removeEventListener('touchend', handleTouchend, false);
+    el.removeEventListener('touchcancel', handleTouchcancel, false);
+  }
 
-        if (e.type === 'touchstart') {
+  function removeTapListener() {
+    el.removeEventListener('click', handleClick, false);
+    el.removeEventListener('touchstart', handleTouchstart, false);
+    removeSecondaryTouchListeners();
+  }
 
-            this.hasTouchEventOccured = true;
-            this.el.addEventListener('touchmove', this, false);
-            this.el.addEventListener('touchend', this, false);
-            this.el.addEventListener('touchcancel', this, false);
-
-        } else if (e.type === 'mousedown') {
-
-            this.el.addEventListener('mouseup', this, false);
-        }
-
-        this.moved = false;
-        this.startX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
-        this.startY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
-    };
-
-    Tap.prototype.move = function(e) {
-        //if finger moves more than 10px flag to cancel
-        if (Math.abs(e.touches[0].clientX - this.startX) > 10 || Math.abs(e.touches[0].clientY - this.startY) > 10) {
-            this.moved = true;
-        }
-    };
-
-    Tap.prototype.end = function(e) {
-        var evt;
-
-        this.el.removeEventListener('touchmove', this, false);
-        this.el.removeEventListener('touchend', this, false);
-        this.el.removeEventListener('touchcancel', this, false);
-        this.el.removeEventListener('mouseup', this, false);
-
-        if (!this.moved) {
-            //create custom event
-            try {
-                evt = new window.CustomEvent('tap', {
-                    bubbles: true,
-                    cancelable: true
-                });
-            } catch (e) {
-                evt = document.createEvent('Event');
-                evt.initEvent('tap', true, true);
-            }
-
-            //prevent touchend from propagating to any parent
-            //nodes that may have a tap.js listener attached
-            e.stopPropagation();
-
-            // dispatchEvent returns false if any handler calls preventDefault,
-            if (!e.target.dispatchEvent(evt)) {
-                // in which case we want to prevent clicks from firing.
-                e.preventDefault();
-            }
-        }
-    };
-
-    Tap.prototype.cancel = function() {
-        this.hasTouchEventOccured = false;
-        this.moved = false;
-        this.startX = 0;
-        this.startY = 0;
-    };
-
-    Tap.prototype.destroy = function() {
-        this.el.removeEventListener('touchstart', this, false);
-        this.el.removeEventListener('touchmove', this, false);
-        this.el.removeEventListener('touchend', this, false);
-        this.el.removeEventListener('touchcancel', this, false);
-        this.el.removeEventListener('mousedown', this, false);
-        this.el.removeEventListener('mouseup', this, false);
-    };
-
-    Tap.prototype.handleEvent = function(e) {
-        switch (e.type) {
-            case 'touchstart': this.start(e); break;
-            case 'touchmove': this.move(e); break;
-            case 'touchend': this.end(e); break;
-            case 'touchcancel': this.cancel(e); break;
-            case 'mousedown': this.start(e); break;
-            case 'mouseup': this.end(e); break;
-        }
-    };
-
-    return Tap;
-}));
+  return {
+    remove: removeTapListener,
+  };
+};
 
 },{}],2:[function(require,module,exports){
 'use strict';
@@ -451,9 +410,9 @@ var _reactDom = require("react-dom");
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _tapJs = require(1);
+var _teenyTap = require(1);
 
-var _tapJs2 = _interopRequireDefault(_tapJs);
+var _teenyTap2 = _interopRequireDefault(_teenyTap);
 
 var Menu = (function (_React$Component) {
   _inherits(Menu, _React$Component);
@@ -469,7 +428,6 @@ var Menu = (function (_React$Component) {
 
     this.context.ambManager.menu = this;
 
-    this.isListeningForTap = false;
     this.tapHandler = function (e) {
       if (_reactDom2['default'].findDOMNode(_this).contains(e.target)) return;
       if (_reactDom2['default'].findDOMNode(_this.context.ambManager.button).contains(e.target)) return;
@@ -480,10 +438,11 @@ var Menu = (function (_React$Component) {
   Menu.prototype.componentWillUpdate = function componentWillUpdate() {
     var ambManager = this.context.ambManager;
 
-    if (ambManager.isOpen && !this.isListeningForTap) {
-      this.addTapListeners();
-    } else if (!ambManager.isOpen && this.isListeningForTap) {
-      this.removeTapListeners();
+    if (ambManager.isOpen && !this.tapListener) {
+      this.addTapListener();
+    } else if (!ambManager.isOpen && this.tapListener) {
+      this.tapListener.remove();
+      delete this.tapListener;
     }
 
     if (!ambManager.isOpen) {
@@ -494,23 +453,13 @@ var Menu = (function (_React$Component) {
   };
 
   Menu.prototype.componentWillUnmount = function componentWillUnmount() {
-    this.removeTapListeners();
+    if (this.tapListener) this.tapListener.remove();
     this.context.ambManager.destroy();
   };
 
-  Menu.prototype.addTapListeners = function addTapListeners() {
+  Menu.prototype.addTapListener = function addTapListener() {
     if (!global.document) return;
-    this.bodyTap = new _tapJs2['default'](document.body);
-    document.body.addEventListener('tap', this.tapHandler, true);
-    this.isListeningForTap = true;
-  };
-
-  Menu.prototype.removeTapListeners = function removeTapListeners() {
-    if (!global.document) return;
-    if (!this.isListeningForTap) return;
-    document.body.removeEventListener('tap', this.tapHandler, true);
-    this.bodyTap.destroy();
-    this.isListeningForTap = false;
+    this.tapListener = _teenyTap2['default'](document.documentElement, this.tapHandler);
   };
 
   Menu.prototype.render = function render() {

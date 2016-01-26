@@ -1,5 +1,9 @@
 # Changelog
 
+# Head
+
+- Switch from `tap.js` to `teeny-tap`.
+
 ## 3.1.0
 
 - Add `disabled` prop to `Button`.

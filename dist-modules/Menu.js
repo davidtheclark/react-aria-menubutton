@@ -16,9 +16,9 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _tapJs = require('tap.js');
+var _teenyTap = require('teeny-tap');
 
-var _tapJs2 = _interopRequireDefault(_tapJs);
+var _teenyTap2 = _interopRequireDefault(_teenyTap);
 
 var Menu = (function (_React$Component) {
   _inherits(Menu, _React$Component);
@@ -34,7 +34,6 @@ var Menu = (function (_React$Component) {
 
     this.context.ambManager.menu = this;
 
-    this.isListeningForTap = false;
     this.tapHandler = function (e) {
       if (_reactDom2['default'].findDOMNode(_this).contains(e.target)) return;
       if (_reactDom2['default'].findDOMNode(_this.context.ambManager.button).contains(e.target)) return;
@@ -45,10 +44,11 @@ var Menu = (function (_React$Component) {
   Menu.prototype.componentWillUpdate = function componentWillUpdate() {
     var ambManager = this.context.ambManager;
 
-    if (ambManager.isOpen && !this.isListeningForTap) {
-      this.addTapListeners();
-    } else if (!ambManager.isOpen && this.isListeningForTap) {
-      this.removeTapListeners();
+    if (ambManager.isOpen && !this.tapListener) {
+      this.addTapListener();
+    } else if (!ambManager.isOpen && this.tapListener) {
+      this.tapListener.remove();
+      delete this.tapListener;
     }
 
     if (!ambManager.isOpen) {
@@ -59,23 +59,13 @@ var Menu = (function (_React$Component) {
   };
 
   Menu.prototype.componentWillUnmount = function componentWillUnmount() {
-    this.removeTapListeners();
+    if (this.tapListener) this.tapListener.remove();
     this.context.ambManager.destroy();
   };
 
-  Menu.prototype.addTapListeners = function addTapListeners() {
+  Menu.prototype.addTapListener = function addTapListener() {
     if (!global.document) return;
-    this.bodyTap = new _tapJs2['default'](document.body);
-    document.body.addEventListener('tap', this.tapHandler, true);
-    this.isListeningForTap = true;
-  };
-
-  Menu.prototype.removeTapListeners = function removeTapListeners() {
-    if (!global.document) return;
-    if (!this.isListeningForTap) return;
-    document.body.removeEventListener('tap', this.tapHandler, true);
-    this.bodyTap.destroy();
-    this.isListeningForTap = false;
+    this.tapListener = _teenyTap2['default'](document.documentElement, this.tapHandler);
   };
 
   Menu.prototype.render = function render() {
