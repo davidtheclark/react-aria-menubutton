@@ -1,11 +1,4 @@
-import Wrapper from './Wrapper';
-import Button from './Button';
-import Menu from './Menu';
-import MenuItem from './MenuItem';
-
-export default {
-  Wrapper,
-  Button,
-  Menu,
-  MenuItem,
-};
+export { default as  Wrapper } from './Wrapper';
+export { default as  Button } from './Button';
+export { default as  Menu } from './Menu';
+export { default as  MenuItem } from './MenuItem';

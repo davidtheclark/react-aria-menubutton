@@ -101,7 +101,7 @@ You can also see more examples by looking in `demo/`.
 // Very simple ES6 example
 
 import React from 'react';
-import AriaMenuButton from 'react-aria-menubutton';
+import { Wrapper, Button, Menu, MenuItem } from 'react-aria-menubutton';
 
 const menuItemWords = ['foo', 'bar', 'baz'];
 

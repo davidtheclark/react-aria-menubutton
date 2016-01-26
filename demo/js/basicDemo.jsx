@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AriaMenuButton from '../../src';
+import { Wrapper, Button, Menu, MenuItem } from '../../src';
 
 const words = ['pectinate', 'borborygmus', 'anisodactylous', 'barbar', 'pilcrow', 'destroy'];
 class DemoOne extends React.Component {
@@ -38,32 +38,32 @@ class DemoOne extends React.Component {
       const display = (word === 'destroy') ? 'destroy this menu' : word;
       return (
         <li className='AriaMenuButton-menuItemWrapper' key={i}>
-          <AriaMenuButton.MenuItem
+          <MenuItem
             className={itemClass}
             value={word}
             text={word}
           >
             {display}
-          </AriaMenuButton.MenuItem>
+          </MenuItem>
         </li>
       );
     });
 
     return (
       <div>
-        <AriaMenuButton.Wrapper
+        <Wrapper
           className='AriaMenuButton'
           onSelection={this.handleSelection.bind(this)}
         >
-          <AriaMenuButton.Button className='AriaMenuButton-trigger'>
+          <Button className='AriaMenuButton-trigger'>
             Select a word
-          </AriaMenuButton.Button>
-          <AriaMenuButton.Menu>
+          </Button>
+          <Menu>
             <ul className='AriaMenuButton-menu'>
               {menuItemElements}
             </ul>
-          </AriaMenuButton.Menu>
-        </AriaMenuButton.Wrapper>
+          </Menu>
+        </Wrapper>
         <span style={{ marginLeft: '1em' }}>
           Your last selection was: <strong>{selected}</strong>
         </span>
