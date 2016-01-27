@@ -244,11 +244,7 @@ Each wrapper can contain *only one* `Button`, *only one* `Menu`, and *multiple* 
 
 All props except `onSelection`, are optional.
 
-##### onSelection
-
-Type: `Function`, *required*
-
-A callback to run when the user makes a selection (i.e. clicks or presses Enter or Space on a `MenuItem`). It will be passed the `value` of the selected `MenuItem` and the React SyntheticEvent.
+**onSelection** { Function }: *Required.* A callback to run when the user makes a selection (i.e. clicks or presses Enter or Space on a `MenuItem`). It will be passed the `value` of the selected `MenuItem` and the React SyntheticEvent.
 
 ```js
 <Wrapper onSelection={handleSelection} />
@@ -261,35 +257,15 @@ function handleSelection(value, event) {
 }
 ```
 
-##### closeOnSelection
+**closeOnSelection** { Boolean }: By default, it *does* automatically close. If `false`, the menu will *not* automatically close when a selection is made. Default: `true`.
 
-Type: `Boolean`, Default: `true`
+**tag** { String }: The HTML tag for this element. Default: `'div'`.
 
-If `false`, the menu will *not* automatically close when a selection is made. By default, it *does* automatically close.
+**id** { String }: An id value.
 
-##### tag
+**className** { String }: A class value.
 
-Type: `String` Default: `'div'`
-
-The HTML tag for this element.
-
-##### id
-
-Type: `String`
-
-An id value.
-
-##### className
-
-Type: `String`
-
-A class value.
-
-##### style
-
-Type: `Object`
-
-An object for inline styles.
+**style** { Object }: An object for inline styles.
 
 ### `Button`
 
@@ -303,35 +279,15 @@ Each `Button` must be wrapped in a `Wrapper`, and each `Wrapper` can wrap only o
 
 All props are optional.
 
-##### disabled
+**disabled** { Boolean }: If `true`, the element is disabled (`aria-disabled='true'`, not in tab order, clicking has no effect).
 
-Type `Boolean`
+**tag** { String }: The HTML tag for this element. Default: `'span'`.
 
-If `true`, the element is disabled (`aria-disabled='true'`, not in tab order, clicking has no effect).
+**id** { String }: An id value.
 
-##### tag
+**className** { String }: A class value.
 
-Type: `String` Default: `'span'`
-
-The HTML tag for this element.
-
-##### id
-
-Type: `String`
-
-An id value.
-
-##### className
-
-Type: `String`
-
-A class value.
-
-##### style
-
-Type: `Object`
-
-An object for inline styles.
+**style** { Object }: An object for inline styles.
 
 ### `Menu`
 
@@ -354,29 +310,13 @@ Each `Menu` must be wrapped in a `Wrapper`, and each `Wrapper` can wrap only one
 
 All props are optional.
 
-##### tag
+**tag** { String }: The HTML tag for this element. Default: `'span'`.
 
-Type: `String` Default: `'span'`
+**id** { String }: An id value.
 
-The HTML tag for this element.
+**className** { String }: A class value.
 
-##### id
-
-Type: `String`
-
-An id value.
-
-##### className
-
-Type: `String`
-
-A class value.
-
-##### style
-
-Type: `Object`
-
-An object for inline styles.
+**style** { Object }: An object for inline styles.
 
 ### `MenuItem`
 
@@ -400,41 +340,17 @@ When the menu is open and the user hits a letter key, focus moves to the next `M
 
 All props are optional.
 
-##### text
+**text** { String } *Required if child is an element*: If `text` has a value, its first letter will be the letter a user can type to navigate to that item.
 
-Type: `String` *Required if child is an element*
+**value** { String | Boolean | Number }: *Required if child is an element.* If `value` has a value, it will be passed to the `onSelection` handler when the `MenuItem` is selected.
 
-If `text` has a value, its first letter will be the letter a user can type to navigate to that item.
+**tag** { String }: The HTML tag for this element. Default: `'span'`.
 
-##### value
+**id** { String }: An id value.
 
-Type: `String|Boolean|Number` *Required if child is an element*
+**className** { String }: A class value.
 
-If `value` has a value, it will be passed to the `onSelection` handler when the `MenuItem` is selected.
-
-##### tag
-
-Type: `String` Default: `'span'`
-
-The HTML tag for this element.
-
-##### id
-
-Type: `String`
-
-An id value.
-
-##### className
-
-Type: `String`
-
-A class value.
-
-##### style
-
-Type: `Object`
-
-An object for inline styles.
+**style** { Object }: An object for inline styles.
 
 ## Contributing & Development
 
