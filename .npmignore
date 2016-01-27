@@ -1,6 +1,3 @@
 demo/
 test/
 .*
-index.html
-karma.conf.js
-webpack*
