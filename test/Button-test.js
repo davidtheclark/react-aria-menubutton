@@ -1,11 +1,13 @@
-import test from 'tape';
-import sinon from 'sinon';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import ReactDOMServer from 'react-dom/server';
-import ReactTestUtils from 'react-addons-test-utils';
-import MockWrapper from './MockWrapper';
-import Button from '../src/Button';
+var test = require('tape');
+var sinon = require('sinon');
+var React = require('react');
+var ReactDOM = require('react-dom');
+var ReactDOMServer = require('react-dom/server');
+var ReactTestUtils = require('react-addons-test-utils');
+var MockWrapper = require('./MockWrapper');
+var Button = require('../lib/Button');
+
+var el = React.createElement;
 
 function mockManager() {
   return {
@@ -20,19 +22,21 @@ function mockManager() {
 }
 
 function mockKeyEvent(key, keyCode) {
-  return { key, keyCode, preventDefault: sinon.spy() };
+  return {
+    key: key,
+    keyCode: keyCode,
+    preventDefault: sinon.spy(),
+  };
 }
 
-test('Button DOM with only required props and text child', t => {
-  const renderedWrapper = ReactTestUtils.renderIntoDocument(
-    <MockWrapper mockManager={mockManager()}>
-      <Button>
-        foo
-      </Button>
-    </MockWrapper>
+test('Button DOM with only required props and text child', function(t) {
+  var renderedWrapper = ReactTestUtils.renderIntoDocument(
+    el(MockWrapper, { mockManager: mockManager() },
+      el(Button, null, 'foo')
+    )
   );
-  const renderedButton = ReactTestUtils.findRenderedComponentWithType(renderedWrapper, Button);
-  const renderedButtonNode = ReactDOM.findDOMNode(renderedButton);
+  var renderedButton = ReactTestUtils.findRenderedComponentWithType(renderedWrapper, Button);
+  var renderedButtonNode = ReactDOM.findDOMNode(renderedButton);
 
   t.equal(renderedWrapper.manager.button, renderedButton);
 
@@ -51,24 +55,22 @@ test('Button DOM with only required props and text child', t => {
   t.end();
 });
 
-test('Button DOM with all possible props and element child', t => {
-  const renderedWrapper = ReactTestUtils.renderIntoDocument(
-    <MockWrapper mockManager={mockManager()}>
-      <Button
-        id='foo'
-        className='bar'
-        style={{ top: 2 }}
-        tag='button'
-        disabled={true}
-      >
-        <span>
-          hooha
-        </span>
-      </Button>
-    </MockWrapper>
+test('Button DOM with all possible props and element child', function(t) {
+  var renderedWrapper = ReactTestUtils.renderIntoDocument(
+    el(MockWrapper, { mockManager: mockManager() },
+      el(Button, {
+        id: 'foo',
+        className: 'bar',
+        style: { top: 2 },
+        tag: 'button',
+        disabled: true,
+      },
+        el('span', null, 'hooha')
+      )
+    )
   );
-  const renderedButton = ReactTestUtils.findRenderedComponentWithType(renderedWrapper, Button);
-  const renderedButtonNode = ReactDOM.findDOMNode(renderedButton);
+  var renderedButton = ReactTestUtils.findRenderedComponentWithType(renderedWrapper, Button);
+  var renderedButtonNode = ReactDOM.findDOMNode(renderedButton);
 
   t.equal(renderedWrapper.manager.button, renderedButton);
 
@@ -89,29 +91,25 @@ test('Button DOM with all possible props and element child', t => {
   t.end();
 });
 
-test('Button click', t => {
-  const renderedWrapper = ReactTestUtils.renderIntoDocument(
-    <MockWrapper mockManager={mockManager()}>
-      <Button>
-        foo
-      </Button>
-    </MockWrapper>
+test('Button click', function(t) {
+  var renderedWrapper = ReactTestUtils.renderIntoDocument(
+    el(MockWrapper, { mockManager: mockManager() },
+      el(Button, null, 'foo')
+    )
   );
-  const renderedButton = ReactTestUtils.findRenderedComponentWithType(renderedWrapper, Button);
-  const renderedButtonNode = ReactDOM.findDOMNode(renderedButton);
+  var renderedButton = ReactTestUtils.findRenderedComponentWithType(renderedWrapper, Button);
+  var renderedButtonNode = ReactDOM.findDOMNode(renderedButton);
 
   ReactTestUtils.Simulate.click(renderedButtonNode);
   t.ok(renderedWrapper.manager.toggleMenu.calledOnce);
 
-  const disabledRenderedWrapper = ReactTestUtils.renderIntoDocument(
-    <MockWrapper mockManager={mockManager()}>
-      <Button disabled={true}>
-        foo
-      </Button>
-    </MockWrapper>
+  var disabledRenderedWrapper = ReactTestUtils.renderIntoDocument(
+    el(MockWrapper, { mockManager: mockManager() },
+      el(Button, { disabled: true }, 'foo')
+    )
   );
-  const disabledRenderedButton = ReactTestUtils.findRenderedComponentWithType(disabledRenderedWrapper, Button);
-  const disabledRenderedButtonNode = ReactDOM.findDOMNode(disabledRenderedButton);
+  var disabledRenderedButton = ReactTestUtils.findRenderedComponentWithType(disabledRenderedWrapper, Button);
+  var disabledRenderedButtonNode = ReactDOM.findDOMNode(disabledRenderedButton);
 
   ReactTestUtils.Simulate.click(disabledRenderedButtonNode);
   t.notOk(disabledRenderedWrapper.manager.toggleMenu.calledOnce, 'no effect when disabled');
@@ -119,22 +117,20 @@ test('Button click', t => {
   t.end();
 });
 
-test('Button keyDown', t => {
-  const renderedWrapper = ReactTestUtils.renderIntoDocument(
-    <MockWrapper mockManager={mockManager()}>
-      <Button>
-        foo
-      </Button>
-    </MockWrapper>
+test('Button keyDown', function(t) {
+  var renderedWrapper = ReactTestUtils.renderIntoDocument(
+    el(MockWrapper, { mockManager: mockManager() },
+      el(Button, null, 'foo')
+    )
   );
-  const renderedButton = ReactTestUtils.findRenderedComponentWithType(renderedWrapper, Button);
-  const renderedButtonNode = ReactDOM.findDOMNode(renderedButton);
-  const { manager } = renderedWrapper;
-  const downEvent = mockKeyEvent('ArrowDown');
-  const enterEvent = mockKeyEvent('Enter');
-  const spaceEvent = mockKeyEvent(' ');
-  const escapeEvent = mockKeyEvent('Escape');
-  const fEvent = mockKeyEvent(null, 70);
+  var renderedButton = ReactTestUtils.findRenderedComponentWithType(renderedWrapper, Button);
+  var renderedButtonNode = ReactDOM.findDOMNode(renderedButton);
+  var manager = renderedWrapper.manager;
+  var downEvent = mockKeyEvent('ArrowDown');
+  var enterEvent = mockKeyEvent('Enter');
+  var spaceEvent = mockKeyEvent(' ');
+  var escapeEvent = mockKeyEvent('Escape');
+  var fEvent = mockKeyEvent(null, 70);
 
   ReactTestUtils.Simulate.keyDown(renderedButtonNode, downEvent);
   t.ok(downEvent.preventDefault.calledOnce);
@@ -166,15 +162,13 @@ test('Button keyDown', t => {
   t.equal(manager.handleMenuKey.getCall(1).args[0].keyCode, 70);
 
   enterEvent.preventDefault.reset();
-  const disabledRenderedWrapper = ReactTestUtils.renderIntoDocument(
-    <MockWrapper mockManager={mockManager()}>
-      <Button disabled={true}>
-        foo
-      </Button>
-    </MockWrapper>
+  var disabledRenderedWrapper = ReactTestUtils.renderIntoDocument(
+    el(MockWrapper, { mockManager: mockManager() },
+      el(Button, { disabled: true }, 'foo')
+    )
   );
-  const disabledRenderedButton = ReactTestUtils.findRenderedComponentWithType(disabledRenderedWrapper, Button);
-  const disabledRenderedButtonNode = ReactDOM.findDOMNode(disabledRenderedButton);
+  var disabledRenderedButton = ReactTestUtils.findRenderedComponentWithType(disabledRenderedWrapper, Button);
+  var disabledRenderedButtonNode = ReactDOM.findDOMNode(disabledRenderedButton);
 
   ReactTestUtils.Simulate.keyDown(disabledRenderedButtonNode, enterEvent);
   t.notOk(enterEvent.preventDefault.calledOnce, 'no effect when disabled');
@@ -182,14 +176,12 @@ test('Button keyDown', t => {
   t.end();
 });
 
-test('Button rendered via renderToString', t => {
-  t.doesNotThrow(() => {
+test('Button rendered via renderToString', function(t) {
+  t.doesNotThrow(function() {
     ReactDOMServer.renderToString(
-      <MockWrapper mockManager={mockManager()}>
-        <Button>
-          foo
-        </Button>
-      </MockWrapper>
+      el(MockWrapper, { mockManager: mockManager() },
+        el(Button, null, 'foo')
+      )
     );
   });
 

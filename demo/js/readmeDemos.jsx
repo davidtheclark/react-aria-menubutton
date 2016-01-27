@@ -1,7 +1,7 @@
 // Simple ES6 Example
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AriaMenuButton from '../../src';
+import AriaMenuButton from '../..';
 
 const menuItemWords = ['foo', 'bar', 'baz'];
 
