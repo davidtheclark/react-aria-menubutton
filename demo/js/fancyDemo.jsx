@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import CSSTransitionGroup from 'react-addons-css-transition-group'
-import { Wrapper, Button, Menu, MenuItem } from '../../src';
+import { Wrapper, Button, Menu, MenuItem } from '../..';
 
 const fancyStuff = ['bowling', 'science', 'scooting'];
 

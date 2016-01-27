@@ -5,19 +5,18 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
-    "minify": "uglifyjs ./dist/AriaMenuButton.js -c -m -o ./dist/AriaMenuButton.min.js",
     "demo-bundle": "browserify demo/js/demo.js -t babelify --extension=.jsx -o demo/demo-bundle.js",
-    "demo-watch": "watchify demo/js/demo.js -t babelify -d --extension=.jsx -o demo/demo-bundle.js -v",
+    "demo-watch": "watchify demo/js/demo.js -d -t babelify --extension=.jsx -o demo/demo-bundle.js -v",
     "demo-dev": "npm run demo-watch & http-server demo",
     "test-dev": "zuul --local 8080 --open -- test",
     "pretest": "npm run lint",
-    "test": "zuul -- test",
-    "prebuild-bundle": "rimraf dist/*",
-    "build-bundle": " browserify src -p bundle-collapser/plugin -x react -x react-dom -t babelify --standalone AriaMenuButton -o dist/AriaMenuButton.js",
-    "prebuild-modules": "rimraf dist-modules/*",
-    "build-modules": "babel src --out-dir dist-modules",
-    "build": "npm run build-bundle && npm run build-modules npm run minify",
-    "prepublish": "npm run build"
+    "test": "zuul -- test"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "react"
+    ]
   },
   "repository": {
     "type": "git",
@@ -43,12 +42,6 @@
     "dropdown",
     "widget"
   ],
-  "babel": {
-    "presets": [
-      "es2015",
-      "react"
-    ]
-  },
   "dependencies": {
     "react": "0.14.x",
     "react-dom": "0.14.x",
@@ -59,16 +52,12 @@
     "babel-preset-react": "6.3.13",
     "babelify": "7.2.0",
     "browserify": "13.0.0",
-    "bundle-collapser": "1.2.1",
     "eslint": "1.10.3",
-    "eslint-plugin-react": "3.16.1",
     "http-server": "0.8.5",
-    "react-addons-css-transition-group": "0.14.0",
-    "react-addons-test-utils": "0.14.0",
-    "rimraf": "2.5.1",
+    "react-addons-css-transition-group": "0.14.6",
+    "react-addons-test-utils": "0.14.6",
     "sinon": "1.17.2",
     "tape": "4.4.0",
-    "uglify-js": "2.6.1",
     "watchify": "3.7.0",
     "zuul": "3.9.0"
   }

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Wrapper, Button, Menu, MenuItem } from '../../src';
+import { Wrapper, Button, Menu, MenuItem } from '../..';
 
 const words = ['pectinate', 'borborygmus', 'anisodactylous', 'barbar', 'pilcrow', 'destroy'];
 class DemoOne extends React.Component {
