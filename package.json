@@ -44,6 +44,7 @@
     "widget"
   ],
   "dependencies": {
+    "focus-group": "^0.1.0",
     "react": "0.14.x",
     "react-dom": "0.14.x",
     "teeny-tap": "^0.1.0"
