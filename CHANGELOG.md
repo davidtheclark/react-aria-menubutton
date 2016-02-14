@@ -1,5 +1,11 @@
 # Changelog
 
+# 4.0.0
+
+- Use `focus-group` for focus management, which includes improving letter navigation.
+- Switch from `tap.js` to `teeny-tap`.
+- Move UMD build to `umd/` directory that is only distributed with the npm package (available on npmcdn).
+
 ## 3.1.0
 
 - Add `disabled` prop to `Button`.

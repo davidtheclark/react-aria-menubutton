@@ -1,7 +1,6 @@
 node_modules
-spec
-**/*-bundle.js
-**/*-bundle.min.js
+demo/demo-bundle.js
 *.log
+umd
 !demo/demo-bundle.js
 !demo/demo-bundle.min.js

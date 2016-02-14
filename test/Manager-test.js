@@ -1,19 +1,25 @@
-import test from 'tape';
-import sinon from 'sinon';
-import ReactDOM from 'react-dom';
-import Manager from '../src/Manager';
+var test = require('tape');
+var sinon = require('sinon');
+var ReactDOM = require('react-dom');
+var createManager = require('../lib/createManager');
+
+var nodeOne = document.createElement('button');
+sinon.spy(nodeOne, 'focus');
+var nodeTwo = document.createElement('button');
+sinon.spy(nodeTwo, 'focus');
+document.body.appendChild(nodeOne);
+document.body.appendChild(nodeTwo);
 
 function mockManager(options) {
-  const manager = new Manager(options);
-  const firstItem = {
-    node: { focus: sinon.spy() },
+  var manager = createManager(options);
+  manager.focusGroup.addMember({
+    node: nodeOne,
     text: 'first',
-  };
-  const secondItem = {
-    node: { focus: sinon.spy() },
-    content: 'second',
-  };
-  manager.menuItems = [firstItem, secondItem];
+  });
+  manager.focusGroup.addMember({
+    node: nodeTwo,
+    text: 'second',
+  });
   manager.button = {
     focus: sinon.spy(),
     setState: sinon.spy(),
@@ -21,61 +27,62 @@ function mockManager(options) {
   manager.menu = {
     setState: sinon.spy(),
   };
+  manager.focusItemSpy = sinon.spy(manager, 'focusItem');
   return manager;
 }
 
 function mockKeyEvent(key, keyCode) {
-  return { key, keyCode, preventDefault: sinon.spy() };
+  return {
+    key: key,
+    keyCode: keyCode,
+    preventDefault: sinon.spy(),
+  };
 }
 
-test('Manager initialization', t => {
-  const m = mockManager();
-  t.equal(m.currentFocus, -1);
+test('Manager initialization', function(t) {
+  var m = mockManager();
   t.notOk(m.isOpen);
   t.ok(m.options.closeOnSelection);
   t.end();
 });
 
-test('Manager#update', t => {
-  const m = mockManager();
+test('Manager#update', function(t) {
+  var m = mockManager();
   m.update();
   t.ok(m.menu.setState.calledWith({ isOpen: m.isOpen }));
   t.ok(m.button.setState.calledWith({ menuOpen: m.isOpen }));
   t.end();
 });
 
-test('Manager#openMenu without focusing in menu', t => {
-  const m = mockManager();
+test('Manager#openMenu without focusing in menu', function(t) {
+  var m = mockManager();
 
   m.openMenu();
   t.ok(m.isOpen);
   t.ok(m.menu.setState.calledWith({ isOpen: true }));
   t.ok(m.button.setState.calledWith({ menuOpen: true }));
-  t.equal(m.currentFocus, -1);
 
   t.end();
 });
 
-test('Manager#openMenu focusing in menu', t => {
-  const m = mockManager();
-  sinon.spy(m, 'moveFocus');
-
+test('Manager#openMenu focusing in menu', function(t) {
+  var m = mockManager();
   t.plan(4);
   m.openMenu({ focusMenu: true });
-  t.ok(m.isOpen);
-  t.ok(m.menu.setState.calledWith({ isOpen: true }));
-  t.ok(m.button.setState.calledWith({ menuOpen: true }));
-  setTimeout(() => {
-    t.ok(m.moveFocus.calledWith(0));
+  t.ok(m.isOpen, 'opens');
+  t.ok(m.menu.setState.calledWith({ isOpen: true }), 'sets open state on menu');
+  t.ok(m.button.setState.calledWith({ menuOpen: true }), 'sets open state on button');
+  setTimeout(function() {
+    t.ok(m.focusItemSpy.calledWith(0), 'focuses first item');
   }, 0);
 });
 
-test('Manager#closeMenu focusing on button', t => {
-  const m = mockManager();
-  const mockNode = { focus: sinon.spy() };
-  const findDOMNodeStub = sinon.stub(ReactDOM, 'findDOMNode').returns(mockNode);
+test('Manager#closeMenu focusing on button', function(t) {
+  var m = mockManager();
+  var mockNode = { focus: sinon.spy() };
+  var findDOMNodeStub = sinon.stub(ReactDOM, 'findDOMNode').returns(mockNode);
 
-  m.closeMenu();
+  m.closeMenu({ focusButton: true });
   t.notOk(m.isOpen);
   t.ok(m.menu.setState.calledWith({ isOpen: false }));
   t.ok(m.button.setState.calledWith({ menuOpen: false }));
@@ -86,10 +93,10 @@ test('Manager#closeMenu focusing on button', t => {
   t.end();
 });
 
-test('Manager#closeMenu without focusing on button', t => {
-  const m = mockManager();
-  const mockNode = { focus: sinon.spy() };
-  const findDOMNodeStub = sinon.stub(ReactDOM, 'findDOMNode').returns(mockNode);
+test('Manager#closeMenu without focusing on button', function(t) {
+  var m = mockManager();
+  var mockNode = { focus: sinon.spy() };
+  var findDOMNodeStub = sinon.stub(ReactDOM, 'findDOMNode').returns(mockNode);
 
   m.closeMenu({ focusButton: false });
   t.notOk(mockNode.focus.calledOnce);
@@ -99,8 +106,8 @@ test('Manager#closeMenu without focusing on button', t => {
   t.end();
 });
 
-test('Manager#toggleMenu', t => {
-  const m = mockManager();
+test('Manager#toggleMenu', function(t) {
+  var m = mockManager();
   sinon.stub(m, 'openMenu');
   sinon.stub(m, 'closeMenu');
 
@@ -121,78 +128,19 @@ test('Manager#toggleMenu', t => {
   t.end();
 });
 
-
-test('Manager#moveFocus', t => {
-  const m = mockManager();
-
-  m.moveFocus(1);
-  t.equal(m.currentFocus, 1);
-  t.ok(m.menuItems[1].node.focus.calledOnce);
-
-  m.moveFocus(0);
-  t.equal(m.currentFocus, 0);
-  t.ok(m.menuItems[0].node.focus.calledOnce);
-
-  t.end();
-});
-
-test('Manager#moveFocusUp', t => {
-  const m = mockManager();
-  sinon.spy(m, 'moveFocus');
-
-  m.moveFocusUp();
-  t.equal(m.moveFocus.getCall(0).args[0], 1);
-  m.moveFocusUp();
-  t.equal(m.moveFocus.getCall(1).args[0], 0);
-  m.moveFocusUp();
-  t.equal(m.moveFocus.getCall(2).args[0], 1);
-  t.end();
-});
-
-test('Manager#moveFocusDown', t => {
-  const m = mockManager();
-  sinon.spy(m, 'moveFocus');
-
-  m.moveFocusDown();
-  t.equal(m.moveFocus.getCall(0).args[0], 0);
-  m.moveFocusDown();
-  t.equal(m.moveFocus.getCall(1).args[0], 1);
-  m.moveFocusDown();
-  t.equal(m.moveFocus.getCall(2).args[0], 0);
-  t.end();
-});
-
-test('Manager#moveToLetter', t => {
-  const m = mockManager();
-  sinon.spy(m, 'moveFocus');
-
-  m.moveToLetter('f');
-  t.equal(m.moveFocus.getCall(0).args[0], 0);
-
-  m.moveToLetter('a');
-  t.ok(m.moveFocus.calledOnce, 'ignores irrelevant letter');
-
-  m.moveToLetter('s');
-  t.equal(m.moveFocus.getCall(1).args[0], 1);
-
-  m.moveToLetter('f');
-  t.equal(m.moveFocus.getCall(2).args[0], 0);
-
-  t.end();
-});
-
-test('Manager#handleSelection', t => {
-  const mOneHandler = sinon.spy();
-  const mOne = mockManager({
+test('Manager#handleSelection', function(t) {
+  var mOneHandler = sinon.spy();
+  var mOne = mockManager({
     onSelection: mOneHandler,
   });
   sinon.stub(mOne, 'closeMenu');
   mOne.handleSelection('foo', { bar: 1 });
-  t.equal(mOne.closeMenu.getCall(0).args.length, 0);
+  t.equal(mOne.closeMenu.getCall(0).args.length, 1);
+  t.deepEqual(mOne.closeMenu.getCall(0).args[0], { focusButton: true });
   t.deepEqual(mOneHandler.getCall(0).args, ['foo', { bar: 1 }]);
 
-  const mTwoHandler = sinon.spy();
-  const mTwo = mockManager({
+  var mTwoHandler = sinon.spy();
+  var mTwo = mockManager({
     closeOnSelection: false,
     onSelection: mTwoHandler,
   });
@@ -204,57 +152,22 @@ test('Manager#handleSelection', t => {
   t.end();
 });
 
-test('Manager#handleMenuKey', t => {
-  const escapeEvent = mockKeyEvent('Escape');
-  const upEvent = mockKeyEvent('ArrowUp');
-  const downEvent = mockKeyEvent('ArrowDown');
-  const fEvent = mockKeyEvent(null, 70);
-  const sEvent = mockKeyEvent(null, 83);
-  const ctrlSEvent = mockKeyEvent(null, 83);
-  ctrlSEvent.ctrlKey = true;
+test('Manager#handleMenuKey', function(t) {
+  var escapeEvent = mockKeyEvent('Escape');
 
-  const m = mockManager();
+  var m = mockManager();
   sinon.stub(m, 'closeMenu');
-  sinon.stub(m, 'moveFocusUp');
-  sinon.stub(m, 'moveFocusDown');
-  sinon.stub(m, 'moveToLetter');
 
   // Closed menu should do nothing
-  m.handleMenuKey(upEvent);
-  m.handleMenuKey(downEvent);
   m.handleMenuKey(escapeEvent);
-  m.handleMenuKey(fEvent);
-  m.handleMenuKey(sEvent);
-  t.notOk(m.closeMenu.called);
-  t.notOk(m.moveFocusUp.called);
-  t.notOk(m.moveFocusDown.called);
-  t.notOk(m.moveToLetter.called);
 
   // Open menu responds
   m.isOpen = true;
 
   m.handleMenuKey(escapeEvent);
-  t.ok(escapeEvent.preventDefault.calledOnce);
-  t.equal(m.closeMenu.getCall(0).args.length, 0);
-
-  m.handleMenuKey(upEvent);
-  t.ok(upEvent.preventDefault.calledOnce);
-  t.ok(m.moveFocusUp.calledOnce);
-
-  m.handleMenuKey(downEvent);
-  t.ok(downEvent.preventDefault.calledOnce);
-  t.ok(m.moveFocusDown.calledOnce);
-
-  m.handleMenuKey(fEvent);
-  t.ok(fEvent.preventDefault.calledOnce);
-  t.deepEqual(m.moveToLetter.getCall(0).args, ['F']);
-
-  m.handleMenuKey(sEvent);
-  t.ok(sEvent.preventDefault.calledOnce);
-  t.deepEqual(m.moveToLetter.getCall(1).args, ['S']);
-
-  m.handleMenuKey(ctrlSEvent);
-  t.notOk(ctrlSEvent.preventDefault.called);
+  t.ok(escapeEvent.preventDefault.calledOnce, 'escapeEvent called once');
+  t.equal(m.closeMenu.getCall(0).args.length, 1, 'closeMenu called once');
+  t.deepEqual(m.closeMenu.getCall(0).args[0], { focusButton: true });
 
   t.end();
 });

@@ -1,10 +1,4 @@
 ui: tape
-browserify:
-  - transform:
-      name: babelify
-  - options:
-      extensions:
-        - .jsx
 browsers:
   - name: chrome
     version: 43..latest

@@ -1,4 +1,4 @@
-import './Manager-test';
-import './Button-test';
-import './Menu-test';
-import './MenuItem-test';
+require('./Manager-test');
+require('./Button-test');
+require('./Menu-test');
+require('./MenuItem-test');

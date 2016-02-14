@@ -3,16 +3,8 @@
   "env": {
     "node": true,
     "browser": true,
-    "es6": true,
     "mocha": true,
   },
-  "ecmaFeatures": {
-    "modules": true,
-    "jsx": true
-  },
-  "plugins": [
-    "react"
-  ],
   "rules": {
     "comma-dangle": [2, "always-multiline"],
     "curly": 0,
@@ -24,21 +16,15 @@
     "indent": [2, 2, {
       "SwitchCase": 1
     }],
-    "jsx-quotes": [2, "prefer-single"],
     "no-console": 0,
     "no-lonely-if": 2,
     "no-nested-ternary": 2,
     "no-use-before-define": [2, "nofunc"],
     "quotes": [2, "single"],
     "space-before-function-paren": [2, "never"],
-    "space-after-keywords": [2, "always"],
+    "keyword-spacing": [2, { "before": true, "after": true }],
     "space-before-blocks": [2, "always"],
     "space-in-parens": [2, "never"],
     "space-unary-ops": 2,
-
-    "react/jsx-no-undef": 2,
-    "react/jsx-uses-react": 2,
-    "react/jsx-uses-vars": 2,
-    "react/react-in-jsx-scope": 2
   }
 }
