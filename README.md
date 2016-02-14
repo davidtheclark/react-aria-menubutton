@@ -229,7 +229,7 @@ The module exposes four components: `Wrapper`, `Button`, `Menu`, and `MenuItem`.
 
 **`Button`, `Menu`, and `MenuItem` must always be wrapped in a `Wrapper`.**
 
-### Wrapper
+### `Wrapper`
 
 A simple component to group a `Button`/`Menu`/`MenuItem` set, coordinating their interactions.
 *It should wrap your entire menu button widget.*
