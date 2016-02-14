@@ -13,11 +13,13 @@ function mockManager() {
   return {
     isOpen: false,
     toggleMenu: sinon.spy(),
+    handleMenuKey: sinon.spy(),
     moveFocusDown: sinon.spy(),
     openMenu: sinon.spy(),
-    handleMenuKey: sinon.spy(),
     handleKeyDown: sinon.spy(),
     handleClick: sinon.spy(),
+    handleButtonNonArrowKey: sinon.spy(),
+    focusItem: sinon.spy(),
   };
 }
 
@@ -132,34 +134,53 @@ test('Button keyDown', function(t) {
   var escapeEvent = mockKeyEvent('Escape');
   var fEvent = mockKeyEvent(null, 70);
 
-  ReactTestUtils.Simulate.keyDown(renderedButtonNode, downEvent);
-  t.ok(downEvent.preventDefault.calledOnce);
-  t.ok(manager.openMenu.calledOnce);
-  t.deepEqual(manager.openMenu.getCall(0).args, [{ focusMenu: true }]);
+  t.test('down arrow', function(st) {
+    ReactTestUtils.Simulate.keyDown(renderedButtonNode, downEvent);
+    st.ok(downEvent.preventDefault.calledOnce, 'calls event.preventDefault');
+    st.ok(manager.openMenu.calledOnce, 'calls open menu');
+    st.deepEqual(manager.openMenu.getCall(0).args, [{ focusMenu: true }], 'calls focuses menu when it opens');
+    st.end();
+  });
 
-  manager.isOpen = true;
-  ReactTestUtils.Simulate.keyDown(renderedButtonNode, downEvent);
-  t.ok(downEvent.preventDefault.calledTwice);
-  t.ok(manager.openMenu.calledOnce);
-  t.ok(manager.moveFocusDown.calledOnce);
+  t.test('down arrow a second time', function(st) {
+    manager.isOpen = true;
+    ReactTestUtils.Simulate.keyDown(renderedButtonNode, downEvent);
+    st.ok(downEvent.preventDefault.calledTwice, 'dcalls event.preventDefault');
+    st.ok(manager.openMenu.calledOnce, 'ddoes not open menu again');
+    st.ok(manager.focusItem.calledOnce, 'calls focusItem');
+    st.equal(manager.focusItem.getCall(0).args[0], 0, 'focuses first node');
+    st.end();
+  });
 
-  ReactTestUtils.Simulate.keyDown(renderedButtonNode, enterEvent);
-  t.ok(enterEvent.preventDefault.calledOnce);
-  t.ok(manager.toggleMenu.calledOnce);
+  t.test('enter', function(st) {
+    ReactTestUtils.Simulate.keyDown(renderedButtonNode, enterEvent);
+    st.ok(enterEvent.preventDefault.calledOnce, 'enter calls event.preventDefault');
+    st.ok(manager.toggleMenu.calledOnce, 'enter calls toggleMenu');
+    st.end();
+  });
 
-  ReactTestUtils.Simulate.keyDown(renderedButtonNode, spaceEvent);
-  t.ok(spaceEvent.preventDefault.calledOnce);
-  t.ok(manager.toggleMenu.calledTwice);
+  t.test('space', function(st) {
+    ReactTestUtils.Simulate.keyDown(renderedButtonNode, spaceEvent);
+    st.ok(spaceEvent.preventDefault.calledOnce, 'space calls event.preventDefault');
+    st.ok(manager.toggleMenu.calledTwice, 'space calls toggleMenu');
+    st.end();
+  });
 
-  ReactTestUtils.Simulate.keyDown(renderedButtonNode, escapeEvent);
-  t.notOk(escapeEvent.preventDefault.called);
-  t.ok(manager.handleMenuKey.calledOnce);
-  t.equal(manager.handleMenuKey.getCall(0).args[0].key, 'Escape');
+  t.test('escape', function(st) {
+    ReactTestUtils.Simulate.keyDown(renderedButtonNode, escapeEvent);
+    st.notOk(escapeEvent.preventDefault.calledOne, 'escape calls event.preventDefault');
+    st.ok(manager.handleMenuKey.calledOnce, 'escape calls closeMenu');
+    st.equal(manager.handleMenuKey.getCall(0).args[0].key, 'Escape', 'escape passes event');
+    st.end();
+  });
 
-  ReactTestUtils.Simulate.keyDown(renderedButtonNode, fEvent);
-  t.notOk(fEvent.preventDefault.called);
-  t.ok(manager.handleMenuKey.calledTwice);
-  t.equal(manager.handleMenuKey.getCall(1).args[0].keyCode, 70);
+  t.test('f key', function(st) {
+    ReactTestUtils.Simulate.keyDown(renderedButtonNode, fEvent);
+    st.notOk(fEvent.preventDefault.called, 'f key calls event.preventDefault');
+    st.ok(manager.handleButtonNonArrowKey.calledOnce, 'f key calls handleButtonNonArrowKey');
+    st.equal(manager.handleButtonNonArrowKey.getCall(0).args[0].keyCode, 70, 'f key passes event');
+    st.end();
+  });
 
   enterEvent.preventDefault.reset();
   var disabledRenderedWrapper = ReactTestUtils.renderIntoDocument(

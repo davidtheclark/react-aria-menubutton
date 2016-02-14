@@ -13,7 +13,8 @@ function mockManager() {
   return {
     menuItems: [1, 2],
     isOpen: false,
-    closeMenu: sinon.spy(),
+    handleMenuKey: sinon.spy(),
+    clearItems: sinon.spy(),
   };
 }
 
@@ -146,7 +147,7 @@ test('Menu updating', function(t) {
 
   manager.menuItems = [1, 2];
   renderedLittleApp.toggleMenu();
-  t.deepEqual(manager.menuItems, [], 'updating closed clears menuItems');
+  t.ok(manager.clearItems.calledOnce, 'closing clears focus group');
 
   t.end();
 });

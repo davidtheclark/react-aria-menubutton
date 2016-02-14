@@ -14,6 +14,7 @@ function mockManager() {
     handleSelection: sinon.spy(),
     currentFocus: -1,
     menuItems: [1, 2],
+    addItem: sinon.spy(),
   };
 }
 
@@ -25,13 +26,6 @@ test('MenuItem DOM with only required props', function(t) {
   );
   var renderedMenuItem = ReactTestUtils.findRenderedComponentWithType(renderedWrapper, MenuItem);
   var renderedMenuItemNode = ReactDOM.findDOMNode(renderedMenuItem);
-
-  t.equal(renderedMenuItem.managedIndex, 2);
-  t.deepEqual(renderedWrapper.manager.menuItems, [1, 2, {
-    node: renderedMenuItemNode,
-    content: 'foo',
-    text: undefined,
-  }]);
 
   t.equal(renderedMenuItemNode.tagName.toLowerCase(), 'div');
   t.notOk(renderedMenuItemNode.getAttribute('id'));
@@ -45,9 +39,8 @@ test('MenuItem DOM with only required props', function(t) {
   t.end();
 });
 
-test('MenuItem DOM with only all possible props and element child, at item index 3', function(t) {
+test('MenuItem DOM with all possible props and element child', function(t) {
   var manager = mockManager();
-  manager.menuItems.push(3);
   var renderedWrapper = ReactTestUtils.renderIntoDocument(
     el(MockWrapper, { mockManager: manager },
       el(MenuItem, {
@@ -62,8 +55,6 @@ test('MenuItem DOM with only all possible props and element child, at item index
   );
   var renderedMenuItem = ReactTestUtils.findRenderedComponentWithType(renderedWrapper, MenuItem);
   var renderedMenuItemNode = ReactDOM.findDOMNode(renderedMenuItem);
-
-  t.equal(renderedMenuItem.managedIndex, 3);
 
   t.equal(renderedMenuItemNode.tagName.toLowerCase(), 'li');
   t.equal(renderedMenuItemNode.getAttribute('id'), 'hogwash');
@@ -92,14 +83,12 @@ test('MenuItem click without specified value prop', function(t) {
   ReactTestUtils.Simulate.click(renderedMenuItemNode, mockEvent);
   t.ok(manager.handleSelection.calledOnce);
   t.ok(manager.handleSelection.calledWithMatch('foo', mockEvent));
-  t.equal(manager.currentFocus, 2);
 
   t.end();
 });
 
-test('MenuItem click with specified value prop, at item index 5', function(t) {
+test('MenuItem click with specified value prop', function(t) {
   var manager = mockManager();
-  manager.menuItems.push(3, 4, 5);
   var renderedWrapper = ReactTestUtils.renderIntoDocument(
     el(MockWrapper, { mockManager: manager },
       el(MenuItem, { value: 'bar' }, 'foo')
@@ -112,7 +101,6 @@ test('MenuItem click with specified value prop, at item index 5', function(t) {
   ReactTestUtils.Simulate.click(renderedMenuItemNode, mockEvent);
   t.ok(manager.handleSelection.calledOnce);
   t.ok(manager.handleSelection.calledWithMatch('bar', mockEvent));
-  t.equal(manager.currentFocus, 5);
 
   t.end();
 });

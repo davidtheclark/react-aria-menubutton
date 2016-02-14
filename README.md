@@ -4,22 +4,26 @@ A React component (set of components, really) that will help you build accessibl
 
 Please check out [the demo](http://davidtheclark.github.io/react-aria-menubutton/demo/).
 
-## Upgrading from 2.x.x to 3.x.x
+## Upgrading from 3.x.x to 4.x.x
 
-There are two big differences between these releases:
-- 3.x.x depends on React 0.14 (and its new counterpart ReactDOM)
-- In 3.x.x, you do not need to use the `ariaMenuButton()` factory function to create a set of components. Instead, you make sure to wrap the `Button`, `Menu`, and `MenuItem` components in a `Wrapper` component: that `Wrapper` will group them and organize the interactions (via [React's `context` API](https://facebook.github.io/react/docs/context.html)). The documentation below explains this new way of doing things.
-
-Please file an issue if anything is unclear or doesn't work as expected.
+The breaking change in v4 is actually a change in the letter navigation behavior, not a change in the API. To learn more about letter navigation, see ["Letter Navigation"](#letter-navigation) below.
 
 ## Project Goals
 
 - Full accessibility
-- Maximum Flexibility
+- Maximum flexibility
 - Absolutely minimal styling
 - Thorough testing
+- Useful modularity
 
-**If you like this kind of module (accessible, flexible, unstyled) you should also check out these projects:**
+"Useful modularity" means that when it makes sense, chunks of lower-level code that solve specific problems are split off into vanilla JS, framework-agnostic modules that could be shared with other similar projects (e.g. a menu button for Angular or Ember).
+
+For this library I was able to split off:
+
+- [focus-group](//github.com/davidtheclark/focus-group)
+- [teeny-tap](//github.com/davidtheclark/teeny-tap)
+
+*If you like this kind of module (accessible, flexible, unstyled, with framework-agnostic low-level modules) you should also check out these projects:*
 - [react-aria-modal](https://github.com/davidtheclark/react-aria-modal)
 - [react-aria-tabpanel](https://github.com/davidtheclark/react-aria-tabpanel)
 
@@ -30,9 +34,20 @@ The project started as an effort to build a React component that follows every d
 Just hiding and showing a menu is easy; but the required **keyboard interactions** are kind of tricky, the required **ARIA attributes** are easy to forget, and some other aspects of opening and closing the menu based on behaviors, and managing focus, proved less than pleasant.
 So I decided to try to abstract the component enough that it would be **worth sharing with others**.
 
-You can read about [the keyboard interactions and ARIA attributes](http://www.w3.org/TR/wai-aria-practices/#menubutton) of the Design Pattern. [The demo](http://davidtheclark.github.io/react-aria-menubutton/demo/) also lists all of the interactions that are built into this module.
+**If you think that this component could be even more accessible, please file an issue.**
 
-*If you think that this component does not satisfy the spec or if you know of other ways to make it even more accessible, please file an issue.*
+
+### Letter Navigation
+
+When focus is on the menu button or within the menu and you type a letter key, a search begins. Focus will move to the first item that starts with the letter you typed; but if you continue to type more letters, the search string extends and the focus becomes more accurate.
+
+So if you type `f` focus might arrive at `farm`; but then if you keep typing until you've typed `foo`, focus will skip ahead (past `farm` and `fit` and `fog`) to `foot`. This significantly improves your ability to type your way to your intended selection.
+
+This keyboard interaction (as well as the arrow keys) is enabled by the module [focus-group](//github.com/davidtheclark/focus-group). You can read more about the way letter navigation works [in that documentation](//github.com/davidtheclark/focus-group#string-searching).
+
+(In 3.x.x, when you typed a letter key focus moved to the next item in the menu (i.e. after the current focused item) that started with that letter, looping around to the front if if reached the end. This was more or less the suggested behavior from the ARIA suggestion and what I saw in jQuery UI. But I think the UX was insufficient, so when I separated out the letter navigation into the module [focus-group](//github.com/davidtheclark/focus-group), I tried to *improve letter navigation by more closely mimicking native `<select>` menus.)
+
+Please file an issue if anything is unclear or doesn't work as expected.
 
 ### Flexibility and minimal styling
 
@@ -40,17 +55,23 @@ Instead of providing a pre-fabricated, fully styled widget, this module's goal i
 
 It does not provide any classes or a stylesheet that you'll have to figure out how to include; and it does not include inline styles that would be hard to override. It **only provides "smart" components to wrap your (dumb, styled) components**. The *library's* components take care of keyboard interaction and ARIA attributes, while *your* components just do whatever you want your components to do.
 
+
 ## Installation
 
 ```
 npm install react-aria-menubutton
 ```
 
-There are dependencies: react 0.14.x, react-dom 0.14.x, and [teeny-tap](https://github.com/davidtheclark/teeny-tap).
+Dependencies:
+- react 0.14.x
+- react-dom 0.14.x
+- [focus-group](//github.com/davidtheclark/focus-group)
+- [teeny-tap](//github.com/davidtheclark/teeny-tap)
 
-teeny-tap is very small and included in the builds (React is not).
-It is included only to accurately detect "taps" (mouse click and touch taps) outside an open
-menu that should close it — which is important enough that it's worth doing right.
+The modular approach of this library means you're much better off building it into your code with a module bundling system like browserify or webpack.
+
+But if you need a UMD version (which will include `focus-group` and `teeny-tap` in the bundle, but of course not React), you can get it via npmcdm at `https://npmcdn.com/react-aria-menubutton@[version-of-choice]/umd/ariaMenuButton.js`.
+If you don't know about npmcdn, [read about it here](https://npmcdn.com).
 
 Versions <3.0 are compatible with React 0.13.x.
 
@@ -62,34 +83,15 @@ Automated testing is done with [zuul](https://github.com/defunctzombie/zuul) and
 
 ## Usage
 
-There are two ways to consume this module:
-- with CommonJS
-- as a global UMD library
-
-Using CommonJS, for example, you can simply `require()` the module to get the AriaMenuButton object, which contains all the components you'll need:
-
 ```js
 var AriaMenuButton = require('react-aria-menubutton');
 
 // Now use AriaMenuButton.Wrapper, AriaMenuButton.Button,
 // AriaMenuButton.Menu, and AriaMenuButton.MenuItem ...
+
+// ... or with es2015
+import { Button, Wrapper, Menu, MenuItem } from 'react-aria-menubutton';
 ```
-
-Using globals/UMD, you must do the following:
-- Expose React and ReactDOM globally
-- Use one of the builds in the `dist/` directory
-
-```html
-<script src="react.min.js"></script>
-<script src="react-dom.min.js"></script>
-<script src="node_modules/react-aria-menu-button/dist/AriaMenuButton.min.js"></script>
-<script>
-  // Now use AriaMenuButton.Wrapper, AriaMenuButton.Button,
-  // AriaMenuButton.Menu, and AriaMenuButton.MenuItem ...
-</script>
-```
-
-**You *get to* (have to) write your own CSS, your own way, based on your own components.**
 
 ## Examples
 
@@ -98,7 +100,7 @@ For details about why the examples work, read the API documentation below.
 You can also see more examples by looking in `demo/`.
 
 ```js
-// Very simple ES6 example
+// Very simple ES2015 example
 
 import React from 'react';
 import { Wrapper, Button, Menu, MenuItem } from 'react-aria-menubutton';
@@ -110,25 +112,25 @@ class MyMenuButton extends React.Component {
     const menuItems = menuItemWords.map((word, i) => {
       return (
         <li key={i}>
-          <AriaMenuButton.MenuItem className='MyMenuButton-menuItem'>
+          <MenuItem className='MyMenuButton-menuItem'>
             {word}
-          </AriaMenuButton.MenuItem>
+          </MenuItem>
         </li>
       );
     });
 
     return (
-      <AriaMenuButton.Wrapper
+      <Wrapper
         className='MyMenuButton'
         onSelection={handleSelection}
       >
-        <AriaMenuButton.Button className='MyMenuButton-button'>
+        <Button className='MyMenuButton-button'>
           click me
-        </AriaMenuButton.Button>
-        <AriaMenuButton.Menu className='MyMenuButton-menu'>
+        </Button>
+        <Menu className='MyMenuButton-menu'>
           <ul>{menuItems}</ul>
-        </AriaMenuButton.Menu>
-      </AriaMenuButton.Wrapper>
+        </Menu>
+      </Wrapper>
     );
   }
 }
@@ -149,10 +151,6 @@ function handleSelection(value, event) { .. }
 var React = require('react');
 var CSSTransitionGroup = require('react-addons-css-transition-group');
 var AriaMenuButton = require('react-aria-menubutton');
-var AmbWrapper = AriaMenuButton.Wrapper;
-var AmbButton = AriaMenuButton.Button;
-var AmbMenu = AriaMenuButton.Menu;
-var AmbMenuItem = AriaMenuButton.MenuItem;
 
 var people = [{
   name: 'Charles Choo-Choo',
@@ -169,7 +167,7 @@ var MyMenuButton = React.createClass({
   render: function() {
     var peopleMenuItems = people.map(function(person, i) {
       return (
-        <AmbMenuItem
+        <AriaMenuButton.MenuItem
           key={i}
           tag='li'
           value={person.id}
@@ -182,7 +180,7 @@ var MyMenuButton = React.createClass({
           <div className='PeopleMenu-personName'>
             {person.name}
           </div>
-        </AmbMenuItem>
+        </AriaMenuButton.MenuItem>
       );
     });
 
@@ -203,21 +201,21 @@ var MyMenuButton = React.createClass({
     };
 
     return (
-      <AmbWrapper
+      <AriaMenuButton.Wrapper
         className='PeopleMenu'
         onSelection={handleSelection}
         style={{ marginTop: 20 }}
       >
-        <AmbButton className='PeopleMenu-trigger'>
+        <AriaMenuButton.Button className='PeopleMenu-trigger'>
           <span className='PeopleMenu-triggerText'>
             Select a person
           </span>
           <span className='PeopleMenu-triggerIcon' />
-        </AmbButton>
-        <AmbMenu>
+        </AriaMenuButton.Button>
+        <AriaMenuButton.Menu>
           {peopleMenuInnards}
-        </AmbMenu>
-      </AmbWrapper>
+        </AriaMenuButton.Menu>
+      </AriaMenuButton.Wrapper>
     );
   }
 });
@@ -225,9 +223,9 @@ var MyMenuButton = React.createClass({
 function handleSelection(value, event) { .. }
 ```
 
-## AriaMenuButton API
+## API
 
-The AriaMenuButton object exposes four components: `Wrapper`, `Button`, `Menu`, and `MenuItem`. Each of these is documented below.
+The module exposes four components: `Wrapper`, `Button`, `Menu`, and `MenuItem`. Each of these is documented below.
 
 **`Button`, `Menu`, and `MenuItem` must always be wrapped in a `Wrapper`.**
 
