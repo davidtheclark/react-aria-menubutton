@@ -1,5 +1,9 @@
 # Changelog
 
+# 4.0.1
+
+- Update `focus-group` due to important fix there.
+
 # 4.0.0
 
 - Use `focus-group` for focus management, which includes improving letter navigation.

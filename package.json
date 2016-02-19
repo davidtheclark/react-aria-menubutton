@@ -1,6 +1,6 @@
 {
   "name": "react-aria-menubutton",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "A fully accessible and flexible React-powered menu button",
   "main": "index.js",
   "scripts": {
@@ -44,7 +44,7 @@
     "widget"
   ],
   "dependencies": {
-    "focus-group": "^0.2.0",
+    "focus-group": "^0.2.1",
     "react": "0.14.x",
     "react-dom": "0.14.x",
     "teeny-tap": "^0.2.0"
