@@ -1,5 +1,9 @@
 # Changelog
 
+# Head
+
+- Move `react` and `react-dom` to peer dependencies.
+
 # 4.0.1
 
 - Update `focus-group` due to important fix there.
