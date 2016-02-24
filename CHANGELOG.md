@@ -1,6 +1,6 @@
 # Changelog
 
-# Head
+# 4.0.2
 
 - Move `react` and `react-dom` to peer dependencies.
 
