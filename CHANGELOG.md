@@ -2,6 +2,7 @@
 
 # Head
 
+- Improve (fix) UMD build.
 - Allow arbitrary props to pass through to Button, Menu, MenuItem, and Wrapper elements.
 
 # 4.0.2
