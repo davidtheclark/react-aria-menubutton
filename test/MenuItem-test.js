@@ -50,6 +50,7 @@ test('MenuItem DOM with all possible props and element child', function(t) {
         style: { right: '1em' },
         text: 'horse',
         value: 'lamb',
+        'data-something-something': 'seven', // arbitrary prop
       }, el('a', { href: '#' }, 'foo'))
     )
   );
@@ -62,6 +63,7 @@ test('MenuItem DOM with all possible props and element child', function(t) {
   t.equal(renderedMenuItemNode.getAttribute('style').replace(/[ ;]/g, ''), 'right:1em');
   t.equal(renderedMenuItemNode.getAttribute('role'), 'menuitem');
   t.equal(renderedMenuItemNode.getAttribute('tabindex'), '-1');
+  t.equal(renderedMenuItemNode.getAttribute('data-something-something'), 'seven');
   t.equal(renderedMenuItemNode.children.length, 1);
   t.equal(renderedMenuItemNode.children[0].tagName.toLowerCase(), 'a');
   t.equal(renderedMenuItemNode.children[0].innerHTML, 'foo');
