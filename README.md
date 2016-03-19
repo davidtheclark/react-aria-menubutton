@@ -259,12 +259,6 @@ function handleSelection(value, event) {
 
 **tag** { String }: The HTML tag for this element. Default: `'div'`.
 
-**id** { String }: An id value.
-
-**className** { String }: A class value.
-
-**style** { Object }: An object for inline styles.
-
 ### `Button`
 
 A React component to wrap the content of your menu-button-pattern's button.
@@ -280,12 +274,6 @@ All props are optional.
 **disabled** { Boolean }: If `true`, the element is disabled (`aria-disabled='true'`, not in tab order, clicking has no effect).
 
 **tag** { String }: The HTML tag for this element. Default: `'span'`.
-
-**id** { String }: An id value.
-
-**className** { String }: A class value.
-
-**style** { Object }: An object for inline styles.
 
 ### `Menu`
 
@@ -309,12 +297,6 @@ Each `Menu` must be wrapped in a `Wrapper`, and each `Wrapper` can wrap only one
 All props are optional.
 
 **tag** { String }: The HTML tag for this element. Default: `'span'`.
-
-**id** { String }: An id value.
-
-**className** { String }: A class value.
-
-**style** { Object }: An object for inline styles.
 
 ### `MenuItem`
 
@@ -344,11 +326,25 @@ All props are optional.
 
 **tag** { String }: The HTML tag for this element. Default: `'span'`.
 
-**id** { String }: An id value.
+### openMenu(wrapperId[, openOptions])
 
-**className** { String }: A class value.
+Open a modal programmatically.
 
-**style** { Object }: An object for inline styles.
+*For this to work, you must provide an `id` prop to the `Wrapper` of the menu.* That `id` should be your first argument to `openMenu()`.
+
+These are the `openOptions`:
+
+- **focusMenu** { Boolean }: If `true`, the menu's first item will receive focus when the menu opens. Default: `false`.
+
+### closeMenu(wrapperId[, closeOptions])
+
+Close a modal programmatically.
+
+*For this to work, you must provide an `id` prop to the `Wrapper` of the menu.* That `id` should be your first argument to `closeMenu()`.
+
+These are the `closeOptions`:
+
+- **focusButton** { Boolean }: If `true`, the widget's button will receive focus when the menu closes. Default: `false`.
 
 ## Contributing & Development
 
