@@ -275,6 +275,8 @@ All props are optional.
 
 **tag** { String }: The HTML tag for this element. Default: `'span'`.
 
+*Any additional props (e.g. `id`, `className`, `data-whatever`) are passed directly to the HTML element.*
+
 ### `Menu`
 
 A React component to wrap the content of your menu-button-pattern's menu.
@@ -297,6 +299,8 @@ Each `Menu` must be wrapped in a `Wrapper`, and each `Wrapper` can wrap only one
 All props are optional.
 
 **tag** { String }: The HTML tag for this element. Default: `'span'`.
+
+*Any additional props (e.g. `id`, `className`, `data-whatever`) are passed directly to the HTML element.*
 
 ### `MenuItem`
 
@@ -325,6 +329,8 @@ All props are optional.
 **value** { String | Boolean | Number }: *Required if child is an element.* If `value` has a value, it will be passed to the `onSelection` handler when the `MenuItem` is selected.
 
 **tag** { String }: The HTML tag for this element. Default: `'span'`.
+
+*Any additional props (e.g. `id`, `className`, `data-whatever`) are passed directly to the DOM element.*
 
 ### openMenu(wrapperId[, openOptions])
 
