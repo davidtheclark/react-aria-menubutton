@@ -1,7 +1,8 @@
 # Changelog
 
-# Head
+# 4.1.0
 
+- Add `openMenu()` and `closeMenu()` to API.
 - Improve (fix) UMD build.
 - Allow arbitrary props to pass through to Button, Menu, MenuItem, and Wrapper elements.
 
