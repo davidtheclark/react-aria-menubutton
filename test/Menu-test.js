@@ -72,6 +72,7 @@ test('Closed menu DOM with all possible props and function child', function(t) {
         className: 'bar',
         style: { bottom: 1 },
         tag: 'ul',
+        'data-something-something': 'seven', // arbitrary prop
       }, childFunction)
     )
   );
@@ -85,6 +86,7 @@ test('Closed menu DOM with all possible props and function child', function(t) {
   t.equal(renderedMenuNode.getAttribute('class'), 'bar');
   t.equal(renderedMenuNode.getAttribute('style').replace(/[ ;]/g, ''), 'bottom:1px');
   t.equal(renderedMenuNode.getAttribute('role'), 'menu');
+  t.equal(renderedMenuNode.getAttribute('data-something-something'), 'seven');
   t.equal(renderedMenuNode.innerHTML, 'isOpen = false');
   t.equal(renderedMenuNode.children.length, 0);
   t.deepEqual(childFunction.getCall(0).args, [{ isOpen: false }]);

@@ -70,7 +70,7 @@ Dependencies:
 
 The modular approach of this library means you're much better off building it into your code with a module bundling system like browserify or webpack.
 
-But if you need a UMD version (which will include `focus-group` and `teeny-tap` in the bundle, but of course not React), you can get it via npmcdm at `https://npmcdn.com/react-aria-menubutton@[version-of-choice]/umd/ariaMenuButton.js`.
+But if you need a UMD version (which will include `focus-group` and `teeny-tap` in the bundle, but of course not `React` or `ReactDOM`), you can get it via npmcdm at `https://npmcdn.com/react-aria-menubutton@[version-of-choice]/umd/ReactAriaMenuButton.js`.
 If you don't know about npmcdn, [read about it here](https://npmcdn.com).
 
 Versions <3.0 are compatible with React 0.13.x.
@@ -259,12 +259,6 @@ function handleSelection(value, event) {
 
 **tag** { String }: The HTML tag for this element. Default: `'div'`.
 
-**id** { String }: An id value.
-
-**className** { String }: A class value.
-
-**style** { Object }: An object for inline styles.
-
 ### `Button`
 
 A React component to wrap the content of your menu-button-pattern's button.
@@ -281,11 +275,7 @@ All props are optional.
 
 **tag** { String }: The HTML tag for this element. Default: `'span'`.
 
-**id** { String }: An id value.
-
-**className** { String }: A class value.
-
-**style** { Object }: An object for inline styles.
+*Any additional props (e.g. `id`, `className`, `data-whatever`) are passed directly to the HTML element.*
 
 ### `Menu`
 
@@ -310,11 +300,7 @@ All props are optional.
 
 **tag** { String }: The HTML tag for this element. Default: `'span'`.
 
-**id** { String }: An id value.
-
-**className** { String }: A class value.
-
-**style** { Object }: An object for inline styles.
+*Any additional props (e.g. `id`, `className`, `data-whatever`) are passed directly to the HTML element.*
 
 ### `MenuItem`
 
@@ -344,11 +330,27 @@ All props are optional.
 
 **tag** { String }: The HTML tag for this element. Default: `'span'`.
 
-**id** { String }: An id value.
+*Any additional props (e.g. `id`, `className`, `data-whatever`) are passed directly to the DOM element.*
 
-**className** { String }: A class value.
+### openMenu(wrapperId[, openOptions])
 
-**style** { Object }: An object for inline styles.
+Open a modal programmatically.
+
+*For this to work, you must provide an `id` prop to the `Wrapper` of the menu.* That `id` should be your first argument to `openMenu()`.
+
+These are the `openOptions`:
+
+- **focusMenu** { Boolean }: If `true`, the menu's first item will receive focus when the menu opens. Default: `false`.
+
+### closeMenu(wrapperId[, closeOptions])
+
+Close a modal programmatically.
+
+*For this to work, you must provide an `id` prop to the `Wrapper` of the menu.* That `id` should be your first argument to `closeMenu()`.
+
+These are the `closeOptions`:
+
+- **focusButton** { Boolean }: If `true`, the widget's button will receive focus when the menu closes. Default: `false`.
 
 ## Contributing & Development
 

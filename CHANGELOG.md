@@ -1,5 +1,19 @@
 # Changelog
 
+# 4.1.0
+
+- Add `openMenu()` and `closeMenu()` to API.
+- Improve (fix) UMD build.
+- Allow arbitrary props to pass through to Button, Menu, MenuItem, and Wrapper elements.
+
+# 4.0.2
+
+- Move `react` and `react-dom` to peer dependencies.
+
+# 4.0.1
+
+- Update `focus-group` due to important fix there.
+
 # 4.0.0
 
 - Use `focus-group` for focus management, which includes improving letter navigation.

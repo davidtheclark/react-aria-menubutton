@@ -66,6 +66,7 @@ test('Button DOM with all possible props and element child', function(t) {
         style: { top: 2 },
         tag: 'button',
         disabled: true,
+        'data-something-something': 'seven', // arbitrary prop
       },
         el('span', null, 'hooha')
       )
@@ -86,6 +87,7 @@ test('Button DOM with all possible props and element child', function(t) {
   t.equal(renderedButtonNode.getAttribute('aria-haspopup'), 'true');
   t.equal(renderedButtonNode.getAttribute('aria-expanded'), 'false');
   t.equal(renderedButtonNode.getAttribute('aria-disabled'), 'true');
+  t.equal(renderedButtonNode.getAttribute('data-something-something'), 'seven');
   t.equal(renderedButtonNode.children.length, 1);
   t.equal(renderedButtonNode.children[0].tagName.toLowerCase(), 'span');
   t.equal(renderedButtonNode.textContent, 'hooha');

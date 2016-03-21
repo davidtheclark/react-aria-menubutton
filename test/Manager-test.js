@@ -82,6 +82,7 @@ test('Manager#closeMenu focusing on button', function(t) {
   var mockNode = { focus: sinon.spy() };
   var findDOMNodeStub = sinon.stub(ReactDOM, 'findDOMNode').returns(mockNode);
 
+  m.isOpen = true;
   m.closeMenu({ focusButton: true });
   t.notOk(m.isOpen);
   t.ok(m.menu.setState.calledWith({ isOpen: false }));
@@ -98,6 +99,7 @@ test('Manager#closeMenu without focusing on button', function(t) {
   var mockNode = { focus: sinon.spy() };
   var findDOMNodeStub = sinon.stub(ReactDOM, 'findDOMNode').returns(mockNode);
 
+  m.isOpen = true;
   m.closeMenu({ focusButton: false });
   t.notOk(mockNode.focus.calledOnce);
 

@@ -1,7 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import CSSTransitionGroup from 'react-addons-css-transition-group'
-import { Wrapper, Button, Menu, MenuItem } from '../..';
+import {
+  Wrapper,
+  Button,
+  Menu,
+  MenuItem,
+  openMenu,
+  closeMenu,
+} from '../..';
 
 const fancyStuff = ['bowling', 'science', 'scooting'];
 
@@ -55,28 +62,42 @@ class Fancy extends React.Component {
 
     return (
       <div>
-        <Wrapper
-          onSelection={this.handleSelection.bind(this)}
-          className='FancyMB'
-        >
-          <Button className='FancyMB-trigger'>
-            <span className='FancyMB-triggerInnards'>
-              <img src='svg/profile-female.svg' className='FancyMB-triggerIcon '/>
-              <span className='FancyMB-triggerText'>
-                What do you enjoy?<br />
-                <span className='FancyMB-triggerSmallText'>
-                  (select an enjoyable activity)
+        <div style={{ marginBottom: 20 }}>
+          <button onClick={() => openMenu('foo')}>
+            open menu below
+          </button>
+          <button onClick={() => openMenu('foo', { focusMenu: true })}>
+            open menu below with focus
+          </button>
+          <button onClick={() => closeMenu('foo')}>
+            close menu below
+          </button>
+        </div>
+        <div>
+          <Wrapper
+            onSelection={this.handleSelection.bind(this)}
+            className='FancyMB'
+            id='foo'
+          >
+            <Button className='FancyMB-trigger'>
+              <span className='FancyMB-triggerInnards'>
+                <img src='svg/profile-female.svg' className='FancyMB-triggerIcon '/>
+                <span className='FancyMB-triggerText'>
+                  What do you enjoy?<br />
+                  <span className='FancyMB-triggerSmallText'>
+                    (select an enjoyable activity)
+                  </span>
                 </span>
               </span>
-            </span>
-          </Button>
-          <Menu>
-            {menuInnards}
-          </Menu>
-        </Wrapper>
-        <span className='FancyMB-selectedText' style={{ marginLeft: '1em' }}>
-          You said you enjoy: <strong>{this.state.selected}</strong>
-        </span>
+            </Button>
+            <Menu>
+              {menuInnards}
+            </Menu>
+          </Wrapper>
+          <span className='FancyMB-selectedText' style={{ marginLeft: '1em' }}>
+            You said you enjoy: <strong>{this.state.selected}</strong>
+          </span>
+        </div>
       </div>
     );
   }
