@@ -1,5 +1,9 @@
 # Changelog
 
+# 4.1.1
+
+- Update UMD build.
+
 # 4.1.0
 
 - Add `openMenu()` and `closeMenu()` to API.
