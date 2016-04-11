@@ -4,10 +4,6 @@ A React component (set of components, really) that will help you build accessibl
 
 Please check out [the demo](http://davidtheclark.github.io/react-aria-menubutton/demo/).
 
-## Upgrading from 3.x.x to 4.x.x
-
-The breaking change in v4 is actually a change in the letter navigation behavior, not a change in the API. To learn more about letter navigation, see ["Letter Navigation"](#letter-navigation) below.
-
 ## Project Goals
 
 - Full accessibility
