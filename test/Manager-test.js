@@ -46,6 +46,19 @@ test('Manager initialization', function(t) {
   t.end();
 });
 
+test('Manager initialization with options', function(t) {
+  var m = mockManager({
+    forwardArrows: ['down', 'right'],
+    backArrows: ['up', 'left'],
+  });
+  t.notOk(m.isOpen);
+  t.deepEqual(m.options.forwardArrows, ['down', 'right'], 'pass forwardArrows option');
+  t.deepEqual(m.options.backArrows, ['up', 'left'], 'pass backArrows option');
+  t.deepEqual(m.focusGroup._settings.forwardArrows, ['down', 'right'], 'pass option to focusGroup');
+  t.deepEqual(m.focusGroup._settings.backArrows, ['up', 'left'], 'pass option to focusGroup');
+  t.end();
+});
+
 test('Manager#update', function(t) {
   var m = mockManager();
   m.update();
