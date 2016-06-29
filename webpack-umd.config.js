@@ -31,12 +31,10 @@ module.exports = {
   ],
   node: {
     Buffer: false,
-    global: false,
     process: false,
     setImmediate: false,
   },
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.optimize.OccurenceOrderPlugin()
   ],
 };
