@@ -1,5 +1,9 @@
 # Changelog
 
+# 4.1.3
+
+- Fix UMD build.
+
 # 4.1.2
 
 - Allow React 15 as a `peerDependency`.
