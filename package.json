@@ -11,7 +11,10 @@
     "test-dev": "zuul --local 8080 --open -- test",
     "pretest": "npm run lint",
     "test": "zuul -- test",
-    "umd": "webpack --config ./webpack-umd.config.js"
+    "umd-unminified": "webpack --config ./webpack-umd.config.js",
+    "umd-minified": "MINIFY=true webpack --config ./webpack-umd.config.js",
+    "umd": "npm run umd-unminified && npm run umd-minified",
+    "prepublish": "npm run umd"
   },
   "babel": {
     "presets": [
