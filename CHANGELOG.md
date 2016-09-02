@@ -30,7 +30,7 @@
 
 - Use `focus-group` for focus management, which includes improving letter navigation.
 - Switch from `tap.js` to `teeny-tap`.
-- Move UMD build to `umd/` directory that is only distributed with the npm package (available on npmcdn).
+- Move UMD build to `umd/` directory that is only distributed with the npm package (available on unpkg).
 
 ## 3.1.0
 
