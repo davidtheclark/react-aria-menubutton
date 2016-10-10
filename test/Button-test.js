@@ -105,7 +105,7 @@ test('Button click', function(t) {
   var renderedButtonNode = ReactDOM.findDOMNode(renderedButton);
 
   ReactTestUtils.Simulate.click(renderedButtonNode);
-  t.ok(renderedWrapper.manager.toggleMenu.calledOnce);
+  t.ok(renderedWrapper.manager.openMenu.calledOnce);
 
   var disabledRenderedWrapper = ReactTestUtils.renderIntoDocument(
     el(MockWrapper, { mockManager: mockManager() },
