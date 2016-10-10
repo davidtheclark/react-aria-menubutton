@@ -328,15 +328,11 @@ All props are optional.
 
 *Any additional props (e.g. `id`, `className`, `data-whatever`) are passed directly to the DOM element.*
 
-### openMenu(wrapperId[, openOptions])
+### openMenu(wrapperId)
 
 Open a modal programmatically.
 
 *For this to work, you must provide an `id` prop to the `Wrapper` of the menu.* That `id` should be your first argument to `openMenu()`.
-
-These are the `openOptions`:
-
-- **focusMenu** { Boolean }: If `true`, the menu's first item will receive focus when the menu opens. Default: `false`.
 
 ### closeMenu(wrapperId[, closeOptions])
 
