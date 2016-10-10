@@ -140,7 +140,6 @@ test('Button keyDown', function(t) {
     ReactTestUtils.Simulate.keyDown(renderedButtonNode, downEvent);
     st.ok(downEvent.preventDefault.calledOnce, 'calls event.preventDefault');
     st.ok(manager.openMenu.calledOnce, 'calls open menu');
-    st.deepEqual(manager.openMenu.getCall(0).args, [{ focusMenu: true }], 'calls focuses menu when it opens');
     st.end();
   });
 
@@ -157,14 +156,14 @@ test('Button keyDown', function(t) {
   t.test('enter', function(st) {
     ReactTestUtils.Simulate.keyDown(renderedButtonNode, enterEvent);
     st.ok(enterEvent.preventDefault.calledOnce, 'enter calls event.preventDefault');
-    st.ok(manager.toggleMenu.calledOnce, 'enter calls toggleMenu');
+    st.ok(manager.openMenu.calledOnce, 'calls open menu');
     st.end();
   });
 
   t.test('space', function(st) {
     ReactTestUtils.Simulate.keyDown(renderedButtonNode, spaceEvent);
     st.ok(spaceEvent.preventDefault.calledOnce, 'space calls event.preventDefault');
-    st.ok(manager.toggleMenu.calledTwice, 'space calls toggleMenu');
+    st.ok(manager.openMenu.calledOnce, 'calls open menu');
     st.end();
   });
 
