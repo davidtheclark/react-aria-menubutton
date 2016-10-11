@@ -54,21 +54,10 @@ test('Manager#update', function(t) {
   t.end();
 });
 
-test('Manager#openMenu without focusing in menu', function(t) {
-  var m = mockManager();
-
-  m.openMenu();
-  t.ok(m.isOpen);
-  t.ok(m.menu.setState.calledWith({ isOpen: true }));
-  t.ok(m.button.setState.calledWith({ menuOpen: true }));
-
-  t.end();
-});
-
 test('Manager#openMenu focusing in menu', function(t) {
   var m = mockManager();
   t.plan(4);
-  m.openMenu({ focusMenu: true });
+  m.openMenu();
   t.ok(m.isOpen, 'opens');
   t.ok(m.menu.setState.calledWith({ isOpen: true }), 'sets open state on menu');
   t.ok(m.button.setState.calledWith({ menuOpen: true }), 'sets open state on button');
