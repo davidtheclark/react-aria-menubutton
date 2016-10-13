@@ -7,5 +7,4 @@ module.exports = {
   MenuItem: require('./lib/MenuItem'),
   openMenu: externalStateControl.openMenu,
   closeMenu: externalStateControl.closeMenu,
-  focusItem: externalStateControl.focusItem,
 };
