@@ -16,6 +16,7 @@ function mockManager() {
     handleMenuKey: sinon.spy(),
     moveFocusDown: sinon.spy(),
     openMenu: sinon.spy(),
+    closeMenu: sinon.spy(),
     handleKeyDown: sinon.spy(),
     handleClick: sinon.spy(),
     handleButtonNonArrowKey: sinon.spy(),
@@ -147,23 +148,23 @@ test('Button keyDown', function(t) {
     manager.isOpen = true;
     ReactTestUtils.Simulate.keyDown(renderedButtonNode, downEvent);
     st.ok(downEvent.preventDefault.calledTwice, 'dcalls event.preventDefault');
-    st.ok(manager.openMenu.calledOnce, 'ddoes not open menu again');
-    st.ok(manager.focusItem.calledOnce, 'calls focusItem');
-    st.equal(manager.focusItem.getCall(0).args[0], 0, 'focuses first node');
+    st.ok(manager.openMenu.calledTwice, 'ddoes not open menu again');
     st.end();
   });
 
   t.test('enter', function(st) {
+    manager.isOpen = false;
     ReactTestUtils.Simulate.keyDown(renderedButtonNode, enterEvent);
     st.ok(enterEvent.preventDefault.calledOnce, 'enter calls event.preventDefault');
-    st.ok(manager.openMenu.calledOnce, 'calls open menu');
+    st.ok(manager.openMenu.calledThrice, 'calls open menu');
     st.end();
   });
 
   t.test('space', function(st) {
+    manager.isOpen = false;
     ReactTestUtils.Simulate.keyDown(renderedButtonNode, spaceEvent);
     st.ok(spaceEvent.preventDefault.calledOnce, 'space calls event.preventDefault');
-    st.ok(manager.openMenu.calledOnce, 'calls open menu');
+    st.ok(manager.openMenu.callCount === 4, 'calls open menu');
     st.end();
   });
 
