@@ -16,6 +16,7 @@ function mockManager() {
     handleMenuKey: sinon.spy(),
     moveFocusDown: sinon.spy(),
     openMenu: sinon.spy(),
+    closeMenu: sinon.spy(),
     handleKeyDown: sinon.spy(),
     handleClick: sinon.spy(),
     handleButtonNonArrowKey: sinon.spy(),
@@ -105,7 +106,7 @@ test('Button click', function(t) {
   var renderedButtonNode = ReactDOM.findDOMNode(renderedButton);
 
   ReactTestUtils.Simulate.click(renderedButtonNode);
-  t.ok(renderedWrapper.manager.toggleMenu.calledOnce);
+  t.ok(renderedWrapper.manager.openMenu.calledOnce);
 
   var disabledRenderedWrapper = ReactTestUtils.renderIntoDocument(
     el(MockWrapper, { mockManager: mockManager() },
@@ -140,7 +141,6 @@ test('Button keyDown', function(t) {
     ReactTestUtils.Simulate.keyDown(renderedButtonNode, downEvent);
     st.ok(downEvent.preventDefault.calledOnce, 'calls event.preventDefault');
     st.ok(manager.openMenu.calledOnce, 'calls open menu');
-    st.deepEqual(manager.openMenu.getCall(0).args, [{ focusMenu: true }], 'calls focuses menu when it opens');
     st.end();
   });
 
@@ -148,23 +148,23 @@ test('Button keyDown', function(t) {
     manager.isOpen = true;
     ReactTestUtils.Simulate.keyDown(renderedButtonNode, downEvent);
     st.ok(downEvent.preventDefault.calledTwice, 'dcalls event.preventDefault');
-    st.ok(manager.openMenu.calledOnce, 'ddoes not open menu again');
-    st.ok(manager.focusItem.calledOnce, 'calls focusItem');
-    st.equal(manager.focusItem.getCall(0).args[0], 0, 'focuses first node');
+    st.ok(manager.openMenu.calledTwice, 'ddoes not open menu again');
     st.end();
   });
 
   t.test('enter', function(st) {
+    manager.isOpen = false;
     ReactTestUtils.Simulate.keyDown(renderedButtonNode, enterEvent);
     st.ok(enterEvent.preventDefault.calledOnce, 'enter calls event.preventDefault');
-    st.ok(manager.toggleMenu.calledOnce, 'enter calls toggleMenu');
+    st.ok(manager.openMenu.calledThrice, 'calls open menu');
     st.end();
   });
 
   t.test('space', function(st) {
+    manager.isOpen = false;
     ReactTestUtils.Simulate.keyDown(renderedButtonNode, spaceEvent);
     st.ok(spaceEvent.preventDefault.calledOnce, 'space calls event.preventDefault');
-    st.ok(manager.toggleMenu.calledTwice, 'space calls toggleMenu');
+    st.ok(manager.openMenu.callCount === 4, 'calls open menu');
     st.end();
   });
 
