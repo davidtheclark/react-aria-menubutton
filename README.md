@@ -71,11 +71,9 @@ If you don't know about unpkg, [read about it here](https://unpkg.com).
 
 Versions <3.0 are compatible with React 0.13.x.
 
-## Tested Browser Support
+## Browser Support
 
-Basically IE9+. See `.zuul.yml` for more details.
-
-Automated testing is done with [zuul](https://github.com/defunctzombie/zuul) and [Open Suace](https://saucelabs.com/opensauce/).
+Basically IE9+.
 
 ## Usage
 

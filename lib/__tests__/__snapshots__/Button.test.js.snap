@@ -1,0 +1,39 @@
+exports[`<Button> DOM with all possible props and element child 1`] = `
+<button
+  aria-disabled={true}
+  aria-expanded={false}
+  aria-haspopup={true}
+  className="bar"
+  data-something-something="seven"
+  id="foo"
+  onBlur={undefined}
+  onClick={[Function]}
+  onKeyDown={[Function]}
+  role="button"
+  style={
+    Object {
+      "top": 2,
+    }
+  }
+  tabIndex="">
+  <span>
+    hooha
+  </span>
+</button>
+`;
+
+exports[`<Button> DOM with only required props and text child 1`] = `
+<span
+  aria-disabled={undefined}
+  aria-expanded={false}
+  aria-haspopup={true}
+  onBlur={undefined}
+  onClick={[Function]}
+  onKeyDown={[Function]}
+  role="button"
+  tabIndex="0">
+  foo
+</span>
+`;
+
+exports[`<Button> rendered via renderToString does not throw 1`] = `"<div data-reactroot=\"\" data-reactid=\"1\" data-react-checksum=\"139735812\"><span role=\"button\" tabindex=\"0\" aria-haspopup=\"true\" aria-expanded=\"false\" data-reactid=\"2\">foo</span></div>"`;

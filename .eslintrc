@@ -3,7 +3,7 @@
   "env": {
     "node": true,
     "browser": true,
-    "mocha": true,
+    "jest": true,
   },
   "rules": {
     "comma-dangle": [2, "always-multiline"],
