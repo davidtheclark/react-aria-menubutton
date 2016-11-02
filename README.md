@@ -58,18 +58,10 @@ It does not provide any classes or a stylesheet that you'll have to figure out h
 npm install react-aria-menubutton
 ```
 
-Dependencies:
-- react 0.14.x
-- react-dom 0.14.x
-- [focus-group](//github.com/davidtheclark/focus-group)
-- [teeny-tap](//github.com/davidtheclark/teeny-tap)
-
 The modular approach of this library means you're much better off building it into your code with a module bundling system like browserify or webpack.
 
 But if you need a UMD version (which will include `focus-group` and `teeny-tap` in the bundle, but of course not `React` or `ReactDOM`), you can get it via npmcdm at `https://unpkg.com/react-aria-menubutton@[version-of-choice]/umd/ReactAriaMenuButton.js`.
 If you don't know about unpkg, [read about it here](https://unpkg.com).
-
-Versions <3.0 are compatible with React 0.13.x.
 
 ## Browser Support
 
