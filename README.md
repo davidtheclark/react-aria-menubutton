@@ -4,10 +4,6 @@ A React component (set of components, really) that will help you build accessibl
 
 Please check out [the demo](http://davidtheclark.github.io/react-aria-menubutton/demo/).
 
-## Upgrading from 3.x.x to 4.x.x
-
-The breaking change in v4 is actually a change in the letter navigation behavior, not a change in the API. To learn more about letter navigation, see ["Letter Navigation"](#letter-navigation) below.
-
 ## Project Goals
 
 - Full accessibility
@@ -70,16 +66,14 @@ Dependencies:
 
 The modular approach of this library means you're much better off building it into your code with a module bundling system like browserify or webpack.
 
-But if you need a UMD version (which will include `focus-group` and `teeny-tap` in the bundle, but of course not `React` or `ReactDOM`), you can get it via npmcdm at `https://npmcdn.com/react-aria-menubutton@[version-of-choice]/umd/ReactAriaMenuButton.js`.
-If you don't know about npmcdn, [read about it here](https://npmcdn.com).
+But if you need a UMD version (which will include `focus-group` and `teeny-tap` in the bundle, but of course not `React` or `ReactDOM`), you can get it via npmcdm at `https://unpkg.com/react-aria-menubutton@[version-of-choice]/umd/ReactAriaMenuButton.js`.
+If you don't know about unpkg, [read about it here](https://unpkg.com).
 
 Versions <3.0 are compatible with React 0.13.x.
 
-## Tested Browser Support
+## Browser Support
 
-Basically IE9+. See `.zuul.yml` for more details.
-
-Automated testing is done with [zuul](https://github.com/defunctzombie/zuul) and [Open Suace](https://saucelabs.com/opensauce/).
+Basically IE9+.
 
 ## Usage
 

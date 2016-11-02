@@ -1,5 +1,22 @@
 # Changelog
 
+# 4.2.0
+
+- Use `ownerDocument` instead of `document.documentElement` in case this is used in an iframe.
+- Rewrite test suite using Jest.
+
+# 4.1.3
+
+- Fix UMD build.
+
+# 4.1.2
+
+- Allow React 15 as a `peerDependency`.
+
+# 4.1.1
+
+- Update UMD build.
+
 # 4.1.0
 
 - Add `openMenu()` and `closeMenu()` to API.
@@ -18,7 +35,7 @@
 
 - Use `focus-group` for focus management, which includes improving letter navigation.
 - Switch from `tap.js` to `teeny-tap`.
-- Move UMD build to `umd/` directory that is only distributed with the npm package (available on npmcdn).
+- Move UMD build to `umd/` directory that is only distributed with the npm package (available on unpkg).
 
 ## 3.1.0
 

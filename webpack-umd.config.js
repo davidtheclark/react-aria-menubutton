@@ -1,6 +1,15 @@
 var webpack = require('webpack');
 var path = require('path');
 
+var plugins = [new webpack.optimize.OccurenceOrderPlugin()];
+if (process.env.MINIFY) {
+  plugins.push(new webpack.optimize.UglifyJsPlugin());
+}
+
+var filename = (process.env.MINIFY)
+  ? 'ReactAriaMenuButton.min.js'
+  : 'ReactAriaMenuButton.js';
+
 module.exports = {
   entry: {
     AriaMenuButton: './index.js',
@@ -9,7 +18,7 @@ module.exports = {
     library: 'ReactAriaMenuButton',
     libraryTarget: 'umd',
     path: path.join(__dirname, 'umd'),
-    filename: 'ReactAriaMenuButton.min.js',
+    filename: filename,
   },
   externals: [
     {
@@ -31,12 +40,8 @@ module.exports = {
   ],
   node: {
     Buffer: false,
-    global: false,
     process: false,
     setImmediate: false,
   },
-  plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin(),
-  ],
+  plugins: plugins,
 };

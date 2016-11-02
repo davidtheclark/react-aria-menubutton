@@ -1,0 +1,49 @@
+exports[`<Menu> closed Menu DOM with only required props and element child 1`] = `null`;
+
+exports[`<Menu> closed menu DOM with all possible props and function child 1`] = `
+<ul
+  className="bar"
+  data-something-something="seven"
+  id="foo"
+  onBlur={undefined}
+  onKeyDown={[Function]}
+  role="menu"
+  style={
+    Object {
+      "bottom": 1,
+    }
+  }>
+  isOpen = false
+</ul>
+`;
+
+exports[`<Menu> open Menu DOM with only required props and element child 1`] = `
+<div
+  onBlur={undefined}
+  onKeyDown={[Function]}
+  role="menu">
+  <div>
+    <div>
+      foo
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<Menu> open menu DOM with all possible props and function child 1`] = `
+<section
+  className="foo"
+  id="bar"
+  onBlur={undefined}
+  onKeyDown={[Function]}
+  role="menu"
+  style={
+    Object {
+      "left": 1,
+    }
+  }>
+  isOpen = true
+</section>
+`;
+
+exports[`<Menu> rendered via renderToString does not throw 1`] = `"<div data-reactroot=\"\" data-reactid=\"1\" data-react-checksum=\"585373152\"><!-- react-empty: 2 --></div>"`;
