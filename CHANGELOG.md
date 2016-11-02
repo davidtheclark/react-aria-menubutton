@@ -1,5 +1,10 @@
 # Changelog
 
+# 4.2.0
+
+- Use `ownerDocument` instead of `document.documentElement` in case this is used in an iframe.
+- Rewrite test suite using Jest.
+
 # 4.1.3
 
 - Fix UMD build.
