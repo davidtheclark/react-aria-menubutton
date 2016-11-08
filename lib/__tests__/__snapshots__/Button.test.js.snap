@@ -6,7 +6,7 @@ exports[`<Button> DOM with all possible props and element child 1`] = `
   className="bar"
   data-something-something="seven"
   id="foo"
-  onBlur={undefined}
+  onBlur={[Function]}
   onClick={[Function]}
   onKeyDown={[Function]}
   role="button"
@@ -24,10 +24,10 @@ exports[`<Button> DOM with all possible props and element child 1`] = `
 
 exports[`<Button> DOM with only required props and text child 1`] = `
 <span
-  aria-disabled={undefined}
+  aria-disabled={false}
   aria-expanded={false}
   aria-haspopup={true}
-  onBlur={undefined}
+  onBlur={[Function]}
   onClick={[Function]}
   onKeyDown={[Function]}
   role="button"
@@ -36,4 +36,4 @@ exports[`<Button> DOM with only required props and text child 1`] = `
 </span>
 `;
 
-exports[`<Button> rendered via renderToString does not throw 1`] = `"<div data-reactroot=\"\" data-reactid=\"1\" data-react-checksum=\"139735812\"><span role=\"button\" tabindex=\"0\" aria-haspopup=\"true\" aria-expanded=\"false\" data-reactid=\"2\">foo</span></div>"`;
+exports[`<Button> rendered via renderToString does not throw 1`] = `"<div data-reactroot=\"\" data-reactid=\"1\" data-react-checksum=\"-785040718\"><span role=\"button\" tabindex=\"0\" aria-haspopup=\"true\" aria-expanded=\"false\" aria-disabled=\"false\" data-reactid=\"2\">foo</span></div>"`;
