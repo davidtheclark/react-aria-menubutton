@@ -36,4 +36,22 @@ exports[`<Button> DOM with only required props and text child 1`] = `
 </span>
 `;
 
+exports[`<Button> DOM with some props and component instance used instead of tag 1`] = `
+<button
+  aria-disabled={false}
+  aria-expanded={false}
+  aria-haspopup={true}
+  className="bar"
+  id="foo"
+  onBlur={[Function]}
+  onClick={[Function]}
+  onKeyDown={[Function]}
+  role="button"
+  tabIndex="0">
+  <span>
+    hooha
+  </span>
+</button>
+`;
+
 exports[`<Button> rendered via renderToString does not throw 1`] = `"<div data-reactroot=\"\" data-reactid=\"1\" data-react-checksum=\"-785040718\"><span role=\"button\" tabindex=\"0\" aria-haspopup=\"true\" aria-expanded=\"false\" aria-disabled=\"false\" data-reactid=\"2\">foo</span></div>"`;
