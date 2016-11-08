@@ -265,7 +265,7 @@ All props are optional.
 
 **component** { Object }: A component instance to use instead of the tag.
 
-*Any additional props (e.g. `id`, `className`, `data-whatever`) are passed directly to the HTML element.*
+*Any additional props (e.g. `id`, `className`, `data-whatever`) are passed directly to the HTML element or custom component.*
 
 ### `Menu`
 
