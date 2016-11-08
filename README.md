@@ -251,6 +251,8 @@ A React component to wrap the content of your menu-button-pattern's button.
 
 The `Button` component itself acts as a UI button (with tab-index, role, etc.), so you probably do not want to pass an HTML `<button>` element as its child.
 
+If you want to use a specific component for `Button`, you can pass it through the `component` prop.
+
 Each `Button` must be wrapped in a `Wrapper`, and each `Wrapper` can wrap only one `Button`.
 
 #### props
@@ -260,6 +262,8 @@ All props are optional.
 **disabled** { Boolean }: If `true`, the element is disabled (`aria-disabled='true'`, not in tab order, clicking has no effect).
 
 **tag** { String }: The HTML tag for this element. Default: `'span'`.
+
+**component** { Object }: A component instance to use instead of the tag.
 
 *Any additional props (e.g. `id`, `className`, `data-whatever`) are passed directly to the HTML element.*
 
