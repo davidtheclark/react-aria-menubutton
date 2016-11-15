@@ -5,7 +5,6 @@ exports[`<Menu> closed menu DOM with all possible props and function child 1`] =
   className="bar"
   data-something-something="seven"
   id="foo"
-  onBlur={undefined}
   onKeyDown={[Function]}
   role="menu"
   style={
@@ -19,7 +18,6 @@ exports[`<Menu> closed menu DOM with all possible props and function child 1`] =
 
 exports[`<Menu> open Menu DOM with only required props and element child 1`] = `
 <div
-  onBlur={undefined}
   onKeyDown={[Function]}
   role="menu">
   <div>
@@ -34,7 +32,6 @@ exports[`<Menu> open menu DOM with all possible props and function child 1`] = `
 <section
   className="foo"
   id="bar"
-  onBlur={undefined}
   onKeyDown={[Function]}
   role="menu"
   style={

@@ -6,7 +6,6 @@ exports[`<Button> DOM with all possible props and element child 1`] = `
   className="bar"
   data-something-something="seven"
   id="foo"
-  onBlur={undefined}
   onClick={[Function]}
   onKeyDown={[Function]}
   role="button"
@@ -24,10 +23,8 @@ exports[`<Button> DOM with all possible props and element child 1`] = `
 
 exports[`<Button> DOM with only required props and text child 1`] = `
 <span
-  aria-disabled={undefined}
   aria-expanded={false}
   aria-haspopup={true}
-  onBlur={undefined}
   onClick={[Function]}
   onKeyDown={[Function]}
   role="button"

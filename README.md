@@ -241,6 +241,30 @@ function handleSelection(value, event) {
 }
 ```
 
+**onChange** { Function }: A callback to run when the menu is opened or closed. It will be passed the `isOpen` state of the menu, e.g. `{ isOpen: true }`
+
+```js
+
+const Example extends React.PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isOpen: false,
+    };
+  }
+
+  render() {
+    const openClass = this.state.isOpen ? 'open' : '';
+
+    return (
+      <Wrapper className={`${openClass}`} onChange={({ isOpen }) => { this.setState({ isOpen })}} />
+    );
+  }
+}
+
+```
+
 **closeOnSelection** { Boolean }: By default, it *does* automatically close. If `false`, the menu will *not* automatically close when a selection is made. Default: `true`.
 
 **tag** { String }: The HTML tag for this element. Default: `'div'`.
