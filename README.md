@@ -241,7 +241,7 @@ function handleSelection(value, event) {
 }
 ```
 
-**onChange** { Function }: A callback to run when the menu is opened or closed. It will be passed the `isOpen` state of the menu, e.g. `{ isOpen: true }`
+**onMenuToggle** { Function }: A callback to run when the menu is opened or closed. It will be passed the `isOpen` state of the menu, e.g. `{ isOpen: true }`
 
 ```js
 
@@ -258,7 +258,7 @@ const Example extends React.PureComponent {
     const openClass = this.state.isOpen ? 'open' : '';
 
     return (
-      <Wrapper className={`${openClass}`} onChange={({ isOpen }) => { this.setState({ isOpen })}} />
+      <Wrapper className={`${openClass}`} onMenuToggle={({ isOpen }) => { this.setState({ isOpen })}} />
     );
   }
 }
