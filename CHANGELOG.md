@@ -1,6 +1,6 @@
 # Changelog
 
-## Head
+## 4.3.0
 
 - Add `onMenuToggle` prop to `Wrapper`.
 
