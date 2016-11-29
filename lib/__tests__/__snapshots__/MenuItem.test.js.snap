@@ -29,4 +29,4 @@ exports[`<MenuItem> DOM with only required props 1`] = `
 </div>
 `;
 
-exports[`<MenuItem> rendered via renderToString does not throw 1`] = `"<div data-reactroot=\"\" data-reactid=\"1\" data-react-checksum=\"-1383914558\"><div role=\"menuitem\" tabindex=\"-1\" data-reactid=\"2\">foo</div></div>"`;
+exports[`<MenuItem> rendered via renderToString does not throw 1`] = `"<div data-reactroot=\"\" data-reactid=\"1\" data-react-checksum=\"-1570692158\"><div tabindex=\"-1\" role=\"menuitem\" data-reactid=\"2\">foo</div></div>"`;
