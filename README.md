@@ -70,7 +70,7 @@ Basically IE9+.
 ## Usage
 
 ```js
-var AriaMenuButton = require('react-aria-menubutton');
+const AriaMenuButton = require('react-aria-menubutton');
 
 // Now use AriaMenuButton.Wrapper, AriaMenuButton.Button,
 // AriaMenuButton.Menu, and AriaMenuButton.MenuItem ...
@@ -135,7 +135,7 @@ function handleSelection(value, event) { .. }
 // - React's CSSTransitionGroup is used for open-close animation
 
 var React = require('react');
-var CSSTransitionGroup = require('react-addons-css-transition-group');
+var CSSTransitionGroup = require('react-transition-group/CSSTransitionGroup');
 var AriaMenuButton = require('react-aria-menubutton');
 
 var people = [{

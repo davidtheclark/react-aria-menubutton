@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.3.1
+
+- Introduce `dist/`, where `src/` now compiles to, since React 15.5+ demands `class`es, so Babel-compilation.
+  Which is actually a huge overhaul, though in semver it's just a patch.
+
 ## 4.3.0
 
 - Add `onMenuToggle` prop to `Wrapper`.

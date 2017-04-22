@@ -1,37 +1,34 @@
-var React = require('react');
-var specialAssign = require('./specialAssign');
+const React = require('react');
+const PropTypes = require('prop-types');
+const specialAssign = require('./specialAssign');
 
-var checkedProps = {
-  children: React.PropTypes.node.isRequired,
-  disabled: React.PropTypes.bool,
-  tag: React.PropTypes.string,
+const checkedProps = {
+  children: PropTypes.node.isRequired,
+  disabled: PropTypes.bool,
+  tag: PropTypes.string
 };
 
-module.exports = React.createClass({
-  displayName: 'AriaMenuButton-Button',
+class AriaMenuButtonButton extends React.Component {
+  static propTypes = checkedProps;
 
-  propTypes: checkedProps,
+  static contextTypes = {
+    ambManager: PropTypes.object.isRequired
+  };
 
-  contextTypes: {
-    ambManager: React.PropTypes.object.isRequired,
-  },
+  static defaultProps = { tag: 'span' };
 
-  getDefaultProps: function() {
-    return { tag: 'span' };
-  },
-
-  componentWillMount: function() {
+  componentWillMount() {
     this.context.ambManager.button = this;
-  },
+  }
 
-  componentWillUnmount: function() {
+  componentWillUnmount() {
     this.context.ambManager.destroy();
-  },
+  }
 
-  handleKeyDown: function(event) {
+  handleKeyDown = event => {
     if (this.props.disabled) return;
 
-    var ambManager = this.context.ambManager;
+    const ambManager = this.context.ambManager;
 
     switch (event.key) {
       case 'ArrowDown':
@@ -54,31 +51,33 @@ module.exports = React.createClass({
         // (Potential) letter keys
         ambManager.handleButtonNonArrowKey(event);
     }
-  },
+  };
 
-  handleClick: function() {
+  handleClick = () => {
     if (this.props.disabled) return;
     this.context.ambManager.toggleMenu();
-  },
+  };
 
-  render: function() {
-    var props = this.props;
+  render() {
+    const props = this.props;
 
-    var buttonProps = {
+    const buttonProps = {
       // "The menu button itself has a role of button."
       role: 'button',
-      tabIndex: (props.disabled) ? '' : '0',
+      tabIndex: props.disabled ? '' : '0',
       // "The menu button has an aria-haspopup property, set to true."
       'aria-haspopup': true,
       'aria-expanded': this.context.ambManager.isOpen,
       'aria-disabled': props.disabled,
       onKeyDown: this.handleKeyDown,
       onClick: this.handleClick,
-      onBlur: this.context.ambManager.handleBlur,
+      onBlur: this.context.ambManager.handleBlur
     };
 
     specialAssign(buttonProps, props, checkedProps);
 
     return React.createElement(props.tag, buttonProps, props.children);
-  },
-});
+  }
+}
+
+module.exports = AriaMenuButtonButton;

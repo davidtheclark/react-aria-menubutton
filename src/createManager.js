@@ -1,15 +1,14 @@
-var ReactDOM = require('react-dom');
-var createFocusGroup = require('focus-group');
-var externalStateControl = require('./externalStateControl');
+const ReactDOM = require('react-dom');
+const createFocusGroup = require('focus-group');
+const externalStateControl = require('./externalStateControl');
 
-var focusGroupOptions = {
+const focusGroupOptions = {
   wrap: true,
-  stringSearch: true,
+  stringSearch: true
 };
 
-var protoManager = {
-
-  init: function(options) {
+const protoManager = {
+  init(options) {
     this.options = options || {};
 
     if (typeof this.options.closeOnSelection === 'undefined') {
@@ -40,51 +39,52 @@ var protoManager = {
     this.isOpen = false;
   },
 
-  focusItem: function(index) {
+  focusItem(index) {
     this.focusGroup.focusNodeAtIndex(index);
   },
 
-  addItem: function(item) {
+  addItem(item) {
     this.focusGroup.addMember(item);
   },
 
-  clearItems: function() {
-    this.focusGroup.clearMembers()
+  clearItems() {
+    this.focusGroup.clearMembers();
   },
 
-  handleButtonNonArrowKey: function(event) {
+  handleButtonNonArrowKey(event) {
     this.focusGroup._handleUnboundKey(event);
   },
 
-  destroy: function() {
+  destroy() {
     this.button = null;
     this.menu = null;
     this.focusGroup.deactivate();
-    clearTimeout(this.blurTimer)
-    clearTimeout(this.moveFocusTimer)
+    clearTimeout(this.blurTimer);
+    clearTimeout(this.moveFocusTimer);
   },
 
-  update: function() {
+  update() {
     this.menu.setState({ isOpen: this.isOpen });
     this.button.setState({ menuOpen: this.isOpen });
-    this.options.onMenuToggle && this.options.onMenuToggle({ isOpen: this.isOpen });
+    this.options.onMenuToggle &&
+      this.options.onMenuToggle({ isOpen: this.isOpen });
   },
 
-  openMenu: function(openOptions) {
+  openMenu(openOptions) {
     if (this.isOpen) return;
     openOptions = openOptions || {};
     this.isOpen = true;
     this.update();
     this.focusGroup.activate();
     if (openOptions.focusMenu) {
-      var self = this;
+      const self = this;
       this.moveFocusTimer = setTimeout(function() {
-        self.focusItem(0)
+        self.focusItem(0);
       }, 0);
     }
   },
 
-  closeMenu: function(closeOptions) {
+  closeMenu(closeOptions) {
     if (!this.isOpen) return;
     closeOptions = closeOptions || {};
     this.isOpen = false;
@@ -94,21 +94,21 @@ var protoManager = {
     }
   },
 
-  toggleMenu: function() {
+  toggleMenu() {
     if (this.isOpen) {
       this.closeMenu();
     } else {
       this.openMenu();
     }
-  },
-}
+  }
+};
 
 function handleBlur() {
-  var self = this;
+  const self = this;
   self.blurTimer = setTimeout(function() {
-    var buttonNode = ReactDOM.findDOMNode(self.button);
-    var menuNode = ReactDOM.findDOMNode(self.menu);
-    var activeEl = buttonNode.ownerDocument.activeElement;
+    const buttonNode = ReactDOM.findDOMNode(self.button);
+    const menuNode = ReactDOM.findDOMNode(self.menu);
+    const activeEl = buttonNode.ownerDocument.activeElement;
     if (buttonNode && activeEl === buttonNode) return;
     if (menuNode && menuNode.contains(activeEl)) return;
     if (self.isOpen) self.closeMenu({ focusButton: false });
@@ -130,7 +130,7 @@ function handleMenuKey(event) {
 }
 
 module.exports = function(options) {
-  var newManager = Object.create(protoManager);
+  const newManager = Object.create(protoManager);
   newManager.init(options);
   return newManager;
 };
