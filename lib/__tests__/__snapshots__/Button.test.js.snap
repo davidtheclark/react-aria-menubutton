@@ -1,3 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`<Button> DOM with all possible props and element child 1`] = `
 <button
   aria-disabled={true}
@@ -14,7 +16,8 @@ exports[`<Button> DOM with all possible props and element child 1`] = `
       "top": 2,
     }
   }
-  tabIndex="">
+  tabIndex=""
+>
   <span>
     hooha
   </span>
@@ -28,9 +31,10 @@ exports[`<Button> DOM with only required props and text child 1`] = `
   onClick={[Function]}
   onKeyDown={[Function]}
   role="button"
-  tabIndex="0">
+  tabIndex="0"
+>
   foo
 </span>
 `;
 
-exports[`<Button> rendered via renderToString does not throw 1`] = `"<div data-reactroot=\"\" data-reactid=\"1\" data-react-checksum=\"139735812\"><span role=\"button\" tabindex=\"0\" aria-haspopup=\"true\" aria-expanded=\"false\" data-reactid=\"2\">foo</span></div>"`;
+exports[`<Button> rendered via renderToString does not throw 1`] = `"<div data-reactroot=\\"\\" data-reactid=\\"1\\" data-react-checksum=\\"139735812\\"><span role=\\"button\\" tabindex=\\"0\\" aria-haspopup=\\"true\\" aria-expanded=\\"false\\" data-reactid=\\"2\\">foo</span></div>"`;
