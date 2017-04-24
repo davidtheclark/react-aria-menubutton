@@ -72,7 +72,7 @@ const protoManager = {
 
   openMenu(openOptions) {
     if (this.isOpen) return;
-    openOptions = openOptions || {};
+    openOptions = openOptions || { focusMenu: true };
     this.isOpen = true;
     this.update();
     this.focusGroup.activate();

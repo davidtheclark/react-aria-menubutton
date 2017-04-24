@@ -73,7 +73,7 @@ describe('createManager', function() {
 
   it('Manager#openMenu focusing in menu', function() {
     var manager = createManagerWithMockedElements();
-    manager.openMenu({ focusMenu: true });
+    manager.openMenu();
     expect(manager.isOpen).toBe(true);
     expect(manager.menu.setState).toHaveBeenCalledTimes(1);
     expect(manager.menu.setState.mock.calls[0]).toEqual([{ isOpen: true }]);
