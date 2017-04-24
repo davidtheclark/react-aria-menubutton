@@ -41,7 +41,8 @@ var AriaMenuButtonButton = function (_React$Component) {
         case 'ArrowDown':
           event.preventDefault();
           if (!ambManager.isOpen) {
-            ambManager.openMenu({ focusMenu: true });
+            ambManager.openMenu();
+            ambManager.focusItem(0);
           } else {
             ambManager.focusItem(0);
           }
