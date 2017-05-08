@@ -63,12 +63,19 @@ describe('createManager', function() {
 
   it('Manager#openMenu without focusing in menu', function() {
     var manager = createManagerWithMockedElements();
-    manager.openMenu();
+    manager.openMenu({ focusMenu: false });
     expect(manager.isOpen).toBe(true);
     expect(manager.menu.setState).toHaveBeenCalledTimes(1);
     expect(manager.menu.setState.mock.calls[0]).toEqual([{ isOpen: true }]);
     expect(manager.button.setState).toHaveBeenCalledTimes(1);
     expect(manager.button.setState.mock.calls[0]).toEqual([{ menuOpen: true }]);
+
+    return new Promise(function(resolve) {
+      setTimeout(function() {
+        expect(manager.focusItem).toHaveBeenCalledTimes(0);
+        resolve();
+      }, 0);
+    });
   });
 
   it('Manager#openMenu focusing in menu', function() {
