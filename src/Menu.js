@@ -17,17 +17,32 @@ module.exports = class extends React.Component {
     ambManager: PropTypes.object.isRequired
   };
 
+  getDocumentElement() {
+    const el = ReactDOM.findDOMNode(this);
+    if (!el) return;
+    const doc = el.ownerDocument;
+    if (!doc) return;
+    return doc.documentElement;
+  }
+
   componentWillMount() {
     this.context.ambManager.menu = this;
   }
 
   componentDidUpdate() {
     const ambManager = this.context.ambManager;
+    // Keep a ref to the document to clean up
+    // listeners attached to it when the menu is closed
+    if (ambManager.isOpen && !this.document) {
+      this.document = this.getDocumentElement();
+    }
     if (ambManager.isOpen && !this.tapListener) {
       this.addTapListener();
+      this.addTapStartListener();
     } else if (!ambManager.isOpen && this.tapListener) {
       this.tapListener.remove();
       delete this.tapListener;
+      this.removeTapStartListener();
     }
 
     if (!ambManager.isOpen) {
@@ -39,16 +54,29 @@ module.exports = class extends React.Component {
 
   componentWillUnmount() {
     if (this.tapListener) this.tapListener.remove();
+    this.removeTapStartListener();
     this.context.ambManager.destroy();
   }
 
+  removeTapStartListener() {
+    if (this.document) {
+      this.document.removeEventListener('mousedown', this.handleTapStart);
+      this.document.removeEventListener('touchstart', this.handleTapStart);
+    }
+  }
+
   addTapListener = () => {
-    const el = ReactDOM.findDOMNode(this);
-    if (!el) return;
-    const doc = el.ownerDocument;
-    if (!doc) return;
-    this.tapListener = createTapListener(doc.documentElement, this.handleTap);
-  };
+    if (this.document) {
+      this.tapListener = createTapListener(this.document, this.handleTap);
+    }
+  }
+
+  addTapStartListener = () => {
+    if (this.document) {
+      this.document.addEventListener('mousedown', this.handleTapStart);
+      this.document.addEventListener('touchstart', this.handleTapStart);
+    }
+  }
 
   handleTap = event => {
     if (ReactDOM.findDOMNode(this).contains(event.target)) return;
@@ -59,6 +87,11 @@ module.exports = class extends React.Component {
     )
       return;
     this.context.ambManager.closeMenu();
+  }
+
+  handleTapStart = event => {
+    var inMenu = ReactDOM.findDOMNode(this).contains(event.target);
+    this.context.ambManager.tapStartInMenu = inMenu;
   };
 
   render() {

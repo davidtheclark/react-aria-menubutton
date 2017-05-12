@@ -37,6 +37,10 @@ const protoManager = {
 
     // State trackers
     this.isOpen = false;
+
+    // This flag is set by the menu to determine if removing focus from the
+    // button is the result of clicking in the menu
+    this.tapStartInMenu = false;
   },
 
   focusItem(index) {
@@ -111,6 +115,9 @@ function handleBlur() {
     const activeEl = buttonNode.ownerDocument.activeElement;
     if (buttonNode && activeEl === buttonNode) return;
     if (menuNode && menuNode.contains(activeEl)) return;
+    // Distinguish between focusing an element outside of the menu via keyboard
+    // and clicking an unfocusable element inside of the menu
+    if (self.tapStartInMenu) return;
     if (self.isOpen) self.closeMenu({ focusButton: false });
   }, 0);
 }
