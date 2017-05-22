@@ -85,8 +85,6 @@ describe('<Button>', function() {
 
     expect(downEvent.preventDefault).toHaveBeenCalledTimes(1);
     expect(ambManager.openMenu).not.toHaveBeenCalled();
-    expect(ambManager.focusItem).toHaveBeenCalledTimes(1);
-    expect(ambManager.focusItem).toHaveBeenCalledWith(0);
   });
 
   test('enter key', function() {

@@ -35,9 +35,6 @@ class AriaMenuButtonButton extends React.Component {
         event.preventDefault();
         if (!ambManager.isOpen) {
           ambManager.openMenu();
-          ambManager.focusItem(0);
-        } else {
-          ambManager.focusItem(0);
         }
         break;
       case 'Enter':
