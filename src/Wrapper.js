@@ -11,7 +11,24 @@ const checkedProps = {
   tag: PropTypes.string,
   focusGroupOptions: PropTypes.shape({
     members: PropTypes.array,
-    keybindings: PropTypes.string,
+    keybindings: PropTypes.shape({
+      next: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.arrayOf(PropTypes.object)
+      ]),
+      prev: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.arrayOf(PropTypes.object)
+      ]),
+      first: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.arrayOf(PropTypes.object)
+      ]),
+      last: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.arrayOf(PropTypes.object)
+      ])
+    }),
     wrap: PropTypes.bool,
     stringSearch: PropTypes.bool,
     stringSearchDelay: PropTypes.number

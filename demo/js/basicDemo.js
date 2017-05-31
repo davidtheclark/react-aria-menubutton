@@ -58,6 +58,16 @@ class DemoOne extends React.Component {
         <Wrapper
           className="AriaMenuButton"
           onSelection={this.handleSelection.bind(this)}
+          focusGroupOptions={
+            {
+              keyBindings: {
+                next: { keyCode: 39 },
+                prev: { keyCode: 37 },
+              },
+              wrap: true,
+              stringSearch: true
+            }
+          }
         >
           <Button className="AriaMenuButton-trigger">
             Select a word
