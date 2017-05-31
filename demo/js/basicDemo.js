@@ -60,7 +60,7 @@ class DemoOne extends React.Component {
           onSelection={this.handleSelection.bind(this)}
           focusGroupOptions={
             {
-              keyBindings: {
+              keybindings: {
                 next: { keyCode: 39 },
                 prev: { keyCode: 37 },
               },

@@ -80,7 +80,7 @@ class Fancy extends React.Component {
             id="foo"
             focusGroupOptions={
               {
-                keyBindings: {
+                keybindings: {
                   next: { keyCode: 39 },
                   prev: { keyCode: 37 },
                 },
