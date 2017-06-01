@@ -13,21 +13,45 @@ const checkedProps = {
     members: PropTypes.array,
     keybindings: PropTypes.shape({
       next: PropTypes.oneOfType([
-        PropTypes.object,
-        PropTypes.arrayOf(PropTypes.object)
+        PropTypes.shape({
+          key: PropTypes.string
+        }),
+        PropTypes.arrayOf(
+          PropTypes.shape({
+            key: PropTypes.string
+          })
+        )
       ]),
       prev: PropTypes.oneOfType([
-        PropTypes.object,
-        PropTypes.arrayOf(PropTypes.object)
+        PropTypes.shape({
+          key: PropTypes.string
+        }),
+        PropTypes.arrayOf(
+          PropTypes.shape({
+            key: PropTypes.string
+          })
+        )
       ]),
       first: PropTypes.oneOfType([
-        PropTypes.object,
-        PropTypes.arrayOf(PropTypes.object)
+        PropTypes.shape({
+          key: PropTypes.string
+        }),
+        PropTypes.arrayOf(
+          PropTypes.shape({
+            key: PropTypes.string
+          })
+        )
       ]),
       last: PropTypes.oneOfType([
-        PropTypes.object,
-        PropTypes.arrayOf(PropTypes.object)
-      ])
+        PropTypes.shape({
+          key: PropTypes.string
+        }),
+        PropTypes.arrayOf(
+          PropTypes.shape({
+            key: PropTypes.string
+          })
+        )
+      ]),
     }),
     wrap: PropTypes.bool,
     stringSearch: PropTypes.bool,
@@ -41,7 +65,11 @@ class AriaMenuButtonWrapper extends React.Component {
     tag: 'div',
     focusGroupOptions: {
       wrap: true,
-      stringSearch: true
+      stringSearch: true,
+      keybindings: {
+        next: { key: 'ArrowDown' },
+        prev: { key: 'ArrowUp' }
+      }
     }
    };
 

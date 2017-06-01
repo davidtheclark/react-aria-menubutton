@@ -61,8 +61,8 @@ class DemoOne extends React.Component {
           focusGroupOptions={
             {
               keybindings: {
-                next: { keyCode: 39 },
-                prev: { keyCode: 37 },
+                  next: { key: 'ArrowRight' },
+                  prev: { key: 'ArrowLeft' }
               },
               wrap: true,
               stringSearch: true

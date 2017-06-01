@@ -29,9 +29,13 @@ class AriaMenuButtonButton extends React.Component {
     if (this.props.disabled) return;
 
     const ambManager = this.context.ambManager;
+    console.log("handleKeyDown: ", event, ambManager);
+    debugger;
+
+    const nextKey = ambManager.options.focusGroupOptions.keybindings.next.key;
 
     switch (event.key) {
-      case 'ArrowDown':
+      case nextKey:
         event.preventDefault();
         if (!ambManager.isOpen) {
           ambManager.openMenu({ focusMenu: true });
