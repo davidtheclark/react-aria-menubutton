@@ -29,7 +29,6 @@ const protoManager = {
     // instance of a visible node whose title begins with that printable letter."
     //
     // All of the above is handled by focus-group.
-    console.log("this.options.focusGroupOptions: ", this.options.focusGroupOptions);
     this.focusGroup = this.options.focusGroupOptions
       ? createFocusGroup(this.options.focusGroupOptions)
       : createFocusGroup(focusGroupOptions);
