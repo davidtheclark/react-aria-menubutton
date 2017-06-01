@@ -29,8 +29,6 @@ class AriaMenuButtonButton extends React.Component {
     if (this.props.disabled) return;
 
     const ambManager = this.context.ambManager;
-    console.log("handleKeyDown: ", event, ambManager);
-    debugger;
 
     const nextKey = ambManager.options.focusGroupOptions.keybindings.next.key;
 

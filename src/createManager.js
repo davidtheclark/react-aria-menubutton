@@ -10,7 +10,6 @@ const focusGroupOptions = {
 const protoManager = {
   init(options) {
     this.options = options || {};
-    console.log("Options: ", this.options.focusGroupOptions);
 
     if (typeof this.options.closeOnSelection === 'undefined') {
       this.options.closeOnSelection = true;
