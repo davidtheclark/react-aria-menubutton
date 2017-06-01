@@ -78,16 +78,6 @@ class Fancy extends React.Component {
             onSelection={this.handleSelection.bind(this)}
             className="FancyMB"
             id="foo"
-            focusGroupOptions={
-              {
-                keybindings: {
-                  next: { key: 'ArrowRight' },
-                  prev: { key: 'ArrowLeft' }
-                },
-                wrap: true,
-                stringSearch: true
-              }
-            }
           >
             <Button className="FancyMB-trigger">
               <span className="FancyMB-triggerInnards">
