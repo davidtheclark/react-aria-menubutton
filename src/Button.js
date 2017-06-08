@@ -18,13 +18,12 @@ class AriaMenuButtonButton extends React.Component {
 
   static defaultProps = {
     tag: 'span',
-      focusGroupOptions: {
-        wrap: true,
-        stringSearch: true,
-        keybindings: {
-          next: { key: 'ArrowDown' },
-          prev: { key: 'ArrowUp' }
-        }
+    focusGroupOptions: {
+      wrap: true,
+      stringSearch: true,
+      keybindings: {
+        next: { key: 'ArrowDown' }
+      }
     }
   };
 
@@ -41,10 +40,10 @@ class AriaMenuButtonButton extends React.Component {
 
     const ambManager = this.context.ambManager;
 
-    const {focusGroupOptions: {keybindings: {next: {key}}}} = this.props;
+    const {focusGroupOptions: {keybindings}} = this.props;
 
     switch (event.key) {
-      case key:
+      case keybindings.next.key:
         event.preventDefault();
         if (!ambManager.isOpen) {
           ambManager.openMenu({ focusMenu: true });

@@ -9,54 +9,7 @@ const checkedProps = {
   onSelection: PropTypes.func.isRequired,
   closeOnSelection: PropTypes.bool,
   tag: PropTypes.string,
-  focusGroupOptions: PropTypes.shape({
-    members: PropTypes.array,
-    keybindings: PropTypes.shape({
-      next: PropTypes.oneOfType([
-        PropTypes.shape({
-          key: PropTypes.string
-        }),
-        PropTypes.arrayOf(
-          PropTypes.shape({
-            key: PropTypes.string
-          })
-        )
-      ]),
-      prev: PropTypes.oneOfType([
-        PropTypes.shape({
-          key: PropTypes.string
-        }),
-        PropTypes.arrayOf(
-          PropTypes.shape({
-            key: PropTypes.string
-          })
-        )
-      ]),
-      first: PropTypes.oneOfType([
-        PropTypes.shape({
-          key: PropTypes.string
-        }),
-        PropTypes.arrayOf(
-          PropTypes.shape({
-            key: PropTypes.string
-          })
-        )
-      ]),
-      last: PropTypes.oneOfType([
-        PropTypes.shape({
-          key: PropTypes.string
-        }),
-        PropTypes.arrayOf(
-          PropTypes.shape({
-            key: PropTypes.string
-          })
-        )
-      ]),
-    }),
-    wrap: PropTypes.bool,
-    stringSearch: PropTypes.bool,
-    stringSearchDelay: PropTypes.number
-  })
+  focusGroupOptions: PropTypes.object
 };
 
 class AriaMenuButtonWrapper extends React.Component {
