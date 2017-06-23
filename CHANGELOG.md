@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.0.0
+
+- When the menu opens, move focus to the first item (by default).
+  This represents a change to [the WAI-ARIA Menu Button Design Pattern](http://www.w3.org/TR/wai-aria-practices/#menubutton).
+
 ## 4.3.1
 
 - Introduce `dist/`, where `src/` now compiles to, since React 15.5+ demands `class`es, so Babel-compilation.
