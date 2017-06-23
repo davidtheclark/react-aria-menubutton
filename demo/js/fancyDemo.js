@@ -66,8 +66,8 @@ class Fancy extends React.Component {
           <button onClick={() => openMenu('foo')}>
             open menu below
           </button>
-          <button onClick={() => openMenu('foo', { focusMenu: true })}>
-            open menu below with focus
+          <button onClick={() => openMenu('foo', { focusMenu: false })}>
+            open menu below without focus
           </button>
           <button onClick={() => closeMenu('foo')}>
             close menu below

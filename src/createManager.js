@@ -73,6 +73,9 @@ const protoManager = {
   openMenu(openOptions) {
     if (this.isOpen) return;
     openOptions = openOptions || {};
+    if (openOptions.focusMenu === undefined) {
+      openOptions.focusMenu = true;
+    }
     this.isOpen = true;
     this.update();
     this.focusGroup.activate();
@@ -94,11 +97,13 @@ const protoManager = {
     }
   },
 
-  toggleMenu() {
+  toggleMenu(closeOptions, openOptions) {
+    closeOptions = closeOptions || {}
+    openOptions = openOptions || {}
     if (this.isOpen) {
-      this.closeMenu();
+      this.closeMenu(closeOptions);
     } else {
-      this.openMenu();
+      this.openMenu(openOptions);
     }
   }
 };

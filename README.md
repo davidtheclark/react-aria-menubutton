@@ -359,7 +359,7 @@ Open a modal programmatically.
 
 These are the `openOptions`:
 
-- **focusMenu** { Boolean }: If `true`, the menu's first item will receive focus when the menu opens. Default: `false`.
+- **focusMenu** { Boolean }: If `true`, the menu's first item will receive focus when the menu opens. Default: `true`.
 
 ### closeMenu(wrapperId[, closeOptions])
 
