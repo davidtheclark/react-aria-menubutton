@@ -53,7 +53,7 @@ class AriaMenuButtonButton extends React.Component {
 
   handleClick = () => {
     if (this.props.disabled) return;
-    this.context.ambManager.toggleMenu();
+    this.context.ambManager.toggleMenu({}, { focusMenu: false });
   };
 
   render() {

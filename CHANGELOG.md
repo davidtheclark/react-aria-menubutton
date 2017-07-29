@@ -1,5 +1,10 @@
 # Changelog
 
+## Head
+
+- When the menu opens, focus only moves to the first menu item *if you opened with keyboard interactions*.
+  With a mouse click on the trigger, for example, focus remains on the trigger.
+
 ## 5.0.0
 
 - When the menu opens, move focus to the first item (by default).
