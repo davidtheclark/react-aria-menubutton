@@ -8,12 +8,23 @@ const checkedProps = {
   onMenuToggle: PropTypes.func,
   onSelection: PropTypes.func.isRequired,
   closeOnSelection: PropTypes.bool,
-  tag: PropTypes.string
+  tag: PropTypes.string,
+  focusGroupOptions: PropTypes.object
 };
 
 class AriaMenuButtonWrapper extends React.Component {
   static propTypes = checkedProps;
-  static defaultProps = { tag: 'div' };
+  static defaultProps = {
+    tag: 'div',
+    focusGroupOptions: {
+      wrap: true,
+      stringSearch: true,
+      keybindings: {
+        next: { key: 'ArrowDown' },
+        prev: { key: 'ArrowUp' }
+      }
+    }
+   };
 
   static childContextTypes = {
     ambManager: PropTypes.object
@@ -30,6 +41,7 @@ class AriaMenuButtonWrapper extends React.Component {
       onMenuToggle: this.props.onMenuToggle,
       onSelection: this.props.onSelection,
       closeOnSelection: this.props.closeOnSelection,
+      focusGroupOptions: this.props.focusGroupOptions,
       id: this.props.id
     });
   }

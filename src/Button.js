@@ -5,6 +5,7 @@ const specialAssign = require('./specialAssign');
 const checkedProps = {
   children: PropTypes.node.isRequired,
   disabled: PropTypes.bool,
+  focusGroupOptions: PropTypes.object,
   tag: PropTypes.string
 };
 
@@ -15,7 +16,16 @@ class AriaMenuButtonButton extends React.Component {
     ambManager: PropTypes.object.isRequired
   };
 
-  static defaultProps = { tag: 'span' };
+  static defaultProps = {
+    tag: 'span',
+    focusGroupOptions: {
+      wrap: true,
+      stringSearch: true,
+      keybindings: {
+        next: { key: 'ArrowDown' }
+      }
+    }
+  };
 
   componentWillMount() {
     this.context.ambManager.button = this;
@@ -30,8 +40,10 @@ class AriaMenuButtonButton extends React.Component {
 
     const ambManager = this.context.ambManager;
 
+    const {focusGroupOptions: {keybindings}} = this.props;
+
     switch (event.key) {
-      case 'ArrowDown':
+      case keybindings.next.key:
         event.preventDefault();
         if (!ambManager.isOpen) {
           ambManager.openMenu();

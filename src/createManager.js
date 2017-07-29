@@ -2,7 +2,7 @@ const ReactDOM = require('react-dom');
 const createFocusGroup = require('focus-group');
 const externalStateControl = require('./externalStateControl');
 
-const focusGroupOptions = {
+const defaultFocusGroupOptions = {
   wrap: true,
   stringSearch: true
 };
@@ -29,7 +29,9 @@ const protoManager = {
     // instance of a visible node whose title begins with that printable letter."
     //
     // All of the above is handled by focus-group.
-    this.focusGroup = createFocusGroup(focusGroupOptions);
+    this.focusGroup = this.options.focusGroupOptions
+      ? createFocusGroup(this.options.focusGroupOptions)
+      : createFocusGroup(defaultFocusGroupOptions);
 
     // These component references are added when the relevant components mount
     this.button = null;
