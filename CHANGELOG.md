@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.0.2
+
+- Satisfy React deprecation warnings.
+
 ## 5.0.1
 
 - Clicks inside the menu that are not on a `MenuItem` move focus to the first `MenuItem`.

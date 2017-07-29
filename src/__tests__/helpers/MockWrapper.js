@@ -18,7 +18,7 @@ class MockWrapper extends React.Component {
   }
 
   render() {
-    return React.DOM.div(null, this.props.children);
+    return React.createElement('div', null, this.props.children);
   }
 }
 

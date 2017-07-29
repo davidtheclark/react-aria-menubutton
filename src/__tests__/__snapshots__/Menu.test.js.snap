@@ -14,6 +14,7 @@ exports[`<Menu> closed menu DOM with all possible props and function child 1`] =
       "bottom": 1,
     }
   }
+  tabIndex={-1}
 >
   isOpen = false
 </ul>
@@ -23,6 +24,7 @@ exports[`<Menu> open Menu DOM with only required props and element child 1`] = `
 <div
   onKeyDown={[Function]}
   role="menu"
+  tabIndex={-1}
 >
   <div>
     <div>
@@ -43,6 +45,7 @@ exports[`<Menu> open menu DOM with all possible props and function child 1`] = `
       "left": 1,
     }
   }
+  tabIndex={-1}
 >
   isOpen = true
 </section>
