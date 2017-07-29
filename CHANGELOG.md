@@ -1,6 +1,6 @@
 # Changelog
 
-## Head
+## 5.0.1
 
 - Clicks inside the menu that are not on a `MenuItem` move focus to the first `MenuItem`.
 - When the menu opens, focus only moves to the first menu item *if you opened with keyboard interactions*.

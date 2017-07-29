@@ -108,6 +108,10 @@ function handleBlur() {
     var activeEl = buttonNode.ownerDocument.activeElement;
     if (buttonNode && activeEl === buttonNode) return;
     var menuNode = ReactDOM.findDOMNode(self.menu);
+    if (menuNode === activeEl) {
+      self.focusItem(0);
+      return;
+    }
     if (menuNode && menuNode.contains(activeEl)) return;
     if (self.isOpen) self.closeMenu({ focusButton: false });
   }, 0);

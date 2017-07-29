@@ -42,6 +42,8 @@ var AriaMenuButtonButton = function (_React$Component) {
           event.preventDefault();
           if (!ambManager.isOpen) {
             ambManager.openMenu();
+          } else {
+            ambManager.focusItem(0);
           }
           break;
         case 'Enter':

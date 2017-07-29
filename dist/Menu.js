@@ -95,7 +95,8 @@ module.exports = (_temp2 = _class = function (_React$Component) {
       var menuProps = {
         onKeyDown: ambManager.handleMenuKey,
         role: 'menu',
-        onBlur: ambManager.handleBlur
+        onBlur: ambManager.handleBlur,
+        tabIndex: -1
       };
 
       specialAssign(menuProps, props, checkedProps);
