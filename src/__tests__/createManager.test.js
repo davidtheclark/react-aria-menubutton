@@ -1,7 +1,7 @@
 /* globals Promise */
 var findDOMNodeMock = jest.fn();
 jest.setMock('react-dom', {
-  findDOMNode: findDOMNodeMock,
+  findDOMNode: findDOMNodeMock
 });
 
 var createManager = require('../createManager');
@@ -18,18 +18,18 @@ function createManagerWithMockedElements(options) {
   var manager = createManager(options);
   manager.focusGroup.addMember({
     node: nodeOne,
-    text: 'first',
+    text: 'first'
   });
   manager.focusGroup.addMember({
     node: nodeTwo,
-    text: 'second',
+    text: 'second'
   });
   manager.button = {
     focus: jest.fn(),
-    setState: jest.fn(),
+    setState: jest.fn()
   };
   manager.menu = {
-    setState: jest.fn(),
+    setState: jest.fn()
   };
   manager.focusItem = jest.fn();
   return manager;
@@ -43,27 +43,44 @@ describe('createManager', function() {
   });
 
   it('Manager#update', function() {
-    var manager = createManagerWithMockedElements();
+    var manager = createManagerWithMockedElements({
+      onMenuToggle: jest.fn()
+    });
     manager.update();
     expect(manager.menu.setState).toHaveBeenCalledTimes(1);
-    expect(manager.menu.setState.mock.calls[0]).toEqual([{ isOpen: manager.isOpen }]);
+    expect(manager.menu.setState.mock.calls[0]).toEqual([
+      { isOpen: manager.isOpen }
+    ]);
     expect(manager.button.setState).toHaveBeenCalledTimes(1);
-    expect(manager.button.setState.mock.calls[0]).toEqual([{ menuOpen: manager.isOpen }]);
+    expect(manager.button.setState.mock.calls[0]).toEqual([
+      { menuOpen: manager.isOpen }
+    ]);
+    expect(manager.options.onMenuToggle).toHaveBeenCalledTimes(1);
+    expect(manager.options.onMenuToggle.mock.calls[0]).toEqual([
+      { isOpen: manager.isOpen }
+    ]);
   });
 
   it('Manager#openMenu without focusing in menu', function() {
     var manager = createManagerWithMockedElements();
-    manager.openMenu();
+    manager.openMenu({ focusMenu: false });
     expect(manager.isOpen).toBe(true);
     expect(manager.menu.setState).toHaveBeenCalledTimes(1);
     expect(manager.menu.setState.mock.calls[0]).toEqual([{ isOpen: true }]);
     expect(manager.button.setState).toHaveBeenCalledTimes(1);
     expect(manager.button.setState.mock.calls[0]).toEqual([{ menuOpen: true }]);
+
+    return new Promise(function(resolve) {
+      setTimeout(function() {
+        expect(manager.focusItem).toHaveBeenCalledTimes(0);
+        resolve();
+      }, 0);
+    });
   });
 
   it('Manager#openMenu focusing in menu', function() {
     var manager = createManagerWithMockedElements();
-    manager.openMenu({ focusMenu: true });
+    manager.openMenu();
     expect(manager.isOpen).toBe(true);
     expect(manager.menu.setState).toHaveBeenCalledTimes(1);
     expect(manager.menu.setState.mock.calls[0]).toEqual([{ isOpen: true }]);
@@ -93,7 +110,9 @@ describe('createManager', function() {
     expect(manager.menu.setState).toHaveBeenCalledTimes(1);
     expect(manager.menu.setState.mock.calls[0]).toEqual([{ isOpen: false }]);
     expect(manager.button.setState).toHaveBeenCalledTimes(1);
-    expect(manager.button.setState.mock.calls[0]).toEqual([{ menuOpen: false }]);
+    expect(manager.button.setState.mock.calls[0]).toEqual([
+      { menuOpen: false }
+    ]);
     expect(mockNode.focus).toHaveBeenCalledTimes(1);
   });
 
@@ -132,7 +151,7 @@ describe('createManager', function() {
   it('Manager#handleSelection A', function() {
     var mockOnSelection = jest.fn();
     var manager = createManagerWithMockedElements({
-      onSelection: mockOnSelection,
+      onSelection: mockOnSelection
     });
     manager.closeMenu = jest.fn();
     manager.handleSelection('foo', { bar: 1 });
@@ -146,7 +165,7 @@ describe('createManager', function() {
     var mockOnSelection = jest.fn();
     var manager = createManagerWithMockedElements({
       onSelection: mockOnSelection,
-      closeOnSelection: false,
+      closeOnSelection: false
     });
     manager.closeMenu = jest.fn();
     manager.handleSelection('foo', { bar: 1 });

@@ -1,7 +1,7 @@
 // Simple ES6 Example
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AriaMenuButton from '../..';
+import AriaMenuButton from '../../src';
 
 const menuItemWords = ['foo', 'bar', 'baz'];
 
@@ -10,7 +10,7 @@ class MyMenuButton extends React.Component {
     const menuItems = menuItemWords.map((word, i) => {
       return (
         <li key={i}>
-          <AriaMenuButton.MenuItem className='MyMenuButton-menuItem'>
+          <AriaMenuButton.MenuItem className="MyMenuButton-menuItem">
             {word}
           </AriaMenuButton.MenuItem>
         </li>
@@ -19,13 +19,13 @@ class MyMenuButton extends React.Component {
 
     return (
       <AriaMenuButton.Wrapper
-        className='MyMenuButton'
+        className="MyMenuButton"
         onSelection={handleSelection}
       >
-        <AriaMenuButton.Button className='MyMenuButton-button'>
+        <AriaMenuButton.Button className="MyMenuButton-button">
           click me
         </AriaMenuButton.Button>
-        <AriaMenuButton.Menu className='MyMenuButton-menu'>
+        <AriaMenuButton.Menu className="MyMenuButton-menu">
           <ul>{menuItems}</ul>
         </AriaMenuButton.Menu>
       </AriaMenuButton.Wrapper>
@@ -42,38 +42,42 @@ class MyMenuButton extends React.Component {
 // - Menu has a function for a child
 // - React's CSSTransitionGroup is used for open-close animation
 
-var CSSTransitionGroup = require('react-addons-css-transition-group');
+var CSSTransitionGroup = require('react-transition-group/CSSTransitionGroup');
 var AmbWrapper = AriaMenuButton.Wrapper;
 var AmbButton = AriaMenuButton.Button;
 var AmbMenu = AriaMenuButton.Menu;
 var AmbMenuItem = AriaMenuButton.MenuItem;
 
-var people = [{
-  name: 'Charles Choo-Choo',
-  id: 1242,
-}, {
-  name: 'Mina Meowmers',
-  id: 8372,
-}, {
-  name: 'Susan Sailor',
-  id: 2435,
-}];
+var people = [
+  {
+    name: 'Charles Choo-Choo',
+    id: 1242
+  },
+  {
+    name: 'Mina Meowmers',
+    id: 8372
+  },
+  {
+    name: 'Susan Sailor',
+    id: 2435
+  }
+];
 
-var MyMenuButton2 = React.createClass({
-  render: function() {
+class MyMenuButton2 extends React.Component {
+  render() {
     var peopleMenuItems = people.map(function(person, i) {
       return (
         <AmbMenuItem
           key={i}
-          tag='li'
+          tag="li"
           value={person.id}
           text={person.name}
-          className='PeopleMenu-person'
+          className="PeopleMenu-person"
         >
-          <div className='PeopleMenu-personPhoto'>
-            <img src={'/people/pictures/' + person.id + '.jpg'}/ >
+          <div className="PeopleMenu-personPhoto">
+            <img src={'/people/pictures/' + person.id + '.jpg'} />
           </div>
-          <div className='PeopleMenu-personName'>
+          <div className="PeopleMenu-personName">
             {person.name}
           </div>
         </AmbMenuItem>
@@ -81,16 +85,13 @@ var MyMenuButton2 = React.createClass({
     });
 
     var peopleMenuInnards = function(menuState) {
-      var menu = (!menuState.isOpen) ? false : (
-        <div
-          className='PeopleMenu-menu'
-          key='menu'
-        >
-          {peopleMenuItems}
-        </div>
-      );
+      var menu = !menuState.isOpen
+        ? false
+        : <div className="PeopleMenu-menu" key="menu">
+            {peopleMenuItems}
+          </div>;
       return (
-        <CSSTransitionGroup transitionName='people'>
+        <CSSTransitionGroup transitionName="people">
           {menu}
         </CSSTransitionGroup>
       );
@@ -98,23 +99,23 @@ var MyMenuButton2 = React.createClass({
 
     return (
       <AmbWrapper
-        className='PeopleMenu'
+        className="PeopleMenu"
         onSelection={handleSelection}
         style={{ marginTop: 20 }}
       >
-        <AmbButton className='PeopleMenu-trigger'>
-          <span className='PeopleMenu-triggerText'>
+        <AmbButton className="PeopleMenu-trigger">
+          <span className="PeopleMenu-triggerText">
             Select a person
           </span>
-          <span className='PeopleMenu-triggerIcon' />
+          <span className="PeopleMenu-triggerIcon" />
         </AmbButton>
         <AmbMenu>
           {peopleMenuInnards}
         </AmbMenu>
       </AmbWrapper>
     );
-  },
-});
+  }
+}
 
 // Getting it working
 function handleSelection(value, event) {
@@ -130,8 +131,7 @@ ReactDOM.render(
 );
 
 var style = document.createElement('style');
-var css = (
-`.PeopleMenu-menu {
+var css = `.PeopleMenu-menu {
   transform: scale(1);
   transition: transform 0.3s linear;
 }
@@ -143,6 +143,6 @@ var css = (
 .PeopleMenu-menu.people-enter.people-enter-active {
   transform: scale(1);
 }
-`);
+`;
 style.appendChild(document.createTextNode(css));
 document.head.appendChild(style);

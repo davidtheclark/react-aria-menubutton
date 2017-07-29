@@ -1,18 +1,18 @@
-var webpack = require('webpack');
-var path = require('path');
+const webpack = require('webpack');
+const path = require('path');
 
-var plugins = [new webpack.optimize.OccurenceOrderPlugin()];
+const plugins = [];
 if (process.env.MINIFY) {
   plugins.push(new webpack.optimize.UglifyJsPlugin());
 }
 
-var filename = (process.env.MINIFY)
+const filename = (process.env.MINIFY)
   ? 'ReactAriaMenuButton.min.js'
   : 'ReactAriaMenuButton.js';
 
 module.exports = {
   entry: {
-    AriaMenuButton: './index.js',
+    AriaMenuButton: './src/index.js',
   },
   output: {
     library: 'ReactAriaMenuButton',
@@ -38,6 +38,11 @@ module.exports = {
       },
     },
   ],
+  module: {
+    loaders: [
+      { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' },
+    ],
+  },
   node: {
     Buffer: false,
     process: false,

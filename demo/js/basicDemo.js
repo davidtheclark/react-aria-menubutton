@@ -1,8 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Wrapper, Button, Menu, MenuItem } from '../..';
+import { Wrapper, Button, Menu, MenuItem } from '../../src';
 
-const words = ['pectinate', 'borborygmus', 'anisodactylous', 'barbar', 'pilcrow', 'destroy'];
+const words = [
+  'pectinate',
+  'borborygmus',
+  'anisodactylous',
+  'barbar',
+  'pilcrow',
+  'destroy'
+];
+
 class DemoOne extends React.Component {
   constructor(props) {
     super(props);
@@ -35,14 +43,10 @@ class DemoOne extends React.Component {
       if (selected === word) {
         itemClass += ' is-selected';
       }
-      const display = (word === 'destroy') ? 'destroy this menu' : word;
+      const display = word === 'destroy' ? 'destroy this menu' : word;
       return (
-        <li className='AriaMenuButton-menuItemWrapper' key={i}>
-          <MenuItem
-            className={itemClass}
-            value={word}
-            text={word}
-          >
+        <li className="AriaMenuButton-menuItemWrapper" key={i}>
+          <MenuItem className={itemClass} value={word} text={word}>
             {display}
           </MenuItem>
         </li>
@@ -52,14 +56,14 @@ class DemoOne extends React.Component {
     return (
       <div>
         <Wrapper
-          className='AriaMenuButton'
+          className="AriaMenuButton"
           onSelection={this.handleSelection.bind(this)}
         >
-          <Button className='AriaMenuButton-trigger'>
+          <Button className="AriaMenuButton-trigger">
             Select a word
           </Button>
           <Menu>
-            <ul className='AriaMenuButton-menu'>
+            <ul className="AriaMenuButton-menu">
               {menuItemElements}
             </ul>
           </Menu>
@@ -72,7 +76,4 @@ class DemoOne extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <DemoOne />,
-  document.getElementById('demo-one')
-);
+ReactDOM.render(<DemoOne />, document.getElementById('demo-one'));
