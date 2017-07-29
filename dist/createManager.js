@@ -66,7 +66,10 @@ var protoManager = {
   },
   openMenu: function openMenu(openOptions) {
     if (this.isOpen) return;
-    openOptions = openOptions || { focusMenu: true };
+    openOptions = openOptions || {};
+    if (openOptions.focusMenu === undefined) {
+      openOptions.focusMenu = true;
+    }
     this.isOpen = true;
     this.update();
     this.focusGroup.activate();
@@ -86,11 +89,13 @@ var protoManager = {
       ReactDOM.findDOMNode(this.button).focus();
     }
   },
-  toggleMenu: function toggleMenu() {
+  toggleMenu: function toggleMenu(closeOptions, openOptions) {
+    closeOptions = closeOptions || {};
+    openOptions = openOptions || {};
     if (this.isOpen) {
-      this.closeMenu();
+      this.closeMenu(closeOptions);
     } else {
-      this.openMenu();
+      this.openMenu(openOptions);
     }
   }
 };
