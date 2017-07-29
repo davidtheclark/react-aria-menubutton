@@ -104,9 +104,10 @@ function handleBlur() {
   var self = this;
   self.blurTimer = setTimeout(function () {
     var buttonNode = ReactDOM.findDOMNode(self.button);
-    var menuNode = ReactDOM.findDOMNode(self.menu);
+    if (!buttonNode) return;
     var activeEl = buttonNode.ownerDocument.activeElement;
     if (buttonNode && activeEl === buttonNode) return;
+    var menuNode = ReactDOM.findDOMNode(self.menu);
     if (menuNode && menuNode.contains(activeEl)) return;
     if (self.isOpen) self.closeMenu({ focusButton: false });
   }, 0);

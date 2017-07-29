@@ -58,7 +58,7 @@ var AriaMenuButtonButton = function (_React$Component) {
       }
     }, _this.handleClick = function () {
       if (_this.props.disabled) return;
-      _this.context.ambManager.toggleMenu();
+      _this.context.ambManager.toggleMenu({}, { focusMenu: false });
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
