@@ -78,7 +78,8 @@ module.exports = class extends React.Component {
     const menuProps = {
       onKeyDown: ambManager.handleMenuKey,
       role: 'menu',
-      onBlur: ambManager.handleBlur
+      onBlur: ambManager.handleBlur,
+      tabIndex: -1
     };
 
     specialAssign(menuProps, props, checkedProps);
