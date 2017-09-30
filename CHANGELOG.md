@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.1.0
+
+- React 16 support.
+
 ## 5.0.2
 
 - Satisfy React deprecation warnings.
