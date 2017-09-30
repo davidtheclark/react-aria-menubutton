@@ -252,22 +252,3 @@
   -webkit-transition: -webkit-transform 0.2s cubic-bezier(.55,0,.1,1);
   transition: transform 0.2s cubic-bezier(.55,0,.1,1);
 }
-
-/* cf. https://github.com/facebook/react/issues/2227 */
-.FancyMB-menu.is-enter-active,
-.FancyMB-menu.is-leave-active {
-  -webkit-transition: -webkit-transform 0.2s cubic-bezier(.55,0,.1,1);
-  transition: transform 0.2s cubic-bezier(.55,0,.1,1);
-}
-
-.FancyMB-menu.is-enter,
-.FancyMB-menu.is-leave.is-leave-active {
-  -webkit-transform: scale(0);
-  transform: scale(0);
-}
-
-.FancyMB-menu.is-enter.is-enter-active,
-.FancyMB-menu.is-leave {
-  -webkit-transform: scale(1);
-  transform: scale(1);
-}

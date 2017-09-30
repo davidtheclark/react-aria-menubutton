@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import {
   Wrapper,
   Button,
@@ -42,21 +41,11 @@ class Fancy extends React.Component {
     ));
 
     const menuInnards = menuState => {
-      const menu = !menuState.isOpen ? (
-        false
-      ) : (
+      if (!menuState.isOpen) return null;
+      return (
         <div className="FancyMB-menu" key="menu">
           {fancyMenuItems}
         </div>
-      );
-      return (
-        <CSSTransitionGroup
-          transitionName="is"
-          transitionEnterTimeout={200}
-          transitionLeaveTimeout={200}
-        >
-          {menu}
-        </CSSTransitionGroup>
       );
     };
 
