@@ -77,23 +77,21 @@ class MyMenuButton2 extends React.Component {
           <div className="PeopleMenu-personPhoto">
             <img src={'/people/pictures/' + person.id + '.jpg'} />
           </div>
-          <div className="PeopleMenu-personName">
-            {person.name}
-          </div>
+          <div className="PeopleMenu-personName">{person.name}</div>
         </AmbMenuItem>
       );
     });
 
     var peopleMenuInnards = function(menuState) {
-      var menu = !menuState.isOpen
-        ? false
-        : <div className="PeopleMenu-menu" key="menu">
-            {peopleMenuItems}
-          </div>;
+      var menu = !menuState.isOpen ? (
+        false
+      ) : (
+        <div className="PeopleMenu-menu" key="menu">
+          {peopleMenuItems}
+        </div>
+      );
       return (
-        <CSSTransitionGroup transitionName="people">
-          {menu}
-        </CSSTransitionGroup>
+        <CSSTransitionGroup transitionName="people">{menu}</CSSTransitionGroup>
       );
     };
 
@@ -104,14 +102,10 @@ class MyMenuButton2 extends React.Component {
         style={{ marginTop: 20 }}
       >
         <AmbButton className="PeopleMenu-trigger">
-          <span className="PeopleMenu-triggerText">
-            Select a person
-          </span>
+          <span className="PeopleMenu-triggerText">Select a person</span>
           <span className="PeopleMenu-triggerIcon" />
         </AmbButton>
-        <AmbMenu>
-          {peopleMenuInnards}
-        </AmbMenu>
+        <AmbMenu>{peopleMenuInnards}</AmbMenu>
       </AmbWrapper>
     );
   }

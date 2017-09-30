@@ -36,19 +36,19 @@ class Fancy extends React.Component {
         <img src={`svg/${activity}.svg`} className="FancyMB-svg" />
         <span className="FancyMB-text">
           I enjoy
-          <span className="FancyMB-keyword">
-            {activity}
-          </span>
+          <span className="FancyMB-keyword">{activity}</span>
         </span>
       </MenuItem>
     ));
 
     const menuInnards = menuState => {
-      const menu = !menuState.isOpen
-        ? false
-        : <div className="FancyMB-menu" key="menu">
-            {fancyMenuItems}
-          </div>;
+      const menu = !menuState.isOpen ? (
+        false
+      ) : (
+        <div className="FancyMB-menu" key="menu">
+          {fancyMenuItems}
+        </div>
+      );
       return (
         <CSSTransitionGroup
           transitionName="is"
@@ -63,15 +63,11 @@ class Fancy extends React.Component {
     return (
       <div>
         <div style={{ marginBottom: 20 }}>
-          <button onClick={() => openMenu('foo')}>
-            open menu below
-          </button>
+          <button onClick={() => openMenu('foo')}>open menu below</button>
           <button onClick={() => openMenu('foo', { focusMenu: false })}>
             open menu below without focus
           </button>
-          <button onClick={() => closeMenu('foo')}>
-            close menu below
-          </button>
+          <button onClick={() => closeMenu('foo')}>close menu below</button>
         </div>
         <div>
           <Wrapper
@@ -93,9 +89,7 @@ class Fancy extends React.Component {
                 </span>
               </span>
             </Button>
-            <Menu>
-              {menuInnards}
-            </Menu>
+            <Menu>{menuInnards}</Menu>
           </Wrapper>
           <span className="FancyMB-selectedText" style={{ marginLeft: '1em' }}>
             You said you enjoy: <strong>{this.state.selected}</strong>

@@ -32,8 +32,7 @@ class DemoOne extends React.Component {
       return (
         <div>
           [You decided to "destroy this menu," so the menu has been destroyed,
-          according to your wishes.
-          Refresh the page to see it again.]
+          according to your wishes. Refresh the page to see it again.]
         </div>
       );
     }
@@ -59,13 +58,9 @@ class DemoOne extends React.Component {
           className="AriaMenuButton"
           onSelection={this.handleSelection.bind(this)}
         >
-          <Button className="AriaMenuButton-trigger">
-            Select a word
-          </Button>
+          <Button className="AriaMenuButton-trigger">Select a word</Button>
           <Menu>
-            <ul className="AriaMenuButton-menu">
-              {menuItemElements}
-            </ul>
+            <ul className="AriaMenuButton-menu">{menuItemElements}</ul>
           </Menu>
         </Wrapper>
         <span style={{ marginLeft: '1em' }}>
