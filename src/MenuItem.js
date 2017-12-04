@@ -26,6 +26,7 @@ class AriaMenuButtonMenuItem extends React.Component {
 
   handleKeyDown = event => {
     if (event.key !== 'Enter' && event.key !== ' ') return;
+    if (this.props.tag === 'a' && this.props.href) return;
     event.preventDefault();
     this.selectItem(event);
   };
