@@ -37,4 +37,4 @@ exports[`<Button> DOM with only required props and text child 1`] = `
 </span>
 `;
 
-exports[`<Button> rendered via renderToString does not throw 1`] = `"<div data-reactroot=\\"\\"><span role=\\"button\\" tabIndex=\\"0\\" aria-haspopup=\\"true\\" aria-expanded=\\"false\\">foo</span></div>"`;
+exports[`<Button> rendered via renderToString does not throw 1`] = `"<div data-reactroot=\\"\\"><span role=\\"button\\" tabindex=\\"0\\" aria-haspopup=\\"true\\" aria-expanded=\\"false\\">foo</span></div>"`;

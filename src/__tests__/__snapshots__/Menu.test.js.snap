@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Menu> closed Menu DOM with only required props and element child 1`] = `undefined`;
+exports[`<Menu> closed Menu DOM with only required props and element child 1`] = `""`;
 
 exports[`<Menu> closed menu DOM with all possible props and function child 1`] = `
 <ul
