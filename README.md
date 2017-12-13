@@ -292,7 +292,7 @@ All props are optional.
 
 **disabled** { Boolean }: If `true`, the element is disabled (`aria-disabled='true'`, not in tab order, clicking has no effect).
 
-**tag** { String }: The HTML tag for this element. Default: `'span'`.
+**tag** { String }: The HTML tag for this element. Default: `'span'` so styling across browsers is consistent, `button` is a good alternative if styling for that element is no issue.
 
 *Any additional props (e.g. `id`, `className`, `data-whatever`) are passed directly to the HTML element.*
 
