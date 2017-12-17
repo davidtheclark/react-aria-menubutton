@@ -35,6 +35,7 @@ var AriaMenuButtonMenuItem = function (_React$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AriaMenuButtonMenuItem.__proto__ || Object.getPrototypeOf(AriaMenuButtonMenuItem)).call.apply(_ref, [this].concat(args))), _this), _this.handleKeyDown = function (event) {
       if (event.key !== 'Enter' && event.key !== ' ') return;
+      if (_this.props.tag === 'a' && _this.props.href) return;
       event.preventDefault();
       _this.selectItem(event);
     }, _this.selectItem = function (event) {
