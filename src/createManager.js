@@ -127,7 +127,7 @@ function handleBlur() {
 
 function handleSelection(value, event) {
   if (this.options.closeOnSelection) this.closeMenu({ focusButton: true });
-  this.options.onSelection(value, event);
+  if (this.options.onSelection) this.options.onSelection(value, event);
 }
 
 function handleMenuKey(event) {
