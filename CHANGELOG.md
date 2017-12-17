@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.1.1
+
+- Fix keydown behavior of link menu items, so Enter and Space open the link the same way a click does.
+- Make prop `onSelection` optional, because it's not necessary if your menu items are link.
+
 ## 5.1.0
 
 - React 16 support.
