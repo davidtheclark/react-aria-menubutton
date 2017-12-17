@@ -226,9 +226,9 @@ Each wrapper can contain *only one* `Button`, *only one* `Menu`, and *multiple* 
 
 #### props
 
-All props except `onSelection`, are optional.
+All props are optional.
 
-**onSelection** { Function }: *Required.* A callback to run when the user makes a selection (i.e. clicks or presses Enter or Space on a `MenuItem`). It will be passed the `value` of the selected `MenuItem` and the React SyntheticEvent.
+**onSelection** { Function }: A callback to run when the user makes a selection (i.e. clicks or presses Enter or Space on a `MenuItem`). It will be passed the `value` of the selected `MenuItem` and the React SyntheticEvent. *You should definitely use this prop, unless your menu items are anchor elements.*
 
 ```js
 <Wrapper onSelection={handleSelection} />
