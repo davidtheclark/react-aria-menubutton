@@ -1,6 +1,6 @@
 {
   "name": "react-aria-menubutton",
-  "version": "5.1.0",
+  "version": "5.1.1",
   "description": "A fully accessible and flexible React-powered menu button",
   "main": "dist/index.js",
   "scripts": {
