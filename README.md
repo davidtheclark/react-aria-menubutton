@@ -2,7 +2,7 @@
 
 A React component (set of components, really) that will help you build accessible menu buttons by providing keyboard interactions and ARIA attributes aligned with [the WAI-ARIA Menu Button Design Pattern](http://www.w3.org/TR/wai-aria-practices/#menubutton).
 
-Please check out [the demo](http://davidtheclark.github.io/react-aria-menubutton/demo/).
+Please check out [the demo](https://davidtheclark.github.io/react-aria-menubutton/demo/).
 
 ## Project Goals
 
