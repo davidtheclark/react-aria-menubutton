@@ -18,10 +18,12 @@ class AriaMenuButtonMenuItem extends React.Component {
   };
 
   componentDidMount() {
-    this.context.ambManager.addItem({
-      node: this.node,
-      text: this.props.text
-    });
+    if (!this.props.disabled) {
+      this.context.ambManager.addItem({
+        node: this.node,
+        text: this.props.text
+      });
+    }
   }
 
   handleKeyDown = event => {
