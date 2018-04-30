@@ -69,6 +69,15 @@ describe('<Button>', function() {
     expect(ambManager.toggleMenu).not.toHaveBeenCalled();
   });
 
+  test('element have disabled attribute when disabled property is set to true', function() {
+    const wrapper = shallow(
+      el(Button, { disabled: true, tag: 'button' }, 'foo'),
+      shallowOptions
+    );
+
+    expect(wrapper.props().disabled).toBeTruthy();
+  });
+
   test('down arrow when closed', function() {
     const wrapper = shallow(el(Button, null, 'foo'), shallowOptions);
     wrapper.simulate('keyDown', downEvent);

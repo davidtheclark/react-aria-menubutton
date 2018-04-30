@@ -74,7 +74,10 @@ class AriaMenuButtonButton extends React.Component {
       onBlur: this.context.ambManager.handleBlur
     };
 
-    specialAssign(buttonProps, props, checkedProps);
+    // The disabled property should be passed down to the button element
+    const reserved = Object.assign({}, checkedProps);
+    delete reserved.disabled;
+    specialAssign(buttonProps, props, reserved);
 
     return React.createElement(props.tag, buttonProps, props.children);
   }

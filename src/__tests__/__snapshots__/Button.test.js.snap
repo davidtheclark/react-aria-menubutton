@@ -7,6 +7,7 @@ exports[`<Button> DOM with all possible props and element child 1`] = `
   aria-haspopup={true}
   className="bar"
   data-something-something="seven"
+  disabled={true}
   id="foo"
   onClick={[Function]}
   onKeyDown={[Function]}
