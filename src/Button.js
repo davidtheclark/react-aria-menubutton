@@ -8,6 +8,17 @@ const checkedProps = {
   tag: PropTypes.string
 };
 
+// List retrieved from https://www.w3schools.com/tags/att_disabled.asp
+const disabledSupportedTags = () => [
+  "button",
+  "fieldset",
+  "input",
+  "optgroup",
+  "option",
+  "select",
+  "textarea"
+];
+
 class AriaMenuButtonButton extends React.Component {
   static propTypes = checkedProps;
 
@@ -74,9 +85,12 @@ class AriaMenuButtonButton extends React.Component {
       onBlur: this.context.ambManager.handleBlur
     };
 
-    // The disabled property should be passed down to the button element
     const reserved = Object.assign({}, checkedProps);
-    delete reserved.disabled;
+    // The disabled property should be passed down to the Button element
+    // if the tag has support for disabled attribute
+    if (disabledSupportedTags().find(r => props.tag === r)) {
+      delete reserved.disabled;
+    }
     specialAssign(buttonProps, props, reserved);
 
     return React.createElement(props.tag, buttonProps, props.children);
