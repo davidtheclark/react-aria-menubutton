@@ -85,11 +85,12 @@ class AriaMenuButtonButton extends React.Component {
       onBlur: this.context.ambManager.handleBlur
     };
 
-    const reserved = Object.assign({}, checkedProps);
+    let reserved = checkedProps;
     // The disabled property should be passed down to the Button element
-    // if the tag has support for disabled attribute
-    if (disabledSupportedTags().find(r => props.tag === r)) {
-      delete reserved.disabled;
+    // if the tag has support for disabled attribute. So it needs to be removed
+    // from the reserved property object
+    if (disabledSupportedTags().indexOf(props.tag) >= 0) {
+      reserved = { children: checkedProps.children, tag: checkedProps.tag };
     }
     specialAssign(buttonProps, props, reserved);
 
