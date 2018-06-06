@@ -276,6 +276,8 @@ const Example extends React.PureComponent {
 
 **closeOnSelection** { Boolean }: By default, it *does* automatically close. If `false`, the menu will *not* automatically close when a selection is made. Default: `true`.
 
+**closeOnBlur** { Boolean }: By default, it *does* automatically close. If `false`, the menu will *not* automatically close when it blurs. Default: `true`.
+
 **tag** { String }: The HTML tag for this element. Default: `'div'`.
 
 ### `Button`

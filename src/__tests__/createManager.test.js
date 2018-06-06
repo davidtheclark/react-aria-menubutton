@@ -40,6 +40,7 @@ describe('createManager', function() {
     var manager = createManagerWithMockedElements();
     expect(manager.isOpen).toBe(false);
     expect(manager.options.closeOnSelection).toBeTruthy();
+    expect(manager.options.closeOnBlur).toBeTruthy();
   });
 
   it('Manager#update', function() {
@@ -165,7 +166,8 @@ describe('createManager', function() {
     var mockOnSelection = jest.fn();
     var manager = createManagerWithMockedElements({
       onSelection: mockOnSelection,
-      closeOnSelection: false
+      closeOnSelection: false,
+      closeOnBlur: false
     });
     manager.closeMenu = jest.fn();
     manager.handleSelection('foo', { bar: 1 });
