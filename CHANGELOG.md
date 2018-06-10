@@ -1,5 +1,15 @@
 # Changelog
 
+## 6.0.0
+
+- **Breaking:** Pass `disabled` attribute to `Button` component's inner element if it is a regular HTML element that supports `disabled`.
+  Considered a potentially breaking (though positive) change because it may affect behavior and styling of your UI.
+
+## 5.1.1
+
+- Fix keydown behavior of link menu items, so Enter and Space open the link the same way a click does.
+- Make prop `onSelection` optional, because it's not necessary if your menu items are link.
+
 ## 5.1.0
 
 - React 16 support.

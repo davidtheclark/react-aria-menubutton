@@ -4,3 +4,4 @@ demo/demo-bundle.js
 umd
 !demo/demo-bundle.js
 !demo/demo-bundle.min.js
+dist

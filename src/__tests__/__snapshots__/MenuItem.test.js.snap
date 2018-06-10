@@ -34,4 +34,4 @@ exports[`<MenuItem> DOM with only required props 1`] = `
 </div>
 `;
 
-exports[`<MenuItem> rendered via renderToString does not throw 1`] = `"<div data-reactroot=\\"\\"><div role=\\"menuitem\\" tabIndex=\\"-1\\">foo</div></div>"`;
+exports[`<MenuItem> rendered via renderToString does not throw 1`] = `"<div data-reactroot=\\"\\"><div role=\\"menuitem\\" tabindex=\\"-1\\">foo</div></div>"`;

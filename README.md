@@ -2,7 +2,7 @@
 
 A React component (set of components, really) that will help you build accessible menu buttons by providing keyboard interactions and ARIA attributes aligned with [the WAI-ARIA Menu Button Design Pattern](http://www.w3.org/TR/wai-aria-practices/#menubutton).
 
-Please check out [the demo](http://davidtheclark.github.io/react-aria-menubutton/demo/).
+Please check out [the demo](https://davidtheclark.github.io/react-aria-menubutton/demo/).
 
 ## Project Goals
 
@@ -226,9 +226,9 @@ Each wrapper can contain *only one* `Button`, *only one* `Menu`, and *multiple* 
 
 #### props
 
-All props except `onSelection`, are optional.
+All props are optional.
 
-**onSelection** { Function }: *Required.* A callback to run when the user makes a selection (i.e. clicks or presses Enter or Space on a `MenuItem`). It will be passed the `value` of the selected `MenuItem` and the React SyntheticEvent.
+**onSelection** { Function }: A callback to run when the user makes a selection (i.e. clicks or presses Enter or Space on a `MenuItem`). It will be passed the `value` of the selected `MenuItem` and the React SyntheticEvent. *You should definitely use this prop, unless your menu items are anchor elements.*
 
 ```js
 <Wrapper onSelection={handleSelection} />
@@ -292,7 +292,7 @@ All props are optional.
 
 **disabled** { Boolean }: If `true`, the element is disabled (`aria-disabled='true'`, not in tab order, clicking has no effect).
 
-**tag** { String }: The HTML tag for this element. Default: `'span'`.
+**tag** { String }: The HTML tag for this element. Default: `'span'` so styling across browsers is consistent, `button` is a good alternative if styling for that element is no issue.
 
 *Any additional props (e.g. `id`, `className`, `data-whatever`) are passed directly to the HTML element.*
 
