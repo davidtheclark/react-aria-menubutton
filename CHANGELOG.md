@@ -1,5 +1,9 @@
 # Changelog
 
+## HEAD
+
+- Pass `disabled` attribute to `Button` component's inner element if it is a regular HTML element that supports `disabled`.
+
 ## 5.1.1
 
 - Fix keydown behavior of link menu items, so Enter and Space open the link the same way a click does.
