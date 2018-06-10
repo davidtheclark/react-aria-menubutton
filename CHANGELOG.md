@@ -1,8 +1,9 @@
 # Changelog
 
-## HEAD
+## 6.0.0
 
-- Pass `disabled` attribute to `Button` component's inner element if it is a regular HTML element that supports `disabled`.
+- **Breaking:** Pass `disabled` attribute to `Button` component's inner element if it is a regular HTML element that supports `disabled`.
+  Considered a potentially breaking (though positive) change because it may affect behavior and styling of your UI.
 
 ## 5.1.1
 
