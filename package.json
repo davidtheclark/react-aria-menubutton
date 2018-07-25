@@ -73,7 +73,7 @@
   "babel": {
     "presets": [
       "react",
-      "env"
+      ["env", {"loose": true}]
     ],
     "plugins": [
       "transform-class-properties"
