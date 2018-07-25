@@ -58,7 +58,9 @@ class DemoOne extends React.Component {
           className="AriaMenuButton"
           onSelection={this.handleSelection.bind(this)}
         >
-          <Button tag='button' className="AriaMenuButton-trigger">Select a word</Button>
+          <Button tag="button" className="AriaMenuButton-trigger">
+            Select a word
+          </Button>
           <Menu>
             <ul className="AriaMenuButton-menu">{menuItemElements}</ul>
           </Menu>

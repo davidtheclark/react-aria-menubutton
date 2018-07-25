@@ -1,5 +1,9 @@
 # Changelog
 
+## 6.0.1
+
+- Chore: Use loose mode for Babel compilation.
+
 ## 6.0.0
 
 - **Breaking:** Pass `disabled` attribute to `Button` component's inner element if it is a regular HTML element that supports `disabled`.
