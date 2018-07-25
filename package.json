@@ -76,8 +76,13 @@
     "webpack-cli": "^3.0.8"
   },
   "babel": {
-    "presets": ["react", "env"],
-    "plugins": ["transform-class-properties"]
+    "presets": [
+      "react",
+      ["env", {"loose": true}]
+    ],
+    "plugins": [
+      "transform-class-properties"
+    ]
   },
   "jest": {
     "setupFiles": ["./src/__tests__/helpers/jest-setup.js"],
