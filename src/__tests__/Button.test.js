@@ -6,6 +6,7 @@ const Button = require('../Button');
 const MockWrapper = require('./helpers/MockWrapper');
 const createMockKeyEvent = require('./helpers/createMockKeyEvent');
 const createMockManager = require('./helpers/createMockManager');
+const createManager = require('../createManager');
 
 const el = React.createElement;
 
@@ -33,6 +34,13 @@ describe('<Button>', function() {
   test('DOM with only required props and text child', function() {
     const wrapper = shallow(el(Button, null, 'foo'), shallowOptions);
     expect(shallowToJson(wrapper)).toMatchSnapshot();
+  });
+
+  test('no onBlur prop when closeOnBlur is false', function() {
+    const manager = createManager({ closeOnBlur: false });
+    const shallowOptions = { context: { ambManager: manager } };
+    const wrapper = shallow(el(Button, null, ''), shallowOptions);
+    expect(shallowToJson(wrapper).props).not.toHaveProperty('onBlur');
   });
 
   test('DOM with all possible props and element child', function() {
@@ -69,7 +77,7 @@ describe('<Button>', function() {
     expect(ambManager.toggleMenu).not.toHaveBeenCalled();
   });
 
-  test('element have disabled attribute when disabled property is set to true', function() {
+  test('element has disabled attribute when disabled property is set to true', function() {
     const wrapper = shallow(
       el(Button, { disabled: true, tag: 'button' }, 'foo'),
       shallowOptions

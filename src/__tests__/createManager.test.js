@@ -166,8 +166,7 @@ describe('createManager', function() {
     var mockOnSelection = jest.fn();
     var manager = createManagerWithMockedElements({
       onSelection: mockOnSelection,
-      closeOnSelection: false,
-      closeOnBlur: false
+      closeOnSelection: false
     });
     manager.closeMenu = jest.fn();
     manager.handleSelection('foo', { bar: 1 });
