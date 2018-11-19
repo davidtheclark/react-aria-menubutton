@@ -5,7 +5,7 @@ const specialAssign = require('./specialAssign');
 const checkedProps = {
   children: PropTypes.node.isRequired,
   disabled: PropTypes.bool,
-  tag: PropTypes.string,
+  tag: PropTypes.string
 };
 
 // List retrieved from https://www.w3schools.com/tags/att_disabled.asp
@@ -16,14 +16,14 @@ const disabledSupportedTags = () => [
   'optgroup',
   'option',
   'select',
-  'textarea',
+  'textarea'
 ];
 
 class AriaMenuButtonButton extends React.Component {
   static propTypes = checkedProps;
 
   static contextTypes = {
-    ambManager: PropTypes.object.isRequired,
+    ambManager: PropTypes.object.isRequired
   };
 
   static defaultProps = { tag: 'span' };
@@ -82,7 +82,7 @@ class AriaMenuButtonButton extends React.Component {
       'aria-expanded': ambManager.isOpen,
       'aria-disabled': props.disabled,
       onKeyDown: this.handleKeyDown,
-      onClick: this.handleClick,
+      onClick: this.handleClick
     };
 
     const reserved = {};
