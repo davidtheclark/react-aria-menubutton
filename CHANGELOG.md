@@ -1,6 +1,6 @@
 # Changelog
 
-## HEAD
+## 6.1.0
 
 - Add `closeOnBlur` prop.
 
