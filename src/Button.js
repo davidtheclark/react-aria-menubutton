@@ -93,7 +93,7 @@ class AriaMenuButtonButton extends React.Component {
     if (disabledSupportedTags().indexOf(props.tag) >= 0) {
       delete reserved.disabled;
     }
-    if (ambManager.options && ambManager.options.closeOnBlur) {
+    if (ambManager.options.closeOnBlur) {
       buttonProps.onBlur = ambManager.handleBlur;
     }
     specialAssign(buttonProps, props, reserved);

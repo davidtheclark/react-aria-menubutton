@@ -14,5 +14,9 @@ module.exports = function() {
     clearItems: jest.fn(),
     currentFocus: -1,
     addItem: jest.fn(),
+    options: {
+      closeOnBlur: true,
+      closeOnSelection: true
+    }
   };
 }

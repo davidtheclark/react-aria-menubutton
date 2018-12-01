@@ -1,5 +1,9 @@
 # Changelog
 
+## HEAD
+
+- Add `closeOnBlur` prop.
+
 ## 6.0.1
 
 - Chore: Use loose mode for Babel compilation.
