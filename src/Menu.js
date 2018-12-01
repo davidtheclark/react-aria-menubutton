@@ -23,6 +23,7 @@ module.exports = class extends React.Component {
 
   componentDidUpdate() {
     const ambManager = this.context.ambManager;
+    if (ambManager.options && !ambManager.options.closeOnBlur) return;
     if (ambManager.isOpen && !this.tapListener) {
       this.addTapListener();
     } else if (!ambManager.isOpen && this.tapListener) {
@@ -78,10 +79,11 @@ module.exports = class extends React.Component {
     const menuProps = {
       onKeyDown: ambManager.handleMenuKey,
       role: 'menu',
-      onBlur: ambManager.handleBlur,
       tabIndex: -1
     };
-
+    if (ambManager.options && ambManager.options.closeOnBlur) {
+      menuProps.onBlur = ambManager.handleBlur;
+    }
     specialAssign(menuProps, props, checkedProps);
 
     return React.createElement(props.tag, menuProps, childrenToRender);

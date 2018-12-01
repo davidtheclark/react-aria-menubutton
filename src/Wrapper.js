@@ -8,6 +8,7 @@ const checkedProps = {
   onMenuToggle: PropTypes.func,
   onSelection: PropTypes.func,
   closeOnSelection: PropTypes.bool,
+  closeOnBlur: PropTypes.bool,
   tag: PropTypes.string
 };
 
@@ -30,6 +31,7 @@ class AriaMenuButtonWrapper extends React.Component {
       onMenuToggle: this.props.onMenuToggle,
       onSelection: this.props.onSelection,
       closeOnSelection: this.props.closeOnSelection,
+      closeOnBlur: this.props.closeOnBlur,
       id: this.props.id
     });
   }

@@ -6,6 +6,7 @@ const shallowToJson = require('enzyme-to-json').shallowToJson;
 const Menu = require('../Menu');
 const MockWrapper = require('./helpers/MockWrapper');
 const createMockManager = require('./helpers/createMockManager');
+const createManager = require('../createManager');
 
 const el = React.createElement;
 
@@ -24,6 +25,15 @@ describe('<Menu>', function() {
     const menuEl = el(Menu, null, el('div', null, 'foo'));
     const wrapper = shallow(menuEl, shallowOptions);
     expect(shallowToJson(wrapper)).toMatchSnapshot();
+  });
+
+  test('no onBlur prop when closeOnBlur is false', function() {
+    const ambManager = createManager({ closeOnBlur: false });
+    ambManager.isOpen = true;
+    const shallowOptions = { context: { ambManager: ambManager } };
+    const menuEl = el(Menu, null, el('div', null, 'foo'));
+    const wrapper = shallow(menuEl, shallowOptions);
+    expect(shallowToJson(wrapper).props).not.toHaveProperty('onBlur');
   });
 
   test('open Menu DOM with only required props and element child', function() {

@@ -40,6 +40,7 @@ describe('createManager', function() {
     var manager = createManagerWithMockedElements();
     expect(manager.isOpen).toBe(false);
     expect(manager.options.closeOnSelection).toBeTruthy();
+    expect(manager.options.closeOnBlur).toBeTruthy();
   });
 
   it('Manager#update', function() {

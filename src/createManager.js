@@ -15,6 +15,10 @@ const protoManager = {
       this.options.closeOnSelection = true;
     }
 
+    if (typeof this.options.closeOnBlur === 'undefined') {
+      this.options.closeOnBlur = true;
+    }
+
     if (this.options.id) {
       externalStateControl.registerManager(this.options.id, this);
     }
@@ -98,8 +102,8 @@ const protoManager = {
   },
 
   toggleMenu(closeOptions, openOptions) {
-    closeOptions = closeOptions || {}
-    openOptions = openOptions || {}
+    closeOptions = closeOptions || {};
+    openOptions = openOptions || {};
     if (this.isOpen) {
       this.closeMenu(closeOptions);
     } else {

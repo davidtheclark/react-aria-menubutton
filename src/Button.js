@@ -10,13 +10,13 @@ const checkedProps = {
 
 // List retrieved from https://www.w3schools.com/tags/att_disabled.asp
 const disabledSupportedTags = () => [
-  "button",
-  "fieldset",
-  "input",
-  "optgroup",
-  "option",
-  "select",
-  "textarea"
+  'button',
+  'fieldset',
+  'input',
+  'optgroup',
+  'option',
+  'select',
+  'textarea'
 ];
 
 class AriaMenuButtonButton extends React.Component {
@@ -71,6 +71,7 @@ class AriaMenuButtonButton extends React.Component {
 
   render() {
     const props = this.props;
+    const ambManager = this.context.ambManager;
 
     const buttonProps = {
       // "The menu button itself has a role of button."
@@ -78,11 +79,10 @@ class AriaMenuButtonButton extends React.Component {
       tabIndex: props.disabled ? '' : '0',
       // "The menu button has an aria-haspopup property, set to true."
       'aria-haspopup': true,
-      'aria-expanded': this.context.ambManager.isOpen,
+      'aria-expanded': ambManager.isOpen,
       'aria-disabled': props.disabled,
       onKeyDown: this.handleKeyDown,
-      onClick: this.handleClick,
-      onBlur: this.context.ambManager.handleBlur
+      onClick: this.handleClick
     };
 
     const reserved = {};
@@ -92,6 +92,9 @@ class AriaMenuButtonButton extends React.Component {
     // from the reserved property object
     if (disabledSupportedTags().indexOf(props.tag) >= 0) {
       delete reserved.disabled;
+    }
+    if (ambManager.options && ambManager.options.closeOnBlur) {
+      buttonProps.onBlur = ambManager.handleBlur;
     }
     specialAssign(buttonProps, props, reserved);
 
