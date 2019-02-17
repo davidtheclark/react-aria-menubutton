@@ -347,7 +347,7 @@ All props are optional.
 
 **text** { String } *Required if child is an element*: If `text` has a value, its first letter will be the letter a user can type to navigate to that item.
 
-**value** { Object }: *Required if child is an element.* If `value` has a value, it will be passed to the `onSelection` handler when the `MenuItem` is selected.
+**value** { String | Boolean | Number | Object }: *Required if child is an element.* If `value` has a value, it will be passed to the `onSelection` handler when the `MenuItem` is selected.
 
 **tag** { String }: The HTML tag for this element. Default: `'span'`.
 
