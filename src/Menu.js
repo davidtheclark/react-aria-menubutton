@@ -17,7 +17,7 @@ module.exports = class extends React.Component {
     ambManager: PropTypes.object.isRequired
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.context.ambManager.menu = this;
   }
 

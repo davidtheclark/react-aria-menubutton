@@ -20,13 +20,8 @@ class AriaMenuButtonWrapper extends React.Component {
     ambManager: PropTypes.object
   };
 
-  getChildContext() {
-    return {
-      ambManager: this.manager
-    };
-  }
-
-  componentWillMount() {
+  constructor(props) {
+    super(props);
     this.manager = createManager({
       onMenuToggle: this.props.onMenuToggle,
       onSelection: this.props.onSelection,
@@ -34,6 +29,12 @@ class AriaMenuButtonWrapper extends React.Component {
       closeOnBlur: this.props.closeOnBlur,
       id: this.props.id
     });
+  }
+
+  getChildContext() {
+    return {
+      ambManager: this.manager
+    };
   }
 
   render() {
