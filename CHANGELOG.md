@@ -1,5 +1,10 @@
 # Changelog
 
+## Latest
+
+- Bind `Home` key to jump to first item in the current menu.
+- Bind `End` key to jump to the last item in the current menu.
+
 ## 6.1.0
 
 - Add `closeOnBlur` prop.

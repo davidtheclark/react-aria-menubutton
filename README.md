@@ -39,7 +39,7 @@ When focus is on the menu button or within the menu and you type a letter key, a
 
 So if you type `f` focus might arrive at `farm`; but then if you keep typing until you've typed `foo`, focus will skip ahead (past `farm` and `fit` and `fog`) to `foot`. This significantly improves your ability to type your way to your intended selection.
 
-This keyboard interaction (as well as the arrow keys) is enabled by the module [focus-group](//github.com/davidtheclark/focus-group). You can read more about the way letter navigation works [in that documentation](//github.com/davidtheclark/focus-group#string-searching).
+This keyboard interaction (as well as the <kbd>home</kbd>, <kbd>end</kbd>, and arrow keys) is enabled by the module [focus-group](//github.com/davidtheclark/focus-group). You can read more about the way letter navigation works [in that documentation](//github.com/davidtheclark/focus-group#string-searching).
 
 (In 3.x.x, when you typed a letter key focus moved to the next item in the menu (i.e. after the current focused item) that started with that letter, looping around to the front if if reached the end. This was more or less the suggested behavior from the ARIA suggestion and what I saw in jQuery UI. But I think the UX was insufficient, so when I separated out the letter navigation into the module [focus-group](//github.com/davidtheclark/focus-group), I tried to *improve letter navigation by more closely mimicking native `<select>` menus.)
 
