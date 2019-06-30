@@ -135,11 +135,23 @@ function handleSelection(value, event) {
 }
 
 function handleMenuKey(event) {
-  // "With focus on the drop-down menu, pressing Escape closes
-  // the menu and returns focus to the button.
-  if (this.isOpen && event.key === 'Escape') {
-    event.preventDefault();
-    this.closeMenu({ focusButton: true });
+  if (this.isOpen) {
+    switch (event.key) {
+      // With focus on the drop-down menu, pressing Escape closes
+      // the menu and returns focus to the button.
+      case 'Escape':
+        event.preventDefault();
+        this.closeMenu({ focusButton: true });
+        break;
+      case 'Home':
+        event.preventDefault();
+        this.focusGroup.moveFocusToFirst();
+        break;
+      case 'End':
+        event.preventDefault();
+        this.focusGroup.moveFocusToLast();
+        break;
+    }
   }
 }
 
