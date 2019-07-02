@@ -5,21 +5,25 @@
   "main": "dist/index.js",
   "scripts": {
     "lint": "eslint .",
-    "demo-bundle":
-      "webpack --mode production --config ./webpack-demo.config.js",
-    "demo-watch":
-      "webpack --mode development --config ./webpack-demo.config.js --watch",
+    "demo-bundle": "webpack --mode production --config ./webpack-demo.config.js",
+    "demo-watch": "webpack --mode development --config ./webpack-demo.config.js --watch",
     "start": "npm run demo-watch & http-server demo",
     "jest": "jest",
     "test": "npm run lint && npm run jest",
-    "umd-unminified":
-      "webpack --mode development --config ./webpack-umd.config.js",
-    "umd-minified":
-      "webpack --mode production --config ./webpack-umd.config.js",
+    "umd-unminified": "webpack --mode development --config ./webpack-umd.config.js",
+    "umd-minified": "webpack --mode production --config ./webpack-umd.config.js",
     "umd": "npm run umd-unminified && npm run umd-minified",
     "format": "prettier --single-quote --write src/**/*.js demo/js/*.js",
     "build": "babel src -d dist --ignore src/__tests__",
     "prepublishOnly": "npm run umd && npm run build"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": "eslint"
   },
   "repository": {
     "type": "git",
@@ -67,7 +71,9 @@
     "enzyme-to-json": "^3.2.2",
     "eslint": "^4.13.1",
     "http-server": "^0.10.0",
+    "husky": "^2.7.0",
     "jest": "^21.2.1",
+    "lint-staged": "^8.2.1",
     "prettier": "^1.9.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
@@ -78,14 +84,21 @@
   "babel": {
     "presets": [
       "react",
-      ["env", {"loose": true}]
+      [
+        "env",
+        {
+          "loose": true
+        }
+      ]
     ],
     "plugins": [
       "transform-class-properties"
     ]
   },
   "jest": {
-    "setupFiles": ["./src/__tests__/helpers/jest-setup.js"],
+    "setupFiles": [
+      "./src/__tests__/helpers/jest-setup.js"
+    ],
     "testRegex": "/__tests__/.*\\.test.js$",
     "clearMocks": true
   }
