@@ -83,7 +83,7 @@ module.exports = class extends React.Component {
     };
 
     if (ambManager.options.closeOnBlur) {
-      menuProps.onBlur = ambManager.handleBlur;
+      menuProps.onBlurCapture = ambManager.handleBlur;
     }
 
     specialAssign(menuProps, props, checkedProps);
