@@ -16,6 +16,7 @@ module.exports = function() {
     addItem: jest.fn(),
     options: {
       closeOnBlur: true,
+      closeOnBlurEvent: "onBlur",
       closeOnSelection: true
     }
   };

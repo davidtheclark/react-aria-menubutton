@@ -36,8 +36,8 @@ describe('<Menu>', function() {
     expect(shallowToJson(wrapper).props).not.toHaveProperty('onBlur');
   });
 
-  test('no onBlurCapture prop when closeOnBlur is false', function() {
-    const ambManager = createManager({ closeOnBlur: false });
+  test('no closeOnBlurEvent prop when closeOnBlur is false', function() {
+    const ambManager = createManager({ closeOnBlur: false, closeOnBlurEvent: 'onBlurCapture' });
     ambManager.isOpen = true;
     const shallowOptions = { context: { ambManager: ambManager } };
     const menuEl = el(Menu, null, el('div', null, 'foo'));
@@ -45,8 +45,17 @@ describe('<Menu>', function() {
     expect(shallowToJson(wrapper).props).not.toHaveProperty('onBlurCapture');
   });
 
-  test('has onBlurCapture prop when closeOnBlur is true', function() {
+  test('has onBlur prop when closeOnBlur is true', function() {
     const ambManager = createManager({ });
+    ambManager.isOpen = true;
+    const shallowOptions = { context: { ambManager: ambManager } };
+    const menuEl = el(Menu, null, el('div', null, 'foo'));
+    const wrapper = shallow(menuEl, shallowOptions);
+    expect(shallowToJson(wrapper).props).toHaveProperty('onBlur');
+  });
+
+  test('has closeOnBlurEvent prop when closeOnBlur is true and closeOnBlurEvent is set', function() {
+    const ambManager = createManager({ closeOnBlurEvent: 'onBlurCapture' });
     ambManager.isOpen = true;
     const shallowOptions = { context: { ambManager: ambManager } };
     const menuEl = el(Menu, null, el('div', null, 'foo'));

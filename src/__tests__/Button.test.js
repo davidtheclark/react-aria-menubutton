@@ -36,8 +36,8 @@ describe('<Button>', function() {
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
-  test('has onBlurCapture prop when closeOnBlur is true', function() {
-    const manager = createManager({ });
+  test('has closeOnBlurEvent prop when closeOnBlur is true and prop name is passed', function() {
+    const manager = createManager({ closeOnBlur: true, closeOnBlurEvent: "onBlurCapture" });
     const shallowOptions = { context: { ambManager: manager } };
     const wrapper = shallow(el(Button, null, ''), shallowOptions);
     expect(shallowToJson(wrapper).props).toHaveProperty('onBlurCapture');
@@ -50,8 +50,8 @@ describe('<Button>', function() {
     expect(shallowToJson(wrapper).props).not.toHaveProperty('onBlur');
   });
 
-  test('no onBlurCapture prop when closeOnBlur is false', function() {
-    const manager = createManager({ closeOnBlur: false });
+  test('no closeOnBlurEvent prop when closeOnBlur is false', function() {
+    const manager = createManager({ closeOnBlur: false, closeOnBlurEvent: "onBlurCapture" });
     const shallowOptions = { context: { ambManager: manager } };
     const wrapper = shallow(el(Button, null, ''), shallowOptions);
     expect(shallowToJson(wrapper).props).not.toHaveProperty('onBlurCapture');

@@ -41,6 +41,7 @@ describe('createManager', function() {
     expect(manager.isOpen).toBe(false);
     expect(manager.options.closeOnSelection).toBeTruthy();
     expect(manager.options.closeOnBlur).toBeTruthy();
+    expect(manager.options.closeOnBlurEvent).toBe("onBlur");
   });
 
   it('Manager#update', function() {

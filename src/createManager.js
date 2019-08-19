@@ -19,6 +19,10 @@ const protoManager = {
       this.options.closeOnBlur = true;
     }
 
+    if (typeof this.options.closeOnBlurEvent === 'undefined') {
+      this.options.closeOnBlurEvent = "onBlur";
+    }
+
     if (this.options.id) {
       externalStateControl.registerManager(this.options.id, this);
     }
