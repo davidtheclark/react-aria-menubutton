@@ -32,6 +32,7 @@ class AriaMenuButtonWrapper extends React.Component {
       onSelection: this.props.onSelection,
       closeOnSelection: this.props.closeOnSelection,
       closeOnBlur: this.props.closeOnBlur,
+      closeOnBlurEvent: this.props.closeOnBlurEvent,
       id: this.props.id
     });
   }
