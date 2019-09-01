@@ -28,7 +28,7 @@ class AriaMenuButtonButton extends React.Component {
 
   static defaultProps = { tag: 'span' };
 
-  componentWillMount() {
+  componentDidMount() {
     this.context.ambManager.button = this;
   }
 
