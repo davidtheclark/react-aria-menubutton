@@ -1,6 +1,6 @@
 # Changelog
 
-## 6.2.0 [Unreleased]
+## 6.2.0
 
 - Bind `Home` key to jump to first item in the current menu.
 - Bind `End` key to jump to the last item in the current menu.
