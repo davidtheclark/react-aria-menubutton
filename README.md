@@ -284,6 +284,8 @@ const Example extends React.PureComponent {
 
 **closeOnBlur** { Boolean }: By default, it *does* automatically close. If `false`, the menu will *not* automatically close when it blurs. Default: `true`.
 
+**closeOnBlurEvent** { String }: The event name to use to trigger the `closeOnBlur` event. Useful when using [Preact](https://github.com/davidtheclark/react-aria-menubutton/issues/98) where the `onBlur` event does not propagate. Default: `onBlur`.
+
 **tag** { String }: The HTML tag for this element. Default: `'div'`.
 
 ### `Button`
