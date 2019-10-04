@@ -59,7 +59,9 @@ module.exports = class extends React.Component {
       )
     )
       return;
-    this.context.ambManager.closeMenu();
+    if(!this.context.ambManager.options.closeOnSelection) {
+      this.context.ambManager.closeMenu();
+    }
   };
 
   render() {
