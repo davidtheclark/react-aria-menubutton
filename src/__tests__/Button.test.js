@@ -65,6 +65,7 @@ describe('<Button>', function() {
     wrapper.simulate('click');
 
     expect(ambManager.toggleMenu).toHaveBeenCalledTimes(1);
+    expect(ambManager.toggleMenu).toHaveBeenCalledWith({}, { focusMenu: true });
   });
 
   test('click when disabled', function() {
