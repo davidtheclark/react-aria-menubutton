@@ -120,6 +120,13 @@ describe('<Button>', function() {
     expect(ambManager.toggleMenu).toHaveBeenCalledTimes(1);
   });
 
+  test('prevent behavior of a Button element when the space key is pressed', function() {
+    const wrapper = shallow(el(Button, null, 'foo'), shallowOptions);
+    wrapper.simulate('keyUp', spaceEvent);
+
+    expect(spaceEvent.preventDefault).toHaveBeenCalledTimes(1);
+  });
+
   test('escape key', function() {
     const wrapper = shallow(el(Button, null, 'foo'), shallowOptions);
     wrapper.simulate('keyDown', escapeEvent);

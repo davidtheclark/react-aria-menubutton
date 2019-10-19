@@ -11,6 +11,7 @@ exports[`<Button> DOM with all possible props and element child 1`] = `
   id="foo"
   onClick={[Function]}
   onKeyDown={[Function]}
+  onKeyUp={[Function]}
   role="button"
   style={
     Object {
@@ -31,6 +32,7 @@ exports[`<Button> DOM with only required props and text child 1`] = `
   aria-haspopup={true}
   onClick={[Function]}
   onKeyDown={[Function]}
+  onKeyUp={[Function]}
   role="button"
   tabIndex="0"
 >

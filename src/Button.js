@@ -69,6 +69,10 @@ class AriaMenuButtonButton extends React.Component {
     this.context.ambManager.toggleMenu({}, { focusMenu: false });
   };
 
+  handleKeyUp = (event) => {
+    event.preventDefault();
+  }
+
   render() {
     const props = this.props;
     const ambManager = this.context.ambManager;
@@ -82,6 +86,7 @@ class AriaMenuButtonButton extends React.Component {
       'aria-expanded': ambManager.isOpen,
       'aria-disabled': props.disabled,
       onKeyDown: this.handleKeyDown,
+      onKeyUp: this.handleKeyUp,
       onClick: this.handleClick
     };
 
