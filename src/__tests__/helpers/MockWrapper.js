@@ -1,24 +1,23 @@
 const React = require('react');
 const PropTypes = require('prop-types');
+const ManagerContext = require('../../ManagerContext');
 
 class MockWrapper extends React.Component {
-  static propTypes: {
+  static propTypes = {
     mockManager: PropTypes.object.isRequired,
   };
 
-  static childContextTypes = {
-    ambManager: PropTypes.object.isRequired,
-  };
-
-  getChildContext() {
+  constructor(props) {
+    super(props);
     this.manager = this.props.mockManager;
-    return {
-      ambManager: this.props.mockManager,
-    };
   }
 
   render() {
-    return React.createElement('div', null, this.props.children);
+    return React.createElement(
+      ManagerContext.Provider,
+      { value: this.props.mockManager },
+      React.createElement('div', null, this.props.children)
+    );
   }
 }
 

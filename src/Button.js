@@ -1,8 +1,10 @@
 const React = require('react');
 const PropTypes = require('prop-types');
 const specialAssign = require('./specialAssign');
+const withManagerContext = require('./withManagerContext');
 
 const checkedProps = {
+  ambManager: PropTypes.object.isRequired,
   children: PropTypes.node.isRequired,
   disabled: PropTypes.bool,
   tag: PropTypes.string
@@ -22,24 +24,20 @@ const disabledSupportedTags = () => [
 class AriaMenuButtonButton extends React.Component {
   static propTypes = checkedProps;
 
-  static contextTypes = {
-    ambManager: PropTypes.object.isRequired
-  };
-
   static defaultProps = { tag: 'span' };
 
   componentDidMount() {
-    this.context.ambManager.button = this;
+    this.props.ambManager.button = this;
   }
 
   componentWillUnmount() {
-    this.context.ambManager.destroy();
+    this.props.ambManager.destroy();
   }
 
   handleKeyDown = event => {
     if (this.props.disabled) return;
 
-    const ambManager = this.context.ambManager;
+    const ambManager = this.props.ambManager;
 
     switch (event.key) {
       case 'ArrowDown':
@@ -66,12 +64,12 @@ class AriaMenuButtonButton extends React.Component {
 
   handleClick = () => {
     if (this.props.disabled) return;
-    this.context.ambManager.toggleMenu({}, { focusMenu: false });
+    this.props.ambManager.toggleMenu({}, { focusMenu: false });
   };
 
   render() {
     const props = this.props;
-    const ambManager = this.context.ambManager;
+    const ambManager = this.props.ambManager;
 
     const buttonProps = {
       // "The menu button itself has a role of button."
@@ -102,4 +100,4 @@ class AriaMenuButtonButton extends React.Component {
   }
 }
 
-module.exports = AriaMenuButtonButton;
+module.exports = withManagerContext(AriaMenuButtonButton);

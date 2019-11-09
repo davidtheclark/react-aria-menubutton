@@ -1,6 +1,7 @@
 const React = require('react');
 const PropTypes = require('prop-types');
 const createManager = require('./createManager');
+const ManagerContext = require('./ManagerContext');
 const specialAssign = require('./specialAssign');
 
 const checkedProps = {
@@ -16,10 +17,6 @@ class AriaMenuButtonWrapper extends React.Component {
   static propTypes = checkedProps;
   static defaultProps = { tag: 'div' };
 
-  static childContextTypes = {
-    ambManager: PropTypes.object
-  };
-
   constructor(props) {
     super(props);
     this.manager = createManager({
@@ -31,19 +28,18 @@ class AriaMenuButtonWrapper extends React.Component {
     });
   }
 
-  getChildContext() {
-    return {
-      ambManager: this.manager
-    };
-  }
-
   render() {
     const wrapperProps = {};
     specialAssign(wrapperProps, this.props, checkedProps);
+
     return React.createElement(
-      this.props.tag,
-      wrapperProps,
-      this.props.children
+      ManagerContext.Provider,
+      { value: this.manager },
+      React.createElement(
+        this.props.tag,
+        wrapperProps,
+        this.props.children,
+      ),
     );
   }
 }

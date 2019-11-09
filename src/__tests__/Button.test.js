@@ -3,6 +3,7 @@ const ReactDOMServer = require('react-dom/server');
 const shallow = require('enzyme').shallow;
 const shallowToJson = require('enzyme-to-json').shallowToJson;
 const Button = require('../Button');
+const ManagerContext = require('../ManagerContext');
 const MockWrapper = require('./helpers/MockWrapper');
 const createMockKeyEvent = require('./helpers/createMockKeyEvent');
 const createMockManager = require('./helpers/createMockManager');
@@ -22,7 +23,8 @@ describe('<Button>', function() {
   beforeEach(function() {
     ambManager = createMockManager();
     shallowOptions = {
-      context: { ambManager: ambManager }
+      wrappingComponent: ManagerContext.Provider,
+      wrappingComponentProps: { value: ambManager },
     };
     downEvent = createMockKeyEvent('ArrowDown');
     enterEvent = createMockKeyEvent('Enter');
@@ -32,14 +34,17 @@ describe('<Button>', function() {
   });
 
   test('DOM with only required props and text child', function() {
-    const wrapper = shallow(el(Button, null, 'foo'), shallowOptions);
+    const wrapper = shallow(el(Button, null, 'foo'), shallowOptions).dive().dive();
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
   test('no onBlur prop when closeOnBlur is false', function() {
     const manager = createManager({ closeOnBlur: false });
-    const shallowOptions = { context: { ambManager: manager } };
-    const wrapper = shallow(el(Button, null, ''), shallowOptions);
+    const shallowOptions = {
+      wrappingComponent: ManagerContext.Provider,
+      wrappingComponentProps: { value: manager }
+    };
+    const wrapper = shallow(el(Button, null, ''), shallowOptions).dive().dive();
     expect(shallowToJson(wrapper).props).not.toHaveProperty('onBlur');
   });
 
@@ -56,12 +61,12 @@ describe('<Button>', function() {
       },
       el('span', null, 'hooha')
     );
-    const wrapper = shallow(button, shallowOptions);
+    const wrapper = shallow(button, shallowOptions).dive().dive();
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
   test('click', function() {
-    const wrapper = shallow(el(Button, null, 'foo'), shallowOptions);
+    const wrapper = shallow(el(Button, null, 'foo'), shallowOptions).dive().dive();
     wrapper.simulate('click');
 
     expect(ambManager.toggleMenu).toHaveBeenCalledTimes(1);
@@ -71,7 +76,7 @@ describe('<Button>', function() {
     const wrapper = shallow(
       el(Button, { disabled: true }, 'foo'),
       shallowOptions
-    );
+    ).dive().dive();
     wrapper.simulate('click');
 
     expect(ambManager.toggleMenu).not.toHaveBeenCalled();
@@ -81,13 +86,13 @@ describe('<Button>', function() {
     const wrapper = shallow(
       el(Button, { disabled: true, tag: 'button' }, 'foo'),
       shallowOptions
-    );
+    ).dive().dive();
 
     expect(wrapper.props().disabled).toBeTruthy();
   });
 
   test('down arrow when closed', function() {
-    const wrapper = shallow(el(Button, null, 'foo'), shallowOptions);
+    const wrapper = shallow(el(Button, null, 'foo'), shallowOptions).dive().dive();
     wrapper.simulate('keyDown', downEvent);
 
     expect(downEvent.preventDefault).toHaveBeenCalledTimes(1);
@@ -96,7 +101,7 @@ describe('<Button>', function() {
   });
 
   test('down arrow when open', function() {
-    const wrapper = shallow(el(Button, null, 'foo'), shallowOptions);
+    const wrapper = shallow(el(Button, null, 'foo'), shallowOptions).dive().dive();
     ambManager.isOpen = true;
     wrapper.simulate('keyDown', downEvent);
 
@@ -105,7 +110,7 @@ describe('<Button>', function() {
   });
 
   test('enter key', function() {
-    const wrapper = shallow(el(Button, null, 'foo'), shallowOptions);
+    const wrapper = shallow(el(Button, null, 'foo'), shallowOptions).dive().dive();
     wrapper.simulate('keyDown', enterEvent);
 
     expect(enterEvent.preventDefault).toHaveBeenCalledTimes(1);
@@ -113,7 +118,7 @@ describe('<Button>', function() {
   });
 
   test('space key', function() {
-    const wrapper = shallow(el(Button, null, 'foo'), shallowOptions);
+    const wrapper = shallow(el(Button, null, 'foo'), shallowOptions).dive().dive();
     wrapper.simulate('keyDown', spaceEvent);
 
     expect(spaceEvent.preventDefault).toHaveBeenCalledTimes(1);
@@ -121,7 +126,7 @@ describe('<Button>', function() {
   });
 
   test('escape key', function() {
-    const wrapper = shallow(el(Button, null, 'foo'), shallowOptions);
+    const wrapper = shallow(el(Button, null, 'foo'), shallowOptions).dive().dive();
     wrapper.simulate('keyDown', escapeEvent);
 
     expect(ambManager.handleMenuKey).toHaveBeenCalledTimes(1);
@@ -129,7 +134,7 @@ describe('<Button>', function() {
   });
 
   test('f key', function() {
-    const wrapper = shallow(el(Button, null, 'foo'), shallowOptions);
+    const wrapper = shallow(el(Button, null, 'foo'), shallowOptions).dive().dive();
     wrapper.simulate('keyDown', fEvent);
 
     expect(ambManager.handleButtonNonArrowKey).toHaveBeenCalledTimes(1);
@@ -142,7 +147,7 @@ describe('<Button>', function() {
     const wrapper = shallow(
       el(Button, { disabled: true }, 'foo'),
       shallowOptions
-    );
+    ).dive().dive();
     wrapper.simulate('keyDown', enterEvent);
 
     expect(enterEvent.preventDefault).not.toHaveBeenCalled();

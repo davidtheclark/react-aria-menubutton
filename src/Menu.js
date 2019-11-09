@@ -3,26 +3,24 @@ const ReactDOM = require('react-dom');
 const PropTypes = require('prop-types');
 const createTapListener = require('teeny-tap');
 const specialAssign = require('./specialAssign');
+const withManagerContext = require('./withManagerContext');
 
 const checkedProps = {
+  ambManager: PropTypes.object.isRequired,
   children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]).isRequired,
   tag: PropTypes.string
 };
 
-module.exports = class extends React.Component {
+class AriaMenuButtonMenu extends React.Component {
   static propTypes = checkedProps;
   static defaultProps = { tag: 'div' };
 
-  static contextTypes = {
-    ambManager: PropTypes.object.isRequired
-  };
-
   componentDidMount() {
-    this.context.ambManager.menu = this;
+    this.props.ambManager.menu = this;
   }
 
   componentDidUpdate() {
-    const ambManager = this.context.ambManager;
+    const ambManager = this.props.ambManager;
     if (!ambManager.options.closeOnBlur) return;
     if (ambManager.isOpen && !this.tapListener) {
       this.addTapListener();
@@ -40,7 +38,7 @@ module.exports = class extends React.Component {
 
   componentWillUnmount() {
     if (this.tapListener) this.tapListener.remove();
-    this.context.ambManager.destroy();
+    this.props.ambManager.destroy();
   }
 
   addTapListener = () => {
@@ -54,17 +52,17 @@ module.exports = class extends React.Component {
   handleTap = event => {
     if (ReactDOM.findDOMNode(this).contains(event.target)) return;
     if (
-      ReactDOM.findDOMNode(this.context.ambManager.button).contains(
+      ReactDOM.findDOMNode(this.props.ambManager.button).contains(
         event.target
       )
     )
       return;
-    this.context.ambManager.closeMenu();
+    this.props.ambManager.closeMenu();
   };
 
   render() {
     const props = this.props;
-    const ambManager = this.context.ambManager;
+    const ambManager = this.props.ambManager;
 
     const childrenToRender = (function() {
       if (typeof props.children === 'function') {
@@ -90,4 +88,6 @@ module.exports = class extends React.Component {
 
     return React.createElement(props.tag, menuProps, childrenToRender);
   }
-};
+}
+
+module.exports = withManagerContext(AriaMenuButtonMenu);

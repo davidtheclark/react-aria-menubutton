@@ -2,6 +2,7 @@ const React = require('react');
 const ReactDOMServer = require('react-dom/server');
 const shallow = require('enzyme').shallow;
 const shallowToJson = require('enzyme-to-json').shallowToJson;
+const ManagerContext = require('../ManagerContext');
 const MenuItem = require('../MenuItem');
 const MockWrapper = require('./helpers/MockWrapper');
 const createMockKeyEvent = require('./helpers/createMockKeyEvent');
@@ -16,13 +17,14 @@ describe('<MenuItem>', function() {
   beforeEach(function() {
     ambManager = createMockManager();
     shallowOptions = {
-      context: { ambManager: ambManager }
+      wrappingComponent: ManagerContext.Provider,
+      wrappingComponentProps: { value: ambManager }
     };
   });
 
   it('DOM with only required props', function() {
     const menuItem = el(MenuItem, null, 'foo');
-    const wrapper = shallow(menuItem, shallowOptions);
+    const wrapper = shallow(menuItem, shallowOptions).dive().dive();
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
@@ -40,14 +42,14 @@ describe('<MenuItem>', function() {
       },
       el('a', { href: '#' }, 'foo')
     );
-    const wrapper = shallow(menuItem, shallowOptions);
+    const wrapper = shallow(menuItem, shallowOptions).dive().dive();
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
   it('click without specified value prop', function() {
     const mockEvent = { bee: 'baa' };
     const menuItem = el(MenuItem, null, 'foo');
-    const wrapper = shallow(menuItem, shallowOptions);
+    const wrapper = shallow(menuItem, shallowOptions).dive().dive();
     wrapper.simulate('click', mockEvent);
     expect(ambManager.handleSelection).toHaveBeenCalledTimes(1);
     expect(ambManager.handleSelection.mock.calls[0]).toEqual([
@@ -59,7 +61,7 @@ describe('<MenuItem>', function() {
   it('click with specified value prop', function() {
     const mockEvent = { bee: 'baa' };
     const menuItem = el(MenuItem, { value: 'bar' }, 'foo');
-    const wrapper = shallow(menuItem, shallowOptions);
+    const wrapper = shallow(menuItem, shallowOptions).dive().dive();
     wrapper.simulate('click', mockEvent);
     expect(ambManager.handleSelection).toHaveBeenCalledTimes(1);
     expect(ambManager.handleSelection.mock.calls[0]).toEqual([
@@ -73,7 +75,7 @@ describe('<MenuItem>', function() {
     const mockSpaceEvent = createMockKeyEvent(' ');
     const mockEscapeEvent = createMockKeyEvent('Escape');
     const menuItem = el(MenuItem, null, 'foo');
-    const wrapper = shallow(menuItem, shallowOptions);
+    const wrapper = shallow(menuItem, shallowOptions).dive().dive();
 
     wrapper.simulate('keyDown', mockEnterEvent);
     wrapper.simulate('keyDown', mockSpaceEvent);
