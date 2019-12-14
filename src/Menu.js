@@ -1,19 +1,22 @@
 const React = require('react');
-const ReactDOM = require('react-dom');
 const PropTypes = require('prop-types');
 const createTapListener = require('teeny-tap');
+const ManagerContext = require('./ManagerContext');
+const { refType } = require("./propTypes");
 const specialAssign = require('./specialAssign');
-const withManagerContext = require('./withManagerContext');
 
 const checkedProps = {
   ambManager: PropTypes.object.isRequired,
   children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]).isRequired,
+  forwardedRef: refType,
   tag: PropTypes.string
 };
 
 class AriaMenuButtonMenu extends React.Component {
   static propTypes = checkedProps;
   static defaultProps = { tag: 'div' };
+
+  ref = React.createRef();
 
   componentDidMount() {
     this.props.ambManager.menu = this;
@@ -42,7 +45,7 @@ class AriaMenuButtonMenu extends React.Component {
   }
 
   addTapListener = () => {
-    const el = ReactDOM.findDOMNode(this);
+    const el = this.ref.current;
     if (!el) return;
     const doc = el.ownerDocument;
     if (!doc) return;
@@ -50,14 +53,23 @@ class AriaMenuButtonMenu extends React.Component {
   };
 
   handleTap = event => {
-    if (ReactDOM.findDOMNode(this).contains(event.target)) return;
+    if (this.ref.current.contains(event.target)) return;
     if (
-      ReactDOM.findDOMNode(this.props.ambManager.button).contains(
+      this.props.ambManager.button.ref.current.contains(
         event.target
       )
     )
       return;
     this.props.ambManager.closeMenu();
+  };
+
+  setRef = instance => {
+    this.ref.current = instance;
+    if (typeof this.props.forwardedRef === "function") {
+      this.props.forwardedRef(instance);
+    } else if (this.props.forwardedRef) {
+      this.props.forwardedRef.current = instance;
+    }
   };
 
   render() {
@@ -85,9 +97,22 @@ class AriaMenuButtonMenu extends React.Component {
     }
 
     specialAssign(menuProps, props, checkedProps);
+    specialAssign(menuProps, { ref: this.setRef });
 
     return React.createElement(props.tag, menuProps, childrenToRender);
   }
 }
 
-module.exports = withManagerContext(AriaMenuButtonMenu);
+module.exports = React.forwardRef((props, ref) => React.createElement(
+  ManagerContext.Consumer,
+  null,
+  (ambManager) => {
+    const buttonProps = { ambManager, forwardedRef: ref };
+    specialAssign(buttonProps, props, {
+      ambManager: checkedProps.ambManager,
+      children: checkedProps.children,
+      forwardedRef: checkedProps.forwardedRef
+    });
+    return React.createElement(AriaMenuButtonMenu, buttonProps, props.children);
+  }
+));

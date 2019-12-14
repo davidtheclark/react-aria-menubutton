@@ -1,5 +1,5 @@
-const createReactContext = require('create-react-context');
+const React = require('react');
 
-const AriaMenuButtonManagerContext = createReactContext();
+const AriaMenuButtonManagerContext = React.createContext();
 
 module.exports = AriaMenuButtonManagerContext;

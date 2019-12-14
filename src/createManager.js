@@ -1,4 +1,3 @@
-const ReactDOM = require('react-dom');
 const createFocusGroup = require('focus-group');
 const externalStateControl = require('./externalStateControl');
 
@@ -97,7 +96,7 @@ const protoManager = {
     this.isOpen = false;
     this.update();
     if (closeOptions.focusButton) {
-      ReactDOM.findDOMNode(this.button).focus();
+      this.button.ref.current.focus();
     }
   },
 
@@ -115,11 +114,11 @@ const protoManager = {
 function handleBlur() {
   const self = this;
   self.blurTimer = setTimeout(function() {
-    const buttonNode = ReactDOM.findDOMNode(self.button);
+    const buttonNode = self.button.ref.current;
     if (!buttonNode) return;
     const activeEl = buttonNode.ownerDocument.activeElement;
     if (buttonNode && activeEl === buttonNode) return;
-    const menuNode = ReactDOM.findDOMNode(self.menu);
+    const menuNode = self.menu.ref.current;
     if (menuNode === activeEl) {
       self.focusItem(0);
       return;

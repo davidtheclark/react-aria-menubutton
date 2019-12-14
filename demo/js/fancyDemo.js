@@ -89,7 +89,7 @@ class Fancy extends React.Component {
   }
 }
 
-ReactDOM.render(<Fancy />, document.getElementById('demo-fancy'));
+ReactDOM.render(<React.StrictMode><Fancy /></React.StrictMode>, document.getElementById('demo-fancy'));
 
 // Pre-load the initially hidden SVGs
 fancyStuff.forEach(t => {

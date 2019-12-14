@@ -1,11 +1,13 @@
 const React = require('react');
 const PropTypes = require('prop-types');
+const ManagerContext = require('./ManagerContext');
+const { refType } = require("./propTypes");
 const specialAssign = require('./specialAssign');
-const withManagerContext = require('./withManagerContext');
 
 const checkedProps = {
   ambManager: PropTypes.object.isRequired,
   children: PropTypes.node.isRequired,
+  forwardedRef: refType,
   tag: PropTypes.string,
   text: PropTypes.string,
   value: PropTypes.any
@@ -15,9 +17,11 @@ class AriaMenuButtonMenuItem extends React.Component {
   static propTypes = checkedProps;
   static defaultProps = { tag: 'div' };
 
+  ref = React.createRef();
+
   componentDidMount() {
     this.props.ambManager.addItem({
-      node: this.node,
+      node: this.ref.current,
       text: this.props.text
     });
   }
@@ -37,8 +41,13 @@ class AriaMenuButtonMenuItem extends React.Component {
     this.props.ambManager.handleSelection(value, event);
   };
 
-  registerNode = node => {
-    this.node = node;
+  setRef = instance => {
+    this.ref.current = instance;
+    if (typeof this.props.forwardedRef === "function") {
+      this.props.forwardedRef(instance);
+    } else if (this.props.forwardedRef) {
+      this.props.forwardedRef.current = instance;
+    }
   };
 
   render() {
@@ -47,7 +56,7 @@ class AriaMenuButtonMenuItem extends React.Component {
       onKeyDown: this.handleKeyDown,
       role: 'menuitem',
       tabIndex: '-1',
-      ref: this.registerNode
+      ref: this.setRef
     };
 
     specialAssign(menuItemProps, this.props, checkedProps);
@@ -60,4 +69,16 @@ class AriaMenuButtonMenuItem extends React.Component {
   }
 }
 
-module.exports = withManagerContext(AriaMenuButtonMenuItem);
+module.exports = React.forwardRef((props, ref) => React.createElement(
+  ManagerContext.Consumer,
+  null,
+  (ambManager) => {
+    const buttonProps = { ambManager, forwardedRef: ref };
+    specialAssign(buttonProps, props, {
+      ambManager: checkedProps.ambManager,
+      children: checkedProps.children,
+      forwardedRef: checkedProps.forwardedRef
+    });
+    return React.createElement(AriaMenuButtonMenuItem, buttonProps, props.children);
+  }
+));
