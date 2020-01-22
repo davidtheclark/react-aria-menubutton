@@ -6,7 +6,8 @@ const checkedProps = {
   children: PropTypes.node.isRequired,
   tag: PropTypes.string,
   text: PropTypes.string,
-  value: PropTypes.any
+  value: PropTypes.any,
+  onClick: PropTypes.any
 };
 
 class AriaMenuButtonMenuItem extends React.Component {
@@ -37,6 +38,10 @@ class AriaMenuButtonMenuItem extends React.Component {
       ? this.props.value
       : this.props.children;
     this.context.ambManager.handleSelection(value, event);
+
+    if (this.props.onClick) {
+      this.props.onClick(event);
+    }
   };
 
   registerNode = node => {
