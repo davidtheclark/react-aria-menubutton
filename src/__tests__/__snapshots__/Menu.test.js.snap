@@ -51,4 +51,4 @@ exports[`<Menu> open menu DOM with all possible props and function child 1`] = `
 </section>
 `;
 
-exports[`<Menu> rendered via renderToString does not throw 1`] = `"<div data-reactroot=\\"\\"></div>"`;
+exports[`<Menu> rendered via renderToString does not throw 1`] = `"<div></div>"`;

@@ -1,8 +1,10 @@
 const React = require('react');
 const PropTypes = require('prop-types');
 const specialAssign = require('./specialAssign');
+const withManagerContext = require('./withManagerContext');
 
 const checkedProps = {
+  ambManager: PropTypes.object.isRequired,
   children: PropTypes.node.isRequired,
   tag: PropTypes.string,
   text: PropTypes.string,
@@ -13,12 +15,8 @@ class AriaMenuButtonMenuItem extends React.Component {
   static propTypes = checkedProps;
   static defaultProps = { tag: 'div' };
 
-  static contextTypes = {
-    ambManager: PropTypes.object.isRequired
-  };
-
   componentDidMount() {
-    this.context.ambManager.addItem({
+    this.props.ambManager.addItem({
       node: this.node,
       text: this.props.text
     });
@@ -36,7 +34,7 @@ class AriaMenuButtonMenuItem extends React.Component {
     const value = typeof this.props.value !== 'undefined'
       ? this.props.value
       : this.props.children;
-    this.context.ambManager.handleSelection(value, event);
+    this.props.ambManager.handleSelection(value, event);
   };
 
   registerNode = node => {
@@ -62,4 +60,4 @@ class AriaMenuButtonMenuItem extends React.Component {
   }
 }
 
-module.exports = AriaMenuButtonMenuItem;
+module.exports = withManagerContext(AriaMenuButtonMenuItem);
