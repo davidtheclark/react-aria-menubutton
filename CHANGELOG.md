@@ -1,5 +1,8 @@
 # Changelog
 
+## 6.3.0
+- Removed usage of legacy React context API, the package now use `create-react-context` which uses new context API if available else fallsback to the legacy API.
+
 ## 6.2.0
 
 - Bind `Home` key to jump to first item in the current menu.
