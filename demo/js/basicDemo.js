@@ -73,4 +73,4 @@ class DemoOne extends React.Component {
   }
 }
 
-ReactDOM.render(<DemoOne />, document.getElementById('demo-one'));
+ReactDOM.render(<React.StrictMode><DemoOne /></React.StrictMode>, document.getElementById('demo-one'));

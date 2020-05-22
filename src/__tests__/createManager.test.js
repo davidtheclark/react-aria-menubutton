@@ -1,12 +1,9 @@
 /* globals Promise */
-var findDOMNodeMock = jest.fn();
-jest.setMock('react-dom', {
-  findDOMNode: findDOMNodeMock
-});
 
 var createManager = require('../createManager');
 var createMockKeyEvent = require('./helpers/createMockKeyEvent');
 
+var mockNode = document.createElement('button');
 var nodeOne = document.createElement('button');
 nodeOne.focus = jest.fn();
 var nodeTwo = document.createElement('button');
@@ -25,7 +22,7 @@ function createManagerWithMockedElements(options) {
     text: 'second'
   });
   manager.button = {
-    focus: jest.fn(),
+    ref: { current: mockNode },
     setState: jest.fn()
   };
   manager.menu = {
@@ -98,10 +95,7 @@ describe('createManager', function() {
   });
 
   it('Manager#closeMenu focusing on button', function() {
-    var mockNode = { focus: jest.fn() };
-    findDOMNodeMock.mockImplementation(function() {
-      return mockNode;
-    });
+    mockNode.focus = jest.fn();
 
     var manager = createManagerWithMockedElements();
     manager.isOpen = true;
@@ -118,10 +112,7 @@ describe('createManager', function() {
   });
 
   it('Manager#closeMenu without focusing on button', function() {
-    var mockNode = { focus: jest.fn() };
-    findDOMNodeMock.mockImplementation(function() {
-      return mockNode;
-    });
+    mockNode.focus = jest.fn();
 
     var manager = createManagerWithMockedElements();
     manager.isOpen = true;

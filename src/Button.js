@@ -1,12 +1,14 @@
 const React = require('react');
 const PropTypes = require('prop-types');
+const ManagerContext = require('./ManagerContext');
+const { refType } = require("./propTypes");
 const specialAssign = require('./specialAssign');
-const withManagerContext = require('./withManagerContext');
 
 const checkedProps = {
   ambManager: PropTypes.object.isRequired,
   children: PropTypes.node.isRequired,
   disabled: PropTypes.bool,
+  forwardedRef: refType,
   tag: PropTypes.string
 };
 
@@ -25,6 +27,8 @@ class AriaMenuButtonButton extends React.Component {
   static propTypes = checkedProps;
 
   static defaultProps = { tag: 'span' };
+
+  ref = React.createRef();
 
   componentDidMount() {
     this.props.ambManager.button = this;
@@ -67,6 +71,15 @@ class AriaMenuButtonButton extends React.Component {
     this.props.ambManager.toggleMenu({}, { focusMenu: false });
   };
 
+  setRef = instance => {
+    this.ref.current = instance;
+    if (typeof this.props.forwardedRef === "function") {
+      this.props.forwardedRef(instance);
+    } else if (this.props.forwardedRef) {
+      this.props.forwardedRef.current = instance;
+    }
+  };
+
   render() {
     const props = this.props;
     const ambManager = this.props.ambManager;
@@ -95,9 +108,22 @@ class AriaMenuButtonButton extends React.Component {
       buttonProps.onBlur = ambManager.handleBlur;
     }
     specialAssign(buttonProps, props, reserved);
+    specialAssign(buttonProps, { ref: this.setRef });
 
     return React.createElement(props.tag, buttonProps, props.children);
   }
 }
 
-module.exports = withManagerContext(AriaMenuButtonButton);
+module.exports = React.forwardRef((props, ref) => React.createElement(
+  ManagerContext.Consumer,
+  null,
+  (ambManager) => {
+    const buttonProps = { ambManager, forwardedRef: ref };
+    specialAssign(buttonProps, props, {
+      ambManager: checkedProps.ambManager,
+      children: checkedProps.children,
+      forwardedRef: checkedProps.forwardedRef
+    });
+    return React.createElement(AriaMenuButtonButton, buttonProps, props.children);
+  }
+));
