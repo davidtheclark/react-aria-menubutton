@@ -1,5 +1,8 @@
 # Changelog
 
+## 7.0.0
+- **Breaking:** Removed usage of `ReactDOM.findDOMNode` and `create-react-context`. This will no longer support older versions of React, it now requires `^16.3.0`
+
 ## 6.3.0
 - Removed usage of legacy React context API, the package now use `create-react-context` which uses new context API if available else fallsback to the legacy API.
 
