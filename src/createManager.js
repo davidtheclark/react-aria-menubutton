@@ -114,6 +114,7 @@ const protoManager = {
 function handleBlur() {
   const self = this;
   self.blurTimer = setTimeout(function() {
+    if (!self.button) return;
     const buttonNode = self.button.ref.current;
     if (!buttonNode) return;
     const activeEl = buttonNode.ownerDocument.activeElement;
