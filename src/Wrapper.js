@@ -2,7 +2,7 @@ const React = require('react');
 const PropTypes = require('prop-types');
 const createManager = require('./createManager');
 const ManagerContext = require('./ManagerContext');
-const { refType } = require("./propTypes");
+const { refType } = require('./propTypes');
 const specialAssign = require('./specialAssign');
 
 const checkedProps = {
@@ -12,11 +12,12 @@ const checkedProps = {
   onSelection: PropTypes.func,
   closeOnSelection: PropTypes.bool,
   closeOnBlur: PropTypes.bool,
-  tag: PropTypes.string
+  tag: PropTypes.string,
 };
 
 class AriaMenuButtonWrapper extends React.Component {
   static propTypes = checkedProps;
+
   static defaultProps = { tag: 'div' };
 
   constructor(props) {
@@ -26,7 +27,7 @@ class AriaMenuButtonWrapper extends React.Component {
       onSelection: this.props.onSelection,
       closeOnSelection: this.props.closeOnSelection,
       closeOnBlur: this.props.closeOnBlur,
-      id: this.props.id
+      id: this.props.id,
     });
   }
 

@@ -3,7 +3,7 @@ const externalStateControl = require('./externalStateControl');
 
 const focusGroupOptions = {
   wrap: true,
-  stringSearch: true
+  stringSearch: true,
 };
 
 const protoManager = {
@@ -69,8 +69,8 @@ const protoManager = {
   update() {
     this.menu.setState({ isOpen: this.isOpen });
     this.button.setState({ menuOpen: this.isOpen });
-    this.options.onMenuToggle &&
-      this.options.onMenuToggle({ isOpen: this.isOpen });
+    this.options.onMenuToggle
+      && this.options.onMenuToggle({ isOpen: this.isOpen });
   },
 
   openMenu(openOptions) {
@@ -84,7 +84,7 @@ const protoManager = {
     this.focusGroup.activate();
     if (openOptions.focusMenu) {
       const self = this;
-      this.moveFocusTimer = setTimeout(function() {
+      this.moveFocusTimer = setTimeout(() => {
         self.focusItem(0);
       }, 0);
     }
@@ -108,12 +108,12 @@ const protoManager = {
     } else {
       this.openMenu(openOptions);
     }
-  }
+  },
 };
 
 function handleBlur() {
   const self = this;
-  self.blurTimer = setTimeout(function() {
+  self.blurTimer = setTimeout(() => {
     const buttonNode = self.button.ref.current;
     if (!buttonNode) return;
     const activeEl = buttonNode.ownerDocument.activeElement;
@@ -154,7 +154,7 @@ function handleMenuKey(event) {
   }
 }
 
-module.exports = function(options) {
+module.exports = function (options) {
   const newManager = Object.create(protoManager);
   newManager.init(options);
   return newManager;

@@ -6,5 +6,5 @@ module.exports = {
   Menu: require('./Menu'),
   MenuItem: require('./MenuItem'),
   openMenu: externalStateControl.openMenu,
-  closeMenu: externalStateControl.closeMenu
+  closeMenu: externalStateControl.closeMenu,
 };
