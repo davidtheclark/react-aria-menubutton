@@ -51,7 +51,7 @@
   ],
   "dependencies": {
     "focus-group": "^0.3.1",
-    "prop-types": "^15.6.0",
+    "prop-types": "^15.7.2",
     "teeny-tap": "^0.2.0"
   },
   "peerDependencies": {
