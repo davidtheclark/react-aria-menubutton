@@ -1,8 +1,9 @@
-const React = require('react');
-const PropTypes = require('prop-types');
-const ManagerContext = require('./ManagerContext');
-const { refType } = require('./propTypes');
-const specialAssign = require('./specialAssign');
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+import ManagerContext from './ManagerContext';
+import { refType } from './propTypes';
+import specialAssign from './specialAssign';
 
 const checkedProps = {
   ambManager: PropTypes.object.isRequired,
@@ -23,11 +24,7 @@ const disabledSupportedTags = () => [
   'textarea',
 ];
 
-class AriaMenuButtonButton extends React.Component {
-  static propTypes = checkedProps;
-
-  static defaultProps = { tag: 'span' };
-
+class AriaMenuButtonButton extends Component {
   ref = React.createRef();
 
   componentDidMount() {
@@ -127,3 +124,9 @@ module.exports = React.forwardRef((props, ref) => React.createElement(
     return React.createElement(AriaMenuButtonButton, buttonProps, props.children);
   },
 ));
+
+AriaMenuButtonButton.propTypes = checkedProps;
+
+AriaMenuButtonButton.defaultProps = {
+  tag: 'span',
+};
