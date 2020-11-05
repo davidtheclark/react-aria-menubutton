@@ -3,6 +3,6 @@ const PropTypes = require("prop-types");
 module.exports = {
   refType: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.shape({ current: PropTypes.oneOfType([PropTypes.elementType, PropTypes.instanceOf(Element)]) })
+    PropTypes.shape({ current: PropTypes.object })
   ])
 };
