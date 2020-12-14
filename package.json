@@ -55,7 +55,7 @@
     "teeny-tap": "^0.2.0"
   },
   "peerDependencies": {
-    "react": "^16.3.0"
+    "react": "^16.3.0 || ^17.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
