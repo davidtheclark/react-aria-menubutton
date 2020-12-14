@@ -1,5 +1,8 @@
 # Changelog
 
+## 7.0.1
+- Added React v17+ in peer dependency
+
 ## 7.0.0
 - **Breaking:** Removed usage of `ReactDOM.findDOMNode` and `create-react-context`. This will no longer support older versions of React, it now requires `^16.3.0`
 

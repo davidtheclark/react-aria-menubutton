@@ -1,6 +1,6 @@
 {
   "name": "react-aria-menubutton",
-  "version": "7.0.0",
+  "version": "7.0.1",
   "description": "A fully accessible and flexible React-powered menu button",
   "main": "dist/index.js",
   "scripts": {
@@ -55,7 +55,7 @@
     "teeny-tap": "^0.2.0"
   },
   "peerDependencies": {
-    "react": "^16.3.0"
+    "react": "^16.3.0 || ^17.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
