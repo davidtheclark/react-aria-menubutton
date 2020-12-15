@@ -1,35 +1,35 @@
-const path = require("path");
+const path = require('path');
 
 const filename = process.env.MINIFY
-  ? "ReactAriaMenuButton.min.js"
-  : "ReactAriaMenuButton.js";
+  ? 'ReactAriaMenuButton.min.js'
+  : 'ReactAriaMenuButton.js';
 
 module.exports = {
   entry: {
-    AriaMenuButton: "./src/index.js"
+    AriaMenuButton: './src/index.js',
   },
   output: {
-    library: "ReactAriaMenuButton",
-    libraryTarget: "umd",
-    path: path.join(__dirname, "umd"),
-    filename: filename
+    library: 'ReactAriaMenuButton',
+    libraryTarget: 'umd',
+    path: path.join(__dirname, 'umd'),
+    filename,
   },
   externals: [
     {
       react: {
-        root: "React",
-        commonjs2: "react",
-        commonjs: "react",
-        amd: "react"
-      }
+        root: 'React',
+        commonjs2: 'react',
+        commonjs: 'react',
+        amd: 'react',
+      },
     },
   ],
   module: {
-    rules: [{ test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }]
+    rules: [{ test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' }],
   },
   node: {
     Buffer: false,
     process: false,
-    setImmediate: false
-  }
+    setImmediate: false,
+  },
 };

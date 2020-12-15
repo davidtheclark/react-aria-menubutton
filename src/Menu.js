@@ -2,18 +2,19 @@ const React = require('react');
 const PropTypes = require('prop-types');
 const createTapListener = require('teeny-tap');
 const ManagerContext = require('./ManagerContext');
-const { refType } = require("./propTypes");
+const { refType } = require('./propTypes');
 const specialAssign = require('./specialAssign');
 
 const checkedProps = {
   ambManager: PropTypes.object.isRequired,
   children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]).isRequired,
   forwardedRef: refType,
-  tag: PropTypes.string
+  tag: PropTypes.string,
 };
 
 class AriaMenuButtonMenu extends React.Component {
   static propTypes = checkedProps;
+
   static defaultProps = { tag: 'div' };
 
   ref = React.createRef();
@@ -23,7 +24,7 @@ class AriaMenuButtonMenu extends React.Component {
   }
 
   componentDidUpdate() {
-    const ambManager = this.props.ambManager;
+    const { ambManager } = this.props;
     if (!ambManager.options.closeOnBlur) return;
     if (ambManager.isOpen && !this.tapListener) {
       this.addTapListener();
@@ -52,20 +53,19 @@ class AriaMenuButtonMenu extends React.Component {
     this.tapListener = createTapListener(doc.documentElement, this.handleTap);
   };
 
-  handleTap = event => {
+  handleTap = (event) => {
     if (this.ref.current.contains(event.target)) return;
     if (
       this.props.ambManager.button.ref.current.contains(
-        event.target
+        event.target,
       )
-    )
-      return;
+    ) return;
     this.props.ambManager.closeMenu();
   };
 
-  setRef = instance => {
+  setRef = (instance) => {
     this.ref.current = instance;
-    if (typeof this.props.forwardedRef === "function") {
+    if (typeof this.props.forwardedRef === 'function') {
       this.props.forwardedRef(instance);
     } else if (this.props.forwardedRef) {
       this.props.forwardedRef.current = instance;
@@ -73,23 +73,23 @@ class AriaMenuButtonMenu extends React.Component {
   };
 
   render() {
-    const props = this.props;
-    const ambManager = this.props.ambManager;
+    const { props } = this;
+    const { ambManager } = this.props;
 
-    const childrenToRender = (function() {
+    const childrenToRender = (function () {
       if (typeof props.children === 'function') {
         return props.children({ isOpen: ambManager.isOpen });
       }
       if (ambManager.isOpen) return props.children;
       return false;
-    })();
+    }());
 
     if (!childrenToRender) return false;
 
     const menuProps = {
       onKeyDown: ambManager.handleMenuKey,
       role: 'menu',
-      tabIndex: -1
+      tabIndex: -1,
     };
 
     if (ambManager.options.closeOnBlur) {
@@ -111,8 +111,8 @@ module.exports = React.forwardRef((props, ref) => React.createElement(
     specialAssign(buttonProps, props, {
       ambManager: checkedProps.ambManager,
       children: checkedProps.children,
-      forwardedRef: checkedProps.forwardedRef
+      forwardedRef: checkedProps.forwardedRef,
     });
     return React.createElement(AriaMenuButtonMenu, buttonProps, props.children);
-  }
+  },
 ));

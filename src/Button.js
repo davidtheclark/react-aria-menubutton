@@ -1,15 +1,16 @@
-const React = require('react');
-const PropTypes = require('prop-types');
-const ManagerContext = require('./ManagerContext');
-const { refType } = require("./propTypes");
-const specialAssign = require('./specialAssign');
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+import ManagerContext from './ManagerContext';
+import { refType } from './propTypes';
+import specialAssign from './specialAssign';
 
 const checkedProps = {
   ambManager: PropTypes.object.isRequired,
   children: PropTypes.node.isRequired,
   disabled: PropTypes.bool,
   forwardedRef: refType,
-  tag: PropTypes.string
+  tag: PropTypes.string,
 };
 
 // List retrieved from https://www.w3schools.com/tags/att_disabled.asp
@@ -20,14 +21,10 @@ const disabledSupportedTags = () => [
   'optgroup',
   'option',
   'select',
-  'textarea'
+  'textarea',
 ];
 
-class AriaMenuButtonButton extends React.Component {
-  static propTypes = checkedProps;
-
-  static defaultProps = { tag: 'span' };
-
+class AriaMenuButtonButton extends Component {
   ref = React.createRef();
 
   componentDidMount() {
@@ -38,10 +35,10 @@ class AriaMenuButtonButton extends React.Component {
     this.props.ambManager.destroy();
   }
 
-  handleKeyDown = event => {
+  handleKeyDown = (event) => {
     if (this.props.disabled) return;
 
-    const ambManager = this.props.ambManager;
+    const { ambManager } = this.props;
 
     switch (event.key) {
       case 'ArrowDown':
@@ -71,9 +68,9 @@ class AriaMenuButtonButton extends React.Component {
     this.props.ambManager.toggleMenu({}, { focusMenu: false });
   };
 
-  setRef = instance => {
+  setRef = (instance) => {
     this.ref.current = instance;
-    if (typeof this.props.forwardedRef === "function") {
+    if (typeof this.props.forwardedRef === 'function') {
       this.props.forwardedRef(instance);
     } else if (this.props.forwardedRef) {
       this.props.forwardedRef.current = instance;
@@ -81,8 +78,8 @@ class AriaMenuButtonButton extends React.Component {
   };
 
   render() {
-    const props = this.props;
-    const ambManager = this.props.ambManager;
+    const { props } = this;
+    const { ambManager } = this.props;
 
     const buttonProps = {
       // "The menu button itself has a role of button."
@@ -93,7 +90,7 @@ class AriaMenuButtonButton extends React.Component {
       'aria-expanded': ambManager.isOpen,
       'aria-disabled': props.disabled,
       onKeyDown: this.handleKeyDown,
-      onClick: this.handleClick
+      onClick: this.handleClick,
     };
 
     const reserved = {};
@@ -122,8 +119,14 @@ module.exports = React.forwardRef((props, ref) => React.createElement(
     specialAssign(buttonProps, props, {
       ambManager: checkedProps.ambManager,
       children: checkedProps.children,
-      forwardedRef: checkedProps.forwardedRef
+      forwardedRef: checkedProps.forwardedRef,
     });
     return React.createElement(AriaMenuButtonButton, buttonProps, props.children);
-  }
+  },
 ));
+
+AriaMenuButtonButton.propTypes = checkedProps;
+
+AriaMenuButtonButton.defaultProps = {
+  tag: 'span',
+};

@@ -1,9 +1,10 @@
-module.exports = function(a, b, reserved) {
-  reserved = reserved || {};
+export default function specialAssign(a, b, reserved = {}) {
   // This will get id, className, style, etc.
-  for (var x in b) {
-    if (!b.hasOwnProperty(x)) continue;
-    if (reserved[x]) continue;
-    a[x] = b[x];
-  }
-};
+
+  Object.keys(b).forEach((key) => {
+    if (!reserved[key]) {
+      // eslint-disable-next-line no-param-reassign
+      a[key] = b[key];
+    }
+  });
+}
