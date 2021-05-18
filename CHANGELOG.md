@@ -1,5 +1,8 @@
 # Changelog
 
+## 7.0.2
+- Fix blur handler breaking due to unavailability of button
+
 ## 7.0.1
 - Added React v17+ in peer dependency
 
