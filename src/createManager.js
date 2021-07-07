@@ -8,19 +8,7 @@ const focusGroupOptions = {
 
 const protoManager = {
   init(options) {
-    this.options = options || {};
-
-    if (typeof this.options.closeOnSelection === 'undefined') {
-      this.options.closeOnSelection = true;
-    }
-
-    if (typeof this.options.closeOnBlur === 'undefined') {
-      this.options.closeOnBlur = true;
-    }
-
-    if (this.options.id) {
-      externalStateControl.registerManager(this.options.id, this);
-    }
+    this.updateOptions(options);
 
     this.handleBlur = handleBlur.bind(this);
     this.handleSelection = handleSelection.bind(this);
@@ -40,6 +28,29 @@ const protoManager = {
 
     // State trackers
     this.isOpen = false;
+  },
+
+  updateOptions(options) {
+    const oldOptions = this.options;
+
+    this.options = options || this.options || {};
+
+    if (typeof this.options.closeOnSelection === 'undefined') {
+      this.options.closeOnSelection = true;
+    }
+
+    if (typeof this.options.closeOnBlur === 'undefined') {
+      this.options.closeOnBlur = true;
+    }
+
+    if (this.options.id) {
+      externalStateControl.registerManager(this.options.id, this);
+    }
+
+    if (oldOptions && oldOptions.id && oldOptions.id !== this.options.id) {
+      externalStateControl.unregisterManager(this.options.id, this);
+    }
+
   },
 
   focusItem(index) {
