@@ -1,5 +1,8 @@
 # Changelog
 
+## 7.0.3
+- Fixes `onSelection` doesn't update on prop change issue [#142](https://github.com/davidtheclark/react-aria-menubutton/issues/142)
+
 ## 7.0.2
 - Fix blur handler breaking due to unavailability of button
 
