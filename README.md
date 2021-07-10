@@ -1,4 +1,4 @@
-# react-aria-menubutton [![Build Status](https://travis-ci.org/davidtheclark/react-aria-menubutton.svg?branch=master)](https://travis-ci.org/davidtheclark/react-aria-menubutton)
+# react-aria-menubutton [![Build Status](https://github.com/davidtheclark/react-aria-menubutton/actions/workflows/build.yml/badge.svg)](https://github.com/davidtheclark/react-aria-menubutton/actions)
 
 A React component (set of components, really) that will help you build accessible menu buttons by providing keyboard interactions and ARIA attributes aligned with [the WAI-ARIA Menu Button Design Pattern](http://www.w3.org/TR/wai-aria-practices/#menubutton).
 
