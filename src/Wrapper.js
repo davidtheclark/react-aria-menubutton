@@ -15,19 +15,27 @@ const checkedProps = {
   tag: PropTypes.string
 };
 
+const managerOptionsFromProps = (props) => {
+  return {
+    onMenuToggle: props.onMenuToggle,
+    onSelection: props.onSelection,
+    closeOnSelection: props.closeOnSelection,
+    closeOnBlur: props.closeOnBlur,
+    id: props.id
+  }
+}
+
 class AriaMenuButtonWrapper extends React.Component {
   static propTypes = checkedProps;
   static defaultProps = { tag: 'div' };
 
   constructor(props) {
     super(props);
-    this.manager = createManager({
-      onMenuToggle: this.props.onMenuToggle,
-      onSelection: this.props.onSelection,
-      closeOnSelection: this.props.closeOnSelection,
-      closeOnBlur: this.props.closeOnBlur,
-      id: this.props.id
-    });
+    this.manager = createManager(managerOptionsFromProps(props));
+  }
+
+  componentDidUpdate() {
+    this.manager.updateOptions(managerOptionsFromProps(this.props))
   }
 
   render() {
