@@ -80,6 +80,14 @@ class AriaMenuButtonButton extends React.Component {
     }
   };
 
+  // The Space key behaves like mousedown/mouseup in some browsers such as Firefox.
+  // To prevent an unexpected click event when the space key is released, event.preventDefault () is set in keyUp.
+  handleKeyUp = (event) => {
+    if (event.key === ' ' || event.key === 'Enter') {
+      event.preventDefault();
+    }
+  }
+
   render() {
     const props = this.props;
     const ambManager = this.props.ambManager;
@@ -93,6 +101,7 @@ class AriaMenuButtonButton extends React.Component {
       'aria-expanded': ambManager.isOpen,
       'aria-disabled': props.disabled,
       onKeyDown: this.handleKeyDown,
+      onKeyUp: this.handleKeyUp,
       onClick: this.handleClick
     };
 
