@@ -44,7 +44,7 @@ class DemoOne extends React.Component {
       }
       const display = word === 'destroy' ? 'destroy this menu' : word;
       return (
-        <li className="AriaMenuButton-menuItemWrapper" key={i}>
+        <li className="AriaMenuButton-menuItemWrapper" key={i} role="presentation">
           <MenuItem className={itemClass} value={word} text={word}>
             {display}
           </MenuItem>
