@@ -15,6 +15,7 @@
     "umd": "npm run umd-unminified && npm run umd-minified",
     "format": "prettier --single-quote --write src/**/*.js demo/js/*.js",
     "build": "babel src -d dist --ignore src/__tests__",
+    "prepare": "husky install",
     "prepublishOnly": "npm run umd && npm run build"
   },
   "husky": {
@@ -69,7 +70,7 @@
     "enzyme-to-json": "^3.4.3",
     "eslint": "^8.0.0",
     "http-server": "^0.10.0",
-    "husky": "^2.7.0",
+    "husky": "^8.0.0",
     "jest": "^29.0.0",
     "jest-environment-jsdom": "^29.5.0",
     "lint-staged": "^8.2.1",
