@@ -9,7 +9,7 @@ exports[`<MenuItem> DOM with all possible props and element child 1`] = `
   onKeyDown={[Function]}
   role="menuitem"
   style={
-    Object {
+    {
       "right": "1em",
     }
   }
@@ -34,4 +34,4 @@ exports[`<MenuItem> DOM with only required props 1`] = `
 </div>
 `;
 
-exports[`<MenuItem> rendered via renderToString does not throw 1`] = `"<div><div role=\\"menuitem\\" tabindex=\\"-1\\">foo</div></div>"`;
+exports[`<MenuItem> rendered via renderToString does not throw 1`] = `"<div><div role="menuitem" tabindex="-1">foo</div></div>"`;

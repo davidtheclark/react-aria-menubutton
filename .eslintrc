@@ -1,5 +1,5 @@
 {
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "extends": "eslint:recommended",
   "env": {
     "es6": true,
@@ -14,6 +14,7 @@
   },
   "rules": {
     "consistent-this": 0,
-    "no-console": 0
+    "no-console": 0,
+    "no-func-assign": 0
   }
 }
