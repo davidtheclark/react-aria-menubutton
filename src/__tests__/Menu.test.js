@@ -25,7 +25,9 @@ describe('<Menu>', function() {
 
   test('closed Menu DOM with only required props and element child', function() {
     const menuEl = el(Menu, null, el('div', null, 'foo'));
-    const wrapper = shallow(menuEl, shallowOptions).dive().dive();
+    const wrapper = shallow(menuEl, shallowOptions)
+      .dive()
+      .dive();
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
@@ -37,14 +39,18 @@ describe('<Menu>', function() {
       wrappingComponentProps: { value: manager }
     };
     const menuEl = el(Menu, null, el('div', null, 'foo'));
-    const wrapper = shallow(menuEl, shallowOptions).dive().dive();
+    const wrapper = shallow(menuEl, shallowOptions)
+      .dive()
+      .dive();
     expect(shallowToJson(wrapper).props).not.toHaveProperty('onBlur');
   });
 
   test('open Menu DOM with only required props and element child', function() {
     ambManager.isOpen = true;
     const menuEl = el(Menu, null, el('div', null, el('div', null, 'foo')));
-    const wrapper = shallow(menuEl, shallowOptions).dive().dive();
+    const wrapper = shallow(menuEl, shallowOptions)
+      .dive()
+      .dive();
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
@@ -63,7 +69,9 @@ describe('<Menu>', function() {
       },
       childFunction
     );
-    const wrapper = shallow(menuEl, shallowOptions).dive().dive();
+    const wrapper = shallow(menuEl, shallowOptions)
+      .dive()
+      .dive();
     expect(shallowToJson(wrapper)).toMatchSnapshot();
     expect(childFunction).toHaveBeenCalledTimes(1);
     expect(childFunction.mock.calls[0]).toEqual([{ isOpen: false }]);
@@ -84,7 +92,9 @@ describe('<Menu>', function() {
       },
       childFunction
     );
-    const wrapper = shallow(menuEl, shallowOptions).dive().dive();
+    const wrapper = shallow(menuEl, shallowOptions)
+      .dive()
+      .dive();
     expect(shallowToJson(wrapper)).toMatchSnapshot();
     expect(childFunction).toHaveBeenCalledTimes(1);
     expect(childFunction.mock.calls[0]).toEqual([{ isOpen: true }]);

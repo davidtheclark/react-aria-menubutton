@@ -44,7 +44,11 @@ class DemoOne extends React.Component {
       }
       const display = word === 'destroy' ? 'destroy this menu' : word;
       return (
-        <li className="AriaMenuButton-menuItemWrapper" key={i} role="presentation">
+        <li
+          className="AriaMenuButton-menuItemWrapper"
+          key={i}
+          role="presentation"
+        >
           <MenuItem className={itemClass} value={word} text={word}>
             {display}
           </MenuItem>
@@ -73,4 +77,9 @@ class DemoOne extends React.Component {
   }
 }
 
-ReactDOM.render(<React.StrictMode><DemoOne /></React.StrictMode>, document.getElementById('demo-one'));
+ReactDOM.render(
+  <React.StrictMode>
+    <DemoOne />
+  </React.StrictMode>,
+  document.getElementById('demo-one')
+);

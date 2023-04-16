@@ -71,7 +71,8 @@ class Fancy extends React.Component {
                   className="FancyMB-triggerIcon "
                 />
                 <span className="FancyMB-triggerText">
-                  What do you enjoy?<br />
+                  What do you enjoy?
+                  <br />
                   <span className="FancyMB-triggerSmallText">
                     (select an enjoyable activity)
                   </span>
@@ -89,7 +90,12 @@ class Fancy extends React.Component {
   }
 }
 
-ReactDOM.render(<React.StrictMode><Fancy /></React.StrictMode>, document.getElementById('demo-fancy'));
+ReactDOM.render(
+  <React.StrictMode>
+    <Fancy />
+  </React.StrictMode>,
+  document.getElementById('demo-fancy')
+);
 
 // Pre-load the initially hidden SVGs
 fancyStuff.forEach(t => {

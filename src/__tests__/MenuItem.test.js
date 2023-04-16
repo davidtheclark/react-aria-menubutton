@@ -24,7 +24,9 @@ describe('<MenuItem>', function() {
 
   it('DOM with only required props', function() {
     const menuItem = el(MenuItem, null, 'foo');
-    const wrapper = shallow(menuItem, shallowOptions).dive().dive();
+    const wrapper = shallow(menuItem, shallowOptions)
+      .dive()
+      .dive();
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
@@ -42,14 +44,18 @@ describe('<MenuItem>', function() {
       },
       el('a', { href: '#' }, 'foo')
     );
-    const wrapper = shallow(menuItem, shallowOptions).dive().dive();
+    const wrapper = shallow(menuItem, shallowOptions)
+      .dive()
+      .dive();
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
   it('click without specified value prop', function() {
     const mockEvent = { bee: 'baa' };
     const menuItem = el(MenuItem, null, 'foo');
-    const wrapper = shallow(menuItem, shallowOptions).dive().dive();
+    const wrapper = shallow(menuItem, shallowOptions)
+      .dive()
+      .dive();
     wrapper.simulate('click', mockEvent);
     expect(ambManager.handleSelection).toHaveBeenCalledTimes(1);
     expect(ambManager.handleSelection.mock.calls[0]).toEqual([
@@ -61,7 +67,9 @@ describe('<MenuItem>', function() {
   it('click with specified value prop', function() {
     const mockEvent = { bee: 'baa' };
     const menuItem = el(MenuItem, { value: 'bar' }, 'foo');
-    const wrapper = shallow(menuItem, shallowOptions).dive().dive();
+    const wrapper = shallow(menuItem, shallowOptions)
+      .dive()
+      .dive();
     wrapper.simulate('click', mockEvent);
     expect(ambManager.handleSelection).toHaveBeenCalledTimes(1);
     expect(ambManager.handleSelection.mock.calls[0]).toEqual([
@@ -75,7 +83,9 @@ describe('<MenuItem>', function() {
     const mockSpaceEvent = createMockKeyEvent(' ');
     const mockEscapeEvent = createMockKeyEvent('Escape');
     const menuItem = el(MenuItem, null, 'foo');
-    const wrapper = shallow(menuItem, shallowOptions).dive().dive();
+    const wrapper = shallow(menuItem, shallowOptions)
+      .dive()
+      .dive();
 
     wrapper.simulate('keyDown', mockEnterEvent);
     wrapper.simulate('keyDown', mockSpaceEvent);
