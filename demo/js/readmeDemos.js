@@ -51,21 +51,21 @@ var AmbMenuItem = AriaMenuButton.MenuItem;
 var people = [
   {
     name: 'Charles Choo-Choo',
-    id: 1242
+    id: 1242,
   },
   {
     name: 'Mina Meowmers',
-    id: 8372
+    id: 8372,
   },
   {
     name: 'Susan Sailor',
-    id: 2435
-  }
+    id: 2435,
+  },
 ];
 
 class MyMenuButton2 extends React.Component {
   render() {
-    var peopleMenuItems = people.map(function(person, i) {
+    var peopleMenuItems = people.map(function (person, i) {
       return (
         <AmbMenuItem
           key={i}
@@ -82,7 +82,7 @@ class MyMenuButton2 extends React.Component {
       );
     });
 
-    var peopleMenuInnards = function(menuState) {
+    var peopleMenuInnards = function (menuState) {
       var menu = !menuState.isOpen ? (
         false
       ) : (

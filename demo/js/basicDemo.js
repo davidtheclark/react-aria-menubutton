@@ -8,7 +8,7 @@ const words = [
   'anisodactylous',
   'barbar',
   'pilcrow',
-  'destroy'
+  'destroy',
 ];
 
 class DemoOne extends React.Component {

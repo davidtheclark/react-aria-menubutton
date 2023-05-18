@@ -11,51 +11,45 @@ const createManager = require('../createManager');
 
 const el = React.createElement;
 
-describe('<Menu>', function() {
+describe('<Menu>', function () {
   let shallowOptions;
   let ambManager;
 
-  beforeEach(function() {
+  beforeEach(function () {
     ambManager = createMockManager();
     shallowOptions = {
       wrappingComponent: ManagerContext.Provider,
-      wrappingComponentProps: { value: ambManager }
+      wrappingComponentProps: { value: ambManager },
     };
   });
 
-  test('closed Menu DOM with only required props and element child', function() {
+  test('closed Menu DOM with only required props and element child', function () {
     const menuEl = el(Menu, null, el('div', null, 'foo'));
-    const wrapper = shallow(menuEl, shallowOptions)
-      .dive()
-      .dive();
+    const wrapper = shallow(menuEl, shallowOptions).dive().dive();
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
-  test('no onBlur prop when closeOnBlur is false', function() {
+  test('no onBlur prop when closeOnBlur is false', function () {
     const manager = createManager({ closeOnBlur: false });
     manager.isOpen = true;
     const shallowOptions = {
       wrappingComponent: ManagerContext.Provider,
-      wrappingComponentProps: { value: manager }
+      wrappingComponentProps: { value: manager },
     };
     const menuEl = el(Menu, null, el('div', null, 'foo'));
-    const wrapper = shallow(menuEl, shallowOptions)
-      .dive()
-      .dive();
+    const wrapper = shallow(menuEl, shallowOptions).dive().dive();
     expect(shallowToJson(wrapper).props).not.toHaveProperty('onBlur');
   });
 
-  test('open Menu DOM with only required props and element child', function() {
+  test('open Menu DOM with only required props and element child', function () {
     ambManager.isOpen = true;
     const menuEl = el(Menu, null, el('div', null, el('div', null, 'foo')));
-    const wrapper = shallow(menuEl, shallowOptions)
-      .dive()
-      .dive();
+    const wrapper = shallow(menuEl, shallowOptions).dive().dive();
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
-  test('closed menu DOM with all possible props and function child', function() {
-    const childFunction = jest.fn().mockImplementation(function(menuState) {
+  test('closed menu DOM with all possible props and function child', function () {
+    const childFunction = jest.fn().mockImplementation(function (menuState) {
       return 'isOpen = ' + menuState.isOpen;
     });
     const menuEl = el(
@@ -65,21 +59,19 @@ describe('<Menu>', function() {
         className: 'bar',
         style: { bottom: 1 },
         tag: 'ul',
-        'data-something-something': 'seven' // arbitrary prop
+        'data-something-something': 'seven', // arbitrary prop
       },
       childFunction
     );
-    const wrapper = shallow(menuEl, shallowOptions)
-      .dive()
-      .dive();
+    const wrapper = shallow(menuEl, shallowOptions).dive().dive();
     expect(shallowToJson(wrapper)).toMatchSnapshot();
     expect(childFunction).toHaveBeenCalledTimes(1);
     expect(childFunction.mock.calls[0]).toEqual([{ isOpen: false }]);
   });
 
-  test('open menu DOM with all possible props and function child', function() {
+  test('open menu DOM with all possible props and function child', function () {
     ambManager.isOpen = true;
-    const childFunction = jest.fn().mockImplementation(function(menuState) {
+    const childFunction = jest.fn().mockImplementation(function (menuState) {
       return 'isOpen = ' + menuState.isOpen;
     });
     const menuEl = el(
@@ -88,19 +80,17 @@ describe('<Menu>', function() {
         id: 'bar',
         className: 'foo',
         style: { left: 1 },
-        tag: 'section'
+        tag: 'section',
       },
       childFunction
     );
-    const wrapper = shallow(menuEl, shallowOptions)
-      .dive()
-      .dive();
+    const wrapper = shallow(menuEl, shallowOptions).dive().dive();
     expect(shallowToJson(wrapper)).toMatchSnapshot();
     expect(childFunction).toHaveBeenCalledTimes(1);
     expect(childFunction.mock.calls[0]).toEqual([{ isOpen: true }]);
   });
 
-  test('menu updating', function() {
+  test('menu updating', function () {
     ambManager.menuItems = [1, 2];
     const childFunction = jest.fn();
 
@@ -126,8 +116,8 @@ describe('<Menu>', function() {
   });
 });
 
-describe('<Menu> rendered via renderToString', function() {
-  test('does not throw', function() {
+describe('<Menu> rendered via renderToString', function () {
+  test('does not throw', function () {
     const output = ReactDOMServer.renderToString(
       el(
         MockWrapper,

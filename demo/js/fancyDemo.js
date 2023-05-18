@@ -6,7 +6,7 @@ import {
   Menu,
   MenuItem,
   openMenu,
-  closeMenu
+  closeMenu,
 } from '../../src';
 
 const fancyStuff = ['bowling', 'science', 'scooting'];
@@ -26,7 +26,7 @@ class Fancy extends React.Component {
       <MenuItem
         value={{
           activity,
-          somethingArbitrary: 'arbitrary'
+          somethingArbitrary: 'arbitrary',
         }}
         text={activity}
         key={i}
@@ -40,7 +40,7 @@ class Fancy extends React.Component {
       </MenuItem>
     ));
 
-    const menuInnards = menuState => {
+    const menuInnards = (menuState) => {
       if (!menuState.isOpen) return null;
       return (
         <div className="FancyMB-menu" key="menu">
@@ -98,7 +98,7 @@ ReactDOM.render(
 );
 
 // Pre-load the initially hidden SVGs
-fancyStuff.forEach(t => {
+fancyStuff.forEach((t) => {
   const x = new Image();
   x.src = `svg/${t}.svg`;
 });

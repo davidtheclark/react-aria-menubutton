@@ -10,27 +10,25 @@ const createMockManager = require('./helpers/createMockManager');
 
 const el = React.createElement;
 
-describe('<MenuItem>', function() {
+describe('<MenuItem>', function () {
   let shallowOptions;
   let ambManager;
 
-  beforeEach(function() {
+  beforeEach(function () {
     ambManager = createMockManager();
     shallowOptions = {
       wrappingComponent: ManagerContext.Provider,
-      wrappingComponentProps: { value: ambManager }
+      wrappingComponentProps: { value: ambManager },
     };
   });
 
-  it('DOM with only required props', function() {
+  it('DOM with only required props', function () {
     const menuItem = el(MenuItem, null, 'foo');
-    const wrapper = shallow(menuItem, shallowOptions)
-      .dive()
-      .dive();
+    const wrapper = shallow(menuItem, shallowOptions).dive().dive();
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
-  it('DOM with all possible props and element child', function() {
+  it('DOM with all possible props and element child', function () {
     const menuItem = el(
       MenuItem,
       {
@@ -40,52 +38,44 @@ describe('<MenuItem>', function() {
         style: { right: '1em' },
         text: 'horse',
         value: 'lamb',
-        'data-something-something': 'seven' // arbitrary prop
+        'data-something-something': 'seven', // arbitrary prop
       },
       el('a', { href: '#' }, 'foo')
     );
-    const wrapper = shallow(menuItem, shallowOptions)
-      .dive()
-      .dive();
+    const wrapper = shallow(menuItem, shallowOptions).dive().dive();
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
-  it('click without specified value prop', function() {
+  it('click without specified value prop', function () {
     const mockEvent = { bee: 'baa' };
     const menuItem = el(MenuItem, null, 'foo');
-    const wrapper = shallow(menuItem, shallowOptions)
-      .dive()
-      .dive();
+    const wrapper = shallow(menuItem, shallowOptions).dive().dive();
     wrapper.simulate('click', mockEvent);
     expect(ambManager.handleSelection).toHaveBeenCalledTimes(1);
     expect(ambManager.handleSelection.mock.calls[0]).toEqual([
       'foo',
-      mockEvent
+      mockEvent,
     ]);
   });
 
-  it('click with specified value prop', function() {
+  it('click with specified value prop', function () {
     const mockEvent = { bee: 'baa' };
     const menuItem = el(MenuItem, { value: 'bar' }, 'foo');
-    const wrapper = shallow(menuItem, shallowOptions)
-      .dive()
-      .dive();
+    const wrapper = shallow(menuItem, shallowOptions).dive().dive();
     wrapper.simulate('click', mockEvent);
     expect(ambManager.handleSelection).toHaveBeenCalledTimes(1);
     expect(ambManager.handleSelection.mock.calls[0]).toEqual([
       'bar',
-      mockEvent
+      mockEvent,
     ]);
   });
 
-  it('click with specified value prop', function() {
+  it('click with specified value prop', function () {
     const mockEnterEvent = createMockKeyEvent('Enter');
     const mockSpaceEvent = createMockKeyEvent(' ');
     const mockEscapeEvent = createMockKeyEvent('Escape');
     const menuItem = el(MenuItem, null, 'foo');
-    const wrapper = shallow(menuItem, shallowOptions)
-      .dive()
-      .dive();
+    const wrapper = shallow(menuItem, shallowOptions).dive().dive();
 
     wrapper.simulate('keyDown', mockEnterEvent);
     wrapper.simulate('keyDown', mockSpaceEvent);
@@ -93,17 +83,17 @@ describe('<MenuItem>', function() {
     expect(ambManager.handleSelection).toHaveBeenCalledTimes(2);
     expect(ambManager.handleSelection.mock.calls[0]).toEqual([
       'foo',
-      mockEnterEvent
+      mockEnterEvent,
     ]);
     expect(ambManager.handleSelection.mock.calls[1]).toEqual([
       'foo',
-      mockSpaceEvent
+      mockSpaceEvent,
     ]);
   });
 });
 
-describe('<MenuItem> rendered via renderToString', function() {
-  it('does not throw', function() {
+describe('<MenuItem> rendered via renderToString', function () {
+  it('does not throw', function () {
     const output = ReactDOMServer.renderToString(
       el(
         MockWrapper,
