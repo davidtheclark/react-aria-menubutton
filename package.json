@@ -15,6 +15,7 @@
     "umd": "npm run umd-unminified && npm run umd-minified",
     "format": "prettier --single-quote --write src/**/*.js demo/js/*.js",
     "build": "babel src -d dist --ignore src/__tests__",
+    "prepare": "husky install",
     "prepublishOnly": "npm run umd && npm run build"
   },
   "husky": {
@@ -58,46 +59,44 @@
     "react": "^16.3.0 || ^17.0.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-eslint": "^8.0.3",
-    "babel-loader": "^7.1.2",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/eslint-parser": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^9.0.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.15.1",
     "enzyme-to-json": "^3.4.3",
-    "eslint": "^4.13.1",
+    "eslint": "^8.0.0",
     "http-server": "^0.10.0",
-    "husky": "^2.7.0",
-    "jest": "^21.2.1",
+    "husky": "^8.0.0",
+    "jest": "^29.0.0",
+    "jest-environment-jsdom": "^29.5.0",
     "lint-staged": "^8.2.1",
-    "prettier": "^1.9.2",
+    "prettier": "^1.19.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-test-renderer": "^16.11.0",
-    "webpack": "^4.15.1",
-    "webpack-cli": "^3.0.8"
+    "webpack": "^5.0.0",
+    "webpack-cli": "^5.0.0"
   },
   "babel": {
     "presets": [
-      "react",
+      "@babel/preset-react",
       [
-        "env",
+        "@babel/preset-env",
         {
           "loose": true
         }
       ]
-    ],
-    "plugins": [
-      "transform-class-properties"
     ]
   },
   "jest": {
     "setupFiles": [
       "./src/__tests__/helpers/jest-setup.js"
     ],
+    "testEnvironment": "jsdom",
     "testRegex": "/__tests__/.*\\.test.js$",
     "clearMocks": true
   }

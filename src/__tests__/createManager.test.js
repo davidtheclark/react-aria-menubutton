@@ -1,5 +1,3 @@
-/* globals Promise */
-
 var createManager = require('../createManager');
 var createMockKeyEvent = require('./helpers/createMockKeyEvent');
 
