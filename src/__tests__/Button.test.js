@@ -179,6 +179,46 @@ describe('<Button>', function() {
     expect(enterEvent.preventDefault).not.toHaveBeenCalled();
     expect(ambManager.toggleMenu).not.toHaveBeenCalled();
   });
+
+  test('prevent manager event when enter key is released.', function() {
+    const wrapper = shallow(
+      el(Button, { tag: 'button' }, 'foo'),
+      shallowOptions
+    );
+    jest.spyOn(ambManager, 'toggleMenu').mockImplementation(() => {
+      ambManager.isOpen = !ambManager.isOpen;
+    });
+
+    wrapper.simulate('click');
+    expect(ambManager.isOpen).toBe(true);
+
+    wrapper.simulate('keydown', enterEvent);
+    expect(ambManager.isOpen).toBe(false);
+
+    wrapper.simulate('keyup', enterEvent);
+    expect(ambManager.isOpen).toBe(false);
+    expect(enterEvent.preventDefault).toHaveBeenCalled();
+  });
+
+  test('prevent manager event when space key is released.', function() {
+    const wrapper = shallow(
+      el(Button, { tag: 'button' }, 'foo'),
+      shallowOptions
+    );
+    jest.spyOn(ambManager, 'toggleMenu').mockImplementation(() => {
+      ambManager.isOpen = !ambManager.isOpen;
+    });
+
+    wrapper.simulate('click');
+    expect(ambManager.isOpen).toBe(true);
+
+    wrapper.simulate('keydown', spaceEvent);
+    expect(ambManager.isOpen).toBe(false);
+
+    wrapper.simulate('keyup', spaceEvent);
+    expect(ambManager.isOpen).toBe(false);
+    expect(spaceEvent.preventDefault).toHaveBeenCalled();
+  });
 });
 
 describe('<Button> rendered via renderToString', function() {
