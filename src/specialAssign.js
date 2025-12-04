@@ -1,4 +1,4 @@
-module.exports = function(a, b, reserved) {
+export default function(a, b, reserved) {
   reserved = reserved || {};
   // This will get id, className, style, etc.
   for (var x in b) {
@@ -6,4 +6,4 @@ module.exports = function(a, b, reserved) {
     if (reserved[x]) continue;
     a[x] = b[x];
   }
-};
+}

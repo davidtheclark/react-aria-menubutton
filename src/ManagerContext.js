@@ -1,5 +1,5 @@
-const React = require('react');
+import React from 'react';
 
 const AriaMenuButtonManagerContext = React.createContext();
 
-module.exports = AriaMenuButtonManagerContext;
+export default AriaMenuButtonManagerContext;

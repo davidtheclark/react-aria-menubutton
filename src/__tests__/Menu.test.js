@@ -1,13 +1,12 @@
-const React = require('react');
-const ReactDOMServer = require('react-dom/server');
-const shallow = require('enzyme').shallow;
-const mount = require('enzyme').mount;
-const shallowToJson = require('enzyme-to-json').shallowToJson;
-const ManagerContext = require('../ManagerContext');
-const Menu = require('../Menu');
-const MockWrapper = require('./helpers/MockWrapper');
-const createMockManager = require('./helpers/createMockManager');
-const createManager = require('../createManager');
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+import { shallow, mount } from 'enzyme';
+import { shallowToJson } from 'enzyme-to-json';
+import ManagerContext from '../ManagerContext';
+import Menu from '../Menu';
+import MockWrapper from './helpers/MockWrapper';
+import createMockManager from './helpers/createMockManager';
+import createManager from '../createManager';
 
 const el = React.createElement;
 

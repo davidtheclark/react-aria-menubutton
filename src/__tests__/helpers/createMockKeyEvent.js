@@ -1,7 +1,7 @@
-module.exports = function(key, keyCode) {
+export default function(key, keyCode) {
   return {
     key: key,
     keyCode: keyCode,
     preventDefault: jest.fn(),
   };
-};
+}

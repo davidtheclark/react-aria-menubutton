@@ -23,9 +23,9 @@ function closeMenu(menuId, closeOptions) {
   manager.closeMenu(closeOptions);
 }
 
-module.exports = {
-  registerManager: registerManager,
-  unregisterManager: unregisterManager,
-  openMenu: openMenu,
-  closeMenu: closeMenu
+export {
+  registerManager,
+  unregisterManager,
+  openMenu,
+  closeMenu
 };
