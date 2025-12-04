@@ -1,5 +1,5 @@
-const createFocusGroup = require('focus-group');
-const externalStateControl = require('./externalStateControl');
+import createFocusGroup from 'focus-group';
+import * as externalStateControl from './externalStateControl';
 
 const focusGroupOptions = {
   wrap: true,
@@ -166,8 +166,8 @@ function handleMenuKey(event) {
   }
 }
 
-module.exports = function(options) {
+export default function(options) {
   const newManager = Object.create(protoManager);
   newManager.init(options);
   return newManager;
-};
+}

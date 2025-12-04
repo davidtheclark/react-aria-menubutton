@@ -1,3 +1,5 @@
 node_modules
 demo
 umd
+dist
+demo-dist

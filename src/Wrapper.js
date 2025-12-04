@@ -1,9 +1,9 @@
-const React = require('react');
-const PropTypes = require('prop-types');
-const createManager = require('./createManager');
-const ManagerContext = require('./ManagerContext');
-const { refType } = require("./propTypes");
-const specialAssign = require('./specialAssign');
+import React from 'react';
+import PropTypes from 'prop-types';
+import createManager from './createManager';
+import ManagerContext from './ManagerContext';
+import { refType } from "./propTypes";
+import specialAssign from './specialAssign';
 
 const checkedProps = {
   children: PropTypes.node.isRequired,
@@ -54,7 +54,7 @@ class AriaMenuButtonWrapper extends React.Component {
   }
 }
 
-module.exports = React.forwardRef((props, ref) => {
+export default React.forwardRef((props, ref) => {
   const wrapperProps = { forwardedRef: ref };
   specialAssign(wrapperProps, props, { children: checkedProps.children, forwardedRef: checkedProps.forwardedRef });
   specialAssign(wrapperProps, { forwardedRef: ref });

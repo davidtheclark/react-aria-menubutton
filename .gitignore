@@ -3,3 +3,4 @@ demo/demo-bundle.js
 *.log
 umd
 dist
+demo-dist

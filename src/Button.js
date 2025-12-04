@@ -1,8 +1,8 @@
-const React = require('react');
-const PropTypes = require('prop-types');
-const ManagerContext = require('./ManagerContext');
-const { refType } = require("./propTypes");
-const specialAssign = require('./specialAssign');
+import React from 'react';
+import PropTypes from 'prop-types';
+import ManagerContext from './ManagerContext';
+import { refType } from "./propTypes";
+import specialAssign from './specialAssign';
 
 const checkedProps = {
   ambManager: PropTypes.object.isRequired,
@@ -114,7 +114,7 @@ class AriaMenuButtonButton extends React.Component {
   }
 }
 
-module.exports = React.forwardRef((props, ref) => React.createElement(
+export default React.forwardRef((props, ref) => React.createElement(
   ManagerContext.Consumer,
   null,
   (ambManager) => {

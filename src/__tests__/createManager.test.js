@@ -1,5 +1,5 @@
-var createManager = require('../createManager');
-var createMockKeyEvent = require('./helpers/createMockKeyEvent');
+import createManager from '../createManager';
+import createMockKeyEvent from './helpers/createMockKeyEvent';
 
 var mockNode = document.createElement('button');
 var nodeOne = document.createElement('button');

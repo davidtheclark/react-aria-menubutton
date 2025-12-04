@@ -1,6 +1,6 @@
-const React = require('react');
-const PropTypes = require('prop-types');
-const ManagerContext = require('../../ManagerContext');
+import React from 'react';
+import PropTypes from 'prop-types';
+import ManagerContext from '../../ManagerContext';
 
 class MockWrapper extends React.Component {
   static propTypes = {
@@ -21,4 +21,4 @@ class MockWrapper extends React.Component {
   }
 }
 
-module.exports = MockWrapper;
+export default MockWrapper;

@@ -1,10 +1,14 @@
-const externalStateControl = require('./externalStateControl');
+import { openMenu, closeMenu } from './externalStateControl';
+import Wrapper from './Wrapper';
+import Button from './Button';
+import Menu from './Menu';
+import MenuItem from './MenuItem';
 
-module.exports = {
-  Wrapper: require('./Wrapper'),
-  Button: require('./Button'),
-  Menu: require('./Menu'),
-  MenuItem: require('./MenuItem'),
-  openMenu: externalStateControl.openMenu,
-  closeMenu: externalStateControl.closeMenu
+export {
+  Wrapper,
+  Button,
+  Menu,
+  MenuItem,
+  openMenu,
+  closeMenu
 };

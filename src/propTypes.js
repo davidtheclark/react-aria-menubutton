@@ -1,8 +1,6 @@
-const PropTypes = require("prop-types");
+import PropTypes from "prop-types";
 
-module.exports = {
-  refType: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({ current: PropTypes.elementType })
-  ])
-};
+export const refType = PropTypes.oneOfType([
+  PropTypes.func,
+  PropTypes.shape({ current: PropTypes.elementType })
+]);
