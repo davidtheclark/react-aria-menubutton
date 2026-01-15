@@ -1,5 +1,63 @@
 # Changelog
 
+## Unreleased
+
+### Breaking Changes
+
+- **Migrated entire codebase from JavaScript to TypeScript** with strict type checking (no `any` types)
+- **Removed `prop-types` dependency** - runtime prop validation replaced with compile-time TypeScript type checking
+- **Expanded React peer dependency** to include React 18 (`^16.3.0 || ^17.0.0 || ^18.0.0`)
+- **Converted class components to functional components** using React hooks internally
+
+### Added
+
+- **Full TypeScript support** - library is now written in TypeScript with strict mode enabled
+- **Built-in type declarations** - ships with `.d.ts` files, no need to install `@types` packages
+- **Exported TypeScript types** for library consumers:
+  - `WrapperProps`, `ButtonProps`, `MenuProps`, `MenuItemProps`
+  - `MenuChildren`, `MenuChildrenState`
+  - `OpenMenuOptions`, `CloseMenuOptions`
+- **ESLint with TypeScript parser** - replaced `@babel/eslint-parser` with `typescript-eslint`
+- **ESLint flat config** (`eslint.config.ts`) - migrated from legacy `.eslintrc` format using native config array (not deprecated `tseslint.config()`)
+- **Prettier integration** for consistent code formatting
+- **New npm scripts**:
+  - `typecheck` - run TypeScript type checking
+  - Updated `format` - format TypeScript files with Prettier
+- **Updated GitHub Actions workflow** (`build.yml`):
+  - Added type check step
+  - Added format check step
+  - Updated to actions/checkout@v4 and actions/setup-node@v4
+  - Organized into clearly named steps
+- **New `format:check` script** for CI to verify formatting without modifying files
+- **Updated README.md** with TypeScript documentation, examples, and exported types
+- **Type declarations for dependencies** - added custom `.d.ts` files for `focus-group` and `teeny-tap`
+
+### Changed
+
+- **Config files migrated to TypeScript**:
+  - `vite.config.js` → `vite.config.ts`
+  - `vite.lib.config.js` → `vite.lib.config.ts`
+  - `vitest.config.js` → `vitest.config.ts`
+  - `eslint.config.js` → `eslint.config.ts`
+- **Demo files migrated to TypeScript** with functional components and React 18's `createRoot` API
+- **Updated dev dependencies** to latest versions:
+  - ESLint v9, Prettier v3, TypeScript v5.7
+  - `@testing-library/react` v14 (React 18 compatible)
+  - Added `vite-plugin-dts` for declaration file generation
+- **Added `"type": "module"`** to package.json for ES modules support
+- **Added `"exports"` field** to package.json for modern ESM/CJS resolution
+- **Added `"sideEffects": false`** for better tree-shaking
+- **Added `"files"` field** to control npm package contents
+- **Added `"engines"` field** to specify Node.js >=18 requirement
+- **Lint-staged** now checks `.ts` and `.tsx` files
+
+### Removed
+
+- **Removed Babel dependencies**: `@babel/core`, `@babel/eslint-parser`, `@babel/preset-react`
+- **Removed `prop-types`** from runtime dependencies
+- **Removed `.eslintrc`** - replaced with `eslint.config.ts`
+- **Removed legacy JavaScript source files** - all converted to TypeScript
+
 ## 7.0.3
 - Fixes `onSelection` doesn't update on prop change issue [#142](https://github.com/davidtheclark/react-aria-menubutton/issues/142)
 
