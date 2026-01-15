@@ -1,6 +1,6 @@
 # react-aria-menubutton [![Build Status](https://github.com/davidtheclark/react-aria-menubutton/actions/workflows/build.yml/badge.svg)](https://github.com/davidtheclark/react-aria-menubutton/actions)
 
-A React component (set of components, really) that will help you build accessible menu buttons by providing keyboard interactions and ARIA attributes aligned with [the WAI-ARIA Menu Button Design Pattern](http://www.w3.org/TR/wai-aria-practices/#menubutton).
+A fully accessible, flexible React menu button component with built-in **TypeScript support**. Provides keyboard interactions and ARIA attributes aligned with [the WAI-ARIA Menu Button Design Pattern](http://www.w3.org/TR/wai-aria-practices/#menubutton).
 
 Please check out [the demo](https://davidtheclark.github.io/react-aria-menubutton/demo/).
 
@@ -58,25 +58,27 @@ It does not provide any classes or a stylesheet that you'll have to figure out h
 npm install react-aria-menubutton
 ```
 
-The modular approach of this library means you're much better off building it into your code with a module bundling system like browserify or webpack.
+**TypeScript users:** This library is written in TypeScript and ships with built-in type declarations. No need to install `@types` packages!
 
-But if you need a UMD version (which will include `focus-group` and `teeny-tap` in the bundle, but of course not `React` or `ReactDOM`), you can get it via npmcdm at `https://unpkg.com/react-aria-menubutton@[version-of-choice]/umd/ReactAriaMenuButton.js`.
-If you don't know about unpkg, [read about it here](https://unpkg.com).
+The modular approach of this library means you're much better off building it into your code with a module bundling system like Vite, webpack, or similar.
 
 ## Browser Support
 
-Basically IE9+.
+Modern browsers (ES2020+). For older browser support, you may need to transpile the library.
 
 ## Usage
 
-```js
-const AriaMenuButton = require('react-aria-menubutton');
+```tsx
+import { Wrapper, Button, Menu, MenuItem } from 'react-aria-menubutton';
 
-// Now use AriaMenuButton.Wrapper, AriaMenuButton.Button,
-// AriaMenuButton.Menu, and AriaMenuButton.MenuItem ...
-
-// ... or with es2015
-import { Button, Wrapper, Menu, MenuItem } from 'react-aria-menubutton';
+// TypeScript: You can also import types
+import type { 
+  WrapperProps, 
+  ButtonProps, 
+  MenuProps, 
+  MenuItemProps,
+  MenuChildrenState 
+} from 'react-aria-menubutton';
 ```
 
 ## Examples
@@ -85,128 +87,114 @@ For details about why the examples work, read the API documentation below.
 
 You can also see more examples by looking in `demo/`.
 
-```js
-// Very simple ES2015 example
+### Basic Example (TypeScript)
 
-import React from 'react';
+```tsx
+import { useState } from 'react';
 import { Wrapper, Button, Menu, MenuItem } from 'react-aria-menubutton';
 
 const menuItemWords = ['foo', 'bar', 'baz'];
 
-class MyMenuButton extends React.Component {
-  render() {
-    const menuItems = menuItemWords.map((word, i) => {
-      return (
-        <li key={i}>
-          <MenuItem className='MyMenuButton-menuItem'>
-            {word}
-          </MenuItem>
-        </li>
-      );
-    });
+function MyMenuButton() {
+  const [selected, setSelected] = useState('');
 
-    return (
-      <Wrapper
-        className='MyMenuButton'
-        onSelection={handleSelection}
-      >
-        <Button className='MyMenuButton-button'>
-          click me
-        </Button>
-        <Menu className='MyMenuButton-menu'>
+  const handleSelection = (value: unknown) => {
+    setSelected(value as string);
+  };
+
+  const menuItems = menuItemWords.map((word, i) => (
+    <li key={i}>
+      <MenuItem className="MyMenuButton-menuItem">{word}</MenuItem>
+    </li>
+  ));
+
+  return (
+    <div>
+      <Wrapper className="MyMenuButton" onSelection={handleSelection}>
+        <Button className="MyMenuButton-button">click me</Button>
+        <Menu className="MyMenuButton-menu">
           <ul>{menuItems}</ul>
         </Menu>
       </Wrapper>
-    );
-  }
+      <p>Selected: {selected}</p>
+    </div>
+  );
 }
-
-function handleSelection(value, event) { .. }
 ```
 
-```js
-// Slightly more complex, ES5 example:
-// - MenuItems have hidden values that are passed
-//   to the selection handler
-// - User can navigate the MenuItems by typing the
-//   first letter of a person's name, even though
-//   each MenuItem's child is not simple text
-// - Menu has a function for a child
-// - React's CSSTransitionGroup is used for open-close animation
+### Advanced Example with Typed Values
 
-var React = require('react');
-var CSSTransitionGroup = require('react-transition-group/CSSTransitionGroup');
-var AriaMenuButton = require('react-aria-menubutton');
+```tsx
+import { useState } from 'react';
+import { 
+  Wrapper, 
+  Button, 
+  Menu, 
+  MenuItem,
+  type MenuChildrenState 
+} from 'react-aria-menubutton';
 
-var people = [{
-  name: 'Charles Choo-Choo',
-  id: 1242
-}, {
-  name: 'Mina Meowmers',
-  id: 8372
-}, {
-  name: 'Susan Sailor',
-  id: 2435
-}];
+interface Person {
+  name: string;
+  id: number;
+}
 
-var MyMenuButton = React.createClass({
-  render: function() {
-    var peopleMenuItems = people.map(function(person, i) {
-      return (
-        <AriaMenuButton.MenuItem
-          key={i}
-          tag='li'
-          value={person.id}
-          text={person.name}
-          className='PeopleMenu-person'
-        >
-          <div className='PeopleMenu-personPhoto'>
-            <img src={'/people/pictures/' + person.id + '.jpg'}/ >
-          </div>
-          <div className='PeopleMenu-personName'>
-            {person.name}
-          </div>
-        </AriaMenuButton.MenuItem>
-      );
-    });
+const people: Person[] = [
+  { name: 'Charles Choo-Choo', id: 1242 },
+  { name: 'Mina Meowmers', id: 8372 },
+  { name: 'Susan Sailor', id: 2435 },
+];
 
-    var peopleMenuInnards = function(menuState) {
-      var menu = (!menuState.isOpen) ? false : (
-        <div
-          className='PeopleMenu-menu'
-          key='menu'
-        >
-          {peopleMenuItems}
-        </div>
-      );
-      return (
-        <CSSTransitionGroup transitionName='people'>
-          {menu}
-        </CSSTransitionGroup>
-      );
-    };
+function PeopleMenu() {
+  const [selectedId, setSelectedId] = useState<number | null>(null);
 
-    return (
-      <AriaMenuButton.Wrapper
-        className='PeopleMenu'
-        onSelection={handleSelection}
-        style={{ marginTop: 20 }}
-      >
-        <AriaMenuButton.Button className='PeopleMenu-trigger'>
-          <span className='PeopleMenu-triggerText'>
-            Select a person
-          </span>
-          <span className='PeopleMenu-triggerIcon' />
-        </AriaMenuButton.Button>
-        <AriaMenuButton.Menu>
-          {peopleMenuInnards}
-        </AriaMenuButton.Menu>
-      </AriaMenuButton.Wrapper>
-    );
-  }
-});
+  const handleSelection = (value: unknown) => {
+    setSelectedId(value as number);
+  };
 
-function handleSelection(value, event) { .. }
+  const menuItems = people.map((person) => (
+    <MenuItem
+      key={person.id}
+      tag="li"
+      value={person.id}
+      text={person.name}
+      className="PeopleMenu-person"
+    >
+      <div className="PeopleMenu-personName">{person.name}</div>
+    </MenuItem>
+  ));
+
+  // Using function children with typed state
+  const menuContent = (menuState: MenuChildrenState) => {
+    if (!menuState.isOpen) return null;
+    return <ul className="PeopleMenu-menu">{menuItems}</ul>;
+  };
+
+  return (
+    <Wrapper className="PeopleMenu" onSelection={handleSelection}>
+      <Button className="PeopleMenu-trigger">Select a person</Button>
+      <Menu>{menuContent}</Menu>
+    </Wrapper>
+  );
+}
+```
+
+### Programmatic Control
+
+```tsx
+import { openMenu, closeMenu } from 'react-aria-menubutton';
+
+// Open menu with id "my-menu"
+openMenu('my-menu');
+
+// Open without focusing the first item
+openMenu('my-menu', { focusMenu: false });
+
+// Close menu
+closeMenu('my-menu');
+
+// Close and focus the button
+closeMenu('my-menu', { focusButton: true });
 ```
 
 ## API
@@ -373,10 +361,40 @@ These are the `closeOptions`:
 
 - **focusButton** { Boolean }: If `true`, the widget's button will receive focus when the menu closes. Default: `false`.
 
+## TypeScript
+
+This library is written in TypeScript and provides built-in type declarations.
+
+### Exported Types
+
+```tsx
+import type {
+  // Component Props
+  WrapperProps,
+  ButtonProps,
+  MenuProps,
+  MenuItemProps,
+  
+  // Menu children function state
+  MenuChildren,
+  MenuChildrenState,
+  
+  // Programmatic control options
+  OpenMenuOptions,
+  CloseMenuOptions,
+} from 'react-aria-menubutton';
+```
+
 ## Contributing & Development
 
 Please note that this project is released with a Contributor Code of Conduct. By participating in this project you agree to abide by its terms.
 
-Lint with `npm run lint`.
+### Scripts
 
-Test with `npm run test-dev`. A browser should open; look at the console log for TAP output.
+- `npm run typecheck` - Type check with TypeScript
+- `npm run lint` - Lint with ESLint
+- `npm run format` - Format with Prettier
+- `npm run format:check` - Check formatting
+- `npm test` - Run tests
+- `npm run build` - Build the library
+- `npm start` - Start the demo dev server
