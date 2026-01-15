@@ -2,8 +2,24 @@
   "name": "react-aria-menubutton",
   "version": "7.0.3",
   "description": "A fully accessible and flexible React-powered menu button",
+  "type": "module",
   "main": "dist/react-aria-menubutton.cjs.js",
   "module": "dist/react-aria-menubutton.es.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/react-aria-menubutton.es.js",
+      "require": "./dist/react-aria-menubutton.cjs.js"
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "lint": "eslint .",
     "start": "vite",
@@ -11,10 +27,12 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "format": "prettier --single-quote --write src/**/*.js demo/js/*.js",
-    "build": "vite build -c vite.lib.config.js",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\" \"demo/js/*.{ts,tsx}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx}\" \"demo/js/*.{ts,tsx}\"",
+    "build": "vite build -c vite.lib.config.ts",
     "prepare": "husky install",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "typecheck": "tsc"
   },
   "husky": {
     "hooks": {
@@ -22,7 +40,10 @@
     }
   },
   "lint-staged": {
-    "*.js": "eslint"
+    "*.{ts,tsx}": [
+      "eslint",
+      "prettier --check"
+    ]
   },
   "repository": {
     "type": "git",
@@ -50,28 +71,37 @@
   ],
   "dependencies": {
     "focus-group": "^0.3.1",
-    "prop-types": "^15.6.0",
     "teeny-tap": "^0.2.0"
   },
   "peerDependencies": {
-    "react": "^16.3.0 || ^17.0.0"
+    "react": "^16.3.0 || ^17.0.0 || ^18.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0",
-    "@babel/eslint-parser": "^7.0.0",
-    "@babel/preset-react": "^7.0.0",
+    "@eslint/js": "^9.28.0",
     "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/react": "^12.1.5",
+    "@testing-library/react": "^14.3.1",
+    "@types/node": "^25.0.8",
+    "@types/react": "^18.3.23",
+    "@types/react-dom": "^18.3.7",
+    "@types/react-transition-group": "^4.4.12",
     "@vitejs/plugin-react": "^5.1.1",
     "@vitest/coverage-v8": "^3.2.4",
-    "eslint": "^8.0.0",
+    "eslint": "^9.28.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
     "husky": "^8.0.0",
+    "jiti": "^2.6.1",
     "jsdom": "^26.1.0",
     "lint-staged": "^8.2.1",
-    "prettier": "^1.19.1",
-    "react": "^16.11.0",
-    "react-dom": "^16.11.0",
+    "prettier": "^3.5.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-transition-group": "^4.4.5",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.34.0",
     "vite": "^7.2.6",
+    "vite-plugin-dts": "^4.5.4",
     "vitest": "^3.2.4"
   }
 }
