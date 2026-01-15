@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import createManager from './createManager';
-import ManagerContext from './ManagerContext';
-import { refType } from "./propTypes";
-import specialAssign from './specialAssign';
+import React from "react";
+import PropTypes from "prop-types";
+import createManager from "../createManager";
+import ManagerContext from "../ManagerContext";
+import { refType } from "../propTypes";
+import specialAssign from "../specialAssign";
 
 const checkedProps = {
   children: PropTypes.node.isRequired,
@@ -15,19 +15,19 @@ const checkedProps = {
   tag: PropTypes.string
 };
 
-const managerOptionsFromProps = (props) => {
+const managerOptionsFromProps = props => {
   return {
     onMenuToggle: props.onMenuToggle,
     onSelection: props.onSelection,
     closeOnSelection: props.closeOnSelection,
     closeOnBlur: props.closeOnBlur,
     id: props.id
-  }
-}
+  };
+};
 
 class AriaMenuButtonWrapper extends React.Component {
   static propTypes = checkedProps;
-  static defaultProps = { tag: 'div' };
+  static defaultProps = { tag: "div" };
 
   constructor(props) {
     super(props);
@@ -35,7 +35,7 @@ class AriaMenuButtonWrapper extends React.Component {
   }
 
   componentDidUpdate() {
-    this.manager.updateOptions(managerOptionsFromProps(this.props))
+    this.manager.updateOptions(managerOptionsFromProps(this.props));
   }
 
   render() {
@@ -45,18 +45,21 @@ class AriaMenuButtonWrapper extends React.Component {
     return React.createElement(
       ManagerContext.Provider,
       { value: this.manager },
-      React.createElement(
-        this.props.tag,
-        wrapperProps,
-        this.props.children,
-      ),
+      React.createElement(this.props.tag, wrapperProps, this.props.children)
     );
   }
 }
 
 export default React.forwardRef((props, ref) => {
   const wrapperProps = { forwardedRef: ref };
-  specialAssign(wrapperProps, props, { children: checkedProps.children, forwardedRef: checkedProps.forwardedRef });
+  specialAssign(wrapperProps, props, {
+    children: checkedProps.children,
+    forwardedRef: checkedProps.forwardedRef
+  });
   specialAssign(wrapperProps, { forwardedRef: ref });
-  return React.createElement(AriaMenuButtonWrapper, wrapperProps, props.children);
+  return React.createElement(
+    AriaMenuButtonWrapper,
+    wrapperProps,
+    props.children
+  );
 });

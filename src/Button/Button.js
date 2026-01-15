@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import ManagerContext from './ManagerContext';
-import { refType } from "./propTypes";
-import specialAssign from './specialAssign';
+import React from "react";
+import PropTypes from "prop-types";
+import ManagerContext from "../ManagerContext";
+import { refType } from "../propTypes";
+import specialAssign from "../specialAssign";
 
 const checkedProps = {
   ambManager: PropTypes.object.isRequired,
@@ -14,19 +14,19 @@ const checkedProps = {
 
 // List retrieved from https://www.w3schools.com/tags/att_disabled.asp
 const disabledSupportedTags = () => [
-  'button',
-  'fieldset',
-  'input',
-  'optgroup',
-  'option',
-  'select',
-  'textarea'
+  "button",
+  "fieldset",
+  "input",
+  "optgroup",
+  "option",
+  "select",
+  "textarea"
 ];
 
 class AriaMenuButtonButton extends React.Component {
   static propTypes = checkedProps;
 
-  static defaultProps = { tag: 'span' };
+  static defaultProps = { tag: "span" };
 
   ref = React.createRef();
 
@@ -44,7 +44,7 @@ class AriaMenuButtonButton extends React.Component {
     const ambManager = this.props.ambManager;
 
     switch (event.key) {
-      case 'ArrowDown':
+      case "ArrowDown":
         event.preventDefault();
         if (!ambManager.isOpen) {
           ambManager.openMenu();
@@ -52,12 +52,12 @@ class AriaMenuButtonButton extends React.Component {
           ambManager.focusItem(0);
         }
         break;
-      case 'Enter':
-      case ' ':
+      case "Enter":
+      case " ":
         event.preventDefault();
         ambManager.toggleMenu();
         break;
-      case 'Escape':
+      case "Escape":
         ambManager.handleMenuKey(event);
         break;
       default:
@@ -86,12 +86,12 @@ class AriaMenuButtonButton extends React.Component {
 
     const buttonProps = {
       // "The menu button itself has a role of button."
-      role: 'button',
-      tabIndex: props.disabled ? '' : '0',
+      role: "button",
+      tabIndex: props.disabled ? "" : "0",
       // "The menu button has an aria-haspopup property, set to true."
-      'aria-haspopup': true,
-      'aria-expanded': ambManager.isOpen,
-      'aria-disabled': props.disabled,
+      "aria-haspopup": true,
+      "aria-expanded": ambManager.isOpen,
+      "aria-disabled": props.disabled,
       onKeyDown: this.handleKeyDown,
       onClick: this.handleClick
     };
@@ -114,16 +114,18 @@ class AriaMenuButtonButton extends React.Component {
   }
 }
 
-export default React.forwardRef((props, ref) => React.createElement(
-  ManagerContext.Consumer,
-  null,
-  (ambManager) => {
+export default React.forwardRef((props, ref) =>
+  React.createElement(ManagerContext.Consumer, null, ambManager => {
     const buttonProps = { ambManager, forwardedRef: ref };
     specialAssign(buttonProps, props, {
       ambManager: checkedProps.ambManager,
       children: checkedProps.children,
       forwardedRef: checkedProps.forwardedRef
     });
-    return React.createElement(AriaMenuButtonButton, buttonProps, props.children);
-  }
-));
+    return React.createElement(
+      AriaMenuButtonButton,
+      buttonProps,
+      props.children
+    );
+  })
+);

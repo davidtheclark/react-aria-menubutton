@@ -1,10 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import ManagerContext from '../../ManagerContext';
+import React from "react";
+import PropTypes from "prop-types";
+import ManagerContext from "../ManagerContext";
 
 class MockWrapper extends React.Component {
   static propTypes = {
-    mockManager: PropTypes.object.isRequired,
+    mockManager: PropTypes.object.isRequired
   };
 
   constructor(props) {
@@ -16,7 +16,7 @@ class MockWrapper extends React.Component {
     return React.createElement(
       ManagerContext.Provider,
       { value: this.props.mockManager },
-      React.createElement('div', null, this.props.children)
+      React.createElement("div", null, this.props.children)
     );
   }
 }
