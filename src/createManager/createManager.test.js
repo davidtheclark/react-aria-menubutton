@@ -1,46 +1,50 @@
-import createManager from '../createManager';
-import createMockKeyEvent from './helpers/createMockKeyEvent';
+import createManager from "./createManager";
+import createMockKeyEvent from "../test-utils/createMockKeyEvent";
 
-var mockNode = document.createElement('button');
-var nodeOne = document.createElement('button');
-nodeOne.focus = jest.fn();
-var nodeTwo = document.createElement('button');
-nodeTwo.focus = jest.fn();
-document.body.appendChild(nodeOne);
-document.body.appendChild(nodeTwo);
+var mockNode;
+var nodeOne;
+var nodeTwo;
 
 function createManagerWithMockedElements(options) {
+  mockNode = document.createElement("button");
+  nodeOne = document.createElement("button");
+  nodeOne.focus = vi.fn();
+  nodeTwo = document.createElement("button");
+  nodeTwo.focus = vi.fn();
+  document.body.appendChild(nodeOne);
+  document.body.appendChild(nodeTwo);
+
   var manager = createManager(options);
   manager.focusGroup.addMember({
     node: nodeOne,
-    text: 'first'
+    text: "first"
   });
   manager.focusGroup.addMember({
     node: nodeTwo,
-    text: 'second'
+    text: "second"
   });
   manager.button = {
     ref: { current: mockNode },
-    setState: jest.fn()
+    setState: vi.fn()
   };
   manager.menu = {
-    setState: jest.fn()
+    setState: vi.fn()
   };
-  manager.focusItem = jest.fn();
+  manager.focusItem = vi.fn();
   return manager;
 }
 
-describe('createManager', function() {
-  it('initalizes', function() {
+describe("createManager", function() {
+  it("initalizes", function() {
     var manager = createManagerWithMockedElements();
     expect(manager.isOpen).toBe(false);
     expect(manager.options.closeOnSelection).toBeTruthy();
     expect(manager.options.closeOnBlur).toBeTruthy();
   });
 
-  it('Manager#update', function() {
+  it("Manager#update", function() {
     var manager = createManagerWithMockedElements({
-      onMenuToggle: jest.fn()
+      onMenuToggle: vi.fn()
     });
     manager.update();
     expect(manager.menu.setState).toHaveBeenCalledTimes(1);
@@ -57,7 +61,7 @@ describe('createManager', function() {
     ]);
   });
 
-  it('Manager#openMenu without focusing in menu', function() {
+  it("Manager#openMenu without focusing in menu", function() {
     var manager = createManagerWithMockedElements();
     manager.openMenu({ focusMenu: false });
     expect(manager.isOpen).toBe(true);
@@ -74,7 +78,7 @@ describe('createManager', function() {
     });
   });
 
-  it('Manager#openMenu focusing in menu', function() {
+  it("Manager#openMenu focusing in menu", function() {
     var manager = createManagerWithMockedElements();
     manager.openMenu();
     expect(manager.isOpen).toBe(true);
@@ -92,10 +96,10 @@ describe('createManager', function() {
     });
   });
 
-  it('Manager#closeMenu focusing on button', function() {
-    mockNode.focus = jest.fn();
-
+  it("Manager#closeMenu focusing on button", function() {
     var manager = createManagerWithMockedElements();
+    mockNode.focus = vi.fn();
+
     manager.isOpen = true;
     manager.closeMenu({ focusButton: true });
 
@@ -109,76 +113,76 @@ describe('createManager', function() {
     expect(mockNode.focus).toHaveBeenCalledTimes(1);
   });
 
-  it('Manager#closeMenu without focusing on button', function() {
-    mockNode.focus = jest.fn();
-
+  it("Manager#closeMenu without focusing on button", function() {
     var manager = createManagerWithMockedElements();
+    mockNode.focus = vi.fn();
+
     manager.isOpen = true;
     manager.closeMenu({ focusButton: false });
 
     expect(mockNode.focus).not.toHaveBeenCalled();
   });
 
-  it('Manager#toggleMenu when closed', function() {
+  it("Manager#toggleMenu when closed", function() {
     var manager = createManagerWithMockedElements();
-    manager.openMenu = jest.fn();
-    manager.closeMenu = jest.fn();
+    manager.openMenu = vi.fn();
+    manager.closeMenu = vi.fn();
     manager.toggleMenu();
     expect(manager.openMenu).toHaveBeenCalledTimes(1);
     expect(manager.closeMenu).not.toHaveBeenCalled();
   });
 
-  it('Manager#toggleMenu when open', function() {
+  it("Manager#toggleMenu when open", function() {
     var manager = createManagerWithMockedElements();
     manager.isOpen = true;
-    manager.openMenu = jest.fn();
-    manager.closeMenu = jest.fn();
+    manager.openMenu = vi.fn();
+    manager.closeMenu = vi.fn();
     manager.toggleMenu();
     expect(manager.openMenu).not.toHaveBeenCalled();
     expect(manager.closeMenu).toHaveBeenCalledTimes(1);
   });
 
-  it('Manager#handleSelection A', function() {
-    var mockOnSelection = jest.fn();
+  it("Manager#handleSelection A", function() {
+    var mockOnSelection = vi.fn();
     var manager = createManagerWithMockedElements({
       onSelection: mockOnSelection
     });
-    manager.closeMenu = jest.fn();
-    manager.handleSelection('foo', { bar: 1 });
+    manager.closeMenu = vi.fn();
+    manager.handleSelection("foo", { bar: 1 });
     expect(manager.closeMenu).toHaveBeenCalledTimes(1);
     expect(manager.closeMenu.mock.calls[0]).toEqual([{ focusButton: true }]);
     expect(mockOnSelection).toHaveBeenCalledTimes(1);
-    expect(mockOnSelection.mock.calls[0]).toEqual(['foo', { bar: 1 }]);
+    expect(mockOnSelection.mock.calls[0]).toEqual(["foo", { bar: 1 }]);
   });
 
-  it('Manager#handleSelection B', function() {
-    var mockOnSelection = jest.fn();
+  it("Manager#handleSelection B", function() {
+    var mockOnSelection = vi.fn();
     var manager = createManagerWithMockedElements({
       onSelection: mockOnSelection,
       closeOnSelection: false
     });
-    manager.closeMenu = jest.fn();
-    manager.handleSelection('foo', { bar: 1 });
+    manager.closeMenu = vi.fn();
+    manager.handleSelection("foo", { bar: 1 });
     expect(manager.closeMenu).not.toHaveBeenCalled();
     expect(mockOnSelection).toHaveBeenCalledTimes(1);
-    expect(mockOnSelection.mock.calls[0]).toEqual(['foo', { bar: 1 }]);
+    expect(mockOnSelection.mock.calls[0]).toEqual(["foo", { bar: 1 }]);
   });
 
-  it('Manager#handleMenuKey on closed menu', function() {
-    var escapeEvent = createMockKeyEvent('Escape');
+  it("Manager#handleMenuKey on closed menu", function() {
+    var escapeEvent = createMockKeyEvent("Escape");
     var manager = createManagerWithMockedElements();
-    manager.closeMenu = jest.fn();
+    manager.closeMenu = vi.fn();
 
     manager.handleMenuKey(escapeEvent);
     expect(escapeEvent.preventDefault).not.toHaveBeenCalled();
     expect(manager.closeMenu).not.toHaveBeenCalled();
   });
 
-  it('Manager#handleMenuKey on open menu', function() {
-    var escapeEvent = createMockKeyEvent('Escape');
+  it("Manager#handleMenuKey on open menu", function() {
+    var escapeEvent = createMockKeyEvent("Escape");
     var manager = createManagerWithMockedElements();
     manager.isOpen = true;
-    manager.closeMenu = jest.fn();
+    manager.closeMenu = vi.fn();
 
     manager.handleMenuKey(escapeEvent);
     expect(escapeEvent.preventDefault).toHaveBeenCalledTimes(1);

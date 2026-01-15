@@ -4,13 +4,27 @@
   "env": {
     "es6": true,
     "node": true,
-    "browser": true,
-    "jest": true
+    "browser": true
   },
   "parserOptions": {
+    "requireConfigFile": false,
+    "babelOptions": {
+      "presets": ["@babel/preset-react"]
+    },
     "ecmaFeatures": {
       "jsx": true
     }
+  },
+  "globals": {
+    "vi": "readonly",
+    "describe": "readonly",
+    "it": "readonly",
+    "test": "readonly",
+    "expect": "readonly",
+    "beforeEach": "readonly",
+    "afterEach": "readonly",
+    "beforeAll": "readonly",
+    "afterAll": "readonly"
   },
   "rules": {
     "consistent-this": 0,

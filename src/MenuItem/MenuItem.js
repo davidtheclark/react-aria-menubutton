@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import ManagerContext from './ManagerContext';
-import { refType } from "./propTypes";
-import specialAssign from './specialAssign';
+import React from "react";
+import PropTypes from "prop-types";
+import ManagerContext from "../ManagerContext";
+import { refType } from "../propTypes";
+import specialAssign from "../specialAssign";
 
 const checkedProps = {
   ambManager: PropTypes.object.isRequired,
@@ -15,7 +15,7 @@ const checkedProps = {
 
 class AriaMenuButtonMenuItem extends React.Component {
   static propTypes = checkedProps;
-  static defaultProps = { tag: 'div' };
+  static defaultProps = { tag: "div" };
 
   ref = React.createRef();
 
@@ -27,17 +27,18 @@ class AriaMenuButtonMenuItem extends React.Component {
   }
 
   handleKeyDown = event => {
-    if (event.key !== 'Enter' && event.key !== ' ') return;
-    if (this.props.tag === 'a' && this.props.href) return;
+    if (event.key !== "Enter" && event.key !== " ") return;
+    if (this.props.tag === "a" && this.props.href) return;
     event.preventDefault();
     this.selectItem(event);
   };
 
   selectItem = event => {
     // If there's no value, we'll send the child
-    const value = typeof this.props.value !== 'undefined'
-      ? this.props.value
-      : this.props.children;
+    const value =
+      typeof this.props.value !== "undefined"
+        ? this.props.value
+        : this.props.children;
     this.props.ambManager.handleSelection(value, event);
   };
 
@@ -54,8 +55,8 @@ class AriaMenuButtonMenuItem extends React.Component {
     const menuItemProps = {
       onClick: this.selectItem,
       onKeyDown: this.handleKeyDown,
-      role: 'menuitem',
-      tabIndex: '-1',
+      role: "menuitem",
+      tabIndex: "-1",
       ref: this.setRef
     };
 
@@ -69,16 +70,18 @@ class AriaMenuButtonMenuItem extends React.Component {
   }
 }
 
-export default React.forwardRef((props, ref) => React.createElement(
-  ManagerContext.Consumer,
-  null,
-  (ambManager) => {
+export default React.forwardRef((props, ref) =>
+  React.createElement(ManagerContext.Consumer, null, ambManager => {
     const buttonProps = { ambManager, forwardedRef: ref };
     specialAssign(buttonProps, props, {
       ambManager: checkedProps.ambManager,
       children: checkedProps.children,
       forwardedRef: checkedProps.forwardedRef
     });
-    return React.createElement(AriaMenuButtonMenuItem, buttonProps, props.children);
-  }
-));
+    return React.createElement(
+      AriaMenuButtonMenuItem,
+      buttonProps,
+      props.children
+    );
+  })
+);

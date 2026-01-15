@@ -4,3 +4,4 @@ demo/demo-bundle.js
 umd
 dist
 demo-dist
+coverage

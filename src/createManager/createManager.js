@@ -1,5 +1,5 @@
-import createFocusGroup from 'focus-group';
-import * as externalStateControl from './externalStateControl';
+import createFocusGroup from "focus-group";
+import * as externalStateControl from "../externalStateControl";
 
 const focusGroupOptions = {
   wrap: true,
@@ -35,11 +35,11 @@ const protoManager = {
 
     this.options = options || this.options || {};
 
-    if (typeof this.options.closeOnSelection === 'undefined') {
+    if (typeof this.options.closeOnSelection === "undefined") {
       this.options.closeOnSelection = true;
     }
 
-    if (typeof this.options.closeOnBlur === 'undefined') {
+    if (typeof this.options.closeOnBlur === "undefined") {
       this.options.closeOnBlur = true;
     }
 
@@ -50,7 +50,6 @@ const protoManager = {
     if (oldOptions && oldOptions.id && oldOptions.id !== this.options.id) {
       externalStateControl.unregisterManager(this.options.id, this);
     }
-
   },
 
   focusItem(index) {
@@ -150,15 +149,15 @@ function handleMenuKey(event) {
     switch (event.key) {
       // With focus on the drop-down menu, pressing Escape closes
       // the menu and returns focus to the button.
-      case 'Escape':
+      case "Escape":
         event.preventDefault();
         this.closeMenu({ focusButton: true });
         break;
-      case 'Home':
+      case "Home":
         event.preventDefault();
         this.focusGroup.moveFocusToFirst();
         break;
-      case 'End':
+      case "End":
         event.preventDefault();
         this.focusGroup.moveFocusToLast();
         break;
