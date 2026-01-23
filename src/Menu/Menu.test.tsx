@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import ReactDOMServer from "react-dom/server";
-import { render, screen, fireEvent, act } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
+import { act } from "react";
 import ManagerContext from "../ManagerContext";
 import Menu from "./Menu";
 import MockWrapper from "../test-utils/MockWrapper";
