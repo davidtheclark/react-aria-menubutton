@@ -173,7 +173,9 @@ describe("<Menu> manager contract", function () {
 
     // Use function children so the menu renders even when closed
     renderWithManager(
-      <Menu>{({ isOpen }) => <div>Menu is {isOpen ? "open" : "closed"}</div>}</Menu>,
+      <Menu>
+        {({ isOpen }) => <div>Menu is {isOpen ? "open" : "closed"}</div>}
+      </Menu>,
       manager
     );
 
@@ -211,7 +213,11 @@ describe("<Menu> manager contract", function () {
     const manager = createManager();
 
     renderWithManager(
-      <Menu>{({ isOpen }) => <div data-testid="status">{isOpen ? "OPEN" : "CLOSED"}</div>}</Menu>,
+      <Menu>
+        {({ isOpen }) => (
+          <div data-testid="status">{isOpen ? "OPEN" : "CLOSED"}</div>
+        )}
+      </Menu>,
       manager
     );
 
@@ -239,7 +245,9 @@ describe("<Menu> manager contract", function () {
     const manager = createManager();
 
     const { unmount } = renderWithManager(
-      <Menu>{({ isOpen }) => <div>Menu is {isOpen ? "open" : "closed"}</div>}</Menu>,
+      <Menu>
+        {({ isOpen }) => <div>Menu is {isOpen ? "open" : "closed"}</div>}
+      </Menu>,
       manager
     );
 

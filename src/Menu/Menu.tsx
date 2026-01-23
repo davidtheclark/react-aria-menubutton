@@ -33,7 +33,9 @@ function AriaMenuButtonMenu({
 }: InternalMenuProps) {
   const ref = useRef<HTMLElement | null>(null);
   const tapListenerRef = useRef<TapListener | null>(null);
-  const tapListenerTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const tapListenerTimerRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null
+  );
   // Local state to trigger re-renders when menu state changes
   const [, setIsOpen] = useState(ambManager.isOpen);
 

@@ -1,13 +1,13 @@
 /**
  * Integration tests for react-aria-menubutton
- * 
+ *
  * These tests follow React Testing Library philosophy:
  * - Test behavior, not implementation
  * - Query elements the way users would find them (by role, text, label)
  * - Use userEvent for realistic user interactions
  * - Assert on visible DOM changes, not internal state
- * 
- * Note: Arrow key navigation within the menu is handled by the focus-group 
+ *
+ * Note: Arrow key navigation within the menu is handled by the focus-group
  * library and is not tested here as it's third-party behavior.
  */
 
@@ -17,12 +17,14 @@ import { Wrapper, Button, Menu, MenuItem, openMenu, closeMenu } from "./index";
 import { act } from "react";
 
 // Helper to render a complete menu button component
-function renderMenuButton(options: { 
-  onSelection?: (value: unknown) => void;
-  id?: string;
-} = {}) {
+function renderMenuButton(
+  options: {
+    onSelection?: (value: unknown) => void;
+    id?: string;
+  } = {}
+) {
   const handleSelection = options.onSelection ?? vi.fn();
-  
+
   return render(
     <Wrapper id={options.id} onSelection={handleSelection}>
       <Button>Open Menu</Button>
@@ -49,7 +51,9 @@ describe("Menu Button Integration", () => {
 
       // Menu should now be visible
       expect(screen.getByRole("menu")).toBeInTheDocument();
-      expect(screen.getByRole("menuitem", { name: "First Item" })).toBeInTheDocument();
+      expect(
+        screen.getByRole("menuitem", { name: "First Item" })
+      ).toBeInTheDocument();
     });
 
     test("clicking the button again closes the menu", async () => {
@@ -120,10 +124,12 @@ describe("Menu Button Integration", () => {
       await user.keyboard("{ArrowDown}");
 
       expect(screen.getByRole("menu")).toBeInTheDocument();
-      
+
       // First menu item should be focused
       await waitFor(() => {
-        expect(screen.getByRole("menuitem", { name: "First Item" })).toHaveFocus();
+        expect(
+          screen.getByRole("menuitem", { name: "First Item" })
+        ).toHaveFocus();
       });
     });
   });
@@ -171,7 +177,9 @@ describe("Menu Button Integration", () => {
 
       // Wait for focus to be on first item
       await waitFor(() => {
-        expect(screen.getByRole("menuitem", { name: "First Item" })).toHaveFocus();
+        expect(
+          screen.getByRole("menuitem", { name: "First Item" })
+        ).toHaveFocus();
       });
 
       // Press Enter to select
@@ -219,9 +227,15 @@ describe("Menu Button Integration", () => {
 
       await user.click(screen.getByRole("button", { name: "Open Menu" }));
 
-      expect(screen.getByRole("menuitem", { name: "First Item" })).toBeInTheDocument();
-      expect(screen.getByRole("menuitem", { name: "Second Item" })).toBeInTheDocument();
-      expect(screen.getByRole("menuitem", { name: "Third Item" })).toBeInTheDocument();
+      expect(
+        screen.getByRole("menuitem", { name: "First Item" })
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("menuitem", { name: "Second Item" })
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("menuitem", { name: "Third Item" })
+      ).toBeInTheDocument();
     });
   });
 });
@@ -311,11 +325,15 @@ describe("Function children pattern", () => {
     );
 
     // Function children always render, showing closed state
-    expect(screen.getByTestId("menu-content")).toHaveTextContent("Menu is CLOSED");
+    expect(screen.getByTestId("menu-content")).toHaveTextContent(
+      "Menu is CLOSED"
+    );
 
     // Open menu
     await user.click(screen.getByRole("button", { name: "Toggle" }));
 
-    expect(screen.getByTestId("menu-content")).toHaveTextContent("Menu is OPEN");
+    expect(screen.getByTestId("menu-content")).toHaveTextContent(
+      "Menu is OPEN"
+    );
   });
 });
