@@ -7,12 +7,6 @@
 - **Migrated entire codebase from JavaScript to TypeScript** with strict type checking (no `any` types)
 - **Removed `prop-types` dependency** - runtime prop validation replaced with compile-time TypeScript type checking
 - **Expanded React peer dependency** to include React 18 (`^16.3.0 || ^17.0.0 || ^18.0.0`)
-- **Converted class components to functional components** using React hooks internally
-
-### Fixed
-
-- **Fixed menu not opening on click** - Button and Menu components now properly register `setState` callbacks with the manager to trigger React re-renders when menu state changes
-- **Fixed external state control (`openMenu`/`closeMenu`) not working** - Added delay before attaching tap listener to prevent the originating click event from immediately closing the menu
 
 ### Added
 
@@ -23,19 +17,7 @@
   - `MenuChildren`, `MenuChildrenState`
   - `OpenMenuOptions`, `CloseMenuOptions`
 - **ESLint with TypeScript parser** - replaced `@babel/eslint-parser` with `typescript-eslint`
-- **ESLint flat config** (`eslint.config.ts`) - migrated from legacy `.eslintrc` format using native config array (not deprecated `tseslint.config()`)
 - **Prettier integration** for consistent code formatting
-- **New npm scripts**:
-  - `start:dist` - run demo against built library (tests distributed package)
-  - `typecheck` - run TypeScript type checking
-  - Updated `format` - format TypeScript files with Prettier
-- **Updated GitHub Actions workflow** (`build.yml`):
-  - Added type check step
-  - Added format check step
-  - Updated to actions/checkout@v4 and actions/setup-node@v4
-  - Organized into clearly named steps
-- **New `format:check` script** for CI to verify formatting without modifying files
-- **Updated README.md** with TypeScript documentation, examples, and exported types
 - **Type declarations for dependencies** - added custom `.d.ts` files for `focus-group` and `teeny-tap`
 - **Contract tests** - verify Button and Menu components properly register with manager:
   - Tests for `ref` and `setState` registration
@@ -60,14 +42,6 @@
 - **Updated dev dependencies** to latest versions:
   - ESLint v9, Prettier v3, TypeScript v5.7
   - `@testing-library/react` v14 (React 18 compatible)
-  - Added `vite-plugin-dts` for declaration file generation
-- **Added `"type": "module"`** to package.json for ES modules support
-- **Added `"exports"` field** to package.json for modern ESM/CJS resolution
-- **Added `"sideEffects": false`** for better tree-shaking
-- **Added `"files"` field** to control npm package contents
-- **Added `"engines"` field** to specify Node.js >=18 requirement
-- **Lint-staged** now checks `.ts` and `.tsx` files
-- **Expanded test coverage** from 39 to 64 tests
 
 ### Removed
 
