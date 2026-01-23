@@ -2,6 +2,7 @@ import {
   forwardRef,
   useContext,
   useRef,
+  useState,
   useEffect,
   useCallback,
   createElement,
@@ -32,6 +33,9 @@ function AriaMenuButtonMenu({
 }: InternalMenuProps) {
   const ref = useRef<HTMLElement | null>(null);
   const tapListenerRef = useRef<TapListener | null>(null);
+  const tapListenerTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Local state to trigger re-renders when menu state changes
+  const [, setIsOpen] = useState(ambManager.isOpen);
 
   const addTapListener = useCallback(() => {
     const el = ref.current;
@@ -53,11 +57,17 @@ function AriaMenuButtonMenu({
   useEffect(() => {
     ambManager.menu = {
       ref,
+      setState: (state: { isOpen: boolean }) => {
+        setIsOpen(state.isOpen);
+      },
     };
 
     return () => {
       if (tapListenerRef.current) {
         tapListenerRef.current.remove();
+      }
+      if (tapListenerTimerRef.current) {
+        clearTimeout(tapListenerTimerRef.current);
       }
       ambManager.destroy();
     };
@@ -67,7 +77,12 @@ function AriaMenuButtonMenu({
     if (!ambManager.options.closeOnBlur) return;
 
     if (ambManager.isOpen && !tapListenerRef.current) {
-      addTapListener();
+      // Delay adding the tap listener to avoid catching the same click
+      // event that triggered the menu to open
+      tapListenerTimerRef.current = setTimeout(() => {
+        addTapListener();
+        tapListenerTimerRef.current = null;
+      }, 0);
     } else if (!ambManager.isOpen && tapListenerRef.current) {
       tapListenerRef.current.remove();
       tapListenerRef.current = null;

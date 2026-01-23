@@ -32,7 +32,8 @@
     "build": "vite build -c vite.lib.config.ts",
     "prepare": "husky install",
     "prepublishOnly": "npm run build",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "start:dist": "npm run build && vite -c vite.demo-dist.config.ts"
   },
   "husky": {
     "hooks": {
@@ -80,6 +81,7 @@
     "@eslint/js": "^9.28.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^14.3.1",
+    "@testing-library/user-event": "^14.6.1",
     "@types/node": "^25.0.8",
     "@types/react": "^18.3.23",
     "@types/react-dom": "^18.3.7",

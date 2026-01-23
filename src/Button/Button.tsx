@@ -2,6 +2,7 @@ import {
   forwardRef,
   useContext,
   useRef,
+  useState,
   useEffect,
   useCallback,
   createElement,
@@ -43,10 +44,15 @@ function AriaMenuButtonButton({
   ...restProps
 }: InternalButtonProps) {
   const ref = useRef<HTMLElement | null>(null);
+  // Local state to trigger re-renders when menu state changes
+  const [, setMenuOpen] = useState(ambManager.isOpen);
 
   useEffect(() => {
     ambManager.button = {
       ref,
+      setState: (state: { menuOpen: boolean }) => {
+        setMenuOpen(state.menuOpen);
+      },
     };
 
     return () => {

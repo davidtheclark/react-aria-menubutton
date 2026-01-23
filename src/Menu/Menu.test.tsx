@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import ReactDOMServer from "react-dom/server";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, act } from "@testing-library/react";
 import ManagerContext from "../ManagerContext";
 import Menu from "./Menu";
 import MockWrapper from "../test-utils/MockWrapper";
@@ -164,5 +164,90 @@ describe("<Menu> rendered via renderToString", function () {
     );
     // Menu is closed, so content should be empty
     expect(output).toContain("div");
+  });
+});
+
+describe("<Menu> manager contract", function () {
+  test("registers with manager on mount with ref and setState", function () {
+    const manager = createManager();
+
+    // Use function children so the menu renders even when closed
+    renderWithManager(
+      <Menu>{({ isOpen }) => <div>Menu is {isOpen ? "open" : "closed"}</div>}</Menu>,
+      manager
+    );
+
+    // Menu should register itself with the manager
+    expect(manager.menu).not.toBeNull();
+    expect(manager.menu?.ref).toBeDefined();
+    expect(manager.menu?.ref.current).toBeInstanceOf(HTMLElement);
+    expect(typeof manager.menu?.setState).toBe("function");
+  });
+
+  test("setState triggers re-render and shows menu content", function () {
+    const manager = createManager();
+
+    const { container } = renderWithManager(
+      <Menu>
+        <div data-testid="menu-content">Menu Content</div>
+      </Menu>,
+      manager
+    );
+
+    // Initially closed - menu content should not be in DOM
+    expect(container.querySelector('[data-testid="menu-content"]')).toBeNull();
+
+    // Simulate what manager.update() does when opening menu
+    act(() => {
+      manager.isOpen = true;
+      manager.menu?.setState?.({ isOpen: true });
+    });
+
+    // After setState, menu content should appear
+    expect(screen.getByTestId("menu-content")).toBeInTheDocument();
+  });
+
+  test("setState with function children updates isOpen state", function () {
+    const manager = createManager();
+
+    renderWithManager(
+      <Menu>{({ isOpen }) => <div data-testid="status">{isOpen ? "OPEN" : "CLOSED"}</div>}</Menu>,
+      manager
+    );
+
+    // Initially closed
+    expect(screen.getByTestId("status")).toHaveTextContent("CLOSED");
+
+    // Open via setState
+    act(() => {
+      manager.isOpen = true;
+      manager.menu?.setState?.({ isOpen: true });
+    });
+
+    expect(screen.getByTestId("status")).toHaveTextContent("OPEN");
+
+    // Close via setState
+    act(() => {
+      manager.isOpen = false;
+      manager.menu?.setState?.({ isOpen: false });
+    });
+
+    expect(screen.getByTestId("status")).toHaveTextContent("CLOSED");
+  });
+
+  test("unregisters from manager on unmount", function () {
+    const manager = createManager();
+
+    const { unmount } = renderWithManager(
+      <Menu>{({ isOpen }) => <div>Menu is {isOpen ? "open" : "closed"}</div>}</Menu>,
+      manager
+    );
+
+    expect(manager.menu).not.toBeNull();
+
+    unmount();
+
+    // After unmount, menu should be unregistered
+    expect(manager.menu).toBeNull();
   });
 });
