@@ -1,4 +1,4 @@
-import { forwardRef, useMemo, createElement } from "react";
+import { forwardRef, useMemo, createElement, useEffect } from "react";
 import createManager from "../createManager";
 import ManagerContext from "../ManagerContext";
 import specialAssign from "../specialAssign";
@@ -49,7 +49,7 @@ const Wrapper = forwardRef<HTMLElement, WrapperProps>(function Wrapper(
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Update options when props change
-  useMemo(() => {
+  useEffect(() => {
     manager.updateOptions(
       managerOptionsFromProps({
         children,
