@@ -1,5 +1,6 @@
 import ReactDOMServer from "react-dom/server";
-import { render, screen, fireEvent, act } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
+import { act } from "react";
 import Button from "./Button";
 import ManagerContext from "../ManagerContext";
 import MockWrapper from "../test-utils/MockWrapper";
