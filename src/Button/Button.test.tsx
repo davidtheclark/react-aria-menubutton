@@ -1,5 +1,5 @@
 import ReactDOMServer from "react-dom/server";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, act } from "@testing-library/react";
 import Button from "./Button";
 import ManagerContext from "../ManagerContext";
 import MockWrapper from "../test-utils/MockWrapper";
@@ -186,5 +186,51 @@ describe("<Button> rendered via renderToString", function () {
     );
     expect(output).toContain('role="button"');
     expect(output).toContain("foo");
+  });
+});
+
+describe("<Button> manager contract", function () {
+  test("registers with manager on mount with ref and setState", function () {
+    const manager = createManager();
+
+    renderWithManager(<Button>foo</Button>, manager);
+
+    // Button should register itself with the manager
+    expect(manager.button).not.toBeNull();
+    expect(manager.button?.ref).toBeDefined();
+    expect(manager.button?.ref.current).toBeInstanceOf(HTMLElement);
+    expect(typeof manager.button?.setState).toBe("function");
+  });
+
+  test("setState triggers re-render and updates aria-expanded", function () {
+    const manager = createManager();
+
+    renderWithManager(<Button>foo</Button>, manager);
+    const button = screen.getByRole("button");
+
+    // Initially closed
+    expect(button).toHaveAttribute("aria-expanded", "false");
+
+    // Simulate what manager.update() does when opening menu
+    act(() => {
+      manager.isOpen = true;
+      manager.button?.setState?.({ menuOpen: true });
+    });
+
+    // After setState, button should reflect the new state
+    expect(button).toHaveAttribute("aria-expanded", "true");
+  });
+
+  test("unregisters from manager on unmount", function () {
+    const manager = createManager();
+
+    const { unmount } = renderWithManager(<Button>foo</Button>, manager);
+
+    expect(manager.button).not.toBeNull();
+
+    unmount();
+
+    // After unmount, button should be unregistered
+    expect(manager.button).toBeNull();
   });
 });
